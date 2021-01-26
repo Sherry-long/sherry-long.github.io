@@ -6,7 +6,39 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Jan 2021 13:52:24 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Jan 2021 21:23:25 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LinkedList</title>
+      <link>https://sherry-long.github.io/post/linkedlist/</link>
+      <pubDate>Tue, 26 Jan 2021 21:23:25 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/linkedlist/</guid>
+      <description>单链表
+数据结构
+typedef struct LinkNode{ int data; struct LinkNode *next; }LinkNode,*LinkList; 函数：
+尾插：
+void List_Tinsert(LinkNode *p,int num) //尾插法 { LinkNode *s = p; while (s-&amp;gt;next) s = s-&amp;gt;next; LinkNode *r = (LinkNode *)malloc(sizeof(LinkNode)); r-&amp;gt;data = num; r-&amp;gt;next = NULL; s-&amp;gt;next = r; } 头插：
+void List_Hinsert(LinkNode *p,int num) //头插法 { LinkNode *s; s = (LinkNode *)malloc(sizeof(LinkNode)); s-&amp;gt;data = num; s-&amp;gt;next = p-&amp;gt;next; p-&amp;gt;next = s; } 链表创建（从1到n按序生成）
+void List_create(LinkNode *p,int n) { for(int i = 1;i &amp;lt;= n;++i) List_Tinsert(p,i); //从1到n，尾插生成  printf(&amp;#34;Creation complete!</description>
+    </item>
+    
+    <item>
+      <title>HeapSort</title>
+      <link>https://sherry-long.github.io/post/heapsort/</link>
+      <pubDate>Tue, 26 Jan 2021 21:20:38 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/heapsort/</guid>
+      <description>堆排序
+首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
+基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
+算法框架如下
+void HeapSort(int *A,int n)	//此处预留A[0],所以参数n应为数组A的大小减1 { BuildMaxHeap(A,n);	//首先建立大根堆  for (int i = n;i &amp;gt; 1;--i) { swap(&amp;amp;A[i],&amp;amp;A[1]); HeapAdjust(A,1,i - 1); }	//每次循环将当前堆顶元素与堆底元素交换，此时堆性质可能会被破坏，  //调用HeapAdjust方法将堆重新调整有序 } 此处将A数组的第一个元素（A[0]）预留出来，后续有用 也就是说n个元素需要一个大小为n+1的数组
+建立大根堆：
+void BuildMaxHeap(int *A,int n) { for (int i = n / 2;i &amp;gt; 0;--i) { HeapAdjust(A,i,n); } } 很简单的几行代码，原理也很简单 学习过二叉树，我们知道：对于一个完全二叉树来说，它的最后一个节点是第 n/2（向下取整） 个节点的子节点。 比如说一个完全二叉树有五个节点，那么它的第五个节点就是第二个节点的子节点。 对以此节点为根的子树进行调整，使该子树成为堆。此后依次向前对各节点进行调整（n/2（向下取整）到1），直到根节点，使整个树成为堆。
+堆调整
+void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放至A[0]中  for(int j = i * 2;j &amp;lt;= n;j *= 2)	//找到i节点的孩子节点j，并沿子节点向下调整  { if(j &amp;lt; n &amp;amp;&amp;amp; A[j] &amp;lt; A[j + 1])	//如果j有兄弟节点，并且	 j++;	//小于其兄弟节点，将j指向兄弟节点  //（也就是找到i的孩子节点中最大的那个，如果建立的是小根堆就是找到最小的那个）  if(A[j] &amp;gt; A[0]) { A[i] = A[j]; i = j; }	//如果i的孩子节点比j大，A[j]放到A[i]的位置上  //并将j作为下一个调整的节点，向下继续调整  else break;	//如果堆性质未被破坏则直接跳出循环  } A[i] = A[0];	//最终将A[i]放到它该在的地方（如堆性质未被破坏则还在原位置） } 堆排序，说白了就是将堆顶元素（最大元素）输出，将堆中的剩余元素重新调整有序，再将堆顶元素（此时为第二大元素）输出，循环此过程</description>
+    </item>
+    
     <item>
       <title>第二次测试</title>
       <link>https://sherry-long.github.io/post/blog2/</link>

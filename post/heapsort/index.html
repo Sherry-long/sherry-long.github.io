@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>HeapSort // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HeapSort"/>
+<meta name="twitter:description" content="堆排序
+首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
+基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
+算法框架如下
+void HeapSort(int *A,int n)	//此处预留A[0],所以参数n应为数组A的大小减1 { BuildMaxHeap(A,n);	//首先建立大根堆  for (int i = n;i &gt; 1;--i) { swap(&amp;A[i],&amp;A[1]); HeapAdjust(A,1,i - 1); }	//每次循环将当前堆顶元素与堆底元素交换，此时堆性质可能会被破坏，  //调用HeapAdjust方法将堆重新调整有序 } 此处将A数组的第一个元素（A[0]）预留出来，后续有用 也就是说n个元素需要一个大小为n&#43;1的数组
+建立大根堆：
+void BuildMaxHeap(int *A,int n) { for (int i = n / 2;i &gt; 0;--i) { HeapAdjust(A,i,n); } } 很简单的几行代码，原理也很简单 学习过二叉树，我们知道：对于一个完全二叉树来说，它的最后一个节点是第 n/2（向下取整） 个节点的子节点。 比如说一个完全二叉树有五个节点，那么它的第五个节点就是第二个节点的子节点。 对以此节点为根的子树进行调整，使该子树成为堆。此后依次向前对各节点进行调整（n/2（向下取整）到1），直到根节点，使整个树成为堆。
+堆调整
+void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放至A[0]中  for(int j = i * 2;j &lt;= n;j *= 2)	//找到i节点的孩子节点j，并沿子节点向下调整  { if(j &lt; n &amp;&amp; A[j] &lt; A[j &#43; 1])	//如果j有兄弟节点，并且	 j&#43;&#43;;	//小于其兄弟节点，将j指向兄弟节点  //（也就是找到i的孩子节点中最大的那个，如果建立的是小根堆就是找到最小的那个）  if(A[j] &gt; A[0]) { A[i] = A[j]; i = j; }	//如果i的孩子节点比j大，A[j]放到A[i]的位置上  //并将j作为下一个调整的节点，向下继续调整  else break;	//如果堆性质未被破坏则直接跳出循环  } A[i] = A[0];	//最终将A[i]放到它该在的地方（如堆性质未被破坏则还在原位置） } 堆排序，说白了就是将堆顶元素（最大元素）输出，将堆中的剩余元素重新调整有序，再将堆顶元素（此时为第二大元素）输出，循环此过程"/>
+
+    <meta property="og:title" content="HeapSort" />
+<meta property="og:description" content="堆排序
+首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
+基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
+算法框架如下
+void HeapSort(int *A,int n)	//此处预留A[0],所以参数n应为数组A的大小减1 { BuildMaxHeap(A,n);	//首先建立大根堆  for (int i = n;i &gt; 1;--i) { swap(&amp;A[i],&amp;A[1]); HeapAdjust(A,1,i - 1); }	//每次循环将当前堆顶元素与堆底元素交换，此时堆性质可能会被破坏，  //调用HeapAdjust方法将堆重新调整有序 } 此处将A数组的第一个元素（A[0]）预留出来，后续有用 也就是说n个元素需要一个大小为n&#43;1的数组
+建立大根堆：
+void BuildMaxHeap(int *A,int n) { for (int i = n / 2;i &gt; 0;--i) { HeapAdjust(A,i,n); } } 很简单的几行代码，原理也很简单 学习过二叉树，我们知道：对于一个完全二叉树来说，它的最后一个节点是第 n/2（向下取整） 个节点的子节点。 比如说一个完全二叉树有五个节点，那么它的第五个节点就是第二个节点的子节点。 对以此节点为根的子树进行调整，使该子树成为堆。此后依次向前对各节点进行调整（n/2（向下取整）到1），直到根节点，使整个树成为堆。
+堆调整
+void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放至A[0]中  for(int j = i * 2;j &lt;= n;j *= 2)	//找到i节点的孩子节点j，并沿子节点向下调整  { if(j &lt; n &amp;&amp; A[j] &lt; A[j &#43; 1])	//如果j有兄弟节点，并且	 j&#43;&#43;;	//小于其兄弟节点，将j指向兄弟节点  //（也就是找到i的孩子节点中最大的那个，如果建立的是小根堆就是找到最小的那个）  if(A[j] &gt; A[0]) { A[i] = A[j]; i = j; }	//如果i的孩子节点比j大，A[j]放到A[i]的位置上  //并将j作为下一个调整的节点，向下继续调整  else break;	//如果堆性质未被破坏则直接跳出循环  } A[i] = A[0];	//最终将A[i]放到它该在的地方（如堆性质未被破坏则还在原位置） } 堆排序，说白了就是将堆顶元素（最大元素）输出，将堆中的剩余元素重新调整有序，再将堆顶元素（此时为第二大元素）输出，循环此过程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/heapsort/" />
+<meta property="article:published_time" content="2021-01-26T21:20:38+08:00" />
+<meta property="article:modified_time" content="2021-01-26T21:20:38+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">HeapSort</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 26, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p><strong>堆排序</strong></p>
+<p>首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。</p>
+<p><strong>基本原理</strong>：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。</p>
+<p><strong>算法框架如下</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">HeapSort</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>A,<span style="color:#66d9ef">int</span> n)	<span style="color:#75715e">//此处预留A[0],所以参数n应为数组A的大小减1
+</span><span style="color:#75715e"></span>{
+    BuildMaxHeap(A,n);	<span style="color:#75715e">//首先建立大根堆
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> n;i <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>;<span style="color:#f92672">--</span>i)
+    {
+        swap(<span style="color:#f92672">&amp;</span>A[i],<span style="color:#f92672">&amp;</span>A[<span style="color:#ae81ff">1</span>]);
+        HeapAdjust(A,<span style="color:#ae81ff">1</span>,i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+    }	<span style="color:#75715e">//每次循环将当前堆顶元素与堆底元素交换，此时堆性质可能会被破坏，
+</span><span style="color:#75715e"></span>    	<span style="color:#75715e">//调用HeapAdjust方法将堆重新调整有序
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>此处将A数组的第一个元素（A[0]）预留出来，后续有用
+也就是说n个元素需要一个大小为n+1的数组</p>
+<p><strong>建立大根堆：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BuildMaxHeap</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>A,<span style="color:#66d9ef">int</span> n)
+{
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> n <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;i <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>;<span style="color:#f92672">--</span>i)
+    {
+        HeapAdjust(A,i,n);
+    }
+}
+</code></pre></div><p>很简单的几行代码，原理也很简单
+学习过二叉树，我们知道：对于一个<strong>完全二叉树</strong>来说，它的最后一个节点是第 <strong>n/2（向下取整）</strong> 个节点的子节点。
+比如说一个完全二叉树有五个节点，那么它的第五个节点就是第二个节点的子节点。
+对以此节点为根的子树进行调整，使该子树成为堆。此后依次向前对各节点进行调整（n/2（向下取整）到1），直到根节点，使整个树成为堆。</p>
+<p><strong>堆调整</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">HeapAdjust</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>A,<span style="color:#66d9ef">int</span> i,<span style="color:#66d9ef">int</span> n)
+{
+    A[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> A[i];	<span style="color:#75715e">//将待调整节点值存放至A[0]中
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>;j <span style="color:#f92672">&lt;=</span> n;j <span style="color:#f92672">*=</span> <span style="color:#ae81ff">2</span>)	<span style="color:#75715e">//找到i节点的孩子节点j，并沿子节点向下调整
+</span><span style="color:#75715e"></span>    {
+        <span style="color:#66d9ef">if</span>(j <span style="color:#f92672">&lt;</span> n <span style="color:#f92672">&amp;&amp;</span> A[j] <span style="color:#f92672">&lt;</span> A[j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>])	<span style="color:#75715e">//如果j有兄弟节点，并且						
+</span><span style="color:#75715e"></span>            j<span style="color:#f92672">++</span>;						<span style="color:#75715e">//小于其兄弟节点，将j指向兄弟节点
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">//（也就是找到i的孩子节点中最大的那个，如果建立的是小根堆就是找到最小的那个）
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span>(A[j] <span style="color:#f92672">&gt;</span> A[<span style="color:#ae81ff">0</span>])
+        {
+            A[i] <span style="color:#f92672">=</span> A[j];
+            i <span style="color:#f92672">=</span> j;
+        }	<span style="color:#75715e">//如果i的孩子节点比j大，A[j]放到A[i]的位置上
+</span><span style="color:#75715e"></span>        	<span style="color:#75715e">//并将j作为下一个调整的节点，向下继续调整
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">break</span>;	<span style="color:#75715e">//如果堆性质未被破坏则直接跳出循环
+</span><span style="color:#75715e"></span>    }
+    A[i] <span style="color:#f92672">=</span> A[<span style="color:#ae81ff">0</span>];	<span style="color:#75715e">//最终将A[i]放到它该在的地方（如堆性质未被破坏则还在原位置）
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>堆排序，说白了就是将堆顶元素（最大元素）输出，将<strong>堆中的剩余元素</strong>重新调整有序，再将堆顶元素（此时为第二大元素）输出，循环此过程</p>
+<p>如果建立的是大根堆，执行完堆排序后最终元素升序排列，小根堆降序</p>
+<p><strong>补上swap函数</strong>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">swap</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>x,<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>y)
+{
+    <span style="color:#66d9ef">int</span> temp <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>y;
+    <span style="color:#f92672">*</span>y <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>x;
+    <span style="color:#f92672">*</span>x <span style="color:#f92672">=</span> temp;
+}
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
