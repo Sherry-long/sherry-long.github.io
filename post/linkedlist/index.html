@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>LinkedList // Sp(act)rum</title>
+    <title>单链表 C实现 // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,7 +12,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="LinkedList"/>
+<meta name="twitter:title" content="单链表 C实现"/>
 <meta name="twitter:description" content="单链表
 数据结构
 typedef struct LinkNode{ int data; struct LinkNode *next; }LinkNode,*LinkList; 函数：
@@ -21,7 +21,7 @@ void List_Tinsert(LinkNode *p,int num) //尾插法 { LinkNode *s = p; while (s-&
 void List_Hinsert(LinkNode *p,int num) //头插法 { LinkNode *s; s = (LinkNode *)malloc(sizeof(LinkNode)); s-&gt;data = num; s-&gt;next = p-&gt;next; p-&gt;next = s; } 链表创建（从1到n按序生成）
 void List_create(LinkNode *p,int n) { for(int i = 1;i &lt;= n;&#43;&#43;i) List_Tinsert(p,i); //从1到n，尾插生成  printf(&#34;Creation complete!"/>
 
-    <meta property="og:title" content="LinkedList" />
+    <meta property="og:title" content="单链表 C实现" />
 <meta property="og:description" content="单链表
 数据结构
 typedef struct LinkNode{ int data; struct LinkNode *next; }LinkNode,*LinkList; 函数：
@@ -49,7 +49,7 @@ void List_create(LinkNode *p,int n) { for(int i = 1;i &lt;= n;&#43;&#43;i) List_
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">LinkedList</h1>
+      <h1 class ="post-title">单链表 C实现</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">

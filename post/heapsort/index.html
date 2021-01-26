@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>HeapSort // Sp(act)rum</title>
+    <title>堆排序原理 &amp; C语言实现 // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,7 +12,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="HeapSort"/>
+<meta name="twitter:title" content="堆排序原理 &amp; C语言实现"/>
 <meta name="twitter:description" content="堆排序
 首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
 基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
@@ -23,7 +23,7 @@ void BuildMaxHeap(int *A,int n) { for (int i = n / 2;i &gt; 0;--i) { HeapAdjust(
 堆调整
 void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放至A[0]中  for(int j = i * 2;j &lt;= n;j *= 2)	//找到i节点的孩子节点j，并沿子节点向下调整  { if(j &lt; n &amp;&amp; A[j] &lt; A[j &#43; 1])	//如果j有兄弟节点，并且	 j&#43;&#43;;	//小于其兄弟节点，将j指向兄弟节点  //（也就是找到i的孩子节点中最大的那个，如果建立的是小根堆就是找到最小的那个）  if(A[j] &gt; A[0]) { A[i] = A[j]; i = j; }	//如果i的孩子节点比j大，A[j]放到A[i]的位置上  //并将j作为下一个调整的节点，向下继续调整  else break;	//如果堆性质未被破坏则直接跳出循环  } A[i] = A[0];	//最终将A[i]放到它该在的地方（如堆性质未被破坏则还在原位置） } 堆排序，说白了就是将堆顶元素（最大元素）输出，将堆中的剩余元素重新调整有序，再将堆顶元素（此时为第二大元素）输出，循环此过程"/>
 
-    <meta property="og:title" content="HeapSort" />
+    <meta property="og:title" content="堆排序原理 &amp; C语言实现" />
 <meta property="og:description" content="堆排序
 首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
 基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
@@ -53,7 +53,7 @@ void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">HeapSort</h1>
+      <h1 class ="post-title">堆排序原理 &amp; C语言实现</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
