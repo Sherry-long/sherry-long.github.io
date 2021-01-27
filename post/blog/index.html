@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>Java巩固笔记 // Sp(act)rum</title>
+    <title>Java笔记(持续更新) // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,17 +12,13 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Java巩固笔记"/>
-<meta name="twitter:description" content="java笔记
-     this关键字
-     创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作       static关键字
-     当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date."/>
+<meta name="twitter:title" content="Java笔记(持续更新)"/>
+<meta name="twitter:description" content="此笔记为本人在复习巩固Java基础时做的记录，内容很杂，持续更新中
+this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System."/>
 
-    <meta property="og:title" content="Java巩固笔记" />
-<meta property="og:description" content="java笔记
-     this关键字
-     创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作       static关键字
-     当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date." />
+    <meta property="og:title" content="Java笔记(持续更新)" />
+<meta property="og:description" content="此笔记为本人在复习巩固Java基础时做的记录，内容很杂，持续更新中
+this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/blog/" />
 <meta property="article:published_time" content="2021-01-26T12:38:16+08:00" />
@@ -43,7 +39,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">Java巩固笔记</h1>
+      <h1 class ="post-title">Java笔记(持续更新)</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -62,18 +58,8 @@
       </div>
     </header>
     <div class="post-content">
-      <p>java笔记</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>this关键字</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+      <p>此笔记为本人在复习巩固Java基础时做的记录，内容很杂，持续更新中</p>
+<h3 id="this关键字">this关键字</h3>
 <pre><code>创建一个对象时分以下四部：
     1.分配对象空间，将对象成员变量初始化为0或空
     2.执行显示值的属性初始化
@@ -93,17 +79,7 @@ this 用法
     5. return this;
        this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>static关键字</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="static关键字">static关键字</h3>
 <pre><code>当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
 方便在没有创建对象的情况下来进行调用（方法/变量）
     1. static方法：
@@ -139,17 +115,7 @@ static不会改变方法和变量的访问权限
     }
 不论调用多少次getAccess(),返回的都是同一对象
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>final关键字</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="final关键字">final关键字</h3>
 <pre><code>final关键字可用来修饰引用、方法和类
 1.修饰引用
     1. 如果引用为基本数据类型，则该引用为常量，无法被修改
@@ -164,33 +130,13 @@ static不会改变方法和变量的访问权限
     参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改
     此时参数只读
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>范型</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="范型">范型</h3>
 <pre><code>一对尖括号&lt;&gt;
 ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
 当将对象引用置入容器中时，它将向上转型为Object类，所以他会丢失当前身份。
 取出时需要将对象引用向下转型，这依靠范型来实现
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>序列化和反序列化</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="序列化和反序列化">序列化和反序列化</h3>
 <pre><code>序列化：将对象写入到IO流中
 反序列化：从IO流中恢复对象
 序列化机制允许将实现序列化的Java对象转换为字节序列，这些字节序列可以保存在磁盘上，
@@ -210,17 +156,7 @@ transient（暂时）变量和static（静态）变量在序列化时会忽视
     arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象，
       所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>可变参数</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="可变参数">可变参数</h3>
 <pre><code>类型 + ... + 形参名
 定义时：
     f(Object... trailing);
@@ -232,32 +168,12 @@ transient（暂时）变量和static（静态）变量在序列化时会忽视
     f();
     都可以,会自动转型成object
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>public、protected和private</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="publicprotected和private">public、protected和private</h3>
 <pre><code>public 所有人均可见
 private 除本身外其他人不可访问
 protected 对继承他的子类开放，有包内访问权限
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>复用类</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="复用类">复用类</h3>
 <pre><code>组合：
 
 继承：使用通用类构造一个特例
@@ -268,17 +184,7 @@ protected 对继承他的子类开放，有包内访问权限
 
 覆写：
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>多态</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="多态">多态</h3>
 <pre><code>多态通过分离“做什么”和“怎么做”，从另一角度将接口和实现分离开。
 消除类型之间的耦合关系。
 
@@ -295,17 +201,7 @@ protected 对继承他的子类开放，有包内访问权限
 多态让程序员将改变的事物与未改变的事物分离开
 多态意味着“不同的形式”，在面向对象程序设计中，我们持有从基类继承而来的相同接口，以及使用该接口的不同形式：不同版本的动态绑定
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>抽象类，接口</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="抽象类接口">抽象类，接口</h3>
 <pre><code>abstract关键字，如果一个类包含一个或多个抽象方法，该类就必须被限定为抽象的。
 如果一个类继承抽象类，并想为该新类创建对象，就必须为抽象类中所有方法声明提供实现
 abstract关键字允许人们在类中创建一个或多个没有任何定义的方法——提供了接口部分
@@ -319,17 +215,7 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
   实现一个接口时，不需要实现嵌套在它内部的任何接口，而且，private接口不能在定义它的类之外被实现
   接口是实现多重继承的途径
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>java反射</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="java反射">java反射</h3>
 <pre><code>写好的代码 -&gt; javac编译 -&gt; 字节码文件(.class) -&gt;     (源码阶段)
 由类加载器(ClassLoader)加载进内存 -&gt; Class类对象(成员变量Field[] fields，构造方法Constructor[] constructors，成员方法Methods[] methods)用来描述.class字节码文件内容 -&gt;    (Class类对象阶段)
 创建对象
@@ -377,17 +263,7 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
     4.获取类名等
         getName()
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>JDK1.8 Hashmap</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="jdk18-hashmap">JDK1.8 Hashmap</h3>
 <pre><code>put()方法流程：
 put(key, value) -&gt; 计算key的哈希值，计算方法：将key.hashCode()的低16位和高16位进行异或操作，减少碰撞 -&gt; 调用putVal -&gt; 先检查hashmap是否为空(是否初始化) -&gt; 
 如未初始化，调用resize()方法进行初始化 -&gt; 找桶位，使用(n - 1) &amp; hash，根据哈希表规定，n必须为2的次幂，-1可得全1二进制，其计算结果=取余，计算机进行按位操作很快 -&gt;
@@ -402,17 +278,7 @@ resize()方法：
 2.扩容
     如果已达最长度，不进行扩容，如果 旧表长度 * 2 &lt; MAX_LENGTH &amp;&amp; 旧表长度 &gt;= 16 ，才进行扩容
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>String，StringBuilder，StringBuffer</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="stringstringbuilderstringbuffer">String，StringBuilder，StringBuffer</h3>
 <pre><code>String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
 StringBuilder 和 StringBuffer 都继承自 AbstractStringBuilder 父类，可变字符序列
 
@@ -432,17 +298,7 @@ String变量 + ：String str1 = &quot;123&quot;,
                       str2 = &quot;456&quot;, 
                       str3 = str1 + str2; === 先把str1转成SBuilder，使用append(str2)，再toString()转回来
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>多线程</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="多线程">多线程</h3>
 <pre><code>线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
 进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
 
@@ -476,17 +332,7 @@ String变量 + ：String str1 = &quot;123&quot;,
 线程常用方法：
     currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程
 </code></pre>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>杂项</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3 id="杂项">杂项</h3>
 <pre><code> String s = new String(&quot;asdf&quot;);
  声明一个对象引用s，new：给我一个新对象
  
