@@ -6,7 +6,30 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Jan 2021 10:19:57 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Jan 2021 11:12:54 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>二叉排序树 &amp; c语言实现</title>
+      <link>https://sherry-long.github.io/post/bstree/</link>
+      <pubDate>Fri, 29 Jan 2021 11:12:54 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/bstree/</guid>
+      <description>二叉排序树，又称为二叉查找树，具有以下性质： (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。插入:
+1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;
+2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;
+查找:
+按以下逻辑进行递归查找while(该节点不为空 &amp;amp;&amp;amp; 该节点值 != 插入值){ if(该节点值 &amp;lt; 插入值) 查找他的右子树 else if(节点值 &amp;gt; 插入值) 查找他的左子树 } 实现:
+typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*BiTree; //定义数据结构  void InOrder(BiTNode *p) //中序遍历 { if(p != NULL) { InOrder(p-&amp;gt;l_child); printf(&amp;#34; %d &amp;#34;,p-&amp;gt;data); InOrder(p-&amp;gt;r_child); } } BiTNode *createNode(int key) //建立新结点并返回 { BiTNode *temp = (BiTNode *)malloc(sizeof(BiTNode)); temp-&amp;gt;data = key; temp-&amp;gt;l_child = temp-&amp;gt;r_child = NULL; return temp; } bool BST_search(BiTNode *bst, int key, BiTNode *before, BiTree *p) //查找 { if (!</description>
+    </item>
+    
+    <item>
+      <title>动态规划-最长公共子序列</title>
+      <link>https://sherry-long.github.io/post/lcs/</link>
+      <pubDate>Thu, 28 Jan 2021 12:47:54 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/lcs/</guid>
+      <description>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&amp;quot;A, B, D, C, E&amp;quot;和&amp;quot;A, Y, D, E, X&amp;quot;两个串来说，他们的LCS就是&amp;quot;A, D, E&amp;quot;)求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m != Y.n ，那么Z一定也是 X[m-1]</description>
+    </item>
+    
     <item>
       <title>字典树 &amp; Java实现</title>
       <link>https://sherry-long.github.io/post/trietree/</link>

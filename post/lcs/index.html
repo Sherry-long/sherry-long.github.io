@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>动态规划-最长公共子序列 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="动态规划-最长公共子序列"/>
+<meta name="twitter:description" content="动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;)求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m != Y.n ，那么Z一定也是 X[m-1]"/>
+
+    <meta property="og:title" content="动态规划-最长公共子序列" />
+<meta property="og:description" content="动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;)求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m != Y.n ，那么Z一定也是 X[m-1]" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/lcs/" />
+<meta property="article:published_time" content="2021-01-28T12:47:54+08:00" />
+<meta property="article:modified_time" content="2021-01-28T12:47:54+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">动态规划-最长公共子序列</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 28, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。<!-- raw HTML omitted -->
+它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。<!-- raw HTML omitted -->
+我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。<!-- raw HTML omitted --></p>
+<p>接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。<!-- raw HTML omitted -->
+问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;)<!-- raw HTML omitted -->
+求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。<!-- raw HTML omitted -->
+假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m != Y.n ，那么Z一定也是 X[m-1]</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
