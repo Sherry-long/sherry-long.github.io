@@ -130,12 +130,6 @@ static不会改变方法和变量的访问权限
     参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改
     此时参数只读
 </code></pre>
-<h3 id="范型">范型</h3>
-<pre><code>一对尖括号&lt;&gt;
-ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
-当将对象引用置入容器中时，它将向上转型为Object类，所以他会丢失当前身份。
-取出时需要将对象引用向下转型，这依靠范型来实现
-</code></pre>
 <h3 id="序列化和反序列化">序列化和反序列化</h3>
 <pre><code>序列化：将对象写入到IO流中
 反序列化：从IO流中恢复对象
@@ -217,7 +211,9 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
 </code></pre>
 <h3 id="java反射">java反射</h3>
 <pre><code>写好的代码 -&gt; javac编译 -&gt; 字节码文件(.class) -&gt;     (源码阶段)
-由类加载器(ClassLoader)加载进内存 -&gt; Class类对象(成员变量Field[] fields，构造方法Constructor[] constructors，成员方法Methods[] methods)用来描述.class字节码文件内容 -&gt;    (Class类对象阶段)
+由类加载器(ClassLoader)加载进内存 -&gt; Class类对象(成员变量Field[] fields，
+                                                 构造方法Constructor[] constructors，
+                                                 成员方法Methods[] methods)用来描述.class字节码文件内容 -&gt;    (Class类对象阶段)
 创建对象
 
 反射：将类的各个组成部分封装为其他对象，这就是反射机制
@@ -265,12 +261,14 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
 </code></pre>
 <h3 id="jdk18-hashmap">JDK1.8 Hashmap</h3>
 <pre><code>put()方法流程：
-put(key, value) -&gt; 计算key的哈希值，计算方法：将key.hashCode()的低16位和高16位进行异或操作，减少碰撞 -&gt; 调用putVal -&gt; 先检查hashmap是否为空(是否初始化) -&gt; 
-如未初始化，调用resize()方法进行初始化 -&gt; 找桶位，使用(n - 1) &amp; hash，根据哈希表规定，n必须为2的次幂，-1可得全1二进制，其计算结果=取余，计算机进行按位操作很快 -&gt;
-找到桶位，如果桶位空，就new一个结点放入 -&gt; 如果桶位不为空，且该结点key等于插入key，将该节点保存到e中 -&gt; 如果该桶位已经树化，调用putVal的Tree版本，并保存到e -&gt;
-如果头结点不是，链表循环检查，判断是否同key，以及是否到链尾，每次都将当前节点的下一节点保存到e中，找到同key就直接跳出循环，找不到则e成空 -&gt; 遍历到链尾没同key，插入结点 -&gt;
-检查长度，超过8，树化 -&gt; 树化方法会检查哈希表长度，小于64则不树化(双重限制) -&gt; 最后检查e，不为空就检查标志位，选择是否更新value -&gt; 插入操作结束 -&gt;
-检查容量是否到达阈值，如果到达就resize()扩容
+put(key, value) -&gt; 计算key的哈希值，计算方法：将key.hashCode()的低16位和高16位进行异或操作，减少碰撞 -&gt; 调用putVal -&gt; 
+先检查hashmap是否为空(是否初始化) -&gt; 如未初始化，调用resize()方法进行初始化 -&gt; 
+找桶位，使用(n - 1) &amp; hash，根据哈希表规定，n必须为2的次幂，-1可得全1二进制，其计算结果=取余，计算机进行按位操作很快 -&gt;
+找到桶位，如果桶位空，就new一个结点放入 -&gt; 如果桶位不为空，且该结点key等于插入key，将该节点保存到e中 -&gt; 
+如果该桶位已经树化，调用putVal的Tree版本，并保存到e -&gt;
+如果头结点不是，链表循环检查，判断是否同key，以及是否到链尾，每次都将当前节点的下一节点保存到e中，找到同key就直接跳出循环，找不到则e成空 -&gt; 
+遍历到链尾没同key，插入结点 -&gt; 检查长度，超过8，树化 -&gt; 树化方法会检查哈希表长度，小于64则不树化(双重限制) -&gt; 
+最后检查e，不为空就检查标志位，选择是否更新value -&gt; 插入操作结束 -&gt; 检查容量是否到达阈值，如果到达就resize()扩容
 
 resize()方法：
 1.初始化
@@ -331,6 +329,24 @@ String变量 + ：String str1 = &quot;123&quot;,
 	
 线程常用方法：
     currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程
+</code></pre>
+<h3 id="泛型">泛型</h3>
+<pre><code>多态是一种泛化机制。你可以将方法的参数设为基类，那么该方法就可以接受从这个基类中导出的任何类作为参数
+泛型：适用于许多许多类型
+一对尖括号&lt;&gt;，在尖括号中填入类型
+
+元组(tuple):将一组对象打包存储于其中的一个单一对象。元组可以具有任意长度，元组中的对象可以是不同类型。
+    ```java
+    public class TwoTuple&lt;A, B&gt;{
+        public final A first;
+        public final B second;
+        ...
+    }
+    ```
+    元组可以创建、存储、返回一组对象。
+ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
+当将对象引用置入容器中时，它将向上转型为Object类，所以他会丢失当前身份。
+取出时需要将对象引用向下转型，这依靠范型来实现
 </code></pre>
 <h3 id="杂项">杂项</h3>
 <pre><code> String s = new String(&quot;asdf&quot;);
