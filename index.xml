@@ -41,7 +41,15 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
       <pubDate>Thu, 28 Jan 2021 12:47:54 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/lcs/</guid>
-      <description>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。 问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&amp;quot;A, B, D, C, E&amp;quot;和&amp;quot;A, Y, D, E, X&amp;quot;两个串来说，他们的LCS就是&amp;quot;A, D, E&amp;quot;) 求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。 假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS 换一种说法，令X = {x1, x2, &amp;hellip;, xm}, Y = {y1, y2, &amp;hellip;, yn} 为两个序列，Z = {z1, z2, &amp;hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3.</description>
+      <description>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。
+它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。
+我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。
+接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。
+问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&amp;quot;A, B, D, C, E&amp;quot;和&amp;quot;A, Y, D, E, X&amp;quot;两个串来说，他们的LCS就是&amp;quot;A, D, E&amp;quot;)
+求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。
+假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS
+换一种说法，令X = {x1, x2, &amp;hellip;, xm}, Y = {y1, y2, &amp;hellip;, yn} 为两个序列，Z = {z1, z2, &amp;hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)
+ 1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.</description>
     </item>
     
     <item>
