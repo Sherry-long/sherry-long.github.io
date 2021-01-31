@@ -8,19 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https:sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="动态规划-最长公共子序列"/>
-<meta name="twitter:description" content="动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;)求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS
-换一种说法，令X = {x1, x2, &hellip;, xm}, Y = {y1, y2, &hellip;, yn} 为两个序列，Z = {z1, z2, &hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3."/>
+<meta name="twitter:description" content="动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。 问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;) 求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。 假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS 换一种说法，令X = {x1, x2, &hellip;, xm}, Y = {y1, y2, &hellip;, yn} 为两个序列，Z = {z1, z2, &hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3."/>
 
     <meta property="og:title" content="动态规划-最长公共子序列" />
-<meta property="og:description" content="动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;)求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS
-换一种说法，令X = {x1, x2, &hellip;, xm}, Y = {y1, y2, &hellip;, yn} 为两个序列，Z = {z1, z2, &hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3." />
+<meta property="og:description" content="动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。 问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;) 求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。 假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS 换一种说法，令X = {x1, x2, &hellip;, xm}, Y = {y1, y2, &hellip;, yn} 为两个序列，Z = {z1, z2, &hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sherry-long.github.io/post/lcs/" />
+<meta property="og:url" content="https:sherry-long.github.io/post/lcs/" />
 <meta property="article:published_time" content="2021-01-28T12:47:54+08:00" />
 <meta property="article:modified_time" content="2021-01-28T12:47:54+08:00" />
 
@@ -28,7 +26,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https:sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">
@@ -71,10 +69,10 @@
       <p>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。<!-- raw HTML omitted -->
 它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。<!-- raw HTML omitted -->
 我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。<!-- raw HTML omitted --></p>
-<p>接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。<!-- raw HTML omitted -->
-问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;)<!-- raw HTML omitted -->
-求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。<!-- raw HTML omitted -->
-假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS</p>
+<p>接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。 <!-- raw HTML omitted -->
+问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&quot;A, B, D, C, E&quot;和&quot;A, Y, D, E, X&quot;两个串来说，他们的LCS就是&quot;A, D, E&quot;) <!-- raw HTML omitted -->
+求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。 <!-- raw HTML omitted -->
+假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS <!-- raw HTML omitted --></p>
 <p>换一种说法，令X = {x1, x2, &hellip;, xm}, Y = {y1, y2, &hellip;, yn} 为两个序列，Z = {z1, z2, &hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)<!-- raw HTML omitted -->
 1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS
 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS
@@ -85,7 +83,7 @@
 1.求 X[m-1] 和 Y 的一个LCS
 2.求 X 和 Y[n-1] 的一个LCS
 两个LCS较长者即为 X 和 Y 的一个LCS</p>
-<p>以上这些情况覆盖了所有可能性，因此必然有一个子问题的最优解出现在 X 和 Y 的LCS当中。<!-- raw HTML omitted -->
+<p>以上这些情况覆盖了所有可能性，因此必然有一个子问题的最优解出现在 X 和 Y 的LCS当中。 <!-- raw HTML omitted -->
 那么为了求解 X 和 Y 的LCS，我们可能需要求解 X[m-1] 和 Y 的LCS以及 X 和 Y[n-1] 的LCS，而这两个子问题又包含了求解 X[m-1] 和 Y[n-1] 的LCS，所以此问题具有重叠子结构，我们可以使用动态规划来解决，将每一次计算结果保存，需要时拿取。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>

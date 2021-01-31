@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sp(act)rum</title>
-    <link>https://sherry-long.github.io/</link>
+    <link>https:sherry-long.github.io/</link>
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 Jan 2021 09:48:38 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Jan 2021 09:48:38 +0800</lastBuildDate><atom:link href="https:sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>红黑树 &amp; C语言实现插入</title>
-      <link>https://sherry-long.github.io/post/rbtree/</link>
+      <link>https:sherry-long.github.io/post/rbtree/</link>
       <pubDate>Sun, 31 Jan 2021 09:48:38 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/rbtree/</guid>
+      <guid>https:sherry-long.github.io/post/rbtree/</guid>
       <description>红黑树是树型结构中难度比较高的一种，面试当中也频频出现相关问题，从JDK的Hashmap到手撕红黑树，所以深入了解红黑树还是有必要的。红黑树是一种自平衡的二叉排序树，每当它的结构发生改变时(插入或删除)，如果破坏了红黑树的性质，它就会通过变色、旋转操作来调整结构重新达到平衡。红黑树的性质：
  1.每个节点都有颜色，不是红的就是黑的 2.根节点为黑色 3.红节点的孩子必为黑节点(不会出现两个连续的红节点) 4.任一结点不管通过什么路径，到达叶子节点的黑结点数目一定相同 5.叶子节点一定为颜色为黑色的NIL节点  红黑树插入：
  首先，红黑树是一种二叉排序树，所以先按照二叉排序树的插入方法进行插入 插入后将节点颜色着成红色(否则会违背 性质4 ，少违背一条性质就意味着我们待会处理的事情越少) 这时若依然违背性质，就对红黑树的结构进行调整重新达成平衡  左旋和右旋：
@@ -23,10 +23,10 @@ void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&amp;gt;r_child
     
     <item>
       <title>二叉排序树 &amp; c语言实现</title>
-      <link>https://sherry-long.github.io/post/bstree/</link>
+      <link>https:sherry-long.github.io/post/bstree/</link>
       <pubDate>Fri, 29 Jan 2021 11:12:54 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/bstree/</guid>
+      <guid>https:sherry-long.github.io/post/bstree/</guid>
       <description>二叉排序树，又称为二叉查找树，具有以下性质： (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。插入:
 1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;
 2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;
@@ -37,29 +37,28 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
     
     <item>
       <title>动态规划-最长公共子序列</title>
-      <link>https://sherry-long.github.io/post/lcs/</link>
+      <link>https:sherry-long.github.io/post/lcs/</link>
       <pubDate>Thu, 28 Jan 2021 12:47:54 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/lcs/</guid>
-      <description>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&amp;quot;A, B, D, C, E&amp;quot;和&amp;quot;A, Y, D, E, X&amp;quot;两个串来说，他们的LCS就是&amp;quot;A, D, E&amp;quot;)求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS
-换一种说法，令X = {x1, x2, &amp;hellip;, xm}, Y = {y1, y2, &amp;hellip;, yn} 为两个序列，Z = {z1, z2, &amp;hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3.</description>
+      <guid>https:sherry-long.github.io/post/lcs/</guid>
+      <description>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。接下来我们来看一个比较经典的题目，最长公共子序列问题(LCS)。 问题：给出两个字符串，求出这两个字符串的LCS。(LCS：比如对于&amp;quot;A, B, D, C, E&amp;quot;和&amp;quot;A, Y, D, E, X&amp;quot;两个串来说，他们的LCS就是&amp;quot;A, D, E&amp;quot;) 求解这一问题前我们需要深入理解一下LCS，分析一下它能不能用动态规划来解决以及用动态规划的优势在哪里。 假设对于 X[m] 和 Y[n] 两个串，我要找他们两个的LCS。先假设他们的LCS为Z，如果我们从两个串的最后一个元素看起，X.m 和 Y.n ，如果 X.m ≠ Y.n ，那么Z一定也是 X[m-1] 与 Y[n] 或 X[m] 与 Y[n-1] 的LCS 换一种说法，令X = {x1, x2, &amp;hellip;, xm}, Y = {y1, y2, &amp;hellip;, yn} 为两个序列，Z = {z1, z2, &amp;hellip;, zk} 为他们的任意LCS(之所以任意，是因为两个序列的LCS可能不止一个)1.如果xm = yn，则 zk = xm = yn 且 Z[k-1] 是 X[m-1] 和 Y[n-1] 的一个LCS 2.如果xm ≠ yn，那么 zk ≠ xm 表示 Z[k] 是 X[m-1] 和 Y[n] 的一个LCS 3.</description>
     </item>
     
     <item>
       <title>字典树 &amp; Java实现</title>
-      <link>https://sherry-long.github.io/post/trietree/</link>
+      <link>https:sherry-long.github.io/post/trietree/</link>
       <pubDate>Thu, 28 Jan 2021 10:19:57 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/trietree/</guid>
+      <guid>https:sherry-long.github.io/post/trietree/</guid>
       <description>字典树：又称单词查找树，Trie树，是一种树形结构，是一种哈希树的变种。它有3个基本性质：1.根节点不包含字符，除根节点外每一个节点都只包含一个字符2.从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串3.每个节点的所有子节点包含的字符都不相同以一个英文单词字典树为例，它的每个节点都有最多26个子节点，代表26个英文字母。如果不了解哈希树可以想想huffman树，当我们在找一个指令的huffman编码时，我们从 根结点出发，往下找到代表该指令的叶结点，路径上经过的节点连起来便是它的huffman编码。字典树也是类似原理，只不过huffman树每个节点有两个子节点，一个代表0、一个代表1，而字典树每个节点有26个子节点(以英文字典树为例)，我们想找一个单词时，就一个字母一个字母的 从根节点往下找，所有字母找完后检查最后一个字母是否为一个单词的结尾(isEnd标志位)，如果是就查找成功。Java实现：// 成员变量 	final static int MAX_LENGTH = 26; //最大长度  char data; //节点数据  boolean isEnd; // 从根节点到此节点所经过的路径是否构成一个完整的单词(是否是一个单词的结尾)  TreeNode[] childs; // 构造方法 	TreeNode(){ childs = new TreeNode[MAX_LENGTH]; isEnd = false; } // 成员方法 	public void createTrieTree(String str, TreeNode node){ //插入节点  char[] temp = str.toCharArray(); for(int i = 0; i &amp;lt; str.length(); ++i){ int location = temp[i] - &amp;#39;a&amp;#39;; // 将字母转成0~25的数字，方便索引  if(node.childs[location] == null){ node.</description>
     </item>
     
     <item>
       <title>计算机网络-TCP三次握手四次挥手</title>
-      <link>https://sherry-long.github.io/post/net/</link>
+      <link>https:sherry-long.github.io/post/net/</link>
       <pubDate>Wed, 27 Jan 2021 10:11:23 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/net/</guid>
+      <guid>https:sherry-long.github.io/post/net/</guid>
       <description>TCP是面向连接的可靠通信协议，在两端主机进行通信前，会先建立逻辑连接，而在结束通信时会断开连接，也就是我们所说的“三次握手”，“四次挥手”
 那么为什么要握手三次呢？
 比较官方的回答自然是，防止确认帧丢失，导致一方误以为确认帧送达而耗费资源
@@ -77,10 +76,10 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
     
     <item>
       <title>单链表 C实现</title>
-      <link>https://sherry-long.github.io/post/linkedlist/</link>
+      <link>https:sherry-long.github.io/post/linkedlist/</link>
       <pubDate>Tue, 26 Jan 2021 21:23:25 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/linkedlist/</guid>
+      <guid>https:sherry-long.github.io/post/linkedlist/</guid>
       <description>单链表
 数据结构
 typedef struct LinkNode{ int data; struct LinkNode *next; }LinkNode,*LinkList; 函数：
@@ -92,10 +91,10 @@ void List_create(LinkNode *p,int n) { for(int i = 1;i &amp;lt;= n;++i) List_Tins
     
     <item>
       <title>堆排序原理 &amp; C语言实现</title>
-      <link>https://sherry-long.github.io/post/heapsort/</link>
+      <link>https:sherry-long.github.io/post/heapsort/</link>
       <pubDate>Tue, 26 Jan 2021 21:20:38 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/heapsort/</guid>
+      <guid>https:sherry-long.github.io/post/heapsort/</guid>
       <description>堆排序
 首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
 基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
@@ -109,28 +108,28 @@ void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放
     
     <item>
       <title>第二次测试</title>
-      <link>https://sherry-long.github.io/post/blog2/</link>
+      <link>https:sherry-long.github.io/post/blog2/</link>
       <pubDate>Tue, 26 Jan 2021 13:52:24 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/blog2/</guid>
+      <guid>https:sherry-long.github.io/post/blog2/</guid>
       <description>this is another test</description>
     </item>
     
     <item>
       <title>测试</title>
-      <link>https://sherry-long.github.io/post/blog1/</link>
+      <link>https:sherry-long.github.io/post/blog1/</link>
       <pubDate>Tue, 26 Jan 2021 13:20:28 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/blog1/</guid>
+      <guid>https:sherry-long.github.io/post/blog1/</guid>
       <description>this is a test</description>
     </item>
     
     <item>
       <title>Java笔记(持续更新)</title>
-      <link>https://sherry-long.github.io/post/blog/</link>
+      <link>https:sherry-long.github.io/post/blog/</link>
       <pubDate>Tue, 26 Jan 2021 12:38:16 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/blog/</guid>
+      <guid>https:sherry-long.github.io/post/blog/</guid>
       <description>此笔记为本人在复习巩固Java基础时做的记录，内容很杂，持续更新中
 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&amp;quot;1946&amp;quot;); endDate = Date.valueOf(&amp;quot;1964&amp;quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System.</description>
     </item>
