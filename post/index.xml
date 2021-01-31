@@ -6,7 +6,21 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Jan 2021 11:12:54 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Jan 2021 09:48:38 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>红黑树 &amp; C语言实现插入</title>
+      <link>https://sherry-long.github.io/post/rbtree/</link>
+      <pubDate>Sun, 31 Jan 2021 09:48:38 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/rbtree/</guid>
+      <description>红黑树是树型结构中难度比较高的一种，面试当中也频频出现相关问题，从JDK的Hashmap到手撕红黑树，所以深入了解红黑树还是有必要的。红黑树是一种自平衡的二叉排序树，每当它的结构发生改变时(插入或删除)，如果破坏了红黑树的性质，它就会通过变色、旋转操作来调整结构重新达到平衡。红黑树的性质：
+ 1.每个节点都有颜色，不是红的就是黑的 2.根节点为黑色 3.红节点的孩子必为黑节点(不会出现两个连续的红节点) 4.任一结点不管通过什么路径，到达叶子节点的黑结点数目一定相同 5.叶子节点一定为颜色为黑色的NIL节点  红黑树插入：
+ 首先，红黑树是一种二叉排序树，所以先按照二叉排序树的插入方法进行插入 插入后将节点颜色着成红色(否则会违背 性质4 ，少违背一条性质就意味着我们待会处理的事情越少) 这时若依然违背性质，就对红黑树的结构进行调整重新达成平衡  左旋和右旋：
+旋转分为左旋和右旋，当对一个节点进行左旋时，意味着将该结点将成为它右孩子的左孩子，同样的，右旋意味着该节点将成为它左孩子的右孩子
+代码实现：
+void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&amp;gt;r_child; //将s指向待调整节点的右孩子  p-&amp;gt;r_child = s-&amp;gt;l_child; //s的左孩子成为p的右孩子  if(s-&amp;gt;l_child != t-&amp;gt;NIL) s-&amp;gt;l_child-&amp;gt;parent = p; //如果s的左孩子不是NIL节点(s的左孩子存在)，遂改该节点的父节点为p  s-&amp;gt;parent = p-&amp;gt;parent; // 接下来调整s取代p的位置  if(p-&amp;gt;parent == t-&amp;gt;NIL) t-&amp;gt;root = s; //如果p为根节点，s成为根节点  else if(p == p-&amp;gt;parent-&amp;gt;l_child) p-&amp;gt;parent-&amp;gt;l_child = s; //如果p为其父节点的左孩子，s取代其位置  else p-&amp;gt;parent-&amp;gt;r_child = s; //如果p为其父节点的右孩子，s取代其位置  s-&amp;gt;l_child = p; //p成为s的左孩子  p-&amp;gt;parent = s; //s成为p的父节点 } void rightRotate(RBtree *t, Node *p){ //右旋函数，过程与左旋类似，方向相反  Node *s = p-&amp;gt;l_child; p-&amp;gt;l_child = s-&amp;gt;r_child; if(s-&amp;gt;r_child !</description>
+    </item>
+    
     <item>
       <title>二叉排序树 &amp; c语言实现</title>
       <link>https://sherry-long.github.io/post/bstree/</link>

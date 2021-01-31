@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>红黑树 &amp; C语言实现插入 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="红黑树 &amp; C语言实现插入"/>
+<meta name="twitter:description" content="红黑树是树型结构中难度比较高的一种，面试当中也频频出现相关问题，从JDK的Hashmap到手撕红黑树，所以深入了解红黑树还是有必要的。红黑树是一种自平衡的二叉排序树，每当它的结构发生改变时(插入或删除)，如果破坏了红黑树的性质，它就会通过变色、旋转操作来调整结构重新达到平衡。红黑树的性质：
+ 1.每个节点都有颜色，不是红的就是黑的 2.根节点为黑色 3.红节点的孩子必为黑节点(不会出现两个连续的红节点) 4.任一结点不管通过什么路径，到达叶子节点的黑结点数目一定相同 5.叶子节点一定为颜色为黑色的NIL节点  红黑树插入：
+ 首先，红黑树是一种二叉排序树，所以先按照二叉排序树的插入方法进行插入 插入后将节点颜色着成红色(否则会违背 性质4 ，少违背一条性质就意味着我们待会处理的事情越少) 这时若依然违背性质，就对红黑树的结构进行调整重新达成平衡  左旋和右旋：
+旋转分为左旋和右旋，当对一个节点进行左旋时，意味着将该结点将成为它右孩子的左孩子，同样的，右旋意味着该节点将成为它左孩子的右孩子
+代码实现：
+void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&gt;r_child; //将s指向待调整节点的右孩子  p-&gt;r_child = s-&gt;l_child; //s的左孩子成为p的右孩子  if(s-&gt;l_child != t-&gt;NIL) s-&gt;l_child-&gt;parent = p; //如果s的左孩子不是NIL节点(s的左孩子存在)，遂改该节点的父节点为p  s-&gt;parent = p-&gt;parent; // 接下来调整s取代p的位置  if(p-&gt;parent == t-&gt;NIL) t-&gt;root = s; //如果p为根节点，s成为根节点  else if(p == p-&gt;parent-&gt;l_child) p-&gt;parent-&gt;l_child = s; //如果p为其父节点的左孩子，s取代其位置  else p-&gt;parent-&gt;r_child = s; //如果p为其父节点的右孩子，s取代其位置  s-&gt;l_child = p; //p成为s的左孩子  p-&gt;parent = s; //s成为p的父节点 } void rightRotate(RBtree *t, Node *p){ //右旋函数，过程与左旋类似，方向相反  Node *s = p-&gt;l_child; p-&gt;l_child = s-&gt;r_child; if(s-&gt;r_child !"/>
+
+    <meta property="og:title" content="红黑树 &amp; C语言实现插入" />
+<meta property="og:description" content="红黑树是树型结构中难度比较高的一种，面试当中也频频出现相关问题，从JDK的Hashmap到手撕红黑树，所以深入了解红黑树还是有必要的。红黑树是一种自平衡的二叉排序树，每当它的结构发生改变时(插入或删除)，如果破坏了红黑树的性质，它就会通过变色、旋转操作来调整结构重新达到平衡。红黑树的性质：
+ 1.每个节点都有颜色，不是红的就是黑的 2.根节点为黑色 3.红节点的孩子必为黑节点(不会出现两个连续的红节点) 4.任一结点不管通过什么路径，到达叶子节点的黑结点数目一定相同 5.叶子节点一定为颜色为黑色的NIL节点  红黑树插入：
+ 首先，红黑树是一种二叉排序树，所以先按照二叉排序树的插入方法进行插入 插入后将节点颜色着成红色(否则会违背 性质4 ，少违背一条性质就意味着我们待会处理的事情越少) 这时若依然违背性质，就对红黑树的结构进行调整重新达成平衡  左旋和右旋：
+旋转分为左旋和右旋，当对一个节点进行左旋时，意味着将该结点将成为它右孩子的左孩子，同样的，右旋意味着该节点将成为它左孩子的右孩子
+代码实现：
+void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&gt;r_child; //将s指向待调整节点的右孩子  p-&gt;r_child = s-&gt;l_child; //s的左孩子成为p的右孩子  if(s-&gt;l_child != t-&gt;NIL) s-&gt;l_child-&gt;parent = p; //如果s的左孩子不是NIL节点(s的左孩子存在)，遂改该节点的父节点为p  s-&gt;parent = p-&gt;parent; // 接下来调整s取代p的位置  if(p-&gt;parent == t-&gt;NIL) t-&gt;root = s; //如果p为根节点，s成为根节点  else if(p == p-&gt;parent-&gt;l_child) p-&gt;parent-&gt;l_child = s; //如果p为其父节点的左孩子，s取代其位置  else p-&gt;parent-&gt;r_child = s; //如果p为其父节点的右孩子，s取代其位置  s-&gt;l_child = p; //p成为s的左孩子  p-&gt;parent = s; //s成为p的父节点 } void rightRotate(RBtree *t, Node *p){ //右旋函数，过程与左旋类似，方向相反  Node *s = p-&gt;l_child; p-&gt;l_child = s-&gt;r_child; if(s-&gt;r_child !" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/rbtree/" />
+<meta property="article:published_time" content="2021-01-31T09:48:38+08:00" />
+<meta property="article:modified_time" content="2021-01-31T09:48:38+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">红黑树 &amp; C语言实现插入</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 31, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>红黑树是树型结构中难度比较高的一种，面试当中也频频出现相关问题，从JDK的Hashmap到手撕红黑树，所以深入了解红黑树还是有必要的。<!-- raw HTML omitted -->
+红黑树是一种自平衡的二叉排序树，每当它的结构发生改变时(插入或删除)，如果破坏了红黑树的性质，它就会通过变色、旋转操作来调整结构重新达到平衡。<!-- raw HTML omitted --></p>
+<p><strong>红黑树的性质：</strong></p>
+<pre><code> 1.每个节点都有颜色，不是红的就是黑的
+ 2.根节点为黑色
+ 3.红节点的孩子必为黑节点(不会出现两个连续的红节点)
+ 4.任一结点不管通过什么路径，到达叶子节点的黑结点数目一定相同
+ 5.叶子节点一定为颜色为黑色的NIL节点
+</code></pre>
+<p><strong>红黑树插入：</strong></p>
+<pre><code> 首先，红黑树是一种二叉排序树，所以先按照二叉排序树的插入方法进行插入
+ 插入后将节点颜色着成红色(否则会违背 性质4 ，少违背一条性质就意味着我们待会处理的事情越少)
+ 这时若依然违背性质，就对红黑树的结构进行调整重新达成平衡
+</code></pre>
+<p><strong>左旋和右旋：</strong></p>
+<p>旋转分为左旋和右旋，当对一个节点进行左旋时，意味着将该结点将成为它右孩子的左孩子，同样的，右旋意味着该节点将成为它左孩子的右孩子</p>
+<p>代码实现：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">leftRotate</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>p){ <span style="color:#75715e">//左旋函数
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>s <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>r_child; <span style="color:#75715e">//将s指向待调整节点的右孩子
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> s<span style="color:#f92672">-&gt;</span>l_child; <span style="color:#75715e">//s的左孩子成为p的右孩子
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">!=</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        s<span style="color:#f92672">-&gt;</span>l_child<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p; <span style="color:#75715e">//如果s的左孩子不是NIL节点(s的左孩子存在)，遂改该节点的父节点为p
+</span><span style="color:#75715e"></span>    s<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>parent; <span style="color:#75715e">// 接下来调整s取代p的位置
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">==</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        t<span style="color:#f92672">-&gt;</span>root <span style="color:#f92672">=</span> s; <span style="color:#75715e">//如果p为根节点，s成为根节点
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(p <span style="color:#f92672">==</span> p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child)
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> s; <span style="color:#75715e">//如果p为其父节点的左孩子，s取代其位置
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span>
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> s; <span style="color:#75715e">//如果p为其父节点的右孩子，s取代其位置
+</span><span style="color:#75715e"></span>    s<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> p; <span style="color:#75715e">//p成为s的左孩子
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> s; <span style="color:#75715e">//s成为p的父节点
+</span><span style="color:#75715e"></span>}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rightRotate</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>p){ <span style="color:#75715e">//右旋函数，过程与左旋类似，方向相反
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>s <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>l_child;
+    p<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> s<span style="color:#f92672">-&gt;</span>r_child;
+    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">!=</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        s<span style="color:#f92672">-&gt;</span>r_child<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p;
+    s<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>parent;
+    <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">==</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        t<span style="color:#f92672">-&gt;</span>root <span style="color:#f92672">=</span> s;
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(p <span style="color:#f92672">==</span> p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child)
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> s;
+    <span style="color:#66d9ef">else</span>
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> s;
+    s<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> p;
+    p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> s;
+}
+</code></pre></div><p><strong>完整代码:</strong>(具体插入过程代码中有注释)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;malloc.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdbool.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">enum</span> {Red, Black}Color; <span style="color:#75715e">//定义枚举类型，颜色：红色，黑色
+</span><span style="color:#75715e">//数据结构
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> Node{
+    Color color;
+    <span style="color:#66d9ef">int</span> data;
+    <span style="color:#66d9ef">struct</span> Node <span style="color:#f92672">*</span>l_child, <span style="color:#f92672">*</span>r_child, <span style="color:#f92672">*</span>parent;
+}Node;
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> RBtree{
+    Node <span style="color:#f92672">*</span>root;
+    Node <span style="color:#f92672">*</span>NIL;
+}RBtree;
+
+<span style="color:#75715e">// 函数声明
+</span><span style="color:#75715e"></span>Node <span style="color:#f92672">*</span><span style="color:#a6e22e">createNode</span>();
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>(RBtree <span style="color:#f92672">**</span>t);
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">insert</span>(RBtree <span style="color:#f92672">*</span>t, <span style="color:#66d9ef">int</span> data);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RB_adjust</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>x);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">leftRotate</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>p);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rightRotate</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>p);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">display</span>(RBtree t, Node <span style="color:#f92672">*</span>p);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">show</span>(RBtree t);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">leftRotate</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>p){ <span style="color:#75715e">//左旋函数
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>s <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>r_child; <span style="color:#75715e">//将s指向待调整节点的右孩子
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> s<span style="color:#f92672">-&gt;</span>l_child; <span style="color:#75715e">//s的左孩子成为p的右孩子
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">!=</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        s<span style="color:#f92672">-&gt;</span>l_child<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p; <span style="color:#75715e">//如果s的左孩子不是NIL节点(s的左孩子存在)，遂改该节点的父节点为p
+</span><span style="color:#75715e"></span>    s<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>parent; <span style="color:#75715e">// 接下来调整s取代p的位置
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">==</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        t<span style="color:#f92672">-&gt;</span>root <span style="color:#f92672">=</span> s; <span style="color:#75715e">//如果p为根节点，s成为根节点
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(p <span style="color:#f92672">==</span> p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child)
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> s; <span style="color:#75715e">//如果p为其父节点的左孩子，s取代其位置
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span>
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> s; <span style="color:#75715e">//如果p为其父节点的右孩子，s取代其位置
+</span><span style="color:#75715e"></span>    s<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> p; <span style="color:#75715e">//p成为s的左孩子
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> s; <span style="color:#75715e">//s成为p的父节点
+</span><span style="color:#75715e"></span>}
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rightRotate</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>p){ <span style="color:#75715e">//右旋函数
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>s <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>l_child;
+    p<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> s<span style="color:#f92672">-&gt;</span>r_child;
+    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">!=</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        s<span style="color:#f92672">-&gt;</span>r_child<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p;
+    s<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>parent;
+    <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">==</span> t<span style="color:#f92672">-&gt;</span>NIL)
+        t<span style="color:#f92672">-&gt;</span>root <span style="color:#f92672">=</span> s;
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(p <span style="color:#f92672">==</span> p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child)
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> s;
+    <span style="color:#66d9ef">else</span>
+        p<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> s;
+    s<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> p;
+    p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> s;
+}
+
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">insert</span>(RBtree <span style="color:#f92672">*</span>t, <span style="color:#66d9ef">int</span> data){ <span style="color:#75715e">//插入函数
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>start <span style="color:#f92672">=</span> t<span style="color:#f92672">-&gt;</span>root;
+    Node <span style="color:#f92672">*</span>temp <span style="color:#f92672">=</span> t<span style="color:#f92672">-&gt;</span>NIL;
+    <span style="color:#66d9ef">while</span> (start <span style="color:#f92672">!=</span> t<span style="color:#f92672">-&gt;</span>NIL){ <span style="color:#75715e">//寻找插入位置
+</span><span style="color:#75715e"></span>        temp <span style="color:#f92672">=</span> start;
+        <span style="color:#66d9ef">if</span>(temp<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">==</span> data)
+            <span style="color:#66d9ef">return</span> false;
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(data <span style="color:#f92672">&lt;</span> temp<span style="color:#f92672">-&gt;</span>data)
+            start <span style="color:#f92672">=</span> start<span style="color:#f92672">-&gt;</span>l_child;
+        <span style="color:#66d9ef">else</span>
+            start <span style="color:#f92672">=</span> start<span style="color:#f92672">-&gt;</span>r_child;
+    }
+    <span style="color:#75715e">//创建一个新结点
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>new <span style="color:#f92672">=</span> createNode();
+    new<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">=</span> data;
+    new<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> temp;
+
+    <span style="color:#66d9ef">if</span>(temp <span style="color:#f92672">==</span> t<span style="color:#f92672">-&gt;</span>NIL){ <span style="color:#75715e">//此情况下红黑树为空
+</span><span style="color:#75715e"></span>        t<span style="color:#f92672">-&gt;</span>root <span style="color:#f92672">=</span> new; <span style="color:#75715e">//直接将new节点作为根节点
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(data <span style="color:#f92672">&lt;</span> temp<span style="color:#f92672">-&gt;</span>data)
+        temp<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> new;
+    <span style="color:#66d9ef">else</span>
+        temp<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> new; <span style="color:#75715e">//插入
+</span><span style="color:#75715e"></span>
+    new<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> new<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> t<span style="color:#f92672">-&gt;</span>NIL;<span style="color:#75715e">//置新节点的左右孩子为NIL
+</span><span style="color:#75715e"></span>    new<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Red; <span style="color:#75715e">//置新节点颜色红色
+</span><span style="color:#75715e"></span>    RB_adjust(t, new); <span style="color:#75715e">//调整结构
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> true;
+}
+
+Node <span style="color:#f92672">*</span><span style="color:#a6e22e">createNode</span>(){ <span style="color:#75715e">//创建新节点函数
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> (Node <span style="color:#f92672">*</span>)malloc(<span style="color:#66d9ef">sizeof</span> (Node)); <span style="color:#75715e">//申请一个新节点
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; <span style="color:#75715e">//颜色置黑
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">//数据置0
+</span><span style="color:#75715e"></span>    p<span style="color:#f92672">-&gt;</span>l_child <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>r_child <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> NULL; <span style="color:#75715e">//左右孩子置空(NULL而不是NIL，两者不一样)
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> p; <span style="color:#75715e">//返回该节点
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">show</span>(RBtree t){ <span style="color:#75715e">//打印红黑树
+</span><span style="color:#75715e"></span>    printf(<span style="color:#e6db74">&#34;根节点为 %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, t.root<span style="color:#f92672">-&gt;</span>data);
+    printf(<span style="color:#e6db74">&#34;值 : 颜色</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    display(t, t.root);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">display</span>(RBtree t, Node <span style="color:#f92672">*</span>p){ <span style="color:#75715e">//中序遍历打印
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(p <span style="color:#f92672">!=</span> t.NIL){
+        display(t, p<span style="color:#f92672">-&gt;</span>l_child);
+        printf(<span style="color:#e6db74">&#34;%d : %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, p<span style="color:#f92672">-&gt;</span>data, p<span style="color:#f92672">-&gt;</span>color);
+        display(t, p<span style="color:#f92672">-&gt;</span>r_child);
+    }
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>(RBtree <span style="color:#f92672">**</span>t){ <span style="color:#75715e">//初始化红黑树
+</span><span style="color:#75715e"></span>    (<span style="color:#f92672">*</span>t) <span style="color:#f92672">=</span> (RBtree <span style="color:#f92672">*</span>)malloc(<span style="color:#66d9ef">sizeof</span> (RBtree)); <span style="color:#75715e">//申请空间
+</span><span style="color:#75715e"></span>    (<span style="color:#f92672">*</span>t)<span style="color:#f92672">-&gt;</span>NIL <span style="color:#f92672">=</span> createNode(); 
+    (<span style="color:#f92672">*</span>t)<span style="color:#f92672">-&gt;</span>root <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>t)<span style="color:#f92672">-&gt;</span>NIL;
+    (<span style="color:#f92672">*</span>t)<span style="color:#f92672">-&gt;</span>NIL<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black;
+    (<span style="color:#f92672">*</span>t)<span style="color:#f92672">-&gt;</span>NIL<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>; <span style="color:#75715e">//创建一棵空的红黑树
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RB_adjust</span>(RBtree <span style="color:#f92672">*</span>t, Node <span style="color:#f92672">*</span>x){ <span style="color:#75715e">//红黑树结构调整
+</span><span style="color:#75715e"></span>    Node <span style="color:#f92672">*</span>uncle; <span style="color:#75715e">//x的叔节点
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">while</span>(x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">==</span> Red){ <span style="color:#75715e">//如果插入节点的父节点是黑色，则红黑树结构不会被破坏，如果父节点是红色，进行调整
+</span><span style="color:#75715e"></span>	
+	
+        <span style="color:#66d9ef">if</span>(x<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">==</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child){ <span style="color:#75715e">//如果父节点是左子节点
+</span><span style="color:#75715e"></span>            uncle <span style="color:#f92672">=</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>r_child; <span style="color:#75715e">//将叔节点保存
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span>(uncle<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">==</span> Red){ <span style="color:#75715e">//如果叔节点是红色
+</span><span style="color:#75715e"></span>                x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; 
+                uncle<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; <span style="color:#75715e">//父节点变黑、叔节点变黑
+</span><span style="color:#75715e"></span>                x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Red; <span style="color:#75715e">//祖先节点变红
+</span><span style="color:#75715e"></span>                x <span style="color:#f92672">=</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent; <span style="color:#75715e">//将待调整节点变为x的祖先节点
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">continue</span>; <span style="color:#75715e">//进入下一遍循环
+</span><span style="color:#75715e"></span>            }
+			
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(x <span style="color:#f92672">==</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>r_child){ <span style="color:#75715e">//如果叔节点是黑色，x是右子节点
+</span><span style="color:#75715e"></span>                x <span style="color:#f92672">=</span> x<span style="color:#f92672">-&gt;</span>parent;
+                leftRotate(t, x); <span style="color:#75715e">//对x的父节点进行左旋
+</span><span style="color:#75715e"></span>            }
+            x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; <span style="color:#75715e">//x的父节点置黑
+</span><span style="color:#75715e"></span>            x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Red; <span style="color:#75715e">//x的祖先节点置红
+</span><span style="color:#75715e"></span>            rightRotate(t, x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent); <span style="color:#75715e">//再对x的祖先节点进行右旋
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">//此处有一个细节，若x是右子节点，则会进行两次旋转，先对x的父节点左旋，在对x的祖先节点右旋
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">//若x是左节点则只进行一次右旋，下方else块中逻辑类似
+</span><span style="color:#75715e"></span>        }
+		
+		
+        <span style="color:#66d9ef">else</span>{<span style="color:#75715e">//如果父节点是右子节点
+</span><span style="color:#75715e"></span>            uncle <span style="color:#f92672">=</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child; <span style="color:#75715e">//保存叔节点
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span>(uncle<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">==</span> Red){ <span style="color:#75715e">//如果叔节点是红色
+</span><span style="color:#75715e"></span>                x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; 
+                uncle<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; <span style="color:#75715e">//父节点置黑、叔节点置黑
+</span><span style="color:#75715e"></span>                x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Red; <span style="color:#75715e">//祖先节点置红
+</span><span style="color:#75715e"></span>                x <span style="color:#f92672">=</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent; <span style="color:#75715e">//将待调整节点变为x的祖先节点
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">continue</span>; <span style="color:#75715e">//进入下一遍循环
+</span><span style="color:#75715e"></span>            }
+			
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(x <span style="color:#f92672">==</span> x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>l_child){ <span style="color:#75715e">//如果叔节点是黑色，x为左孩子
+</span><span style="color:#75715e"></span>                x <span style="color:#f92672">=</span> x<span style="color:#f92672">-&gt;</span>parent;
+                rightRotate(t, x); <span style="color:#75715e">//对x的父节点进行右旋
+</span><span style="color:#75715e"></span>            }
+            x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; <span style="color:#75715e">//x父节点置黑
+</span><span style="color:#75715e"></span>            x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Red; <span style="color:#75715e">//x的祖先节点置红
+</span><span style="color:#75715e"></span>            leftRotate(t, x<span style="color:#f92672">-&gt;</span>parent<span style="color:#f92672">-&gt;</span>parent); <span style="color:#75715e">//对x的祖先节点进行左旋
+</span><span style="color:#75715e"></span>        }
+    }
+    t<span style="color:#f92672">-&gt;</span>root<span style="color:#f92672">-&gt;</span>color <span style="color:#f92672">=</span> Black; <span style="color:#75715e">//调整完后，将根节点变黑，防止破坏性质
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    RBtree <span style="color:#f92672">*</span>rb;
+    <span style="color:#66d9ef">int</span> ar[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">12</span>,};
+    <span style="color:#75715e">//int ar[] = {10, 7, 5};
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(ar)<span style="color:#f92672">/</span><span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>);
+    <span style="color:#66d9ef">int</span> i;
+    init(<span style="color:#f92672">&amp;</span>rb);
+    printf(<span style="color:#e6db74">&#34;初始化...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">for</span>(i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>){
+        insert(rb, ar[i]);
+        }
+    printf(<span style="color:#e6db74">&#34;0：红，1：黑</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    show(<span style="color:#f92672">*</span>rb);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+</code></pre></div><pre><code>初始化...
+0：红，1：黑
+根节点为 10
+值 : 颜色
+4 : 0
+5 : 1
+6 : 0
+7 : 0
+8 : 1
+10 : 1
+11 : 1
+12 : 0
+13 : 0
+15 : 1
+</code></pre><p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->
+推荐网站：
+<a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a><!-- raw HTML omitted -->
+此网站有各种数据结构、算法的可视化展示，可用来验证、学习<!-- raw HTML omitted -->
+参考文章：<a href="https://mp.weixin.qq.com/s/u6WJ7luePQ8hxhF3kIf2qA">https://mp.weixin.qq.com/s/u6WJ7luePQ8hxhF3kIf2qA</a></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
