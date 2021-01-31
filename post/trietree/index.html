@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https:sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -18,7 +18,7 @@
     <meta property="og:title" content="字典树 &amp; Java实现" />
 <meta property="og:description" content="字典树：又称单词查找树，Trie树，是一种树形结构，是一种哈希树的变种。它有3个基本性质：1.根节点不包含字符，除根节点外每一个节点都只包含一个字符2.从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串3.每个节点的所有子节点包含的字符都不相同以一个英文单词字典树为例，它的每个节点都有最多26个子节点，代表26个英文字母。如果不了解哈希树可以想想huffman树，当我们在找一个指令的huffman编码时，我们从 根结点出发，往下找到代表该指令的叶结点，路径上经过的节点连起来便是它的huffman编码。字典树也是类似原理，只不过huffman树每个节点有两个子节点，一个代表0、一个代表1，而字典树每个节点有26个子节点(以英文字典树为例)，我们想找一个单词时，就一个字母一个字母的 从根节点往下找，所有字母找完后检查最后一个字母是否为一个单词的结尾(isEnd标志位)，如果是就查找成功。Java实现：// 成员变量 	final static int MAX_LENGTH = 26; //最大长度  char data; //节点数据  boolean isEnd; // 从根节点到此节点所经过的路径是否构成一个完整的单词(是否是一个单词的结尾)  TreeNode[] childs; // 构造方法 	TreeNode(){ childs = new TreeNode[MAX_LENGTH]; isEnd = false; } // 成员方法 	public void createTrieTree(String str, TreeNode node){ //插入节点  char[] temp = str.toCharArray(); for(int i = 0; i &lt; str.length(); &#43;&#43;i){ int location = temp[i] - &#39;a&#39;; // 将字母转成0~25的数字，方便索引  if(node.childs[location] == null){ node." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https:sherry-long.github.io/post/trietree/" />
+<meta property="og:url" content="https://sherry-long.github.io/post/trietree/" />
 <meta property="article:published_time" content="2021-01-28T10:19:57+08:00" />
 <meta property="article:modified_time" content="2021-01-28T10:19:57+08:00" />
 
@@ -26,7 +26,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https:sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">

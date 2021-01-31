@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https:sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -34,7 +34,7 @@ void BuildMaxHeap(int *A,int n) { for (int i = n / 2;i &gt; 0;--i) { HeapAdjust(
 堆调整
 void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放至A[0]中  for(int j = i * 2;j &lt;= n;j *= 2)	//找到i节点的孩子节点j，并沿子节点向下调整  { if(j &lt; n &amp;&amp; A[j] &lt; A[j &#43; 1])	//如果j有兄弟节点，并且	 j&#43;&#43;;	//小于其兄弟节点，将j指向兄弟节点  //（也就是找到i的孩子节点中最大的那个，如果建立的是小根堆就是找到最小的那个）  if(A[j] &gt; A[0]) { A[i] = A[j]; i = j; }	//如果i的孩子节点比j大，A[j]放到A[i]的位置上  //并将j作为下一个调整的节点，向下继续调整  else break;	//如果堆性质未被破坏则直接跳出循环  } A[i] = A[0];	//最终将A[i]放到它该在的地方（如堆性质未被破坏则还在原位置） } 堆排序，说白了就是将堆顶元素（最大元素）输出，将堆中的剩余元素重新调整有序，再将堆顶元素（此时为第二大元素）输出，循环此过程" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https:sherry-long.github.io/post/heapsort/" />
+<meta property="og:url" content="https://sherry-long.github.io/post/heapsort/" />
 <meta property="article:published_time" content="2021-01-26T21:20:38+08:00" />
 <meta property="article:modified_time" content="2021-01-26T21:20:38+08:00" />
 
@@ -42,7 +42,7 @@ void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放
   </head>
   <body>
     <header class="app-header">
-      <a href="https:sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">
