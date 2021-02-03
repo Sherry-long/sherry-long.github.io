@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>二叉排序树 &amp; c语言实现 // Sp(act)rum</title>
+    <title>二叉排序树 &amp; C语言实现 // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,7 +12,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="二叉排序树 &amp; c语言实现"/>
+<meta name="twitter:title" content="二叉排序树 &amp; C语言实现"/>
 <meta name="twitter:description" content="二叉排序树，又称为二叉查找树，具有以下性质： (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。插入:
 1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;
 2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;
@@ -20,7 +20,7 @@
 按以下逻辑进行递归查找while(该节点不为空 &amp;&amp; 该节点值 != 插入值){ if(该节点值 &lt; 插入值) 查找他的右子树 else if(节点值 &gt; 插入值) 查找他的左子树 } 实现:
 typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*BiTree; //定义数据结构  void InOrder(BiTNode *p) //中序遍历 { if(p != NULL) { InOrder(p-&gt;l_child); printf(&#34; %d &#34;,p-&gt;data); InOrder(p-&gt;r_child); } } BiTNode *createNode(int key) //建立新结点并返回 { BiTNode *temp = (BiTNode *)malloc(sizeof(BiTNode)); temp-&gt;data = key; temp-&gt;l_child = temp-&gt;r_child = NULL; return temp; } bool BST_search(BiTNode *bst, int key, BiTNode *before, BiTree *p) //查找 { if (!"/>
 
-    <meta property="og:title" content="二叉排序树 &amp; c语言实现" />
+    <meta property="og:title" content="二叉排序树 &amp; C语言实现" />
 <meta property="og:description" content="二叉排序树，又称为二叉查找树，具有以下性质： (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。插入:
 1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;
 2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;
@@ -57,7 +57,7 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">二叉排序树 &amp; c语言实现</h1>
+      <h1 class ="post-title">二叉排序树 &amp; C语言实现</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">

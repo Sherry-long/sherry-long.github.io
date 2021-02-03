@@ -6,7 +6,29 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 Jan 2021 09:48:38 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Feb 2021 09:32:24 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AVL树 &amp; C语言实现</title>
+      <link>https://sherry-long.github.io/post/avltree/</link>
+      <pubDate>Wed, 03 Feb 2021 09:32:24 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/avltree/</guid>
+      <description>AVL树(平衡二叉树)，是一棵空树，或者是一棵二叉排序树。要介绍AVL树，首先要了解一下二叉排序树的缺点。
+当我们向二叉排序树中插入一个有序序列时，它会退化成链表。这样一来我们采用树形结构就没有意义了。为了防止这种情况出现，在插入数据后我们对二叉排序树进行一些结构上的调整，虽然增加了操作复杂度，却减少了检索时间。
+AVL性质：
+ 1.它是一棵空树或它的左右两个子树的高度差的绝对值不超过 1，并且左右两个子树都是一棵平衡二叉树 2.在 AVL树中任何节点的两个子树的高度最大差为 1  AVL与红黑树的区别：
+红黑树也是为了解决二叉排序树结构失衡的问题，那么它和AVL树有什么区别呢？
+1.首先，AVL是绝对平衡，在 AVL树中任何节点的两个子树的高度最大差为 1。而红黑树的平衡没有这么严格，它的高度差可能大于 1。红黑树在平衡方面加入了颜色机制，所以在进行结构调整时进行旋转的次数要小于AVL，红黑树是在空间和时间效率上的权衡。
+2.红黑树的查询性能略微逊色于AVL树，因为其比AVL树会稍微不平衡最多一层，也就是说红黑树的查询性能只比相同内容的AVL树最多多一次比较，但是，红黑树在插入和删除上优于AVL树，AVL树每次插入删除会进行大量的平衡度计算，而红黑树为了维持红黑性质所做的红黑变换和旋转的开销，相较于AVL树为了维持平衡的开销要小得多。
+3.AVL树结构更加直观，读取效率更高，维护开销较大；红黑树读取略逊于AVL，维护强于AVL，空间开销与AVL类似，内容极多时略优于AVL，维护优于AVL。
+4.在查询次数远大于插入删除的情况下采用AVL更好，在查询插入删除都比较频繁的情况下采用红黑树更好。
+AVL插入：
+当我们向一棵AVL树中插入数据时，要时刻注意检查结构是否失衡，如果失衡就要调整结构，其旋转与红黑树类似，但差别也很大，因为AVL树没有颜色标识，所以进行旋转的次数要比红黑树多。
+关于AVL树的插入原理网上有很多资料，下方参考文章里也有，此处不再赘述。详情见下面代码注释
+C语言实现：
+#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdbool.h&amp;gt;#include &amp;lt;malloc.h&amp;gt; typedef struct AVLNode{ int data; struct AVLNode *r_child, *l_child; int height; }AVLNode, *AVLTree; //AVL树节点  int MAX(int a, int b){ //取ab最大值  return a &amp;gt; b ? a : b; } int Height(AVLTree t){ //求树高，若树为空返回-1  if(t == NULL) return -1; else return t-&amp;gt;height; } AVLNode *AVL_leftRotate(AVLNode *p){ //AVL树左旋(以p为根节点的子树)  AVLNode *s = p-&amp;gt;r_child; //s指向p的右孩子  p-&amp;gt;r_child = s-&amp;gt;l_child; //将s的左孩子接到p的右孩子位置  s-&amp;gt;l_child = p; //p成为s的左孩子  p-&amp;gt;height = MAX(Height(p-&amp;gt;r_child), Height(p-&amp;gt;l_child)) + 1; s-&amp;gt;height = MAX(Height(s-&amp;gt;r_child), Height(s-&amp;gt;l_child)) + 1; //重新计算树高  return s; //返回调整后的根节点 } AVLNode *AVL_rightRotate(AVLNode *p){ //AVL树右旋  AVLNode *s = p-&amp;gt;l_child; p-&amp;gt;l_child = s-&amp;gt;r_child; s-&amp;gt;r_child = p; p-&amp;gt;height = MAX(Height(p-&amp;gt;r_child), Height(p-&amp;gt;l_child)) + 1; s-&amp;gt;height = MAX(Height(s-&amp;gt;r_child), Height(s-&amp;gt;l_child)) + 1; return s; } AVLTree AVL_insert(AVLTree t, int data){ //AVL树插入  if(t == NULL) //如果AVL树是空的，新建一个节点，并置树高为0  { t = (AVLNode *)malloc(sizeof (AVLNode)); t-&amp;gt;data = data; t-&amp;gt;l_child = t-&amp;gt;r_child = NULL; t-&amp;gt;height = 0; } else if (data &amp;lt; t-&amp;gt;data){ //如果data小于t节点的data，插入到它的左子树  t-&amp;gt;l_child = AVL_insert(t-&amp;gt;l_child, data); if(Height(t-&amp;gt;l_child) - Height(t-&amp;gt;r_child) == 2){ //插入完成后，检查结构是否失衡(当向左子树插入data时，只有可能会出现这种情况)  if(data &amp;lt; t-&amp;gt;l_child-&amp;gt;data) //如果是插入到左子树的左子树 (左左情况)  t = AVL_rightRotate(t); //对t进行一次右旋  else if(data &amp;gt; t-&amp;gt;l_child-&amp;gt;data) //左右情况  { t-&amp;gt;l_child = AVL_leftRotate(t-&amp;gt;l_child); //先对t的左子树进行一次左旋  t = AVL_rightRotate(t); //再对t进行一次右旋  } } } else if (data &amp;gt; t-&amp;gt;data){ //参考上方  t-&amp;gt;r_child = AVL_insert(t-&amp;gt;r_child, data); if(Height(t-&amp;gt;r_child) - Height(t-&amp;gt;l_child) == 2){ if(data &amp;gt; t-&amp;gt;r_child-&amp;gt;data) //右右情况  t = AVL_leftRotate(t); else if(data &amp;lt; t-&amp;gt;r_child-&amp;gt;data){ //右左情况  t-&amp;gt;r_child = AVL_rightRotate(t-&amp;gt;r_child); t = AVL_leftRotate(t); } } } t-&amp;gt;height = MAX(Height(t-&amp;gt;l_child), Height(t-&amp;gt;r_child)) + 1; //重新计算树高  return t; //返回t节点 } void AVL_inorder(AVLNode *t){ //中序遍历打印AVL树  if(t !</description>
+    </item>
+    
     <item>
       <title>红黑树 &amp; C语言实现插入</title>
       <link>https://sherry-long.github.io/post/rbtree/</link>
@@ -22,7 +44,7 @@ void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&amp;gt;r_child
     </item>
     
     <item>
-      <title>二叉排序树 &amp; c语言实现</title>
+      <title>二叉排序树 &amp; C语言实现</title>
       <link>https://sherry-long.github.io/post/bstree/</link>
       <pubDate>Fri, 29 Jan 2021 11:12:54 +0800</pubDate>
       
