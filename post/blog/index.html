@@ -270,7 +270,11 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
         getName()
 </code></pre>
 <h3 id="jdk18-hashmap">JDK1.8 Hashmap</h3>
-<pre><code>put()方法流程：
+<pre><code>Hashmap基于哈希表，底层结构由数组 + 链表 + 红黑树组成，添加到集合中的元素以键值对的形式存储，键值对被封装成一个实体，Entry
+Entry[]保存了集合中所有的键值对
+
+
+put()方法流程：
 put(key, value) -&gt; 计算key的哈希值，计算方法：将key.hashCode()的低16位和高16位进行异或操作，减少碰撞 -&gt; 调用putVal -&gt; 
 先检查hashmap是否为空(是否初始化) -&gt; 如未初始化，调用resize()方法进行初始化 -&gt; 
 找桶位，使用(n - 1) &amp; hash，根据哈希表规定，n必须为2的次幂，-1可得全1二进制，其计算结果=取余，计算机进行按位操作很快 -&gt;
@@ -286,6 +290,7 @@ resize()方法：
 2.扩容
     如果已达最长度，不进行扩容，如果 旧表长度 * 2 &lt; MAX_LENGTH &amp;&amp; 旧表长度 &gt;= 16 ，才进行扩容
 </code></pre>
+<h3 id="jdk18-objectoutputstream">JDK1.8 ObjectOutputStream</h3>
 <h3 id="stringstringbuilderstringbuffer">String，StringBuilder，StringBuffer</h3>
 <pre><code>String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
 StringBuilder 和 StringBuffer 都继承自 AbstractStringBuilder 父类，可变字符序列
@@ -305,8 +310,21 @@ String常量 + ：String str1 = &quot;123&quot; + &quot;456&quot;; === String st
 String变量 + ：String str1 = &quot;123&quot;, 
                       str2 = &quot;456&quot;, 
                       str3 = str1 + str2; === 先把str1转成SBuilder，使用append(str2)，再toString()转回来
+					  
+在String中equals方法被重写了，所以比较的是字符串的内容。而Object类中的equals方法内部就是 ==
+					  
+StringBuilder 和 StringBuffer 的 substring方法都来自父类 AbstractStringBuilder
 </code></pre>
-<h3 id="多线程">多线程</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">substring</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> start<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> end<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//父类 AbstractStringBuilder 的substring实现方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>start <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> StringIndexOutOfBoundsException<span style="color:#f92672">(</span>start<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>end <span style="color:#f92672">&gt;</span> count<span style="color:#f92672">)</span>
+	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> StringIndexOutOfBoundsException<span style="color:#f92672">(</span>end<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>start <span style="color:#f92672">&gt;</span> end<span style="color:#f92672">)</span>
+	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> StringIndexOutOfBoundsException<span style="color:#f92672">(</span>end <span style="color:#f92672">-</span> start<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>value<span style="color:#f92672">,</span> start<span style="color:#f92672">,</span> end <span style="color:#f92672">-</span> start<span style="color:#f92672">);</span> <span style="color:#75715e">//返回了一个新建的String类型
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><h3 id="多线程">多线程</h3>
 <pre><code>线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
 进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
 

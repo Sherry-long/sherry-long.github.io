@@ -6,7 +6,19 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Feb 2021 09:32:24 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Feb 2021 12:00:38 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 设计一个加法满足100位数相加</title>
+      <link>https://sherry-long.github.io/post/java/</link>
+      <pubDate>Sun, 07 Feb 2021 12:00:38 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java/</guid>
+      <description>设计一个加法，满足100位数字的相加
+思路：将两个加数以字符串形式保存，倒序每位进行加法，进行进位判断，结束之后再按倒序输出
+实现：
+package test; public class Adder { public static void BigNumSum(String num1, String num2){ // 定义静态函数  char[] numA = new StringBuilder(num1).reverse().toString().toCharArray(); //倒序保存num1的数组形式  char[] numB = new StringBuilder(num2).reverse().toString().toCharArray(); //倒序保存num2的数组形式  int resultLength = Math.max(numA.length, numB.length); //保存两个数的最大位数  int[] result = new int[resultLength + 1]; //定义一个位数为 resultLength + 1 的数组，用来保存结果  for (int i = 0; i &amp;lt; resultLength; ++i) //开始计算  { int Aint = i &amp;lt; numA.</description>
+    </item>
+    
     <item>
       <title>AVL树 &amp; C语言实现</title>
       <link>https://sherry-long.github.io/post/avltree/</link>
