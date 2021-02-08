@@ -6,7 +6,22 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Feb 2021 12:00:38 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Feb 2021 12:39:40 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 在二维数组中查找指定元素</title>
+      <link>https://sherry-long.github.io/post/java1/</link>
+      <pubDate>Mon, 08 Feb 2021 12:39:40 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java1/</guid>
+      <description>题目：
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+示例： [1, 2, 8, 9] [2, 4, 9, 12] [4, 7, 10, 13] [6, 8, 11, 15] 思路： 对于这种结构比较特殊的二维数组，使用暴力方法虽然可以解决，效率大大折扣。
+我们换一个角度看，每次都看最上面一行和最右面一列。根据本题给出的结构，他是一个递增序列。那么结合这一特点，我们采用二分法来查找。
+首先，读取最上面一行和最右面一列，取它们的中间元素，也就是最右上角的元素。如果查找的数小于它，就把列数减少一(此时二维数组变成四行三列)，如果大于就把行数加上一(此时二维数组变成三行四列)，再从新的数组中找出右上角元素进行重复比较，直到找出要查找的数或者数组被“削减”完。
+Java实现：
+public class Solution { public boolean Find(int target, int [][] array) { int i = 0, j = array[0].length - 1; //i，j分别为行数列数索引，将i的初值设为最上面那一行，j设为最右面那一列  while(i &amp;lt;= array.length - 1 &amp;amp;&amp;amp; j &amp;gt;= 0) { if(array[i][j] == target) return true; //找到target返回true  else if(array[i][j] &amp;lt; target) i++; //array[i][j] &amp;lt; target，i(行)下移  else j--; //array[i][j] &amp;gt; target，j(列)左移  } return false; //未找到元素，返回false  } } 题目来源：剑指offer</description>
+    </item>
+    
     <item>
       <title>Java 设计一个加法满足100位数相加</title>
       <link>https://sherry-long.github.io/post/java/</link>

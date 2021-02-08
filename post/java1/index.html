@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java 在二维数组中查找指定元素 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 在二维数组中查找指定元素"/>
+<meta name="twitter:description" content="题目：
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+示例： [1, 2, 8, 9] [2, 4, 9, 12] [4, 7, 10, 13] [6, 8, 11, 15] 思路： 对于这种结构比较特殊的二维数组，使用暴力方法虽然可以解决，效率大大折扣。
+我们换一个角度看，每次都看最上面一行和最右面一列。根据本题给出的结构，他是一个递增序列。那么结合这一特点，我们采用二分法来查找。
+首先，读取最上面一行和最右面一列，取它们的中间元素，也就是最右上角的元素。如果查找的数小于它，就把列数减少一(此时二维数组变成四行三列)，如果大于就把行数加上一(此时二维数组变成三行四列)，再从新的数组中找出右上角元素进行重复比较，直到找出要查找的数或者数组被“削减”完。
+Java实现：
+public class Solution { public boolean Find(int target, int [][] array) { int i = 0, j = array[0].length - 1; //i，j分别为行数列数索引，将i的初值设为最上面那一行，j设为最右面那一列  while(i &lt;= array.length - 1 &amp;&amp; j &gt;= 0) { if(array[i][j] == target) return true; //找到target返回true  else if(array[i][j] &lt; target) i&#43;&#43;; //array[i][j] &lt; target，i(行)下移  else j--; //array[i][j] &gt; target，j(列)左移  } return false; //未找到元素，返回false  } } 题目来源：剑指offer"/>
+
+    <meta property="og:title" content="Java 在二维数组中查找指定元素" />
+<meta property="og:description" content="题目：
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+示例： [1, 2, 8, 9] [2, 4, 9, 12] [4, 7, 10, 13] [6, 8, 11, 15] 思路： 对于这种结构比较特殊的二维数组，使用暴力方法虽然可以解决，效率大大折扣。
+我们换一个角度看，每次都看最上面一行和最右面一列。根据本题给出的结构，他是一个递增序列。那么结合这一特点，我们采用二分法来查找。
+首先，读取最上面一行和最右面一列，取它们的中间元素，也就是最右上角的元素。如果查找的数小于它，就把列数减少一(此时二维数组变成四行三列)，如果大于就把行数加上一(此时二维数组变成三行四列)，再从新的数组中找出右上角元素进行重复比较，直到找出要查找的数或者数组被“削减”完。
+Java实现：
+public class Solution { public boolean Find(int target, int [][] array) { int i = 0, j = array[0].length - 1; //i，j分别为行数列数索引，将i的初值设为最上面那一行，j设为最右面那一列  while(i &lt;= array.length - 1 &amp;&amp; j &gt;= 0) { if(array[i][j] == target) return true; //找到target返回true  else if(array[i][j] &lt; target) i&#43;&#43;; //array[i][j] &lt; target，i(行)下移  else j--; //array[i][j] &gt; target，j(列)左移  } return false; //未找到元素，返回false  } } 题目来源：剑指offer" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/java1/" />
+<meta property="article:published_time" content="2021-02-08T12:39:40+08:00" />
+<meta property="article:modified_time" content="2021-02-08T12:39:40+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java 在二维数组中查找指定元素</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 8, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p><strong>题目：</strong></p>
+<p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<pre><code>示例：
+[1, 2, 8, 9]
+[2, 4, 9, 12]
+[4, 7, 10, 13]
+[6, 8, 11, 15]
+</code></pre><p><strong>思路：</strong>
+对于这种结构比较特殊的二维数组，使用暴力方法虽然可以解决，效率大大折扣。</p>
+<p>我们换一个角度看，每次都看最上面一行和最右面一列。根据本题给出的结构，他是一个递增序列。那么结合这一特点，我们采用二分法来查找。</p>
+<p>首先，读取最上面一行和最右面一列，取它们的中间元素，也就是<strong>最右上角的元素</strong>。如果查找的数小于它，就把列数减少一(此时二维数组变成四行三列)，如果大于就把行数加上一(此时二维数组变成三行四列)，再从新的数组中找出右上角元素进行重复比较，直到找出要查找的数或者数组被“削减”完。</p>
+<p><strong>Java实现：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">Find</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> target<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">[][]</span> array<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">,</span> j <span style="color:#f92672">=</span> array<span style="color:#f92672">[</span>0<span style="color:#f92672">].</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//i，j分别为行数列数索引，将i的初值设为最上面那一行，j设为最右面那一列
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>i <span style="color:#f92672">&lt;=</span> array<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1 <span style="color:#f92672">&amp;&amp;</span> j <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">)</span> 
+        <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>array<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">==</span> target<span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span> <span style="color:#75715e">//找到target返回true
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>array<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">&lt;</span> target<span style="color:#f92672">)</span>
+                i<span style="color:#f92672">++;</span> <span style="color:#75715e">//array[i][j] &lt; target，i(行)下移
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">else</span>
+                j<span style="color:#f92672">--;</span> <span style="color:#75715e">//array[i][j] &gt; target，j(列)左移
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span> <span style="color:#75715e">//未找到元素，返回false
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>题目来源：剑指offer</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
