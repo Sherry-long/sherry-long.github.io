@@ -6,7 +6,45 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Feb 2021 12:39:40 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Feb 2021 13:07:23 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 根据前序中序遍历序列重构二叉树</title>
+      <link>https://sherry-long.github.io/post/java3/</link>
+      <pubDate>Tue, 09 Feb 2021 13:07:23 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java3/</guid>
+      <description>题目：
+输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
+假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+示例： 输入：[1,2,3,4,5,6,7],[3,2,4,1,6,5,7]
+ 输出：{1,2,5,3,4,6,7}  思路：
+因为是树的结构，一般都是用递归来实现。
+用数学归纳法的思想就是，假设最后一步，就是root的左右子树都已经重建好了，那么我只要考虑将root的左右子树安上去即可。
+根据前序遍历的性质，第一个元素必然就是root，那么下面的工作就是如何确定root的左右子树的范围。
+根据中序遍历的性质，root元素前面都是root的左子树，后面都是root的右子树。那么我们只要找到中序遍历中root的位置，就可以确定好左右子树的范围。
+正如上面所说，只需要将确定的左右子树安到root上即可。递归要注意出口，假设最后只有一个元素了，那么就要返回。
+参考来源：https://www.nowcoder.com/questionTerminal/8a19cbe657394eeaac2f6ea9b0f6fcf6
+Java实现：
+/** * Definition for binary tree * public class TreeNode { * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) { val = x; } * } */ import java.util.Arrays; public class Solution { public TreeNode reConstructBinaryTree(int [] pre,int [] in) { if(pre.length == 0) return null; //如果序列为空 返回空节点 	int rootVal = pre[0]; //前序遍历第一个节点必为根节点  if(pre.</description>
+    </item>
+    
+    <item>
+      <title>Java 替换字符串空格</title>
+      <link>https://sherry-long.github.io/post/java2/</link>
+      <pubDate>Tue, 09 Feb 2021 11:04:38 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java2/</guid>
+      <description>题目：
+请实现一个函数，将一个字符串中的每个空格替换成“%20”。
+例如，当字符串为
+ We Are Happy.  则经过替换之后的字符串为
+ We%20Are%20Happy。  思路：
+这种题如果用String来做就会很麻烦，熟悉StringBuffer的相关函数这道题就很简单了。我的思路是这样的，定义一个result(StringBuffer)用来保存结果，将str保存在一个temp数组中，从头到尾遍历数组把temp中的内容写入result中，遇到&#39; &amp;lsquo;就把&amp;quot;%20&amp;quot;用append方法接到result后面，最后将result以String形式返回。
+Java实现：
+public class Solution { public String replaceSpace(StringBuffer str) { char[] temp = new String(str).toCharArray(); StringBuffer result = new StringBuffer(); for(int index = 0; index &amp;lt; temp.length; ++index) { if(temp[index] == &amp;#39; &amp;#39;) result.append(&amp;#34;%20&amp;#34;); else result.append(temp[index]); } return new String(result); } } 题目来源：剑指offer</description>
+    </item>
+    
     <item>
       <title>Java 在二维数组中查找指定元素</title>
       <link>https://sherry-long.github.io/post/java1/</link>
@@ -15,7 +53,8 @@
       <guid>https://sherry-long.github.io/post/java1/</guid>
       <description>题目：
 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
-示例： [1, 2, 8, 9] [2, 4, 9, 12] [4, 7, 10, 13] [6, 8, 11, 15] 思路： 对于这种结构比较特殊的二维数组，使用暴力方法虽然可以解决，效率大大折扣。
+示例： [1, 2, 8, 9] [2, 4, 9, 12] [4, 7, 10, 13] [6, 8, 11, 15] 思路：
+对于这种结构比较特殊的二维数组，使用暴力方法虽然可以解决，效率大大折扣。
 我们换一个角度看，每次都看最上面一行和最右面一列。根据本题给出的结构，他是一个递增序列。那么结合这一特点，我们采用二分法来查找。
 首先，读取最上面一行和最右面一列，取它们的中间元素，也就是最右上角的元素。如果查找的数小于它，就把列数减少一(此时二维数组变成四行三列)，如果大于就把行数加上一(此时二维数组变成三行四列)，再从新的数组中找出右上角元素进行重复比较，直到找出要查找的数或者数组被“削减”完。
 Java实现：
