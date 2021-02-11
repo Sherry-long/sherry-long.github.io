@@ -6,7 +6,22 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Feb 2021 13:07:23 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Feb 2021 17:22:52 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 反向打印链表</title>
+      <link>https://sherry-long.github.io/post/java4/</link>
+      <pubDate>Thu, 11 Feb 2021 17:22:52 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java4/</guid>
+      <description>题目：
+输入一个链表，按链表从尾到头的顺序返回一个ArrayList
+示例：
+ 输入： {67,0,24,58} 返回： [58,24,0,67]  思路：
+借助栈来实现。
+Java实现：
+/** * public class ListNode { * int val; * ListNode next = null; * * ListNode(int val) { * this.val = val; * } * } * */ import java.util.*; public class Solution { public ArrayList&amp;lt;Integer&amp;gt; printListFromTailToHead(ListNode listNode) { ArrayList&amp;lt;Integer&amp;gt; result = new ArrayList&amp;lt;Integer&amp;gt;(); Stack s = new Stack(); while(listNode != null){ s.push(listNode.val); listNode = listNode.next; } while(!</description>
+    </item>
+    
     <item>
       <title>Java 根据前序中序遍历序列重构二叉树</title>
       <link>https://sherry-long.github.io/post/java3/</link>
@@ -17,8 +32,8 @@
 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
-示例： 输入：[1,2,3,4,5,6,7],[3,2,4,1,6,5,7]
- 输出：{1,2,5,3,4,6,7}  思路：
+示例：
+ 输入：[1,2,3,4,5,6,7],[3,2,4,1,6,5,7] 输出：{1,2,5,3,4,6,7}  思路：
 因为是树的结构，一般都是用递归来实现。
 用数学归纳法的思想就是，假设最后一步，就是root的左右子树都已经重建好了，那么我只要考虑将root的左右子树安上去即可。
 根据前序遍历的性质，第一个元素必然就是root，那么下面的工作就是如何确定root的左右子树的范围。
