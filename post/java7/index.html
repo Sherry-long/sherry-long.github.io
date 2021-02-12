@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java 斐波那契数列 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 斐波那契数列"/>
+<meta name="twitter:description" content="题目：
+java实现斐波那契数列
+思路：
+动态规划思路，使用备忘录机制，定义一个静态数组result[]，将计算过的结果保存在result中，每次要进行计算之前，检查相应位置是否已经计算过，如果计算过直接返回该值。
+Java实现：
+public class Solution { static int result[] = new int[40]; // 静态result作备忘录  static{ result[0] = 0; result[1] = 1; for(int i = 2; i &lt; 40; i&#43;&#43;) result[i] = -1; // 静态代码块，对result中的值进行赋初始值  } public int Fibonacci(int n) { int temp = -1; if(result[n] == temp) // 如果相应位置未进行计算  { temp = Fibonacci(n - 1) &#43; Fibonacci(n - 2); result[n] = temp; // 进行计算并且将结果储存  } return result[n]; // 返回result[n]  } } 题目来源：剑指offer"/>
+
+    <meta property="og:title" content="Java 斐波那契数列" />
+<meta property="og:description" content="题目：
+java实现斐波那契数列
+思路：
+动态规划思路，使用备忘录机制，定义一个静态数组result[]，将计算过的结果保存在result中，每次要进行计算之前，检查相应位置是否已经计算过，如果计算过直接返回该值。
+Java实现：
+public class Solution { static int result[] = new int[40]; // 静态result作备忘录  static{ result[0] = 0; result[1] = 1; for(int i = 2; i &lt; 40; i&#43;&#43;) result[i] = -1; // 静态代码块，对result中的值进行赋初始值  } public int Fibonacci(int n) { int temp = -1; if(result[n] == temp) // 如果相应位置未进行计算  { temp = Fibonacci(n - 1) &#43; Fibonacci(n - 2); result[n] = temp; // 进行计算并且将结果储存  } return result[n]; // 返回result[n]  } } 题目来源：剑指offer" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/java7/" />
+<meta property="article:published_time" content="2021-02-12T10:42:17+08:00" />
+<meta property="article:modified_time" content="2021-02-12T10:42:17+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java 斐波那契数列</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 12, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p><strong>题目：</strong></p>
+<p>java实现斐波那契数列</p>
+<p><strong>思路：</strong></p>
+<p>动态规划思路，使用备忘录机制，定义一个静态数组result[]，将计算过的结果保存在result中，每次要进行计算之前，检查相应位置是否已经计算过，如果计算过直接返回该值。</p>
+<p><strong>Java实现：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> result<span style="color:#f92672">[]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>40<span style="color:#f92672">];</span> <span style="color:#75715e">// 静态result作备忘录
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span><span style="color:#f92672">{</span>
+        result<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> 
+        result<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 2<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 40<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span>
+            result<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span> <span style="color:#75715e">// 静态代码块，对result中的值进行赋初始值
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">Fibonacci</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> n<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> temp <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>result<span style="color:#f92672">[</span>n<span style="color:#f92672">]</span> <span style="color:#f92672">==</span> temp<span style="color:#f92672">)</span> <span style="color:#75715e">// 如果相应位置未进行计算
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">{</span>
+            temp <span style="color:#f92672">=</span> Fibonacci<span style="color:#f92672">(</span>n <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">+</span> Fibonacci<span style="color:#f92672">(</span>n <span style="color:#f92672">-</span> 2<span style="color:#f92672">);</span>
+            result<span style="color:#f92672">[</span>n<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> temp<span style="color:#f92672">;</span> <span style="color:#75715e">// 进行计算并且将结果储存
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> result<span style="color:#f92672">[</span>n<span style="color:#f92672">];</span> <span style="color:#75715e">// 返回result[n]
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>题目来源：剑指offer</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

@@ -6,7 +6,54 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Feb 2021 17:22:52 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 12 Feb 2021 10:42:17 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 斐波那契数列</title>
+      <link>https://sherry-long.github.io/post/java7/</link>
+      <pubDate>Fri, 12 Feb 2021 10:42:17 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java7/</guid>
+      <description>题目：
+java实现斐波那契数列
+思路：
+动态规划思路，使用备忘录机制，定义一个静态数组result[]，将计算过的结果保存在result中，每次要进行计算之前，检查相应位置是否已经计算过，如果计算过直接返回该值。
+Java实现：
+public class Solution { static int result[] = new int[40]; // 静态result作备忘录  static{ result[0] = 0; result[1] = 1; for(int i = 2; i &amp;lt; 40; i++) result[i] = -1; // 静态代码块，对result中的值进行赋初始值  } public int Fibonacci(int n) { int temp = -1; if(result[n] == temp) // 如果相应位置未进行计算  { temp = Fibonacci(n - 1) + Fibonacci(n - 2); result[n] = temp; // 进行计算并且将结果储存  } return result[n]; // 返回result[n]  } } 题目来源：剑指offer</description>
+    </item>
+    
+    <item>
+      <title>Java 寻找旋转数组最小值</title>
+      <link>https://sherry-long.github.io/post/java6/</link>
+      <pubDate>Thu, 11 Feb 2021 20:12:34 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java6/</guid>
+      <description>题目：
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
+输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
+NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+示例：
+ 输入：[3,4,5,1,2] 输出：1  思路：
+二分思想。取中间元素mid，与末尾元素high进行比较，可能出现的情况如下：
+ 1.mid &amp;gt; high 说明最小元素在右半边数组中 2.mid &amp;lt; high 说明最小元素在左半边数组中 3.mid = high 此情况下数组应类似 [1,1,0,1]，此时缩短high进行试探，直到mid != high  Java实现：
+import java.util.*; public class Solution { public int minNumberInRotateArray(int [] array) { int low = 0, high = array.length - 1; if(array.length == 0) return 0; while(low &amp;lt; high) { int mid = low + (high - low) / 2; if(array[mid] &amp;gt; array[high]) low = mid + 1; else if(array[mid] == array[high]) high--; else high = mid; } return array[low]; }} 题目来源：剑指offer</description>
+    </item>
+    
+    <item>
+      <title>Java 用两个栈实现队列</title>
+      <link>https://sherry-long.github.io/post/java5/</link>
+      <pubDate>Thu, 11 Feb 2021 18:13:51 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java5/</guid>
+      <description>题目：
+用两个栈来实现一个队列，完成队列的Push和Pop操作。
+队列中的元素为int类型。
+思路：
+我的想法是，push操作使用stack1进行，pop操作用stack2进行
+pop操作时，如果stack2内容为空，就把stack1的内容pop到stack2中，然后正常进行pop操作
+Java实现：
+import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; stack1 = new Stack&amp;lt;Integer&amp;gt;(); Stack&amp;lt;Integer&amp;gt; stack2 = new Stack&amp;lt;Integer&amp;gt;(); public void push(int node) { stack1.push(node); } public int pop() { if(stack2.empty()){ while(!stack1.empty()){ stack2.push(stack1.pop()); } } return stack2.pop(); } } 题目来源：剑指offer</description>
+    </item>
+    
     <item>
       <title>Java 反向打印链表</title>
       <link>https://sherry-long.github.io/post/java4/</link>
