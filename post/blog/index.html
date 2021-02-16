@@ -388,6 +388,8 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
  当创建一个数组对象时，对象会被自动初始化
  
  Array.copyOfRange(int[] source, int from, int to):返回一个数组，复制 source 数组从 from 位到 to 位的内容，不包括to位，长度为 to - from 。
+ 
+ 在Java中，负数自动以补码形式保存， &gt;&gt; 为带符号右移，正数高位补 0 ，负数高位补 1 ，&gt;&gt;&gt; 为无符号右移，正数负数高位都补 0 。
 </code></pre>
 
     </div>

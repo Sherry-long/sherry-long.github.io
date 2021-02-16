@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java 二进制中 1 的个数 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 二进制中 1 的个数"/>
+<meta name="twitter:description" content="题目：
+输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
+示例：
+ 输入：10 返回：2  思路：
+主要过程：通过与 1 进行 &amp; 操作可以获得最低位的数，0 或 1，根据此进行统计
+需要注意负数的情况，在Java中负数是以补码形式存储的，有两种思路：
+ 1.将负数数值部分取出，使用 &gt;&gt; 进行右移，结束后计数器要再加一，因为少了符号位的 1 2.正数负数统一操作，使用 &gt;&gt;&gt; 无符号进行右移，高位补0  Java实现：
+第一种实现：
+public class Solution { public int NumberOf1(int n) { int count = 0; //计数器  if(n &lt; 0) { n = n &amp; 0x7FFFFFFF; &#43;&#43;count; //将负数的补码的数值部分取出，并将符号位的 1 手动加入计数器中  } //此步骤是为了防止下方循环进入死循环  while(n != 0) { count &#43;= n &amp; 1; //每次拿 n 的最低位与 1 进行与操作，并计入计数器  n = n &gt;&gt; 1; //对 n 进行带符号右移，此时负数已由上面操作转为正数，进行右移时不会再高位补 1，也就不会陷入死循环  } return count; } } 第二种实现："/>
+
+    <meta property="og:title" content="Java 二进制中 1 的个数" />
+<meta property="og:description" content="题目：
+输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
+示例：
+ 输入：10 返回：2  思路：
+主要过程：通过与 1 进行 &amp; 操作可以获得最低位的数，0 或 1，根据此进行统计
+需要注意负数的情况，在Java中负数是以补码形式存储的，有两种思路：
+ 1.将负数数值部分取出，使用 &gt;&gt; 进行右移，结束后计数器要再加一，因为少了符号位的 1 2.正数负数统一操作，使用 &gt;&gt;&gt; 无符号进行右移，高位补0  Java实现：
+第一种实现：
+public class Solution { public int NumberOf1(int n) { int count = 0; //计数器  if(n &lt; 0) { n = n &amp; 0x7FFFFFFF; &#43;&#43;count; //将负数的补码的数值部分取出，并将符号位的 1 手动加入计数器中  } //此步骤是为了防止下方循环进入死循环  while(n != 0) { count &#43;= n &amp; 1; //每次拿 n 的最低位与 1 进行与操作，并计入计数器  n = n &gt;&gt; 1; //对 n 进行带符号右移，此时负数已由上面操作转为正数，进行右移时不会再高位补 1，也就不会陷入死循环  } return count; } } 第二种实现：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/java8/" />
+<meta property="article:published_time" content="2021-02-16T11:48:07+08:00" />
+<meta property="article:modified_time" content="2021-02-16T11:48:07+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java 二进制中 1 的个数</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 16, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p><strong>题目：</strong></p>
+<p>输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。</p>
+<p>示例：</p>
+<pre><code> 输入：10
+ 
+ 返回：2
+</code></pre>
+<p><strong>思路：</strong></p>
+<p>主要过程：通过与 1 进行 &amp; 操作可以获得最低位的数，0 或 1，根据此进行统计</p>
+<p>需要注意负数的情况，在Java中负数是以补码形式存储的，有两种思路：</p>
+<pre><code> 1.将负数数值部分取出，使用 &gt;&gt; 进行右移，结束后计数器要再加一，因为少了符号位的 1
+
+ 2.正数负数统一操作，使用 &gt;&gt;&gt; 无符号进行右移，高位补0
+</code></pre>
+<p><strong>Java实现：</strong></p>
+<p>第一种实现：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">NumberOf1</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> n<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> <span style="color:#75715e">//计数器
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>n <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#f92672">{</span>
+            n <span style="color:#f92672">=</span> n <span style="color:#f92672">&amp;</span> 0x7FFFFFFF<span style="color:#f92672">;</span>
+            <span style="color:#f92672">++</span>count<span style="color:#f92672">;</span> <span style="color:#75715e">//将负数的补码的数值部分取出，并将符号位的 1 手动加入计数器中
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span> <span style="color:#75715e">//此步骤是为了防止下方循环进入死循环
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>n <span style="color:#f92672">!=</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#f92672">{</span>
+            count <span style="color:#f92672">+=</span> n <span style="color:#f92672">&amp;</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//每次拿 n 的最低位与 1 进行与操作，并计入计数器
+</span><span style="color:#75715e"></span>            n <span style="color:#f92672">=</span> n <span style="color:#f92672">&gt;&gt;</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//对 n 进行带符号右移，此时负数已由上面操作转为正数，进行右移时不会再高位补 1，也就不会陷入死循环
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> count<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>第二种实现：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">NumberOf1</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> n<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> <span style="color:#75715e">//计数器
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>n <span style="color:#f92672">!=</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#f92672">{</span>
+            count <span style="color:#f92672">+=</span> n <span style="color:#f92672">&amp;</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//每次拿 n 的最低位与 1 进行与操作，并计入计数器
+</span><span style="color:#75715e"></span>            n <span style="color:#f92672">=</span> n <span style="color:#f92672">&gt;&gt;&gt;</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//对 n 进行无符号右移
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> count<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>题目来源：剑指offer</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
