@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java 调整数组顺序使奇数位于偶数前面 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 调整数组顺序使奇数位于偶数前面"/>
+<meta name="twitter:description" content="题目：
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+示例：
+ 输入：[1, 2, 3, 4, 5, 6, 7] 输出：[1, 3, 5, 7, 2, 4, 6]  思路：
+两种思路
+ 第一种：结合选择排序的思想，定义两个游标，一个 i 用来从头查找奇数元素，一个 count 用来表示已经排好的奇数个数， 每次将奇数元素调整到 count 位置，再将 count &#43; 1 第二种：借助队列，空间换时间  java实现：
+import java.util.*; public class Solution { public void reOrderArray(int [] array) { // int count = 0; //count表示已经排好位置的奇数个数 // for(int i = 0; i &lt; array.length; &#43;&#43;i) // { // if((array[i] &#43; 1) % 2 == 0) // { // int j = i; // while(j &gt; count) // { // int temp = array[j]; // array[j] = array[j - 1]; // array[j - 1] = temp; // j--; // } //遍历数组，将每个奇数前挪 // &#43;&#43;count; //挪完后计数器&#43;1 // } // }  Queue&lt;Integer&gt; Odd = new LinkedList&lt;Integer&gt;(); Queue&lt;Integer&gt; Even = new LinkedList&lt;Integer&gt;(); for(int i = 0; i &lt; array."/>
+
+    <meta property="og:title" content="Java 调整数组顺序使奇数位于偶数前面" />
+<meta property="og:description" content="题目：
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+示例：
+ 输入：[1, 2, 3, 4, 5, 6, 7] 输出：[1, 3, 5, 7, 2, 4, 6]  思路：
+两种思路
+ 第一种：结合选择排序的思想，定义两个游标，一个 i 用来从头查找奇数元素，一个 count 用来表示已经排好的奇数个数， 每次将奇数元素调整到 count 位置，再将 count &#43; 1 第二种：借助队列，空间换时间  java实现：
+import java.util.*; public class Solution { public void reOrderArray(int [] array) { // int count = 0; //count表示已经排好位置的奇数个数 // for(int i = 0; i &lt; array.length; &#43;&#43;i) // { // if((array[i] &#43; 1) % 2 == 0) // { // int j = i; // while(j &gt; count) // { // int temp = array[j]; // array[j] = array[j - 1]; // array[j - 1] = temp; // j--; // } //遍历数组，将每个奇数前挪 // &#43;&#43;count; //挪完后计数器&#43;1 // } // }  Queue&lt;Integer&gt; Odd = new LinkedList&lt;Integer&gt;(); Queue&lt;Integer&gt; Even = new LinkedList&lt;Integer&gt;(); for(int i = 0; i &lt; array." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/java9/" />
+<meta property="article:published_time" content="2021-02-16T19:35:44+08:00" />
+<meta property="article:modified_time" content="2021-02-16T19:35:44+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java 调整数组顺序使奇数位于偶数前面</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 16, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p><strong>题目：</strong></p>
+<p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+<p>示例：</p>
+<pre><code> 输入：[1, 2, 3, 4, 5, 6, 7]
+
+ 输出：[1, 3, 5, 7, 2, 4, 6]
+</code></pre>
+<p><strong>思路：</strong></p>
+<p>两种思路</p>
+<pre><code> 第一种：结合选择排序的思想，定义两个游标，一个 i 用来从头查找奇数元素，一个 count 用来表示已经排好的奇数个数，
+         每次将奇数元素调整到 count 位置，再将 count + 1
+
+ 第二种：借助队列，空间换时间
+</code></pre>
+<p><strong>java实现：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.util.*<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reOrderArray</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> <span style="color:#f92672">[]</span> array<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+	
+	
+<span style="color:#75715e">//         int count = 0; //count表示已经排好位置的奇数个数
+</span><span style="color:#75715e">//         for(int i = 0; i &lt; array.length; ++i)
+</span><span style="color:#75715e">//         {
+</span><span style="color:#75715e">//             if((array[i] + 1) % 2 == 0)
+</span><span style="color:#75715e">//             {
+</span><span style="color:#75715e">//                 int j = i;
+</span><span style="color:#75715e">//                 while(j &gt; count)
+</span><span style="color:#75715e">//                 {
+</span><span style="color:#75715e">//                     int temp = array[j];
+</span><span style="color:#75715e">//                     array[j] = array[j - 1];
+</span><span style="color:#75715e">//                     array[j - 1] = temp;
+</span><span style="color:#75715e">//                     j--;
+</span><span style="color:#75715e">//                 } //遍历数组，将每个奇数前挪
+</span><span style="color:#75715e">//                 ++count; //挪完后计数器+1
+</span><span style="color:#75715e">//             }
+</span><span style="color:#75715e">//         }
+</span><span style="color:#75715e"></span>        
+        
+        
+        Queue<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> Odd <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;();</span>
+        Queue<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> Even <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedList<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;();</span>
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> array<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> <span style="color:#f92672">++</span>i<span style="color:#f92672">)</span>
+        <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>array<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">%</span> 2 <span style="color:#f92672">==</span> 1<span style="color:#f92672">)</span>
+                Odd<span style="color:#f92672">.</span><span style="color:#a6e22e">offer</span><span style="color:#f92672">(</span>array<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span>
+            <span style="color:#66d9ef">else</span>
+                Even<span style="color:#f92672">.</span><span style="color:#a6e22e">offer</span><span style="color:#f92672">(</span>array<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span> <span style="color:#75715e">//将奇数压入Odd队列，偶数压入Even队列
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> array<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> <span style="color:#f92672">++</span>i<span style="color:#f92672">)</span>
+        <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(!</span>Odd<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">())</span>
+                array<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> Odd<span style="color:#f92672">.</span><span style="color:#a6e22e">poll</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">else</span>
+                array<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> Even<span style="color:#f92672">.</span><span style="color:#a6e22e">poll</span><span style="color:#f92672">();</span> <span style="color:#75715e">//将元素出列
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+		
+		
+		
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>题目来源：剑指offer</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
