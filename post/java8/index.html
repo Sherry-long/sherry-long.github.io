@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>Java 二进制中 1 的个数 // Sp(act)rum</title>
+    <title>二进制中 1 的个数 Java // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,7 +12,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Java 二进制中 1 的个数"/>
+<meta name="twitter:title" content="二进制中 1 的个数 Java"/>
 <meta name="twitter:description" content="题目：
 输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
 示例：
@@ -23,7 +23,7 @@
 第一种实现：
 public class Solution { public int NumberOf1(int n) { int count = 0; //计数器  if(n &lt; 0) { n = n &amp; 0x7FFFFFFF; &#43;&#43;count; //将负数的补码的数值部分取出，并将符号位的 1 手动加入计数器中  } //此步骤是为了防止下方循环进入死循环  while(n != 0) { count &#43;= n &amp; 1; //每次拿 n 的最低位与 1 进行与操作，并计入计数器  n = n &gt;&gt; 1; //对 n 进行带符号右移，此时负数已由上面操作转为正数，进行右移时不会再高位补 1，也就不会陷入死循环  } return count; } } 第二种实现："/>
 
-    <meta property="og:title" content="Java 二进制中 1 的个数" />
+    <meta property="og:title" content="二进制中 1 的个数 Java" />
 <meta property="og:description" content="题目：
 输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
 示例：
@@ -63,7 +63,7 @@ public class Solution { public int NumberOf1(int n) { int count = 0; //计数器
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">Java 二进制中 1 的个数</h1>
+      <h1 class ="post-title">二进制中 1 的个数 Java</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">

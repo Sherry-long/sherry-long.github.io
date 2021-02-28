@@ -6,9 +6,23 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Feb 2021 09:45:21 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Feb 2021 10:51:26 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Java 链表中倒数第k个节点</title>
+      <title>树的子结构 Java</title>
+      <link>https://sherry-long.github.io/post/java11/</link>
+      <pubDate>Sun, 28 Feb 2021 10:51:26 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java11/</guid>
+      <description>题目：
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+示例：
+ 输入：{8,8,#,9,#,2,#,5},{8,9,#,2} 返回：true  思路：
+java实现：
+/** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { boolean isSubTree(TreeNode root1, TreeNode root2){ if(root2 == null) return true; if(root1 == null) return false; if(root1.val == root2.val){ return isSubTree(root1.left, root2.left) &amp;amp;&amp;amp; isSubTree(root1.right, root2.right); } else return false; } public boolean HasSubtree(TreeNode root1,TreeNode root2) { if(root2 == null || root1 == null) return false; return isSubTree(root1, root2) || HasSubtree(root1.</description>
+    </item>
+    
+    <item>
+      <title>链表中倒数第k个节点 Java</title>
       <link>https://sherry-long.github.io/post/java10/</link>
       <pubDate>Wed, 24 Feb 2021 09:45:21 +0800</pubDate>
       
@@ -24,7 +38,7 @@ java实现：
     </item>
     
     <item>
-      <title>Java 调整数组顺序使奇数位于偶数前面</title>
+      <title>调整数组顺序使奇数位于偶数前面 Java</title>
       <link>https://sherry-long.github.io/post/java9/</link>
       <pubDate>Tue, 16 Feb 2021 19:35:44 +0800</pubDate>
       
@@ -39,7 +53,7 @@ import java.util.*; public class Solution { public void reOrderArray(int [] arra
     </item>
     
     <item>
-      <title>Java 二进制中 1 的个数</title>
+      <title>二进制中 1 的个数 Java</title>
       <link>https://sherry-long.github.io/post/java8/</link>
       <pubDate>Tue, 16 Feb 2021 11:48:07 +0800</pubDate>
       
@@ -56,7 +70,7 @@ public class Solution { public int NumberOf1(int n) { int count = 0; //计数器
     </item>
     
     <item>
-      <title>Java 斐波那契数列</title>
+      <title>斐波那契数列 Java</title>
       <link>https://sherry-long.github.io/post/java7/</link>
       <pubDate>Fri, 12 Feb 2021 10:42:17 +0800</pubDate>
       
@@ -70,7 +84,7 @@ public class Solution { static int result[] = new int[40]; // 静态result作备
     </item>
     
     <item>
-      <title>Java 寻找旋转数组最小值</title>
+      <title>寻找旋转数组最小值 Java</title>
       <link>https://sherry-long.github.io/post/java6/</link>
       <pubDate>Thu, 11 Feb 2021 20:12:34 +0800</pubDate>
       
@@ -87,7 +101,7 @@ import java.util.*; public class Solution { public int minNumberInRotateArray(in
     </item>
     
     <item>
-      <title>Java 用两个栈实现队列</title>
+      <title>用两个栈实现队列 Java</title>
       <link>https://sherry-long.github.io/post/java5/</link>
       <pubDate>Thu, 11 Feb 2021 18:13:51 +0800</pubDate>
       
@@ -103,7 +117,7 @@ import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; sta
     </item>
     
     <item>
-      <title>Java 反向打印链表</title>
+      <title>反向打印链表 Java</title>
       <link>https://sherry-long.github.io/post/java4/</link>
       <pubDate>Thu, 11 Feb 2021 17:22:52 +0800</pubDate>
       
@@ -118,7 +132,7 @@ Java实现：
     </item>
     
     <item>
-      <title>Java 根据前序中序遍历序列重构二叉树</title>
+      <title>根据前序中序遍历序列重构二叉树 Java</title>
       <link>https://sherry-long.github.io/post/java3/</link>
       <pubDate>Tue, 09 Feb 2021 13:07:23 +0800</pubDate>
       
@@ -140,7 +154,7 @@ Java实现：
     </item>
     
     <item>
-      <title>Java 替换字符串空格</title>
+      <title>替换字符串空格 Java</title>
       <link>https://sherry-long.github.io/post/java2/</link>
       <pubDate>Tue, 09 Feb 2021 11:04:38 +0800</pubDate>
       
@@ -156,7 +170,7 @@ public class Solution { public String replaceSpace(StringBuffer str) { char[] te
     </item>
     
     <item>
-      <title>Java 在二维数组中查找指定元素</title>
+      <title>在二维数组中查找指定元素 Java</title>
       <link>https://sherry-long.github.io/post/java1/</link>
       <pubDate>Mon, 08 Feb 2021 12:39:40 +0800</pubDate>
       
@@ -172,7 +186,7 @@ public class Solution { public boolean Find(int target, int [][] array) { int i 
     </item>
     
     <item>
-      <title>Java 设计一个加法满足100位数相加</title>
+      <title>设计一个加法满足100位数相加 Java</title>
       <link>https://sherry-long.github.io/post/java/</link>
       <pubDate>Sun, 07 Feb 2021 12:00:38 +0800</pubDate>
       
