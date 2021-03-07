@@ -6,7 +6,24 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Feb 2021 10:51:26 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Mar 2021 19:48:35 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从上到下层次遍历二叉树 Java</title>
+      <link>https://sherry-long.github.io/post/java12/</link>
+      <pubDate>Sun, 07 Mar 2021 19:48:35 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java12/</guid>
+      <description>题目：
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+示例：
+ 输入：{5,4,#,3,#,2,#,1} 输出：[5,4,3,2,1]  思路：
+层次遍历二叉树可以借助队列来实现，先将根节点入队，然后将队首元素(此时只有根节点一个)出队，将它的左右孩子按序入队，循环此操作直到队列为空
+Java中的Queue是接口，不能直接创建实例，可以借助LinkedList来创建。我们创建一个TreeNode类型的queue，来保存遍历顺序，每次队首元素出队时，将它的值保存在res中
+注意空树的处理
+java实现：
+import java.util.*; /** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { public ArrayList&amp;lt;Integer&amp;gt; PrintFromTopToBottom(TreeNode root) { Queue&amp;lt;TreeNode&amp;gt; queue = new LinkedList&amp;lt;TreeNode&amp;gt;(); ArrayList&amp;lt;Integer&amp;gt; res = new ArrayList&amp;lt;Integer&amp;gt;(); if(root == null) return res; queue.add(root); // 根节点入队  while(!queue.isEmpty()){ if(queue.</description>
+    </item>
+    
     <item>
       <title>树的子结构 Java</title>
       <link>https://sherry-long.github.io/post/java11/</link>
@@ -17,8 +34,9 @@
 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
 示例：
  输入：{8,8,#,9,#,2,#,5},{8,9,#,2} 返回：true  思路：
+树结构的问题一般都考虑使用递归方法
 子函数 isSubTree ，判断 root2 是否为 root1 的子树，依次遍历两颗树的节点，如果 root2 遍历结束则是子树，如果遍历未完成(root1 遍历结束或中途有节点不相等)，false
-HasSubtree 方法使用递归思路来进行判断
+HasSubtree 方法使用递归思路结合子函数 isSubTree 来进行判断
 java实现：
 /** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { boolean isSubTree(TreeNode root1, TreeNode root2){ if(root2 == null) return true; // root2 遍历结束返回真  if(root1 == null) return false; // root1 遍历结束返回假  if(root1.</description>
     </item>

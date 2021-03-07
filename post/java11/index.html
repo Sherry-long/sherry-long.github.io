@@ -17,8 +17,9 @@
 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
 示例：
  输入：{8,8,#,9,#,2,#,5},{8,9,#,2} 返回：true  思路：
+树结构的问题一般都考虑使用递归方法
 子函数 isSubTree ，判断 root2 是否为 root1 的子树，依次遍历两颗树的节点，如果 root2 遍历结束则是子树，如果遍历未完成(root1 遍历结束或中途有节点不相等)，false
-HasSubtree 方法使用递归思路来进行判断
+HasSubtree 方法使用递归思路结合子函数 isSubTree 来进行判断
 java实现：
 /** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { boolean isSubTree(TreeNode root1, TreeNode root2){ if(root2 == null) return true; // root2 遍历结束返回真  if(root1 == null) return false; // root1 遍历结束返回假  if(root1."/>
 
@@ -27,8 +28,9 @@ java实现：
 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
 示例：
  输入：{8,8,#,9,#,2,#,5},{8,9,#,2} 返回：true  思路：
+树结构的问题一般都考虑使用递归方法
 子函数 isSubTree ，判断 root2 是否为 root1 的子树，依次遍历两颗树的节点，如果 root2 遍历结束则是子树，如果遍历未完成(root1 遍历结束或中途有节点不相等)，false
-HasSubtree 方法使用递归思路来进行判断
+HasSubtree 方法使用递归思路结合子函数 isSubTree 来进行判断
 java实现：
 /** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { boolean isSubTree(TreeNode root1, TreeNode root2){ if(root2 == null) return true; // root2 遍历结束返回真  if(root1 == null) return false; // root1 遍历结束返回假  if(root1." />
 <meta property="og:type" content="article" />
@@ -88,8 +90,9 @@ java实现：
  返回：true
 </code></pre>
 <p><strong>思路：</strong></p>
+<p>树结构的问题一般都考虑使用递归方法</p>
 <p>子函数 isSubTree ，判断 root2 是否为 root1 的子树，依次遍历两颗树的节点，如果 root2 遍历结束则是子树，如果遍历未完成(root1 遍历结束或中途有节点不相等)，false</p>
-<p>HasSubtree 方法使用递归思路来进行判断</p>
+<p>HasSubtree 方法使用递归思路结合子函数 isSubTree 来进行判断</p>
 <p><strong>java实现：</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/**
 </span><span style="color:#75715e">public class TreeNode {
