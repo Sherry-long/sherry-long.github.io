@@ -375,6 +375,18 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
 当将对象引用置入容器中时，它将向上转型为Object类，所以他会丢失当前身份。
 取出时需要将对象引用向下转型，这依靠范型来实现
 </code></pre>
+<h3 id="bigdecimal">BigDecimal</h3>
+<pre><code>在使用BigDecimal时，禁止使用构造方法BigDecimal(double)的方式把double值转化为BigDecimal对象，因为可能会产生精度丢失
+优先推荐入参为String的构造方法，或使用BigDecimal的valueOf方法，此方法内部其实执行了Double的toString，
+而Double的toString按double的实际能表达的精度对尾数进行了截断。
+
+在判断两个BigDecimal类型的变量相等时，使用compareTo()而不是equals()或者 == 
+在BigDecimal类中，equals方法不止比较数值，还会比较标度(scale)
+    new BigDecimal(&quot;0.10000&quot;)的标度为5
+    new BigDecimal(&quot;0.1&quot;)的标度为1
+    两者数值上相等，但是使用equals方法来判断会返回false，因为equals也会比较标度
+    使用compareTo来比较即可
+</code></pre>
 <h3 id="杂项">杂项</h3>
 <pre><code> String s = new String(&quot;asdf&quot;);
  声明一个对象引用s，new：给我一个新对象
@@ -390,6 +402,23 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
  Array.copyOfRange(int[] source, int from, int to):返回一个数组，复制 source 数组从 from 位到 to 位的内容，不包括to位，长度为 to - from 。
  
  在Java中，负数自动以补码形式保存， &gt;&gt; 为带符号右移，正数高位补 0 ，负数高位补 1 ，&gt;&gt;&gt; 为无符号右移，正数负数高位都补 0 。
+ 
+ 比较两个浮点数，不能直接使用 == 
+    方法一：指定一个误差范围，两个浮点数的差值在此范围之内，则认为两数相等
+            float diff = 1e-6f;
+            if (Math.abs(float1 - float2) &lt; diff) return true;
+    方法二：使用BigDecimal来定义值，再进行浮点数的操作运算
+	
+            BigDecimal a = new BigDecimal(&quot;1.0&quot;);
+            BigDecimal b = new BigDecimal(&quot;0.9&quot;);
+            BigDecimal c = new BigDecimal(&quot;0.8&quot;);
+			
+            BigDecimal x = a.subtract(b);
+            BigDecimal y = b.subtract(c);
+			
+            if (x.equals(y)){
+                System.out.println(&quot;true&quot;);
+            }
 </code></pre>
 
     </div>

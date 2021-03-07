@@ -17,8 +17,10 @@
 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
 示例：
  输入：{8,8,#,9,#,2,#,5},{8,9,#,2} 返回：true  思路：
+子函数 isSubTree ，判断 root2 是否为 root1 的子树，依次遍历两颗树的节点，如果 root2 遍历结束则是子树，如果遍历未完成(root1 遍历结束或中途有节点不相等)，false
+HasSubtree 方法使用递归思路来进行判断
 java实现：
-/** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { boolean isSubTree(TreeNode root1, TreeNode root2){ if(root2 == null) return true; if(root1 == null) return false; if(root1.val == root2.val){ return isSubTree(root1.left, root2.left) &amp;amp;&amp;amp; isSubTree(root1.right, root2.right); } else return false; } public boolean HasSubtree(TreeNode root1,TreeNode root2) { if(root2 == null || root1 == null) return false; return isSubTree(root1, root2) || HasSubtree(root1.</description>
+/** public class TreeNode { int val = 0; TreeNode left = null; TreeNode right = null; public TreeNode(int val) { this.val = val; } } */ public class Solution { boolean isSubTree(TreeNode root1, TreeNode root2){ if(root2 == null) return true; // root2 遍历结束返回真  if(root1 == null) return false; // root1 遍历结束返回假  if(root1.</description>
     </item>
     
     <item>
