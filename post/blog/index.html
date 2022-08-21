@@ -28,7 +28,7 @@ this关键字 创建一个对象时分以下四部： 1.分配对象空间，将
   </head>
   <body>
     <header class="app-header">
-      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">
@@ -180,13 +180,24 @@ protected 对继承他的子类开放，有包内访问权限
 <h3 id="复用类">复用类</h3>
 <pre><code>组合：
 
-继承：使用通用类构造一个特例
+继承：使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
 
 代理：
 
-重载：
+重载(overload)：在同一个类中，同名不同参的函数定义是重载
 
-覆写：
+覆写(override/overwrite)：子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符
+                          不小于父类被重写方法的权限修饰符。
+						  
+                          子类不能重写父类中private修饰的方法。
+						  
+                          父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。
+						  
+                          父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。
+						  
+                          父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。
+						  
+                          子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。
 </code></pre>
 <h3 id="多态">多态</h3>
 <pre><code>多态通过分离“做什么”和“怎么做”，从另一角度将接口和实现分离开。
