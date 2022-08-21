@@ -14,11 +14,11 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java笔记(持续更新)"/>
 <meta name="twitter:description" content="此笔记为本人在复习巩固Java基础时做的记录，内容很杂，持续更新中
-this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System."/>
+this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System."/>
 
     <meta property="og:title" content="Java笔记(持续更新)" />
 <meta property="og:description" content="此笔记为本人在复习巩固Java基础时做的记录，内容很杂，持续更新中
-this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System." />
+this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式 public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/blog/" />
 <meta property="article:published_time" content="2021-01-26T12:38:16+08:00" />
@@ -73,7 +73,7 @@ this关键字 创建一个对象时分以下四部： 1.分配对象空间，将
 <pre><code>创建一个对象时分以下四部：
     1.分配对象空间，将对象成员变量初始化为0或空
     2.执行显示值的属性初始化
-    3.执行构造方法
+    3.执行构造方法  this(\*\*)
     4.返回对象的地址给相关变量
 	
 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
@@ -140,6 +140,16 @@ static不会改变方法和变量的访问权限
     参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改
     此时参数只读
 </code></pre>
+<h3 id="super关键字">super关键字</h3>
+<pre><code>在子类中调用父类的属性与方法
+super理解为：父类的
+可以用来调用属性、方法、构造器：
+    当子类，父类中出现了同名的属性(或重写的方法)时，可以通过 this 与 super 来区分
+	
+    我们可以在子类的构造器中显式的使用 super(\*\*\*) 调用父类的构造器(必须声明在子类构造器的首行)
+    在类构造器中，this() super() 只能二选一，*未显示声明的时候，默认 super(空参);
+    在类的多个构造器中，至少有一个类的构造器中使用了super(\*\*\*)，调用父类构造器
+</code></pre>
 <h3 id="序列化和反序列化">序列化和反序列化</h3>
 <pre><code>序列化：将对象写入到IO流中
 反序列化：从IO流中恢复对象
@@ -199,6 +209,16 @@ protected 对继承他的子类开放，有包内访问权限
 						  
                           子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。
 </code></pre>
+<h3 id="子类对象实例化">子类对象实例化</h3>
+<pre><code>*从结果上看（继承性）
+子类继承父类以后，就会获得父类中声明的属性和方法
+创建子类的对象，在堆空间中，就会加载所有父类中声明的属性
+
+*从过程上看
+当我们使用子类中的构造器构造一个对象的时候，一定会直接或间接地调用父类的构造器，然后父类的父类，最后到java.lang.Object类的构造器
+
+虽然创建子类对象时调用了父类构造器，但自始至终只创建过一个对象，即new的对象
+</code></pre>
 <h3 id="多态">多态</h3>
 <pre><code>多态通过分离“做什么”和“怎么做”，从另一角度将接口和实现分离开。
 消除类型之间的耦合关系。
@@ -215,6 +235,12 @@ protected 对继承他的子类开放，有包内访问权限
 	
 多态让程序员将改变的事物与未改变的事物分离开
 多态意味着“不同的形式”，在面向对象程序设计中，我们持有从基类继承而来的相同接口，以及使用该接口的不同形式：不同版本的动态绑定
+
+*对象的多态性：
+```java
+    Person person = new Man();
+```java 
+    使用父类创建子类对象(父类的引用指向子类的对象)
 </code></pre>
 <h3 id="抽象类接口">抽象类，接口</h3>
 <pre><code>abstract关键字，如果一个类包含一个或多个抽象方法，该类就必须被限定为抽象的。
