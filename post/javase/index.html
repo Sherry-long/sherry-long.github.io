@@ -17,14 +17,14 @@
 Java基础
 JKD相关
 其他
-关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式  public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System."/>
+关键字 keywords this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式  public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System."/>
 
     <meta property="og:title" content="JavaSE" />
 <meta property="og:description" content="Java关键字
 Java基础
 JKD相关
 其他
-关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式  public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System." />
+关键字 keywords this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式  public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javase/" />
 <meta property="article:published_time" content="2022-08-22T11:28:43+08:00" />
@@ -79,7 +79,7 @@ JKD相关
 <p><a href="#JDK">JKD相关</a></p>
 <p><a href="#others">其他</a></p>
 <h1 id="关键字">关键字</h1>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> keywords <!-- raw HTML omitted --></p>
 <h2 id="this关键字">this关键字</h2>
 <pre><code>创建一个对象时分以下四部：
     1.分配对象空间，将对象成员变量初始化为0或空
@@ -169,7 +169,7 @@ super理解为：父类的
 <li>protected * 对继承他的子类开放，有包内访问权限</li>
 </ul>
 <h1 id="java基础">Java基础</h1>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> JavaSE <!-- raw HTML omitted --></p>
 <h2 id="序列化和反序列化">序列化和反序列化</h2>
 <pre><code>序列化：将对象写入到IO流中
 反序列化：从IO流中恢复对象
@@ -229,13 +229,13 @@ transient（暂时）变量和static（静态）变量在序列化时会忽视
 <h2 id="子类对象实例化">子类对象实例化</h2>
 <ul>
 <li>
-<p>从结果上看（继承性） *
-子类继承父类以后，就会获得父类中声明的属性和方法
+<p>从结果上看（继承性）</p>
+<p>子类继承父类以后，就会获得父类中声明的属性和方法
 创建子类的对象，在堆空间中，就会加载所有父类中声明的属性</p>
 </li>
 <li>
-<p>从过程上看 *
-当我们使用子类中的构造器构造一个对象的时候，一定会直接或间接地调用父类的构造器，然后父类的父类，最后到java.lang.Object类的构造器</p>
+<p>从过程上看</p>
+<p>当我们使用子类中的构造器构造一个对象的时候，一定会直接或间接地调用父类的构造器，然后父类的父类，最后到java.lang.Object类的构造器</p>
 <p>虽然创建子类对象时调用了父类构造器，但自始至终只创建过一个对象，即new的对象</p>
 </li>
 </ul>
@@ -253,7 +253,15 @@ transient（暂时）变量和static（静态）变量在序列化时会忽视
 <pre><code>在某些情况下，对象会自动向上转型成它的基类
 向一个参数为* 基类对象 *的方法中，传入一个子类，子类对象会自动向上转型，避免子类过多需要额外编写太多的代码
 </code></pre>
-<h3 id="向下转型动态绑定">向下转型(动态绑定)：</h3>
+<h3 id="向下转型">向下转型：</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Person p1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Man<span style="color:#f92672">();</span>
+p1<span style="color:#f92672">.</span><span style="color:#a6e22e">earnMoney</span><span style="color:#f92672">();</span><span style="color:#75715e">//此时会报错，无法调用子类独有的方法和属性
+</span><span style="color:#75715e"></span>Man m1 <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Man<span style="color:#f92672">)</span>p1<span style="color:#f92672">;</span>
+m1<span style="color:#f92672">.</span><span style="color:#a6e22e">earnMoney</span><span style="color:#f92672">();</span><span style="color:#75715e">//此时可以，通过向下转型将p1转为Man类型，但是会有风险
+</span><span style="color:#75715e">//可能会抛出 ClassCastException 异常
+</span></code></pre></div><h4 id="解决方法instanceof">解决方法：instanceof</h4>
+<p>a instanceof A 判断a对象是否为A类的一个实例</p>
+<h3 id="动态绑定">动态绑定</h3>
 <pre><code>编译器无法得知基类的继承类是哪个，引出“绑定”的概念
 绑定：将一个方法调用和一个方法主体关联起来称为绑定
 在运行时进行绑定，称为动态绑定或后期绑定
@@ -265,11 +273,11 @@ Java中所有方法都是通过动态绑定来实现多态的
 <h3 id="对象的多态性使用前提1类的继承关系--2方法的重写">对象的多态性：（使用前提：1.类的继承关系  2.方法的重写）</h3>
 <ul>
 <li>
-<p>只适用于方法，不适用于属性 *
-Person person = new Man();(编译看左边，执行看右边)
+<p>只适用于方法，不适用于属性</p>
+<p>Person person = new Man();(编译看左边，执行看右边)
 person.eat(); 假设此方法子类中有重写</p>
 <p>使用父类创建子类对象(父类的引用指向子类的对象)
-此时使用 person.方法() 所调用的子父类同名方法，真正执行的是子类中重写的方法 * (虚拟方法调用) *
+此时使用 person.方法() 所调用的子父类同名方法，真正执行的是子类中重写的方法 *(虚拟方法调用)
 当程序编译的时候，编译器认为 person 是 Person 类的对象，调用的 eat() 也是Person类中的方法。
 但当程序执行的时候，eat()执行的是子类中重写的方法</p>
 <p>总结：有了对象的多态性以后，我们在编译器只能调用父类中声明的方法，但在执行期(运行期)，我们实际执行的是子类中重写的方法。(虚拟方法调用)</p>
@@ -406,7 +414,7 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
     使用compareTo来比较即可
 </code></pre>
 <h1 id="jdk相关">JDK相关</h1>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> JDK <!-- raw HTML omitted --></p>
 <h2 id="jdk18-hashmap">JDK1.8 Hashmap</h2>
 <pre><code>Hashmap基于哈希表，底层结构由数组 + 链表 + 红黑树组成，添加到集合中的元素以键值对的形式存储，键值对被封装成一个实体，Entry
 Entry[]保存了集合中所有的键值对
@@ -461,7 +469,7 @@ StringBuilder 和 StringBuffer 的 substring方法都来自父类 AbstractString
 <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>value<span style="color:#f92672">,</span> start<span style="color:#f92672">,</span> end <span style="color:#f92672">-</span> start<span style="color:#f92672">);</span> <span style="color:#75715e">//返回了一个新建的String类型
 </span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
 </code></pre></div><h1 id="其他">其他</h1>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --> others <!-- raw HTML omitted --></p>
 <pre><code> String s = new String(&quot;asdf&quot;);
  声明一个对象引用s，new：给我一个新对象
  
@@ -494,7 +502,52 @@ BigDecimal y <span style="color:#f92672">=</span> b<span style="color:#f92672">.
 <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>x<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>y<span style="color:#f92672">)){</span>
 	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">);</span>
 <span style="color:#f92672">}</span>
-</code></pre></div>
+</code></pre></div><h2 id="-与-equals-方法的区别">== 与 .equals() 方法的区别</h2>
+<pre><code>==：用于比较基本数据类型时，比较的是变量保存的内容，不一定要类型相同，值相同即为true
+
+    用于比较引用数据类型时，比较的是两个对象的地址，即两个引用是否指向内存中的同一个地址
+	
+.equals()：Object类中的 .equals() 方法就是通过 == 来实现的。
+
+           只能适用于引用数据类型(继承于Object)
+		   
+           像String, Date, File, 包装类等都重写了 .equals() 方法，重写之后，比较的是两个对象的内容是否相同
+</code></pre>
+<h2 id="基本类型包装类">基本类型、包装类</h2>
+<pre><code>Java提供了8种基本数据类型对应的包装类，使得基本数据类型的变量具有类的特征
+</code></pre>
+<p>int &mdash; Integer</p>
+<p>float &mdash; Float</p>
+<p>double &mdash; Double</p>
+<p>short &mdash; Short</p>
+<p>long &mdash; Long</p>
+<p>boolean &mdash; Boolean</p>
+<p>char &mdash; Character</p>
+<p>byte &mdash; Byte</p>
+<pre><code>JDK 5.0以后，增加了自动装箱，自动拆箱机制。
+
+在使用包装类进行符号运算时，以及在向以包装类为形参的方法中传入基本数据类型时，会触发自动拆箱(前者)，自动装箱机制(后者)。
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">int</span> num2 <span style="color:#f92672">=</span> 10<span style="color:#f92672">;</span>
+Integer num1 <span style="color:#f92672">=</span> num2<span style="color:#f92672">;</span> <span style="color:#75715e">//无需使用构造函数,自动装箱
+</span><span style="color:#75715e"></span>
+
+<span style="color:#75715e">//Integer内部定义了IntegerCache结构，IntegerCache中定义了一个Integer[],包含了-128~127的整数。当我们使用自动装箱机制给Integer赋值
+</span><span style="color:#75715e">//范围在-128~127之内时，可以直接使用数组中的元素，无需new。当超出这一范围时，Integer会自动帮我们new一个Integer。
+</span><span style="color:#75715e"></span>Integer num3 <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
+Integer num4 <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>num3 <span style="color:#f92672">==</span> num4<span style="color:#f92672">);</span> <span style="color:#75715e">// 自动装箱赋值在范围内，num3和num4是两个数，true
+</span><span style="color:#75715e"></span>
+Integer num5 <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
+Integer num6 <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>num5 <span style="color:#f92672">==</span> num6<span style="color:#f92672">);</span><span style="color:#75715e">// 自动装箱赋值在范围外，此时Integer其实是new了两个Integer，所以此时比较的是两个对象，false
+</span></code></pre></div><h2 id="三目运算符相关">三目运算符相关</h2>
+<pre><code>? : 三目运算符，冒号左右两边应当为同一类型。
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object o <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> Integer<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">new</span> Double<span style="color:#f92672">(</span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">)</span>
+syso<span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
+<span style="color:#75715e">//因为此时冒号两边类型不同，所以左边Integer将被转型成Double,所以此时输出为 1.0
+</span></code></pre></div>
     </div>
     <div class="post-footer">
       
