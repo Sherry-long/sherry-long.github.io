@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>设计模式(Java) // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="设计模式(Java)"/>
+<meta name="twitter:description" content="单例模式 Java中，可用static来实现单例模式
+饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
+class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
+class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 不论调用多少次getInstance(),返回的都是同一对象  应用场景： 1."/>
+
+    <meta property="og:title" content="设计模式(Java)" />
+<meta property="og:description" content="单例模式 Java中，可用static来实现单例模式
+饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
+class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
+class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 不论调用多少次getInstance(),返回的都是同一对象  应用场景： 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/designpatterns/" />
+<meta property="article:published_time" content="2022-08-23T11:52:56+08:00" />
+<meta property="article:modified_time" content="2022-08-23T11:52:56+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">设计模式(Java)</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 23, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h1 id="单例模式">单例模式</h1>
+<p>Java中，可用static来实现单例模式</p>
+<h3 id="饿汉式">饿汉式</h3>
+<p>(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New1</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New1 new1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New1<span style="color:#f92672">();</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New1 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">return</span> new1<span style="color:#f92672">;</span><span style="color:#75715e">//不管用不用直接创建，饥不择食
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="懒汉式">懒汉式</h3>
+<p>(优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+			instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
+		<span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span><span style="color:#75715e">//什么时候用什么时候创建，拖延症
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><pre><code>不论调用多少次getInstance(),返回的都是同一对象
+</code></pre>
+<h3 id="应用场景">应用场景：</h3>
+<p>1.网站计数器，一般使用单例模式实现，否则难以同步
+2.应用程序的日志应用，一般是由于共享的日志文件一直处于打开状态，因为只能有一个实例去操作，否则内容不好追加
+3.数据库连接池
+4.读取配置文件的类，一般也只有一个对象</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

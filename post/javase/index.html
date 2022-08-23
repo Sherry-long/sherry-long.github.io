@@ -13,18 +13,32 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="JavaSE"/>
-<meta name="twitter:description" content="Java关键字
-Java基础
-JKD相关
-其他
-关键字 keywords this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式  public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System."/>
+<meta name="twitter:description" content="关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
+this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
+this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
+static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&ldquo;1946&rdquo;); endDate = Date.valueOf(&ldquo;1964&rdquo;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用
+static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
+####开发中,如何确定一个属性是否要声明为static?
+1.属性被多个对象共享，不会因为对象的不同而不同
+2.类中的常量也常常修饰为static
+####开发中,如何确定一个方法是否要声明为static?
+1.操作静态属性的方法通常设置为静态
+2.工具类中的方法习惯上声明为静态方法
+可用static来实现单例模式  饿汉式(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)"/>
 
     <meta property="og:title" content="JavaSE" />
-<meta property="og:description" content="Java关键字
-Java基础
-JKD相关
-其他
-关键字 keywords this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够） 可用static来实现单例模式  public class New { private static New new1 = new New(); public static New getAccess(){ return new1; } public static void main(String[] args) { System." />
+<meta property="og:description" content="关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
+this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
+this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
+static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&ldquo;1946&rdquo;); endDate = Date.valueOf(&ldquo;1964&rdquo;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用
+static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
+####开发中,如何确定一个属性是否要声明为static?
+1.属性被多个对象共享，不会因为对象的不同而不同
+2.类中的常量也常常修饰为static
+####开发中,如何确定一个方法是否要声明为static?
+1.操作静态属性的方法通常设置为静态
+2.工具类中的方法习惯上声明为静态方法
+可用static来实现单例模式  饿汉式(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javase/" />
 <meta property="article:published_time" content="2022-08-22T11:28:43+08:00" />
@@ -74,93 +88,108 @@ JKD相关
       </div>
     </header>
     <div class="post-content">
-      <p><a href="#keywords">Java关键字</a></p>
-<p><a href="#JavaSE">Java基础</a></p>
-<p><a href="#JDK">JKD相关</a></p>
-<p><a href="#others">其他</a></p>
-<h1 id="关键字">关键字</h1>
-<p><!-- raw HTML omitted --> keywords <!-- raw HTML omitted --></p>
+      <h1 id="关键字">关键字</h1>
 <h2 id="this关键字">this关键字</h2>
-<pre><code>创建一个对象时分以下四部：
-    1.分配对象空间，将对象成员变量初始化为0或空
-    2.执行显示值的属性初始化
-    3.执行构造方法  this(\*\*)
-    4.返回对象的地址给相关变量
-	
-this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
-
-this 用法
-    1. this.name = name;
-       避免程序二义
-    2. 使用this关键字调用重载的构造方法，避免初始化代码重复。
-       只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句
-       （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用）
-    3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this）
-    4. this 将当前对象本身作为参数传递给其他方法
-    5. return this;
-       this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
-</code></pre>
+<p>创建一个对象时分以下四部：
+1.分配对象空间，将对象成员变量初始化为0或空
+2.执行显示值的属性初始化
+3.执行构造方法  this(**)
+4.返回对象的地址给相关变量</p>
+<p>this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”</p>
+<p>this 用法
+1. this.name = name;
+避免程序二义
+2. 使用this关键字调用重载的构造方法，避免初始化代码重复。
+只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句
+（在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用）
+3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this）
+4. this 将当前对象本身作为参数传递给其他方法
+5. return this;
+this 将当前对象作为参数返回，这样可以对一个对象进行多次操作</p>
 <h2 id="static关键字">static关键字</h2>
-<pre><code>当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
+<p>当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
 方便在没有创建对象的情况下来进行调用（方法/变量）
-    1. static方法：
-        静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的
-        不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）
-    2. static变量：
-        静态变量被所有对象共享，在内存中只有一个副本
-    3. static代码块：
-        优化程序性能（重复代码块）
-            private static Date startDate,endDate;
-        static{
-            startDate = Date.valueOf(&quot;1946&quot;);
-            endDate = Date.valueOf(&quot;1964&quot;);
-        }
-        static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的
-        在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。
-    构造器是static方法，它不需要对象来调用
-		
-static不会改变方法和变量的访问权限
-静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
-
-可用static来实现单例模式
+1. static方法：
+静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的
+不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）
+2. static变量：
+静态变量被所有对象共享，在内存中只有一个副本
+3. static代码块：
+优化程序性能（重复代码块）
+private static Date startDate,endDate;
+static{
+startDate = Date.valueOf(&ldquo;1946&rdquo;);
+endDate = Date.valueOf(&ldquo;1964&rdquo;);
+}
+static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的
+在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。
+构造器是static方法，它不需要对象来调用</p>
+<p>static不会改变方法和变量的访问权限
+静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）</p>
+<p>####开发中,如何确定一个属性是否要声明为static?</p>
+<p>1.属性被多个对象共享，不会因为对象的不同而不同</p>
+<p>2.类中的常量也常常修饰为static</p>
+<p>####开发中,如何确定一个方法是否要声明为static?</p>
+<p>1.操作静态属性的方法通常设置为静态</p>
+<p>2.工具类中的方法习惯上声明为静态方法</p>
+<pre><code>可用static来实现单例模式
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New</span> <span style="color:#f92672">{</span>
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New new1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New<span style="color:#f92672">();</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New <span style="color:#a6e22e">getAccess</span><span style="color:#f92672">(){</span>
-	<span style="color:#66d9ef">return</span> new1<span style="color:#f92672">;</span>
+<p>饿汉式(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New1</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New1 new1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New1<span style="color:#f92672">();</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New1 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">return</span> new1<span style="color:#f92672">;</span><span style="color:#75715e">//不管用不用直接创建，饥不择食
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
 <span style="color:#f92672">}</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>New<span style="color:#f92672">.</span><span style="color:#a6e22e">getAccess</span><span style="color:#f92672">());</span>
-	Object o <span style="color:#f92672">=</span> New<span style="color:#f92672">.</span><span style="color:#a6e22e">getAccess</span><span style="color:#f92672">();</span>
-	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
+</code></pre></div><p>懒汉式(优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+			instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
+		<span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span><span style="color:#75715e">//什么时候用什么时候创建，拖延症
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><pre><code>不论调用多少次getAccess(),返回的都是同一对象
+</code></pre></div><pre><code>不论调用多少次getInstance(),返回的都是同一对象
 </code></pre>
 <h2 id="final关键字">final关键字</h2>
-<pre><code>final关键字可用来修饰引用、方法和类
-* 1.修饰引用 *
-    1. 如果引用为基本数据类型，则该引用为常量，无法被修改
-    2. 如果引用为引用数据类型，比如对象、数组，则该对象、数组本身可以修改，但指向该对象或数组的地址引用不能被修改
-    3. 如果引用是类的成员变量，则必须当场赋值
-* 2.修饰方法 *
-    当用final修饰方法时，这个方法将成为最终方法，无法被子类重写，可被继承
-* 3.修饰类 *
-    当用final修饰类时，该类将成为最终类，无法被继承（断子绝孙类）
-    （String就是最终类）
-* 4.final参数 *
-    参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改
-    此时参数只读(类比c++中用const修饰形参)
-</code></pre>
+<p>final关键字可用来修饰引用、方法和类</p>
+<ul>
+<li>1.修饰引用 *
+<ol>
+<li>如果引用为基本数据类型，则该引用为常量，无法被修改</li>
+<li>如果引用为引用数据类型，比如对象、数组，则该对象、数组本身可以修改，但指向该对象或数组的地址引用不能被修改</li>
+<li>如果引用是类的成员变量，则必须当场赋值</li>
+</ol>
+</li>
+<li>2.修饰方法 *
+当用final修饰方法时，这个方法将成为最终方法，无法被子类重写，可被继承</li>
+<li>3.修饰类 *
+当用final修饰类时，该类将成为最终类，无法被继承（断子绝孙类）
+（String就是最终类）</li>
+<li>4.final参数 *
+参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改
+此时参数只读(类比c++中用const修饰形参)</li>
+</ul>
 <h2 id="super关键字">super关键字</h2>
-<pre><code>在子类中调用父类的属性与方法
+<p>在子类中调用父类的属性与方法
 super理解为：父类的
 可以用来调用属性、方法、构造器：
-    当子类，父类中出现了同名的属性(或重写的方法)时，可以通过 this 与 super 来区分
-	
-    我们可以在子类的构造器中显式的使用 super(\*\*\*) 调用父类的构造器(必须声明在子类构造器的首行)
-    在类构造器中，this() super() 只能二选一，* 未显示声明的时候，默认 super(空参); *
-    在类的多个构造器中，至少有一个类的构造器中使用了super(\*\*\*)，调用父类构造器
+当子类，父类中出现了同名的属性(或重写的方法)时，可以通过 this 与 super 来区分</p>
+<pre><code>我们可以在子类的构造器中显式的使用 super(\*\*\*) 调用父类的构造器(必须声明在子类构造器的首行)
+在类构造器中，this() super() 只能二选一，* 未显示声明的时候，默认 super(空参); *
+在类的多个构造器中，至少有一个类的构造器中使用了super(\*\*\*)，调用父类构造器
 </code></pre>
 <h2 id="publicprotected和private">public、protected和private</h2>
 <ul>
@@ -169,63 +198,50 @@ super理解为：父类的
 <li>protected * 对继承他的子类开放，有包内访问权限</li>
 </ul>
 <h1 id="java基础">Java基础</h1>
-<p><!-- raw HTML omitted --> JavaSE <!-- raw HTML omitted --></p>
 <h2 id="序列化和反序列化">序列化和反序列化</h2>
-<pre><code>序列化：将对象写入到IO流中
+<p>序列化：将对象写入到IO流中
 反序列化：从IO流中恢复对象
 序列化机制允许将实现序列化的Java对象转换为字节序列，这些字节序列可以保存在磁盘上，
-  或通过网络传输，以达到以后恢复成原来的对象。序列化机制使得对象可以脱离程序运行而独立存在
-
-所有可在网络上传输的对象都必须是可序列化的，所有需要保存到磁盘上的对象都必须是可序列化的
-
-反序列化不会调用构造方法，对象是由JVM自己生成的
- 
-所有保存到磁盘上的对象都有一个序列化编码
-在程序试图序列化一个对象时，会先检查此对象是否已经被序列化过，如果已经序列化直接输出编号
-
-对一个已经序列化的对象进行修改后，再次序列化则不会保存
-transient（暂时）变量和static（静态）变量在序列化时会忽视
-
-关于arraylist底层自定义序列化方法：
-    arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象，
-      所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中
-</code></pre>
+或通过网络传输，以达到以后恢复成原来的对象。序列化机制使得对象可以脱离程序运行而独立存在</p>
+<p>所有可在网络上传输的对象都必须是可序列化的，所有需要保存到磁盘上的对象都必须是可序列化的</p>
+<p>反序列化不会调用构造方法，对象是由JVM自己生成的</p>
+<p>所有保存到磁盘上的对象都有一个序列化编码
+在程序试图序列化一个对象时，会先检查此对象是否已经被序列化过，如果已经序列化直接输出编号</p>
+<p>对一个已经序列化的对象进行修改后，再次序列化则不会保存
+transient（暂时）变量和static（静态）变量在序列化时会忽视</p>
+<p>关于arraylist底层自定义序列化方法：
+arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象，
+所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中</p>
 <h2 id="可变参数">可变参数</h2>
-<pre><code>类型 + ... + 形参名
+<p>类型 + &hellip; + 形参名
 定义时：
-    f(Object... trailing);
+f(Object&hellip; trailing);
 调用时：
-    f(&quot;one&quot;);
-    f(&quot;one&quot;, &quot;two&quot;);
-    f(1,2,3);
-    f('a', 'b');
-    f();
-    都可以,会自动转型成object
-</code></pre>
+f(&ldquo;one&rdquo;);
+f(&ldquo;one&rdquo;, &ldquo;two&rdquo;);
+f(1,2,3);
+f(&lsquo;a&rsquo;, &lsquo;b&rsquo;);
+f();
+都可以,会自动转型成object</p>
 <h2 id="复用类">复用类</h2>
-<pre><code>组合：
-
-继承：使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
-
-代理：
-
-重载(overload)：在同一个类中，同名不同参的函数定义是重载
-
-覆写(override/overwrite)：子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符
-                          不小于父类被重写方法的权限修饰符。
-						  
-                          子类不能重写父类中private修饰的方法。
-						  
-                          父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。
-						  
-                          父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。
-						  
-                          父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。
-						  
-                          子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。
-对于重载。编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 * 早绑定(静态绑定) *
-对于重写。只有在真正执行时，编译器才知道具体调用的是哪个方法 * 晚绑定(动态绑定) *
+<p>组合：</p>
+<p>继承：使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性</p>
+<p>代理：</p>
+<p>重载(overload)：在同一个类中，同名不同参的函数定义是重载</p>
+<p>覆写(override/overwrite)：子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符
+不小于父类被重写方法的权限修饰符。</p>
+<pre><code>                      子类不能重写父类中private修饰的方法。
+					  
+                      父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。
+					  
+                      父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。
+					  
+                      父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。
+					  
+                      子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。
 </code></pre>
+<p>对于重载。编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 * 早绑定(静态绑定) *
+对于重写。只有在真正执行时，编译器才知道具体调用的是哪个方法 * 晚绑定(动态绑定) *</p>
 <h2 id="子类对象实例化">子类对象实例化</h2>
 <ul>
 <li>
@@ -287,103 +303,90 @@ person.eat(); 假设此方法子类中有重写</p>
 <pre><code>典型使用：.equals() 方法，其接收参数为Object类型，所有类型的父类，所有对象皆可使用这一方法。
 </code></pre>
 <h2 id="抽象类接口">抽象类，接口</h2>
-<pre><code>abstract关键字，如果一个类包含一个或多个抽象方法，该类就必须被限定为抽象的。
+<p>abstract关键字，如果一个类包含一个或多个抽象方法，该类就必须被限定为抽象的。
 如果一个类继承抽象类，并想为该新类创建对象，就必须为抽象类中所有方法声明提供实现
-abstract关键字允许人们在类中创建一个或多个没有任何定义的方法——提供了接口部分
-
-
-接口：
-    只有方法声明没有实现
-  一个接口表示：所有实现了该特定接口的类看起来都这样
-  任何使用特定接口的类都知道可以调用该接口的哪些方法，接口被用来建立类与类之间的协议。
-  放入接口中的任何域都自动是static和final的
-  实现一个接口时，不需要实现嵌套在它内部的任何接口，而且，private接口不能在定义它的类之外被实现
-  接口是实现多重继承的途径
-</code></pre>
+abstract关键字允许人们在类中创建一个或多个没有任何定义的方法——提供了接口部分</p>
+<p>接口：
+只有方法声明没有实现
+一个接口表示：所有实现了该特定接口的类看起来都这样
+任何使用特定接口的类都知道可以调用该接口的哪些方法，接口被用来建立类与类之间的协议。
+放入接口中的任何域都自动是static和final的
+实现一个接口时，不需要实现嵌套在它内部的任何接口，而且，private接口不能在定义它的类之外被实现
+接口是实现多重继承的途径</p>
 <h2 id="java反射">Java反射</h2>
-<pre><code>写好的代码 -&gt; javac编译 -&gt; 字节码文件(.class) -&gt;     (源码阶段)
+<p>写好的代码 -&gt; javac编译 -&gt; 字节码文件(.class) -&gt;     (源码阶段)
 由类加载器(ClassLoader)加载进内存 -&gt; Class类对象(成员变量Field[] fields，
-                                                 构造方法Constructor[] constructors，
-                                                 成员方法Methods[] methods)用来描述.class字节码文件内容 -&gt;    (Class类对象阶段)
-创建对象
-
-反射：将类的各个组成部分封装为其他对象，这就是反射机制
-
-好处：1.在程序的运行过程中操作这些对象，比如
-                    String str = &quot;abc&quot;;
-                    str.  (当键入.之后，编辑器会自动弹出下拉列表可选方法或属性，
-                          这是因为类加载器已将String类加载进内存，
-                          并将String的所有成员抽取出来存放到了Method[]数组中)
-      2.解耦，降低程序耦合性，提高程序可扩展性
-	  
-获取class对象的方式：
-    1.在源码阶段，class文件还未被加载进内存，需调用Class.forName(&quot;全类名&quot;)手动将class加载进内存，返回class对象
-        * 多用于配置文件中，将类名定义在配置文件中，读取文件，加载类
-    2.已经将字节码文件加载进内存，不需要加载可直接获取，通过类名获取  类名.class
-        * 多用于参数传递
-    3.已经创建了对象， 对象.class ,此方法已被封装在Object类中
-        * 多用于对象的获取字节码的方式
-同一个字节码文件再一次程序运行的过程中，只会被加载一次，无论通过哪一种方式获取的class对象都是同一个
-
-使用class对象：
-    大部分都是获取的功能
-    1.获取成员变量
-        getFields 获取所有public修饰的变量
-        getDeclaredFields
-        getField() 获取指定名字的成员变量
-        使用set和get方法可以修改成员变量，但是对于private不可修改
-        可以使用setAccessible(true)来忽略访问权限修饰符的安全检查，暴力反射
-    2.获取构造方法
-        ...
-        ...
-        创建对象 newInstance() 创建对应的对象
-        如果构造使用空参数的构造方法创建对象，操作可以简化：可使用class对象的newInstance()方法
-    3.获取成员方法
-        ...
-        ...
-        getMethods() 不止获取你看到的方法，还会获取到Object的一些方法
-		
-        执行方法 invoke(对象, 参数);
-        setAccessible()也可以使用
-        获取方法名称 getName()
-        使用invoke()方法可以执行方法
-    4.获取类名等
-        getName()
+构造方法Constructor[] constructors，
+成员方法Methods[] methods)用来描述.class字节码文件内容 -&gt;    (Class类对象阶段)
+创建对象</p>
+<p>反射：将类的各个组成部分封装为其他对象，这就是反射机制</p>
+<p>好处：1.在程序的运行过程中操作这些对象，比如
+String str = &ldquo;abc&rdquo;;
+str.  (当键入.之后，编辑器会自动弹出下拉列表可选方法或属性，
+这是因为类加载器已将String类加载进内存，
+并将String的所有成员抽取出来存放到了Method[]数组中)
+2.解耦，降低程序耦合性，提高程序可扩展性</p>
+<p>获取class对象的方式：
+1.在源码阶段，class文件还未被加载进内存，需调用Class.forName(&ldquo;全类名&rdquo;)手动将class加载进内存，返回class对象
+* 多用于配置文件中，将类名定义在配置文件中，读取文件，加载类
+2.已经将字节码文件加载进内存，不需要加载可直接获取，通过类名获取  类名.class
+* 多用于参数传递
+3.已经创建了对象， 对象.class ,此方法已被封装在Object类中
+* 多用于对象的获取字节码的方式
+同一个字节码文件再一次程序运行的过程中，只会被加载一次，无论通过哪一种方式获取的class对象都是同一个</p>
+<p>使用class对象：
+大部分都是获取的功能
+1.获取成员变量
+getFields 获取所有public修饰的变量
+getDeclaredFields
+getField() 获取指定名字的成员变量
+使用set和get方法可以修改成员变量，但是对于private不可修改
+可以使用setAccessible(true)来忽略访问权限修饰符的安全检查，暴力反射
+2.获取构造方法
+&hellip;
+&hellip;
+创建对象 newInstance() 创建对应的对象
+如果构造使用空参数的构造方法创建对象，操作可以简化：可使用class对象的newInstance()方法
+3.获取成员方法
+&hellip;
+&hellip;
+getMethods() 不止获取你看到的方法，还会获取到Object的一些方法</p>
+<pre><code>    执行方法 invoke(对象, 参数);
+    setAccessible()也可以使用
+    获取方法名称 getName()
+    使用invoke()方法可以执行方法
+4.获取类名等
+    getName()
 </code></pre>
 <h2 id="多线程">多线程</h2>
-<pre><code>线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
-进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
-
-主线程和子线程
-    JVM启动时会创建一个主线程，该主线程运行main方法
-    Java中线程不是孤立的，线程之间存在一些联系。A线程创建了B线程，B是A的子线程，A是B的父线程
-	
-可以通过两种方法实现线程类：1）继承Thread类； 2）实现Runnable接口
+<p>线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
+进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程</p>
+<p>主线程和子线程
+JVM启动时会创建一个主线程，该主线程运行main方法
+Java中线程不是孤立的，线程之间存在一些联系。A线程创建了B线程，B是A的子线程，A是B的父线程</p>
+<p>可以通过两种方法实现线程类：1）继承Thread类； 2）实现Runnable接口
 1）
 1.继承Thread类
 2.重写run方法，run方法内部就是你的线程要做的事情
 3.创建子线程对象
 4.启动线程 thread.start()
-    调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行
-    由线程调度器决定 Scheduler
-    注意：
-        start()方法调用结束并不代表子线程开始运行
-        新开启的线程会执行run()方法
-        如果开启了多个线程，start()调用的顺序并不一定就是线程启动的顺序
-        多线程运行结果与代码执行顺序(调用顺序)无关
-
-多线程运行结果有随机性
+调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行
+由线程调度器决定 Scheduler
+注意：
+start()方法调用结束并不代表子线程开始运行
+新开启的线程会执行run()方法
+如果开启了多个线程，start()调用的顺序并不一定就是线程启动的顺序
+多线程运行结果与代码执行顺序(调用顺序)无关</p>
+<p>多线程运行结果有随机性
 2）
 当线程类已经有父类了，就不能继承Thread类了，
 1.实现Runnable接口，重写run方法，run方法内部就是你的线程要做的事情
 2.创建Runnable接口实现类对象 Myrunnable runnable = new Myrunnable();
 3.创建线程对象 Thread thread = new Thread(runnable);
 4.开启线程 thread.start();
-第三步可以通过传递匿名内部类实现
-	
-线程常用方法：
-    currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程
-</code></pre>
+第三步可以通过传递匿名内部类实现</p>
+<p>线程常用方法：
+currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程</p>
 <h2 id="泛型">泛型</h2>
 <pre><code>多态是一种泛化机制。你可以将方法的参数设为基类，那么该方法就可以接受从这个基类中导出的任何类作为参数
 泛型：适用于许多许多类型
@@ -402,19 +405,16 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
 取出时需要将对象引用向下转型，这依靠范型来实现
 </code></pre>
 <h2 id="bigdecimal">BigDecimal</h2>
-<pre><code>在使用BigDecimal时，禁止使用构造方法BigDecimal(double)的方式把double值转化为BigDecimal对象，因为可能会产生精度丢失
+<p>在使用BigDecimal时，禁止使用构造方法BigDecimal(double)的方式把double值转化为BigDecimal对象，因为可能会产生精度丢失
 优先推荐入参为String的构造方法，或使用BigDecimal的valueOf方法，此方法内部其实执行了Double的toString，
-而Double的toString按double的实际能表达的精度对尾数进行了截断。
-
-在判断两个BigDecimal类型的变量相等时，使用compareTo()而不是equals()或者 == 
+而Double的toString按double的实际能表达的精度对尾数进行了截断。</p>
+<p>在判断两个BigDecimal类型的变量相等时，使用compareTo()而不是equals()或者 ==
 在BigDecimal类中，equals方法不止比较数值，还会比较标度(scale)
-    new BigDecimal(&quot;0.10000&quot;)的标度为5
-    new BigDecimal(&quot;0.1&quot;)的标度为1
-    两者数值上相等，但是使用equals方法来判断会返回false，因为equals也会比较标度
-    使用compareTo来比较即可
-</code></pre>
+new BigDecimal(&ldquo;0.10000&rdquo;)的标度为5
+new BigDecimal(&ldquo;0.1&rdquo;)的标度为1
+两者数值上相等，但是使用equals方法来判断会返回false，因为equals也会比较标度
+使用compareTo来比较即可</p>
 <h1 id="jdk相关">JDK相关</h1>
-<p><!-- raw HTML omitted --> JDK <!-- raw HTML omitted --></p>
 <h2 id="jdk18-hashmap">JDK1.8 Hashmap</h2>
 <pre><code>Hashmap基于哈希表，底层结构由数组 + 链表 + 红黑树组成，添加到集合中的元素以键值对的形式存储，键值对被封装成一个实体，Entry
 Entry[]保存了集合中所有的键值对
@@ -436,29 +436,22 @@ put(key, value) -&gt; 计算key的哈希值，计算方法：将key.hashCode()�
 </code></pre>
 <h2 id="jdk18-objectoutputstream">JDK1.8 ObjectOutputStream</h2>
 <h2 id="stringstringbuilderstringbuffer">String，StringBuilder，StringBuffer</h2>
-<pre><code>String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
-StringBuilder 和 StringBuffer 都继承自 AbstractStringBuilder 父类，可变字符序列
-
-StrngBuilder ：
-    当构造一个有参StringBuilder时，会使用append方法，且初始化长度为 字符串长度 + 16 。此append方法是来自 AbstractStringBuilder
-    append 是使用getChar实现的
-    insert 方法也是来自父类，使用arraycopy实现
-	
-StringBuffer ：
-    同上
-    不同点：SBuf的方法有 synchronized 关键字修饰，对调用方法的对象加锁，线程安全，SBui的没有
-	
-StringBuilder 与 StringBuffer 区别：前者效率更高，后者线程安全
-	
-String常量 + ：String str1 = &quot;123&quot; + &quot;456&quot;; === String str1 = &quot;123456&quot;;
-String变量 + ：String str1 = &quot;123&quot;, 
-                      str2 = &quot;456&quot;, 
-                      str3 = str1 + str2; === 先把str1转成SBuilder，使用append(str2)，再toString()转回来
-					  
-在String中equals方法被重写了，所以比较的是字符串的内容。而Object类中的equals方法内部就是 ==
-					  
-StringBuilder 和 StringBuffer 的 substring方法都来自父类 AbstractStringBuilder
-</code></pre>
+<p>String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
+StringBuilder 和 StringBuffer 都继承自 AbstractStringBuilder 父类，可变字符序列</p>
+<p>StrngBuilder ：
+当构造一个有参StringBuilder时，会使用append方法，且初始化长度为 字符串长度 + 16 。此append方法是来自 AbstractStringBuilder
+append 是使用getChar实现的
+insert 方法也是来自父类，使用arraycopy实现</p>
+<p>StringBuffer ：
+同上
+不同点：SBuf的方法有 synchronized 关键字修饰，对调用方法的对象加锁，线程安全，SBui的没有</p>
+<p>StringBuilder 与 StringBuffer 区别：前者效率更高，后者线程安全</p>
+<p>String常量 + ：String str1 = &ldquo;123&rdquo; + &ldquo;456&rdquo;; === String str1 = &ldquo;123456&rdquo;;
+String变量 + ：String str1 = &ldquo;123&rdquo;,
+str2 = &ldquo;456&rdquo;,
+str3 = str1 + str2; === 先把str1转成SBuilder，使用append(str2)，再toString()转回来</p>
+<p>在String中equals方法被重写了，所以比较的是字符串的内容。而Object类中的equals方法内部就是 ==</p>
+<p>StringBuilder 和 StringBuffer 的 substring方法都来自父类 AbstractStringBuilder</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">substring</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> start<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> end<span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//父类 AbstractStringBuilder 的substring实现方法
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>start <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
 	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> StringIndexOutOfBoundsException<span style="color:#f92672">(</span>start<span style="color:#f92672">);</span>
@@ -469,7 +462,6 @@ StringBuilder 和 StringBuffer 的 substring方法都来自父类 AbstractString
 <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>value<span style="color:#f92672">,</span> start<span style="color:#f92672">,</span> end <span style="color:#f92672">-</span> start<span style="color:#f92672">);</span> <span style="color:#75715e">//返回了一个新建的String类型
 </span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
 </code></pre></div><h1 id="其他">其他</h1>
-<p><!-- raw HTML omitted --> others <!-- raw HTML omitted --></p>
 <pre><code> String s = new String(&quot;asdf&quot;);
  声明一个对象引用s，new：给我一个新对象
  
@@ -542,8 +534,7 @@ Integer num5 <span style="color:#f92672">=</span> 128<span style="color:#f92672"
 Integer num6 <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
 System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>num5 <span style="color:#f92672">==</span> num6<span style="color:#f92672">);</span><span style="color:#75715e">// 自动装箱赋值在范围外，此时Integer其实是new了两个Integer，所以此时比较的是两个对象，false
 </span></code></pre></div><h2 id="三目运算符相关">三目运算符相关</h2>
-<pre><code>? : 三目运算符，冒号左右两边应当为同一类型。
-</code></pre>
+<p>? : 三目运算符，冒号左右两边应当为同一类型。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object o <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> Integer<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">new</span> Double<span style="color:#f92672">(</span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">)</span>
 syso<span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
 <span style="color:#75715e">//因为此时冒号两边类型不同，所以左边Integer将被转型成Double,所以此时输出为 1.0
