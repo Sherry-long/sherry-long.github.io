@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>旋转打印 1 ~ n方(Java) // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="旋转打印 1 ~ n方(Java)"/>
+<meta name="twitter:description" content="输入 3  输出 int[][]res = 1 2 3 8 9 4 7 6 5  思路 确定循环不变量，确保填充数据时不会重复填充、缺省填充
+将每一圈的数据填充过程分为四条边，每条边填充第一个至倒数第二个数据，即[0,n),左闭右开
+坚持这个原则，严格控制每一条边的填充长度，即可。
+Java实现 public static int[][] generateMatrix(int n) { int[][] res = new int[n][n]; int startx = 0, starty = 0, //起始坐标 	loop = n / 2, mid = n / 2, //循环次数，以及中间位置 	offset = 1, count = 1, //每条边的偏移量，以及计数器 	i, j; //游标i、j  while (loop-- != 0) { i = startx; j = starty; for (; j &lt; starty &#43; n - offset; j&#43;&#43;)//最上面一条边 	res[i][j] = count&#43;&#43;; for (; i &lt; startx &#43; n - offset; i&#43;&#43;)//最右方一条边 	res[i][j] = count&#43;&#43;; for (; j &gt; starty; j--)//最下面一条边 	res[i][j] = count&#43;&#43;; for (; i &gt; startx; i--)//最左方一条边 	res[i][j] = count&#43;&#43;; startx&#43;&#43;; starty&#43;&#43;; offset &#43;= 2;//一圈填完，圈收缩，起始坐标改变，偏移量改变  } if (n % 2 == 1) res[mid][mid] = count;//所有圈填完，查看正中央是否有独立空位 	return res; } "/>
+
+    <meta property="og:title" content="旋转打印 1 ~ n方(Java)" />
+<meta property="og:description" content="输入 3  输出 int[][]res = 1 2 3 8 9 4 7 6 5  思路 确定循环不变量，确保填充数据时不会重复填充、缺省填充
+将每一圈的数据填充过程分为四条边，每条边填充第一个至倒数第二个数据，即[0,n),左闭右开
+坚持这个原则，严格控制每一条边的填充长度，即可。
+Java实现 public static int[][] generateMatrix(int n) { int[][] res = new int[n][n]; int startx = 0, starty = 0, //起始坐标 	loop = n / 2, mid = n / 2, //循环次数，以及中间位置 	offset = 1, count = 1, //每条边的偏移量，以及计数器 	i, j; //游标i、j  while (loop-- != 0) { i = startx; j = starty; for (; j &lt; starty &#43; n - offset; j&#43;&#43;)//最上面一条边 	res[i][j] = count&#43;&#43;; for (; i &lt; startx &#43; n - offset; i&#43;&#43;)//最右方一条边 	res[i][j] = count&#43;&#43;; for (; j &gt; starty; j--)//最下面一条边 	res[i][j] = count&#43;&#43;; for (; i &gt; startx; i--)//最左方一条边 	res[i][j] = count&#43;&#43;; startx&#43;&#43;; starty&#43;&#43;; offset &#43;= 2;//一圈填完，圈收缩，起始坐标改变，偏移量改变  } if (n % 2 == 1) res[mid][mid] = count;//所有圈填完，查看正中央是否有独立空位 	return res; } " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/generatematrix/" />
+<meta property="article:published_time" content="2022-08-23T15:05:36+08:00" />
+<meta property="article:modified_time" content="2022-08-23T15:05:36+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">旋转打印 1 ~ n方(Java)</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 23, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h4 id="输入">输入</h4>
+<pre><code>3
+</code></pre>
+<h4 id="输出">输出</h4>
+<pre><code>int[][]res = 1 2 3
+             8 9 4
+             7 6 5
+</code></pre>
+<h4 id="思路">思路</h4>
+<p>确定循环不变量，确保填充数据时不会重复填充、缺省填充</p>
+<p>将每一圈的数据填充过程分为四条边，每条边填充第一个至倒数第二个数据，即[0,n),左闭右开</p>
+<p>坚持这个原则，严格控制每一条边的填充长度，即可。</p>
+<h4 id="java实现">Java实现</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[][]</span> <span style="color:#a6e22e">generateMatrix</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> n<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">int</span><span style="color:#f92672">[][]</span> res <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>n<span style="color:#f92672">][</span>n<span style="color:#f92672">];</span>
+		<span style="color:#66d9ef">int</span> startx <span style="color:#f92672">=</span> 0<span style="color:#f92672">,</span> starty <span style="color:#f92672">=</span> 0<span style="color:#f92672">,</span>  <span style="color:#75715e">//起始坐标
+</span><span style="color:#75715e"></span>		loop <span style="color:#f92672">=</span> n <span style="color:#f92672">/</span> 2<span style="color:#f92672">,</span> mid <span style="color:#f92672">=</span> n <span style="color:#f92672">/</span> 2<span style="color:#f92672">,</span>  <span style="color:#75715e">//循环次数，以及中间位置
+</span><span style="color:#75715e"></span>		offset <span style="color:#f92672">=</span> 1<span style="color:#f92672">,</span> count <span style="color:#f92672">=</span> 1<span style="color:#f92672">,</span>  <span style="color:#75715e">//每条边的偏移量，以及计数器
+</span><span style="color:#75715e"></span>		i<span style="color:#f92672">,</span> j<span style="color:#f92672">;</span> <span style="color:#75715e">//游标i、j
+</span><span style="color:#75715e"></span>
+		<span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>loop<span style="color:#f92672">--</span> <span style="color:#f92672">!=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+			i <span style="color:#f92672">=</span> startx<span style="color:#f92672">;</span>
+			j <span style="color:#f92672">=</span> starty<span style="color:#f92672">;</span>
+			<span style="color:#66d9ef">for</span> <span style="color:#f92672">(;</span> j <span style="color:#f92672">&lt;</span> starty <span style="color:#f92672">+</span> n <span style="color:#f92672">-</span> offset<span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span><span style="color:#75715e">//最上面一条边
+</span><span style="color:#75715e"></span>				res<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> count<span style="color:#f92672">++;</span>
+			<span style="color:#66d9ef">for</span> <span style="color:#f92672">(;</span> i <span style="color:#f92672">&lt;</span> startx <span style="color:#f92672">+</span> n <span style="color:#f92672">-</span> offset<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span><span style="color:#75715e">//最右方一条边
+</span><span style="color:#75715e"></span>				res<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> count<span style="color:#f92672">++;</span>
+			<span style="color:#66d9ef">for</span> <span style="color:#f92672">(;</span> j <span style="color:#f92672">&gt;</span> starty<span style="color:#f92672">;</span> j<span style="color:#f92672">--)</span><span style="color:#75715e">//最下面一条边
+</span><span style="color:#75715e"></span>				res<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> count<span style="color:#f92672">++;</span>
+			<span style="color:#66d9ef">for</span> <span style="color:#f92672">(;</span> i <span style="color:#f92672">&gt;</span> startx<span style="color:#f92672">;</span> i<span style="color:#f92672">--)</span><span style="color:#75715e">//最左方一条边
+</span><span style="color:#75715e"></span>				res<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> count<span style="color:#f92672">++;</span>
+			startx<span style="color:#f92672">++;</span>
+			starty<span style="color:#f92672">++;</span>
+			offset <span style="color:#f92672">+=</span> 2<span style="color:#f92672">;</span><span style="color:#75715e">//一圈填完，圈收缩，起始坐标改变，偏移量改变
+</span><span style="color:#75715e"></span>
+		<span style="color:#f92672">}</span>
+		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">%</span> 2 <span style="color:#f92672">==</span> 1<span style="color:#f92672">)</span>
+			res<span style="color:#f92672">[</span>mid<span style="color:#f92672">][</span>mid<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> count<span style="color:#f92672">;</span><span style="color:#75715e">//所有圈填完，查看正中央是否有独立空位
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> res<span style="color:#f92672">;</span>
+	<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

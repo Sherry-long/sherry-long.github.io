@@ -6,7 +6,19 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Aug 2022 11:52:56 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Aug 2022 15:05:36 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>旋转打印 1 ~ n方(Java)</title>
+      <link>https://sherry-long.github.io/post/generatematrix/</link>
+      <pubDate>Tue, 23 Aug 2022 15:05:36 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/generatematrix/</guid>
+      <description>输入 3  输出 int[][]res = 1 2 3 8 9 4 7 6 5  思路 确定循环不变量，确保填充数据时不会重复填充、缺省填充
+将每一圈的数据填充过程分为四条边，每条边填充第一个至倒数第二个数据，即[0,n),左闭右开
+坚持这个原则，严格控制每一条边的填充长度，即可。
+Java实现 public static int[][] generateMatrix(int n) { int[][] res = new int[n][n]; int startx = 0, starty = 0, //起始坐标 	loop = n / 2, mid = n / 2, //循环次数，以及中间位置 	offset = 1, count = 1, //每条边的偏移量，以及计数器 	i, j; //游标i、j  while (loop-- != 0) { i = startx; j = starty; for (; j &amp;lt; starty + n - offset; j++)//最上面一条边 	res[i][j] = count++; for (; i &amp;lt; startx + n - offset; i++)//最右方一条边 	res[i][j] = count++; for (; j &amp;gt; starty; j--)//最下面一条边 	res[i][j] = count++; for (; i &amp;gt; startx; i--)//最左方一条边 	res[i][j] = count++; startx++; starty++; offset += 2;//一圈填完，圈收缩，起始坐标改变，偏移量改变  } if (n % 2 == 1) res[mid][mid] = count;//所有圈填完，查看正中央是否有独立空位 	return res; } </description>
+    </item>
+    
     <item>
       <title>设计模式(Java)</title>
       <link>https://sherry-long.github.io/post/designpatterns/</link>
@@ -25,18 +37,12 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
       <pubDate>Mon, 22 Aug 2022 11:28:43 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/javase/</guid>
-      <description>关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
-this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
-this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
-static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&amp;ldquo;1946&amp;rdquo;); endDate = Date.valueOf(&amp;ldquo;1964&amp;rdquo;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用
-static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
-####开发中,如何确定一个属性是否要声明为static?
+      <description>关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&amp;quot;1946&amp;quot;); endDate = Date.valueOf(&amp;quot;1964&amp;quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）  ####开发中,如何确定一个属性是否要声明为static?
 1.属性被多个对象共享，不会因为对象的不同而不同
 2.类中的常量也常常修饰为static
 ####开发中,如何确定一个方法是否要声明为static?
 1.操作静态属性的方法通常设置为静态
-2.工具类中的方法习惯上声明为静态方法
-可用static来实现单例模式  饿汉式(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)</description>
+2.工具类中的方法习惯上声明为静态方法</description>
     </item>
     
     <item>
