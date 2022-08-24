@@ -229,13 +229,13 @@ arraylist底层采用数组实现，采用算法实现动态数组，数组通�
     都可以,会自动转型成object
 </code></pre>
 <h2 id="复用类">复用类</h2>
-<p>组合：</p>
-<p>继承：使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性</p>
-<p>代理：</p>
-<p>重载(overload)：
+<p><strong>组合：</strong></p>
+<p>**继承：**使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性</p>
+<p><strong>代理：</strong></p>
+<p><strong>重载(overload)：</strong>
 在同一个类中，同名不同参的函数定义是重载
 是否为重载关系，只看方法名(须相同)与参数列表(须不同，类型、数量、顺序等)，不看返回值类型</p>
-<p>覆写or重写(override/overwrite)：
+<p><strong>覆写or重写(override/overwrite)：</strong>
 子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符
 不小于父类被重写方法的权限修饰符。
 子类不能重写父类中private修饰的方法。
@@ -279,7 +279,7 @@ p1<span style="color:#f92672">.</span><span style="color:#a6e22e">earnMoney</spa
 m1<span style="color:#f92672">.</span><span style="color:#a6e22e">earnMoney</span><span style="color:#f92672">();</span><span style="color:#75715e">//此时可以，通过向下转型将p1转为Man类型，但是会有风险
 </span><span style="color:#75715e">//可能会抛出 ClassCastException 异常
 </span></code></pre></div><h4 id="解决方法instanceof">解决方法：instanceof</h4>
-<p>a instanceof A 判断a对象是否为A类的一个实例</p>
+<p><strong>a instanceof A</strong> 判断a对象是否为A类的一个实例</p>
 <h3 id="动态绑定">动态绑定</h3>
 <pre><code>编译器无法得知基类的继承类是哪个，引出“绑定”的概念
 绑定：将一个方法调用和一个方法主体关联起来称为绑定
@@ -323,12 +323,16 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
 接口是实现多重继承的途径</p>
 <ul>
 <li>
-<p>定义接口中的成员
-JDK7以前：只能定义全局常量(public static final)和抽象方法(public abstract)</p>
-<p>JDK8以后：还可以定义静态方法、默认方法
-接口不可实例化，接口中不能定义构造器</p>
+<p>定义接口中的成员</p>
+<p>JDK7以前：只能定义<strong>全局常量(public static final)<strong>和</strong>抽象方法(public abstract)</strong></p>
+<p>JDK8以后：还可以定义<strong>静态方法、默认方法</strong></p>
 </li>
 </ul>
+<p>接口中定义的静态方法只能通过接口调用，实现类(包括其对象)不能调用。默认方法在实现类中被重写，则调用的是重写方法</p>
+<p>如果子类(或实现类)继承的父类和实现的接口中有同名同参数方法，那么子类在没有重写此方法的情况下，默认调用的是父类中的方法</p>
+<p>可以通过 <strong>接口名.super.method()</strong> 的方式调用接口中的默认方法</p>
+<p>通过实现类的对象可以调用接口中的默认方法</p>
+<p>接口不可实例化，接口中不能定义构造器</p>
 <p>java开发中，接口都通过让类去实现(implements)的方式使用</p>
 <p>如果实现类覆盖了接口中的所有抽象方法，则此类可以实例化</p>
 <p>如果没有覆盖所有抽象方法，则此实现类仍为一个抽象类</p>
@@ -342,6 +346,18 @@ JDK7以前：只能定义全局常量(public static final)和抽象方法(public
 抽象类必须要有构造函数，接口不能有构造函数
 抽象类被继承(单继承)，接口被实现(一个类可实现多个接口)，接口与接口之间继承，可以多继承
 </code></pre>
+<h2 id="内部类inner-class">内部类(Inner class)</h2>
+<p>在Java中，允许一个类的定义位于另一个类的内部，前者称为内部类，后者称为外部类</p>
+<p>使用<strong>Inner class</strong>来定义一个内部类，一般用于定义它的类或语句块之内(内部类的名字不能与外部类一致)</p>
+<h4 id="分类">分类</h4>
+<ul>
+<li>
+<p>成员内部类(static成员内部类 或 非static成员内部类)</p>
+</li>
+<li>
+<p>局部内部类(不谈修饰符)、匿名内部类</p>
+</li>
+</ul>
 <h2 id="java反射">Java反射</h2>
 <pre><code>写好的代码 -&gt; javac编译 -&gt; 字节码文件(.class) -&gt;     (源码阶段)
 由类加载器(ClassLoader)加载进内存 -&gt; Class类对象(成员变量Field[] fields，
