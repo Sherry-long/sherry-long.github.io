@@ -67,7 +67,7 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -80,7 +80,7 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
 	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
 </span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
-
+   
 	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New1 new1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New1<span style="color:#f92672">();</span>
 
 	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New1 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
@@ -116,6 +116,125 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
 <h3 id="解决的问题">解决的问题</h3>
 <pre><code>当功能内部一部分实现是确定的，一部分实现是不确定的，这是可以将不确定的部分暴露出去，让子类实现
 </code></pre>
+<h1 id="代理模式">代理模式</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StarTest</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+		RealStar rs <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RealStar<span style="color:#f92672">();</span>
+		ProxyStar ps <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ProxyStar<span style="color:#f92672">(</span>rs<span style="color:#f92672">);</span>
+		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">();</span>
+	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Star</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">confer</span><span style="color:#f92672">();</span><span style="color:#75715e">// 面谈
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">signContract</span><span style="color:#f92672">();</span><span style="color:#75715e">// 签合同
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bookTicket</span><span style="color:#f92672">();</span><span style="color:#75715e">// 订票
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sing</span><span style="color:#f92672">();</span><span style="color:#75715e">// 演唱
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">collectMoney</span><span style="color:#f92672">();</span><span style="color:#75715e">// 收钱
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RealStar</span> <span style="color:#66d9ef">implements</span> Star <span style="color:#f92672">{</span>
+
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">confer</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">signContract</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;The real star signs contract&#34;</span><span style="color:#f92672">);</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bookTicket</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sing</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;The real star sings&#34;</span><span style="color:#f92672">);</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">collectMoney</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;The real star collects money&#34;</span><span style="color:#f92672">);</span>
+	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProxyStar</span> <span style="color:#66d9ef">implements</span> Star <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> Star star<span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ProxyStar</span><span style="color:#f92672">(</span>Star star<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated constructor stub
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">star</span> <span style="color:#f92672">=</span> star<span style="color:#f92672">;</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">confer</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Proxy confer&#34;</span><span style="color:#f92672">);</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">signContract</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Proxy consider&#34;</span><span style="color:#f92672">);</span>
+		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Proxy thinks its good&#34;</span><span style="color:#f92672">);</span>
+		star<span style="color:#f92672">.</span><span style="color:#a6e22e">signContract</span><span style="color:#f92672">();</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bookTicket</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Proxy books ticket&#34;</span><span style="color:#f92672">);</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sing</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		star<span style="color:#f92672">.</span><span style="color:#a6e22e">sing</span><span style="color:#f92672">();</span>
+	<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">collectMoney</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>		star<span style="color:#f92672">.</span><span style="color:#a6e22e">collectMoney</span><span style="color:#f92672">();</span>
+	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Proxy confer
+Proxy consider
+Proxy thinks its good
+The real star signs contract
+Proxy books ticket
+The real star sings
+The real star collects money
+</code></pre></div><h3 id="应用场景-1">应用场景：</h3>
+<pre><code>安全代理：屏蔽对真实角色的直接访问
+远程代理：通过代理类处理远程方法调用(RMI)
+延迟加载：先加载轻量级的代理对象，真正需要再加载真实对象
+</code></pre>
+<h3 id="分类">分类</h3>
+<ul>
+<li>
+<p>静态代理 (静态定义代理类)</p>
+</li>
+<li>
+<p>动态代理 (动态生成代理类)</p>
+</li>
+</ul>
+<h1 id="工厂模式">工厂模式</h1>
+<h3 id="分类-1">分类</h3>
+<ul>
+<li>
+<p>简单工厂
+也叫静态工厂模式，就是工厂类一般是使用静态方法，通过接收的参数不同来返回不同的实例对象
+缺点：对于新增加的产品，不修改代码无法扩展，违反了开闭原则(对扩展开放，对修改关闭)</p>
+</li>
+<li>
+<p>工厂方法</p>
+</li>
+<li>
+<p>抽象工厂</p>
+</li>
+</ul>
 
     </div>
     <div class="post-footer">
