@@ -13,14 +13,40 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="JavaSE"/>
-<meta name="twitter:description" content="关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 随着类的加载而加载，早于对象被创建 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）  开发中,如何确定一个属性是否要声明为static? 1.属性被多个对象共享，不会因为对象的不同而不同
-2.类中的常量也常常修饰为static
-开发中,如何确定一个方法是否要声明为static? 1.操作静态属性的方法通常设置为静态"/>
+<meta name="twitter:description" content="Java基础 序列化和反序列化 序列化：将对象写入到IO流中 反序列化：从IO流中恢复对象 序列化机制允许将实现序列化的Java对象转换为字节序列，这些字节序列可以保存在磁盘上， 或通过网络传输，以达到以后恢复成原来的对象。序列化机制使得对象可以脱离程序运行而独立存在
+所有可在网络上传输的对象都必须是可序列化的，所有需要保存到磁盘上的对象都必须是可序列化的
+反序列化不会调用构造方法，对象是由JVM自己生成的
+所有保存到磁盘上的对象都有一个序列化编码 在程序试图序列化一个对象时，会先检查此对象是否已经被序列化过，如果已经序列化直接输出编号
+对一个已经序列化的对象进行修改后，再次序列化则不会保存 transient（暂时）变量和static（静态）变量在序列化时会忽视
+关于arraylist底层自定义序列化方法： arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象， 所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中
+ 可变参数 类型 &#43; ... &#43; 形参名 定义时： f(Object... trailing); 调用时： f(&quot;one&quot;); f(&quot;one&quot;, &quot;two&quot;); f(1,2,3); f(&#39;a&#39;, &#39;b&#39;); f(); 都可以,会自动转型成object   复用类 组合：
+**继承：**使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
+代理：
+重载(overload)： 在同一个类中，同名不同参的函数定义是重载 是否为重载关系，只看方法名(须相同)与参数列表(须不同，类型、数量、顺序等)，不看返回值类型
+覆写or重写(override/overwrite)： 子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符 不小于父类被重写方法的权限修饰符。 子类不能重写父类中private修饰的方法。 父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。 父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。 父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。
+子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。 对于重载。编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 * 早绑定(静态绑定) * 对于重写。只有在真正执行时，编译器才知道具体调用的是哪个方法 * 晚绑定(动态绑定) *
+ 子类对象实例化   从结果上看（继承性）
+子类继承父类以后，就会获得父类中声明的属性和方法 创建子类的对象，在堆空间中，就会加载所有父类中声明的属性
+  从过程上看
+当我们使用子类中的构造器构造一个对象的时候，一定会直接或间接地调用父类的构造器，然后父类的父类，最后到java.lang.Object类的构造器"/>
 
     <meta property="og:title" content="JavaSE" />
-<meta property="og:description" content="关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 随着类的加载而加载，早于对象被创建 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）  开发中,如何确定一个属性是否要声明为static? 1.属性被多个对象共享，不会因为对象的不同而不同
-2.类中的常量也常常修饰为static
-开发中,如何确定一个方法是否要声明为static? 1.操作静态属性的方法通常设置为静态" />
+<meta property="og:description" content="Java基础 序列化和反序列化 序列化：将对象写入到IO流中 反序列化：从IO流中恢复对象 序列化机制允许将实现序列化的Java对象转换为字节序列，这些字节序列可以保存在磁盘上， 或通过网络传输，以达到以后恢复成原来的对象。序列化机制使得对象可以脱离程序运行而独立存在
+所有可在网络上传输的对象都必须是可序列化的，所有需要保存到磁盘上的对象都必须是可序列化的
+反序列化不会调用构造方法，对象是由JVM自己生成的
+所有保存到磁盘上的对象都有一个序列化编码 在程序试图序列化一个对象时，会先检查此对象是否已经被序列化过，如果已经序列化直接输出编号
+对一个已经序列化的对象进行修改后，再次序列化则不会保存 transient（暂时）变量和static（静态）变量在序列化时会忽视
+关于arraylist底层自定义序列化方法： arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象， 所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中
+ 可变参数 类型 &#43; ... &#43; 形参名 定义时： f(Object... trailing); 调用时： f(&quot;one&quot;); f(&quot;one&quot;, &quot;two&quot;); f(1,2,3); f(&#39;a&#39;, &#39;b&#39;); f(); 都可以,会自动转型成object   复用类 组合：
+**继承：**使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
+代理：
+重载(overload)： 在同一个类中，同名不同参的函数定义是重载 是否为重载关系，只看方法名(须相同)与参数列表(须不同，类型、数量、顺序等)，不看返回值类型
+覆写or重写(override/overwrite)： 子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符 不小于父类被重写方法的权限修饰符。 子类不能重写父类中private修饰的方法。 父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。 父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。 父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。
+子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。 对于重载。编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 * 早绑定(静态绑定) * 对于重写。只有在真正执行时，编译器才知道具体调用的是哪个方法 * 晚绑定(动态绑定) *
+ 子类对象实例化   从结果上看（继承性）
+子类继承父类以后，就会获得父类中声明的属性和方法 创建子类的对象，在堆空间中，就会加载所有父类中声明的属性
+  从过程上看
+当我们使用子类中的构造器构造一个对象的时候，一定会直接或间接地调用父类的构造器，然后父类的父类，最后到java.lang.Object类的构造器" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javase/" />
 <meta property="article:published_time" content="2022-08-22T11:28:43+08:00" />
@@ -65,143 +91,12 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          5 min read
+          3 min read
         </div>
       </div>
     </header>
     <div class="post-content">
-      <h1 id="关键字">关键字</h1>
-<h2 id="this关键字">this关键字</h2>
-<pre><code>创建一个对象时分以下四部：
-    1.分配对象空间，将对象成员变量初始化为0或空
-    2.执行显示值的属性初始化
-    3.执行构造方法  this(\*\*)
-    4.返回对象的地址给相关变量
-	
-this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
-
-this 用法
-    1. this.name = name;
-       避免程序二义
-    2. 使用this关键字调用重载的构造方法，避免初始化代码重复。
-       只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句
-       （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用）
-    3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this）
-    4. this 将当前对象本身作为参数传递给其他方法
-    5. return this;
-       this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
-</code></pre>
-<h2 id="static关键字">static关键字</h2>
-<pre><code>当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
-方便在没有创建对象的情况下来进行调用（方法/变量）
-    1. static方法：
-        静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的
-        不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）
-	
-    2. static变量：
-        静态变量被所有对象共享，在内存中只有一个副本
-        随着类的加载而加载，早于对象被创建
-	
-    3. static代码块：
-        优化程序性能（重复代码块）
-            private static Date startDate,endDate;
-        static{
-            startDate = Date.valueOf(&quot;1946&quot;);
-            endDate = Date.valueOf(&quot;1964&quot;);
-        }
-        static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的
-        在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。
-    构造器是static方法，它不需要对象来调用
-		
-static不会改变方法和变量的访问权限
-静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
-</code></pre>
-<h4 id="开发中如何确定一个属性是否要声明为static">开发中,如何确定一个属性是否要声明为static?</h4>
-<p>1.属性被多个对象共享，不会因为对象的不同而不同</p>
-<p>2.类中的常量也常常修饰为static</p>
-<h4 id="开发中如何确定一个方法是否要声明为static">开发中,如何确定一个方法是否要声明为static?</h4>
-<p>1.操作静态属性的方法通常设置为静态</p>
-<p>2.工具类中的方法习惯上声明为静态方法</p>
-<h4 id="可用static来实现单例模式">可用static来实现单例模式</h4>
-<ul>
-<li>饿汉式</li>
-</ul>
-<p>(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New1</span> <span style="color:#f92672">{</span>
-	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
-
-	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New1 new1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New1<span style="color:#f92672">();</span>
-
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New1 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-		<span style="color:#66d9ef">return</span> new1<span style="color:#f92672">;</span><span style="color:#75715e">//不管用不用直接创建，饥不择食
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
-
-<span style="color:#f92672">}</span>
-</code></pre></div><ul>
-<li>懒汉式</li>
-</ul>
-<p>(优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span>
-	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
-
-	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
-
-	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
-			instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
-		<span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span><span style="color:#75715e">//什么时候用什么时候创建，拖延症
-</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><pre><code>不论调用多少次getInstance(),返回的都是同一对象
-</code></pre>
-<h2 id="final关键字">final关键字</h2>
-<p>final关键字可用来修饰引用、方法和类</p>
-<ul>
-<li>
-<p>1.修饰引用</p>
-<ol>
-<li>如果引用为基本数据类型，则该引用为常量，无法被修改</li>
-<li>如果引用为引用数据类型，比如对象、数组，则该对象、数组本身可以修改，但指向该对象或数组的地址引用不能被修改</li>
-<li>如果引用是类的成员变量，则可以考虑赋值的位置有：
-显式初始化、代码块中初始化、构造器中初始化(当有多个构造器时所有构造器都需赋值)</li>
-</ol>
-</li>
-<li>
-<p>2.修饰方法</p>
-<p>当用final修饰方法时，这个方法将成为最终方法，无法被子类重写，可被继承</p>
-</li>
-<li>
-<p>3.修饰类</p>
-<p>当用final修饰类时，该类将成为最终类，无法被继承（断子绝孙类）
-（String就是最终类）</p>
-</li>
-<li>
-<p>4.final参数</p>
-<p>参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改
-此时参数只读(类比c++中用const修饰形参)</p>
-</li>
-</ul>
-<h2 id="super关键字">super关键字</h2>
-<pre><code>在子类中调用父类的属性与方法
-super理解为：父类的
-可以用来调用属性、方法、构造器：
-    当子类，父类中出现了同名的属性(或重写的方法)时，可以通过 this 与 super 来区分
-	
-    我们可以在子类的构造器中显式的使用 super(\*\*\*) 调用父类的构造器(必须声明在子类构造器的首行)
-</code></pre>
-<p>在类构造器中，this() super() 只能二选一， 未显式声明的时候，默认 super(空参);
-在类的多个构造器中，至少有一个类的构造器中使用了super(***)，调用父类构造器</p>
-<h2 id="publicprotected和private">public、protected和private</h2>
-<ul>
-<li>public  所有人均可见</li>
-<li>private  除本身外其他人不可访问</li>
-<li>protected  对继承他的子类开放，有包内访问权限</li>
-</ul>
-<h1 id="java基础">Java基础</h1>
+      <h1 id="java基础">Java基础</h1>
 <h2 id="序列化和反序列化">序列化和反序列化</h2>
 <p>序列化：将对象写入到IO流中
 反序列化：从IO流中恢复对象
@@ -216,6 +111,7 @@ transient（暂时）变量和static（静态）变量在序列化时会忽视</
 <p>关于arraylist底层自定义序列化方法：
 arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象，
 所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中</p>
+<hr>
 <h2 id="可变参数">可变参数</h2>
 <pre><code>类型 + ... + 形参名
 定义时：
@@ -228,6 +124,7 @@ arraylist底层采用数组实现，采用算法实现动态数组，数组通�
     f();
     都可以,会自动转型成object
 </code></pre>
+<hr>
 <h2 id="复用类">复用类</h2>
 <p><strong>组合：</strong></p>
 <p>**继承：**使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性</p>
@@ -245,6 +142,7 @@ arraylist底层采用数组实现，采用算法实现动态数组，数组通�
 <p>子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。
 对于重载。编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 * 早绑定(静态绑定) *
 对于重写。只有在真正执行时，编译器才知道具体调用的是哪个方法 * 晚绑定(动态绑定) *</p>
+<hr>
 <h2 id="子类对象实例化">子类对象实例化</h2>
 <ul>
 <li>
@@ -258,6 +156,7 @@ arraylist底层采用数组实现，采用算法实现动态数组，数组通�
 <p>虽然创建子类对象时调用了父类构造器，但自始至终只创建过一个对象，即new的对象</p>
 </li>
 </ul>
+<hr>
 <h2 id="多态运行时行为">多态：运行时行为</h2>
 <pre><code>多态通过分离“做什么”和“怎么做”，从另一角度将接口和实现分离开。
 消除类型之间的耦合关系。
@@ -305,6 +204,7 @@ person.eat(); 假设此方法子类中有重写</p>
 <h3 id="多态性使用">多态性使用</h3>
 <pre><code>典型使用：.equals() 方法，其接收参数为Object类型，所有类型的父类，所有对象皆可使用这一方法。
 </code></pre>
+<hr>
 <h2 id="抽象类abstract-class">抽象类(abstract class)</h2>
 <pre><code>abstract关键字，如果一个类包含一个或多个抽象方法，该类就必须被限定为抽象的。
 </code></pre>
@@ -312,7 +212,9 @@ person.eat(); 假设此方法子类中有重写</p>
 如果一个类继承抽象类，并想为该新类创建对象，就必须为抽象类中所有方法声明提供实现
 若未重写所有抽象方法，则此子类为抽象类，应使用 abstract 修饰
 abstract关键字允许人们在类中创建一个或多个没有任何定义的方法——提供了接口部分</p>
+<hr>
 <h2 id="抽象类的匿名子类">抽象类的匿名子类</h2>
+<hr>
 <h2 id="接口interface">接口(interface)</h2>
 <p>使用interface来定义，Java中，接口和类是并列的两个结构
 只有方法声明没有实现
@@ -340,24 +242,99 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
 <h4 id="接口与接口之间可以继承而且可以多继承">接口与接口之间可以继承，而且可以多继承</h4>
 <h4 id="接口的使用体现了多态性">接口的使用，体现了多态性</h4>
 <h3 id="抽象类与接口有哪些异同">抽象类与接口有哪些异同</h3>
-<pre><code>都不可实例化对象，内部都有抽象方法，都体现了多态性
-子类想要实例化都必须实现(或重写)其内部所有抽象方法，否则子类为抽象类
-
-抽象类必须要有构造函数，接口不能有构造函数
-抽象类被继承(单继承)，接口被实现(一个类可实现多个接口)，接口与接口之间继承，可以多继承
+<pre><code>    都不可实例化对象，内部都有抽象方法，都体现了多态性
+    子类想要实例化都必须实现(或重写)其内部所有抽象方法，否则子类为抽象类
+	
+    抽象类必须要有构造函数，接口不能有构造函数
+    抽象类被继承(单继承)，接口被实现(一个类可实现多个接口)，接口与接口之间继承，可以多继承
 </code></pre>
+<hr>
 <h2 id="内部类inner-class">内部类(Inner class)</h2>
 <p>在Java中，允许一个类的定义位于另一个类的内部，前者称为内部类，后者称为外部类</p>
-<p>使用<strong>Inner class</strong>来定义一个内部类，一般用于定义它的类或语句块之内(内部类的名字不能与外部类一致)</p>
+<p>内部类一般用于定义它的类或语句块之内(内部类的名字不能与外部类一致)</p>
 <h4 id="分类">分类</h4>
 <ul>
+<li>成员内部类(static成员内部类 或 非static成员内部类)</li>
+</ul>
+<p>一方面，作为外部类的成员</p>
+<pre><code>    调用外部类的结构
+    可以被static修饰
+    可以被四种不同的权限修饰
+</code></pre>
+<p>另一方面，作为一个类</p>
+<pre><code>    类内可以定义属性、方法、构造器等
+    可以被final修饰。表示此类不能被继承。不使用final，此类可被继承
+    可以被abstract修饰
+</code></pre>
+<ul>
+<li>局部内部类(不谈修饰符，方法内、代码块内、构造器内)、匿名内部类</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">{</span>
+
+	<span style="color:#75715e">// 成员内部类
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Dog</span> <span style="color:#f92672">{</span><span style="color:#75715e">//静态成员内部类
+</span><span style="color:#75715e"></span>
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bird</span> <span style="color:#f92672">{</span><span style="color:#75715e">//非静态成员内部类
+</span><span style="color:#75715e"></span>
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span><span style="color:#75715e">//方法内
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// 局部内部类
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AA</span> <span style="color:#f92672">{</span>
+
+		<span style="color:#f92672">}</span>
+
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#f92672">{</span><span style="color:#75715e">//代码块内
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// 局部内部类
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BB</span> <span style="color:#f92672">{</span>
+
+		<span style="color:#f92672">}</span>
+	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="如何实例化成员内部类的对象">如何实例化成员内部类的对象</h4>
+<ul>
 <li>
-<p>成员内部类(static成员内部类 或 非static成员内部类)</p>
+<p>静态成员内部类 ： 外部类名.内部类名 引用名 = new 外部类名.内部类构造方法</p>
 </li>
 <li>
-<p>局部内部类(不谈修饰符)、匿名内部类</p>
+<p>非静态成员内部类 ： 先创建一个外部类的对象，之后 外部类名.内部类名 引用名 = 引用名.new 内部类构造方法</p>
 </li>
 </ul>
+<h4 id="如何在成员内部类中区分调用外部类的结构">如何在成员内部类中区分调用外部类的结构</h4>
+<p>无重名时，直接调用。重名时，内部类中的结构使用 <strong>this.结构名</strong>，外部类中的结构用 <strong>外部类名.this.结构名</strong></p>
+<h4 id="开发中局部内部类的使用">开发中，局部内部类的使用</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> Comparable <span style="color:#a6e22e">getComparable</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span><span style="color:#75715e">//返回一个实现了Comparable接口的类的对象
+</span><span style="color:#75715e"></span>
+		<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyComparable</span> <span style="color:#66d9ef">implements</span> Comparable <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//非静态局部内部类实现接口
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">@Override</span>
+			<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">compareTo</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+				<span style="color:#75715e">// TODO Auto-generated method stub
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">return</span> 0<span style="color:#f92672">;</span>
+			<span style="color:#f92672">}</span>
+		<span style="color:#f92672">}</span>
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> MyComparable<span style="color:#f92672">();</span>
+
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#f92672">...</span>
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Comparable</span> <span style="color:#f92672">{</span><span style="color:#75715e">//接口Comparable
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">compareTo</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h2 id="异常">异常</h2>
+<h4 id="概述">概述</h4>
+<h4 id="常见异常">常见异常</h4>
+<h4 id="异常处理机制一try-catch-finally">异常处理机制一：try-catch-finally</h4>
+<h4 id="异常处理机制二throws">异常处理机制二：throws</h4>
+<h4 id="手动抛出异常throw">手动抛出异常：throw</h4>
+<h4 id="用户自定义异常类">用户自定义异常类</h4>
+<hr>
 <h2 id="java反射">Java反射</h2>
 <pre><code>写好的代码 -&gt; javac编译 -&gt; 字节码文件(.class) -&gt;     (源码阶段)
 由类加载器(ClassLoader)加载进内存 -&gt; Class类对象(成员变量Field[] fields，
@@ -408,6 +385,7 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
     4.获取类名等
         getName()
 </code></pre>
+<hr>
 <h2 id="多线程">多线程</h2>
 <pre><code>线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
 进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
@@ -442,6 +420,7 @@ abstract关键字允许人们在类中创建一个或多个没有任何定义的
 线程常用方法：
     currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程
 </code></pre>
+<hr>
 <h2 id="泛型">泛型</h2>
 <pre><code>多态是一种泛化机制。你可以将方法的参数设为基类，那么该方法就可以接受从这个基类中导出的任何类作为参数
 泛型：适用于许多许多类型
@@ -459,6 +438,7 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
 当将对象引用置入容器中时，它将向上转型为Object类，所以他会丢失当前身份。
 取出时需要将对象引用向下转型，这依靠范型来实现
 </code></pre>
+<hr>
 <h2 id="bigdecimal">BigDecimal</h2>
 <pre><code>在使用BigDecimal时，禁止使用构造方法BigDecimal(double)的方式把double值转化为BigDecimal对象，因为可能会产生精度丢失
 优先推荐入参为String的构造方法，或使用BigDecimal的valueOf方法，此方法内部其实执行了Double的toString，
@@ -471,6 +451,7 @@ ArrayList&lt;Shape&gt; shapes = new.ArrayList&lt;Shape&gt;();
     两者数值上相等，但是使用equals方法来判断会返回false，因为equals也会比较标度
     使用compareTo来比较即可
 </code></pre>
+<hr>
 <h1 id="jdk相关">JDK相关</h1>
 <h2 id="jdk18-hashmap">JDK1.8 Hashmap</h2>
 <pre><code>Hashmap基于哈希表，底层结构由数组 + 链表 + 红黑树组成，添加到集合中的元素以键值对的形式存储，键值对被封装成一个实体，Entry
@@ -491,7 +472,9 @@ put(key, value) -&gt; 计算key的哈希值，计算方法：将key.hashCode()�
 2.扩容
     如果已达最长度，不进行扩容，如果 旧表长度 * 2 &lt; MAX_LENGTH &amp;&amp; 旧表长度 &gt;= 16 ，才进行扩容
 </code></pre>
+<hr>
 <h2 id="jdk18-objectoutputstream">JDK1.8 ObjectOutputStream</h2>
+<hr>
 <h2 id="stringstringbuilderstringbuffer">String，StringBuilder，StringBuffer</h2>
 <p>String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它</p>
 <p>StringBuilder 和 StringBuffer 都继承自 AbstractStringBuilder 父类，可变字符序列</p>
@@ -521,105 +504,7 @@ String变量 + ：String str1 = &quot;123&quot;,
 	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> StringIndexOutOfBoundsException<span style="color:#f92672">(</span>end <span style="color:#f92672">-</span> start<span style="color:#f92672">);</span>
 <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>value<span style="color:#f92672">,</span> start<span style="color:#f92672">,</span> end <span style="color:#f92672">-</span> start<span style="color:#f92672">);</span> <span style="color:#75715e">//返回了一个新建的String类型
 </span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
-</code></pre></div><h1 id="其他">其他</h1>
-<pre><code> String s = new String(&quot;asdf&quot;);
- 声明一个对象引用s，new：给我一个新对象
- 
- Java对象创建在堆上，对象引用在堆栈上
- 对象为什么不在堆上：创建程序时，Java系统必须知道存储在堆栈内的所有项的确切生命周期，以便上下移动堆栈指针（分配新内存以及回收内存）
-                     在堆中存储时，编译器不需要知道存储的数据在堆中存活多久，更有灵活性，但是在堆中进行内存分配和清理比堆栈花时间更多
- 对于基本类型，将他们存储在堆栈上不是很高效，new时，创建一个并非是引用的“自动“变量，这个变量直接存储值，并存储在堆栈上，更加高效。
- （基本类型，变量直接储存值）
- 
- 当创建一个数组对象时，对象会被自动初始化
- 
- Array.copyOfRange(int[] source, int from, int to):返回一个数组，复制 source 数组从 from 位到 to 位的内容，不包括to位，长度为 to - from 。
- 
- 在Java中，负数自动以补码形式保存， &gt;&gt; 为带符号右移，正数高位补 0 ，负数高位补 1 ，&gt;&gt;&gt; 为无符号右移，正数负数高位都补 0 。
- 
- 比较两个浮点数，不能直接使用 == 
-    方法一：指定一个误差范围，两个浮点数的差值在此范围之内，则认为两数相等
-</code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">float</span> diff <span style="color:#f92672">=</span> 1e<span style="color:#f92672">-</span>6f<span style="color:#f92672">;</span>
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>Math<span style="color:#f92672">.</span><span style="color:#a6e22e">abs</span><span style="color:#f92672">(</span>float1 <span style="color:#f92672">-</span> float2<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> diff<span style="color:#f92672">)</span> <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
-</code></pre></div><pre><code>    方法二：使用BigDecimal来定义值，再进行浮点数的操作运算
-</code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">BigDecimal a <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BigDecimal<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">);</span>
-BigDecimal b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BigDecimal<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;0.9&#34;</span><span style="color:#f92672">);</span>
-BigDecimal c <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BigDecimal<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;0.8&#34;</span><span style="color:#f92672">);</span>
-
-BigDecimal x <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span><span style="color:#a6e22e">subtract</span><span style="color:#f92672">(</span>b<span style="color:#f92672">);</span>
-BigDecimal y <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span><span style="color:#a6e22e">subtract</span><span style="color:#f92672">(</span>c<span style="color:#f92672">);</span>
-
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>x<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>y<span style="color:#f92672">)){</span>
-	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">);</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h2 id="-与-equals-方法的区别">== 与 .equals() 方法的区别</h2>
-<pre><code>==：用于比较基本数据类型时，比较的是变量保存的内容，不一定要类型相同，值相同即为true
-
-    用于比较引用数据类型时，比较的是两个对象的地址，即两个引用是否指向内存中的同一个地址
-	
-.equals()：Object类中的 .equals() 方法就是通过 == 来实现的。
-
-           只能适用于引用数据类型(继承于Object)
-		   
-           像String, Date, File, 包装类等都重写了 .equals() 方法，重写之后，比较的是两个对象的内容是否相同
-</code></pre>
-<h2 id="基本类型包装类">基本类型、包装类</h2>
-<pre><code>Java提供了8种基本数据类型对应的包装类，使得基本数据类型的变量具有类的特征
-</code></pre>
-<p>int &mdash; Integer</p>
-<p>float &mdash; Float</p>
-<p>double &mdash; Double</p>
-<p>short &mdash; Short</p>
-<p>long &mdash; Long</p>
-<p>boolean &mdash; Boolean</p>
-<p>char &mdash; Character</p>
-<p>byte &mdash; Byte</p>
-<pre><code>JDK 5.0以后，增加了自动装箱，自动拆箱机制。
-
-在使用包装类进行符号运算时，以及在向以包装类为形参的方法中传入基本数据类型时，会触发自动拆箱(前者)，自动装箱机制(后者)。
-</code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">int</span> num2 <span style="color:#f92672">=</span> 10<span style="color:#f92672">;</span>
-Integer num1 <span style="color:#f92672">=</span> num2<span style="color:#f92672">;</span> <span style="color:#75715e">//无需使用构造函数,自动装箱
-</span><span style="color:#75715e"></span>
-
-<span style="color:#75715e">//Integer内部定义了IntegerCache结构，IntegerCache中定义了一个Integer[],包含了-128~127的整数。当我们使用自动装箱机制给Integer赋值
-</span><span style="color:#75715e">//范围在-128~127之内时，可以直接使用数组中的元素，无需new。当超出这一范围时，Integer会自动帮我们new一个Integer。
-</span><span style="color:#75715e"></span>Integer num3 <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
-Integer num4 <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
-System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>num3 <span style="color:#f92672">==</span> num4<span style="color:#f92672">);</span> <span style="color:#75715e">// 自动装箱赋值在范围内，num3和num4是两个数，true
-</span><span style="color:#75715e"></span>
-Integer num5 <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
-Integer num6 <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
-System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>num5 <span style="color:#f92672">==</span> num6<span style="color:#f92672">);</span><span style="color:#75715e">// 自动装箱赋值在范围外，此时Integer其实是new了两个Integer，所以此时比较的是两个对象，false
-</span></code></pre></div><h2 id="三目运算符相关">三目运算符相关</h2>
-<p>? : 三目运算符，冒号左右两边应当为同一类型。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object o <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> Integer<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">new</span> Double<span style="color:#f92672">(</span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">)</span>
-syso<span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
-<span style="color:#75715e">//因为此时冒号两边类型不同，所以左边Integer将被转型成Double,所以此时输出为 1.0
-</span></code></pre></div><h2 id="代码块多了一种赋值方式">代码块(多了一种赋值方式)</h2>
-<p>类的成员之一</p>
-<p>作用：用来初始化类、对象</p>
-<p>如果需要关键字修饰，只能使用static来修饰(静态代码块 与 非静态代码块)</p>
-<pre><code>静态代码块：
-</code></pre>
-<p>内部可以有输出语句，在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次</p>
-<p>只可以调用静态属性或方法，不可以调用非静态属性或方法</p>
-<h4 id="可写在类中除了方法内的任意位置任何方法都不行">可写在类中除了方法内的任意位置，任何方法都不行！</h4>
-<p>作用：初始化类信息</p>
-<pre><code>非静态代码块：
-</code></pre>
-<p>内部可以有输出语句，在对象被创建时执行</p>
-<p>可以调用静态属性方法与非静态属性方法</p>
-<p>作用：可以在创建对象时，对对象的属性等进行初始化</p>
-<h2 id="对属性赋值的先后顺序">对属性赋值的先后顺序</h2>
-<ol>
-<li>默认初始化</li>
-<li>显式初始化 / 代码块赋值</li>
-<li>构造器初始化</li>
-<li>对象.属性 或 对象.方法</li>
-</ol>
+</code></pre></div><hr>
 
     </div>
     <div class="post-footer">

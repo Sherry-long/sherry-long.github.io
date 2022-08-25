@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java关键字 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java关键字"/>
+<meta name="twitter:description" content="关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
+this 指的是**“创建好的对象的地址”**，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
+this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
+ static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
+方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）
+ 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 随着类的加载而加载，早于对象被创建 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用  static不会改变方法和变量的访问权限
+静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
+开发中,如何确定一个属性是否要声明为static?   1.属性被多个对象共享，不会因为对象的不同而不同"/>
+
+    <meta property="og:title" content="Java关键字" />
+<meta property="og:description" content="关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
+this 指的是**“创建好的对象的地址”**，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
+this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
+ static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
+方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）
+ 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 随着类的加载而加载，早于对象被创建 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&quot;1946&quot;); endDate = Date.valueOf(&quot;1964&quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用  static不会改变方法和变量的访问权限
+静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
+开发中,如何确定一个属性是否要声明为static?   1.属性被多个对象共享，不会因为对象的不同而不同" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javakeywords/" />
+<meta property="article:published_time" content="2022-08-25T11:33:41+08:00" />
+<meta property="article:modified_time" content="2022-08-25T11:33:41+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java关键字</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 25, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h1 id="关键字">关键字</h1>
+<h2 id="this关键字">this关键字</h2>
+<p>创建一个对象时分以下四部：
+1.分配对象空间，将对象成员变量初始化为0或空
+2.执行显示值的属性初始化
+3.执行构造方法  this(**)
+4.返回对象的地址给相关变量</p>
+<p>this 指的是**“创建好的对象的地址”**，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”</p>
+<p>this 用法
+1. this.name = name;
+避免程序二义
+2. 使用this关键字调用重载的构造方法，避免初始化代码重复。
+只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句
+（在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用）
+3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this）
+4. this 将当前对象本身作为参数传递给其他方法
+5. return this;
+this 将当前对象作为参数返回，这样可以对一个对象进行多次操作</p>
+<hr>
+<h2 id="static关键字">static关键字</h2>
+<p>当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联</p>
+<p>方便在没有创建对象的情况下来进行调用（方法/变量）
+1. static方法：
+静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的
+不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）</p>
+<pre><code>    2. static变量：
+        静态变量被所有对象共享，在内存中只有一个副本
+        随着类的加载而加载，早于对象被创建
+	
+    3. static代码块：
+        优化程序性能（重复代码块）
+            private static Date startDate,endDate;
+        static{
+            startDate = Date.valueOf(&quot;1946&quot;);
+            endDate = Date.valueOf(&quot;1964&quot;);
+        }
+        static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的
+        在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。
+    构造器是static方法，它不需要对象来调用
+</code></pre>
+<p>static不会改变方法和变量的访问权限</p>
+<p>静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）</p>
+<h4 id="开发中如何确定一个属性是否要声明为static">开发中,如何确定一个属性是否要声明为static?</h4>
+<ul>
+<li>
+<p>1.属性被多个对象共享，不会因为对象的不同而不同</p>
+</li>
+<li>
+<p>2.类中的常量也常常修饰为static</p>
+</li>
+</ul>
+<h4 id="开发中如何确定一个方法是否要声明为static">开发中,如何确定一个方法是否要声明为static?</h4>
+<ul>
+<li>
+<p>1.操作静态属性的方法通常设置为静态</p>
+</li>
+<li>
+<p>2.工具类中的方法习惯上声明为静态方法</p>
+</li>
+</ul>
+<h4 id="可用static来实现单例模式">可用static来实现单例模式</h4>
+<ul>
+<li>饿汉式</li>
+</ul>
+<p>(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New1</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New1 new1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New1<span style="color:#f92672">();</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New1 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">return</span> new1<span style="color:#f92672">;</span><span style="color:#75715e">//不管用不用直接创建，饥不择食
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>懒汉式</li>
+</ul>
+<p>(优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span>
+	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+			instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
+		<span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span><span style="color:#75715e">//什么时候用什么时候创建，拖延症
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><pre><code>不论调用多少次getInstance(),返回的都是同一对象
+</code></pre>
+<hr>
+<h2 id="final关键字">final关键字</h2>
+<p>final关键字可用来修饰引用、方法和类</p>
+<ul>
+<li>
+<p>1.修饰引用</p>
+<pre><code>  1. 如果引用为基本数据类型，则该引用为常量，无法被修改
+  2. 如果引用为引用数据类型，比如对象、数组，则该对象、数组本身可以修改，但指向该对象或数组的地址引用不能被修改
+  3. 如果引用是类的成员变量，则可以考虑赋值的位置有：
+      显式初始化、代码块中初始化、构造器中初始化(当有多个构造器时所有构造器都需赋值)
+</code></pre>
+</li>
+<li>
+<p>2.修饰方法</p>
+<p>当用final修饰方法时，这个方法将成为最终方法，无法被子类重写，可被继承</p>
+</li>
+<li>
+<p>3.修饰类</p>
+<p>当用final修饰类时，该类将成为最终类，无法被继承（String就是最终类）</p>
+</li>
+<li>
+<p>4.final参数</p>
+<p>参数列表中用final来修饰参数，在方法中无法对final修饰的对象进行修改</p>
+<p>此时参数只读(类比c++中用const修饰形参)</p>
+</li>
+</ul>
+<hr>
+<h2 id="super关键字">super关键字</h2>
+<p>在子类中调用父类的属性与方法，super理解为：父类的</p>
+<p>可以用来调用属性、方法、构造器：
+当子类，父类中出现了同名的属性(或重写的方法)时，可以通过 this 与 super 来区分</p>
+<pre><code>    我们可以在子类的构造器中显式的使用 super(\*\*\*) 调用父类的构造器(必须声明在子类构造器的首行)
+	
+    在类构造器中，this() super() 只能二选一， 未显式声明的时候，默认 super(空参); 
+	
+    在类的多个构造器中，至少有一个类的构造器中使用了super(\*\*\*)，调用父类构造器
+</code></pre>
+<hr>
+<h2 id="publicprotected和private">public、protected和private</h2>
+<ul>
+<li>public  所有人均可见</li>
+<li>private  除本身外其他人不可访问</li>
+<li>protected  对继承他的子类开放，有包内访问权限</li>
+</ul>
+<hr>
+<h2 id="abstract关键字">abstract关键字</h2>
+<p>可以用来修饰：类，方法。抽象的使用前提：继承性</p>
+<ul>
+<li>
+<p>修饰类时
+此类不能实例化
+抽象类中一定有构造器，便于子类对象实例化时调用
+开发中，都会提供子类的抽象类，让子类对象实例化，完成相关操作</p>
+</li>
+<li>
+<p>修饰方法时(抽象方法)
+抽象方法只有方法的声明，无方法体
+包含抽象方法的类，一定是抽象类。而抽象类不一定必须要有抽象方法
+子类重写了父类中所有的抽象方法，此子类可实例化
+子类未重写全部抽象方法，此子类也为抽象类</p>
+</li>
+</ul>
+<p><strong>注意点：</strong></p>
+<p>abstract不能用来修饰属性，构造器等结构</p>
+<p>abstract<em><strong>不能</strong></em>用来修饰<strong>私有方法、静态方法、final方法、final类</strong></p>
+<hr>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

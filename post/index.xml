@@ -6,7 +6,32 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Aug 2022 15:05:36 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Aug 2022 11:33:59 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>杂项</title>
+      <link>https://sherry-long.github.io/post/javaothers/</link>
+      <pubDate>Thu, 25 Aug 2022 11:33:59 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javaothers/</guid>
+      <description>其他  String s = new String(&amp;quot;asdf&amp;quot;); 声明一个对象引用s，new：给我一个新对象 Java对象创建在堆上，对象引用在堆栈上 对象为什么不在堆上：创建程序时，Java系统必须知道存储在堆栈内的所有项的确切生命周期，以便上下移动堆栈指针（分配新内存以及回收内存） 在堆中存储时，编译器不需要知道存储的数据在堆中存活多久，更有灵活性，但是在堆中进行内存分配和清理比堆栈花时间更多 对于基本类型，将他们存储在堆栈上不是很高效，new时，创建一个并非是引用的“自动“变量，这个变量直接存储值，并存储在堆栈上，更加高效。 （基本类型，变量直接储存值） 当创建一个数组对象时，对象会被自动初始化 Array.copyOfRange(int[] source, int from, int to):返回一个数组，复制 source 数组从 from 位到 to 位的内容，不包括to位，长度为 to - from 。 在Java中，负数自动以补码形式保存， &amp;gt;&amp;gt; 为带符号右移，正数高位补 0 ，负数高位补 1 ，&amp;gt;&amp;gt;&amp;gt; 为无符号右移，正数负数高位都补 0 。 比较两个浮点数，不能直接使用 == 方法一：指定一个误差范围，两个浮点数的差值在此范围之内，则认为两数相等  float diff = 1e-6f; if (Math.abs(float1 - float2) &amp;lt; diff) return true;  方法二：使用BigDecimal来定义值，再进行浮点数的操作运算  BigDecimal a = new BigDecimal(&amp;#34;1.0&amp;#34;); BigDecimal b = new BigDecimal(&amp;#34;0.9&amp;#34;); BigDecimal c = new BigDecimal(&amp;#34;0.</description>
+    </item>
+    
+    <item>
+      <title>Java关键字</title>
+      <link>https://sherry-long.github.io/post/javakeywords/</link>
+      <pubDate>Thu, 25 Aug 2022 11:33:41 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javakeywords/</guid>
+      <description>关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
+this 指的是**“创建好的对象的地址”**，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
+this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
+ static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联
+方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用）
+ 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 随着类的加载而加载，早于对象被创建 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&amp;quot;1946&amp;quot;); endDate = Date.valueOf(&amp;quot;1964&amp;quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用  static不会改变方法和变量的访问权限
+静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）
+开发中,如何确定一个属性是否要声明为static?   1.属性被多个对象共享，不会因为对象的不同而不同</description>
+    </item>
+    
     <item>
       <title>旋转打印 1 ~ n方(Java)</title>
       <link>https://sherry-long.github.io/post/generatematrix/</link>
@@ -37,9 +62,22 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
       <pubDate>Mon, 22 Aug 2022 11:28:43 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/javase/</guid>
-      <description>关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(\*\*) 4.返回对象的地址给相关变量 this 指的是“创建好的对象的地址”，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象” this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作  static关键字 当声明一个域或方法是static时，意味着这个域或方法不与包含他的那个类的任何对象关联在一起，与类相关联 方便在没有创建对象的情况下来进行调用（方法/变量） 1. static方法： 静态方法中不能访问非静态成员方法和非静态成员变量，但是在非静态成员方法中是可以访问静态成员方法/变量的 不需要对象便可通过类名进行调用（但是也可以通过对象进行调用） 2. static变量： 静态变量被所有对象共享，在内存中只有一个副本 随着类的加载而加载，早于对象被创建 3. static代码块： 优化程序性能（重复代码块） private static Date startDate,endDate; static{ startDate = Date.valueOf(&amp;quot;1946&amp;quot;); endDate = Date.valueOf(&amp;quot;1964&amp;quot;); } static块可以出现类中的任何地方（只要不是方法内部，记住，任何方法内部都不行），并且执行是按照static块的顺序执行的 在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。 构造器是static方法，它不需要对象来调用 static不会改变方法和变量的访问权限 静态成员变量虽然独立于对象，但是不代表不可以通过对象去访问，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）  开发中,如何确定一个属性是否要声明为static? 1.属性被多个对象共享，不会因为对象的不同而不同
-2.类中的常量也常常修饰为static
-开发中,如何确定一个方法是否要声明为static? 1.操作静态属性的方法通常设置为静态</description>
+      <description>Java基础 序列化和反序列化 序列化：将对象写入到IO流中 反序列化：从IO流中恢复对象 序列化机制允许将实现序列化的Java对象转换为字节序列，这些字节序列可以保存在磁盘上， 或通过网络传输，以达到以后恢复成原来的对象。序列化机制使得对象可以脱离程序运行而独立存在
+所有可在网络上传输的对象都必须是可序列化的，所有需要保存到磁盘上的对象都必须是可序列化的
+反序列化不会调用构造方法，对象是由JVM自己生成的
+所有保存到磁盘上的对象都有一个序列化编码 在程序试图序列化一个对象时，会先检查此对象是否已经被序列化过，如果已经序列化直接输出编号
+对一个已经序列化的对象进行修改后，再次序列化则不会保存 transient（暂时）变量和static（静态）变量在序列化时会忽视
+关于arraylist底层自定义序列化方法： arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象， 所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中
+ 可变参数 类型 + ... + 形参名 定义时： f(Object... trailing); 调用时： f(&amp;quot;one&amp;quot;); f(&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;); f(1,2,3); f(&#39;a&#39;, &#39;b&#39;); f(); 都可以,会自动转型成object   复用类 组合：
+**继承：**使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
+代理：
+重载(overload)： 在同一个类中，同名不同参的函数定义是重载 是否为重载关系，只看方法名(须相同)与参数列表(须不同，类型、数量、顺序等)，不看返回值类型
+覆写or重写(override/overwrite)： 子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符 不小于父类被重写方法的权限修饰符。 子类不能重写父类中private修饰的方法。 父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。 父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。 父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。
+子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。 对于重载。编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 * 早绑定(静态绑定) * 对于重写。只有在真正执行时，编译器才知道具体调用的是哪个方法 * 晚绑定(动态绑定) *
+ 子类对象实例化   从结果上看（继承性）
+子类继承父类以后，就会获得父类中声明的属性和方法 创建子类的对象，在堆空间中，就会加载所有父类中声明的属性
+  从过程上看
+当我们使用子类中的构造器构造一个对象的时候，一定会直接或间接地调用父类的构造器，然后父类的父类，最后到java.lang.Object类的构造器</description>
     </item>
     
     <item>
