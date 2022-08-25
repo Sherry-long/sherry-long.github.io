@@ -100,6 +100,7 @@ BigDecimal y <span style="color:#f92672">=</span> b<span style="color:#f92672">.
 	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">);</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><hr>
+<hr>
 <h2 id="-与-equals-方法的区别">== 与 .equals() 方法的区别</h2>
 <pre><code>==：用于比较基本数据类型时，比较的是变量保存的内容，不一定要类型相同，值相同即为true
 
@@ -111,6 +112,7 @@ BigDecimal y <span style="color:#f92672">=</span> b<span style="color:#f92672">.
 		   
            像String, Date, File, 包装类等都重写了 .equals() 方法，重写之后，比较的是两个对象的内容是否相同
 </code></pre>
+<hr>
 <hr>
 <h2 id="基本类型包装类">基本类型、包装类</h2>
 <pre><code>Java提供了8种基本数据类型对应的包装类，使得基本数据类型的变量具有类的特征
@@ -141,12 +143,14 @@ Integer num5 <span style="color:#f92672">=</span> 128<span style="color:#f92672"
 Integer num6 <span style="color:#f92672">=</span> 128<span style="color:#f92672">;</span>
 System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>num5 <span style="color:#f92672">==</span> num6<span style="color:#f92672">);</span><span style="color:#75715e">// 自动装箱赋值在范围外，此时Integer其实是new了两个Integer，所以此时比较的是两个对象，false
 </span></code></pre></div><hr>
+<hr>
 <h2 id="三目运算符相关">三目运算符相关</h2>
 <p>? : 三目运算符，冒号左右两边应当为同一类型。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object o <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> Integer<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">new</span> Double<span style="color:#f92672">(</span>2<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">)</span>
 syso<span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
 <span style="color:#75715e">//因为此时冒号两边类型不同，所以左边Integer将被转型成Double,所以此时输出为 1.0
 </span></code></pre></div><hr>
+<hr>
 <h2 id="代码块多了一种赋值方式">代码块(多了一种赋值方式)</h2>
 <p>类的成员之一</p>
 <p>作用：用来初始化类、对象</p>
@@ -163,6 +167,7 @@ syso<span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
 <p>可以调用静态属性方法与非静态属性方法</p>
 <p>作用：可以在创建对象时，对对象的属性等进行初始化</p>
 <hr>
+<hr>
 <h2 id="对属性赋值的先后顺序">对属性赋值的先后顺序</h2>
 <ol>
 <li>默认初始化</li>
@@ -170,6 +175,8 @@ syso<span style="color:#f92672">(</span>o<span style="color:#f92672">);</span>
 <li>构造器初始化</li>
 <li>对象.属性 或 对象.方法</li>
 </ol>
+<hr>
+<hr>
 
     </div>
     <div class="post-footer">
