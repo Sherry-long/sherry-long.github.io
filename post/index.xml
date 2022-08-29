@@ -6,7 +6,28 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2022 11:33:59 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 Aug 2022 09:22:08 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java线程</title>
+      <link>https://sherry-long.github.io/post/javathreadbundle/javathread/</link>
+      <pubDate>Mon, 29 Aug 2022 09:22:08 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javathreadbundle/javathread/</guid>
+      <description>多线程 主线程和子线程 JVM启动时会创建一个主线程，该主线程运行main方法 Java中线程不是孤立的，线程之间存在一些联系。A线程创建了B线程，B是A的子线程，A是B的父线程
+线程常用方法： currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程    进程与线程 进程是资源分配的单位，线程是调度和执行的单位 线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
+进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
+并发与并行 并行是指两个或者多个事件在同一时刻发生，而并发是指两个或多个事件在同一时间间隔发生。
+并行是在不同实体上的多个事件，并发是在同一实体上的多个事件。
+使用多线程的优点   1.提高应用程序的响应速度。对图形化界面更有意义，可增强用户体验
+  2.提高计算机系统CPU的利用率
+  3.改善程序结构，将既长又复杂的进程分为多个线程，独立运行，利于理解和修改
+  何时需要多线程   程序需要同时执行两个或多个任务
+  程序需要实现一些需要等待的任务时，如用户输入、文件读写操作、网络操作、搜索等
+  需要一些后台运行的程序时
+   线程的创建和使用-4种创建方式 可以通过两种方法实现线程类：** 1）继承Thread类 **； **2 ）实现Runnable接口 ** 1） 1. 继承Thread类 2. 重写run方法，run方法内部就是你的线程要做的事情 3. 创建子线程对象 4. 启动线程 thread.start() 调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行 由线程调度器决定 Scheduler
+ 2） 当线程类已经有父类了，就不能继承Thread类了， 1. 实现Runnable接口，重写run方法，run方法内部就是你的线程要做的事情 2. 创建Runnable接口实现类对象 Myrunnable runnable = new Myrunnable(); 3.</description>
+    </item>
+    
     <item>
       <title>杂项</title>
       <link>https://sherry-long.github.io/post/javaothers/</link>
@@ -69,13 +90,9 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
 对一个已经序列化的对象进行修改后，再次序列化则不会保存 transient（暂时）变量和static（静态）变量在序列化时会忽视
 关于arraylist底层自定义序列化方法： arraylist底层采用数组实现，采用算法实现动态数组，数组通常不会被填满，直接调用序列化会序列化很多null对象， 所以将elementData定义为transient防止直接序列化，重写序列化反序列化方法，循环遍历将元素序列化进流中
   可变参数 类型 + &amp;hellip; + 形参名 定义时： f(Object&amp;hellip; trailing); 调用时： f(&amp;ldquo;one&amp;rdquo;); f(&amp;ldquo;one&amp;rdquo;, &amp;ldquo;two&amp;rdquo;); f(1,2,3); f(&amp;lsquo;a&amp;rsquo;, &amp;lsquo;b&amp;rsquo;); f(); 都可以,会自动转型成object
-  复用类 组合：
-**继承：**使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
-代理：
-重载(overload)： 在同一个类中，同名不同参的函数定义是重载 是否为重载关系，只看方法名(须相同)与参数列表(须不同，类型、数量、顺序等)，不看返回值类型
-覆写or重写(override/overwrite)： 子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符 不小于父类被重写方法的权限修饰符。 子类不能重写父类中private修饰的方法。 父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。 父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。 父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。 子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。
-** 对于重载 ** 编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 ** 早绑定(静态绑定) **
-** 对于重写 ** 只有在真正执行时，编译器才知道具体调用的是哪个方法 ** 晚绑定(动态绑定) **
+  复用类 组合： 继承： 使用通用类构造一个特例。。。。抽象特征提取，减少重复代码，增加代码可复用性
+代理： 重载(overload)：  在同一个类中，同名不同参的函数定义是重载 是否为重载关系，只看方法名(须相同)与参数列表(须不同，类型、数量、顺序等)，不看返回值类型  覆写or重写(override/overwrite)：  子类复写(覆盖)父类中的同名同参方法，子类重写的方法的权限修饰符 不小于父类被重写方法的权限修饰符。 子类不能重写父类中private修饰的方法。 父类被重写的方法的返回值类型是void，则子类重写方法的返回值类型也是void。 父类被重写方法的返回值类型是A，则子类重写方法的返回值类型只能是A或A的子类。 父类被重写方法的返回值类型是基本数据类型，则子类重写方法的返回值类型必须是相同的基本数据类型。 子类重写方法抛出的异常不大于父类被重写的方法抛出的异常。  对于重载 编译器在编译时期就能知道调用的具体方法是哪个，各个同名方法的地址在编译期就决定了 ** 早绑定(静态绑定) **
+对于重写 只有在真正执行时，编译器才知道具体调用的是哪个方法 ** 晚绑定(动态绑定) **
   子类对象实例化   从结果上看（继承性）</description>
     </item>
     
