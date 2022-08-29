@@ -184,10 +184,7 @@ Java中线程不是孤立的，线程之间存在一些联系。A线程创建了
 <h5 id="boolean-isalive--判断线程是否存活">boolean isAlive() : 判断线程是否存活</h5>
 <hr>
 <h3 id="线程的生命周期">线程的生命周期</h3>
-<p>{{ $image := .Resources.GetMatch &ldquo;ThreadLiveTime.jpg&rdquo; }}
-{{ with $image }}
-<!-- raw HTML omitted -->
-{{ end }}</p>
+<p>{{ $image := .Resources.GetMatch &ldquo;ThreadLiveTime.jpg&rdquo; }}</p>
 <hr>
 <h1 id="线程的同步线程安全-3种解决方式">线程的同步(线程安全)-3种解决方式</h1>
 <h3 id="主要解决问题多个线程对于临界资源的访问可能因为线程调度引起的访问冲突等问题">主要解决问题：多个线程对于临界资源的访问，可能因为线程调度引起的访问冲突等问题</h3>
