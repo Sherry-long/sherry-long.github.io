@@ -184,10 +184,44 @@ Java中线程不是孤立的，线程之间存在一些联系。A线程创建了
 <h5 id="boolean-isalive--判断线程是否存活">boolean isAlive() : 判断线程是否存活</h5>
 <hr>
 <h3 id="线程的生命周期">线程的生命周期</h3>
-<p>{{ $image := .Resources.GetMatch &ldquo;ThreadLiveTime.jpg&rdquo; }}</p>
 <hr>
 <h1 id="线程的同步线程安全-3种解决方式">线程的同步(线程安全)-3种解决方式</h1>
 <h3 id="主要解决问题多个线程对于临界资源的访问可能因为线程调度引起的访问冲突等问题">主要解决问题：多个线程对于临界资源的访问，可能因为线程调度引起的访问冲突等问题</h3>
+<p>当一个线程在操作临界资源的时候，其他线程不能参与进来，直到当前线程操作完临界资源后，其他线程才可操作。即使当前线程被阻塞，也不能改变。</p>
+<h3 id="在java中我们通过同步机制来解决线程问题">在Java中我们通过同步机制来解决线程问题</h3>
+<h4 id="方式一-同步代码块">方式一： 同步代码块</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>同步监视器<span style="color:#f92672">){</span>
+	<span style="color:#75715e">//需要被同步的代码，不能多不能少
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><p>说明：操作临界资源的代码即为需要被同步的代码。同步监视器：俗称 锁 ，任何一个类的对象都可以充当 锁 。多个线程必须共用一把锁(同一个对象)</p>
+<ul>
+<li>
+<p>当采用实现类的方式创建线程时，可使用 this 作为同步监视器。因为只需要创建一个实现类对象，通过此实现类去构造不同线程，实现类对象只有一个，</p>
+<p>所以可以作为锁。</p>
+</li>
+<li>
+<p>当采用继承Thread类的方式创建线程时，可使用 线程类名.class 作为锁(类也是对象)</p>
+</li>
+</ul>
+<h4 id="方式二-同步方法">方式二： 同步方法</h4>
+<p>如果操作临界资源的代码完整的声明在一个方法中，将这个方法声明为同步的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">operate</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>tickets <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>100<span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> tickets<span style="color:#f92672">);</span>
+            tickets<span style="color:#f92672">--;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>当采用实现类的方式创建线程时，默认锁为 this</p>
+<p>所以可以作为锁。</p>
+</li>
+<li>
+<p>当采用继承Thread类的方式创建线程时，默认锁为 当前类</p>
+</li>
+</ul>
+<h4 id="解决了线程安全问题但是只有一个线程参与其他线程等待相当于是一个单线程的过程效率低一些">解决了线程安全问题，但是只有一个线程参与，其他线程等待。相当于是一个单线程的过程，效率低一些。</h4>
 
     </div>
     <div class="post-footer">
