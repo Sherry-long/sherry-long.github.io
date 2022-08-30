@@ -74,7 +74,7 @@ Java实现 public static int[][] generateMatrix(int n) { int[][] res = new int[n
       <description>单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
 class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
-class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 不论调用多少次getInstance(),返回的都是同一对象  应用场景： 1.</description>
+class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 懒汉式的线程安全实现方法：</description>
     </item>
     
     <item>

@@ -16,13 +16,13 @@
 <meta name="twitter:description" content="单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
 class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
-class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 不论调用多少次getInstance(),返回的都是同一对象  应用场景： 1."/>
+class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 懒汉式的线程安全实现方法："/>
 
     <meta property="og:title" content="设计模式(Java)" />
 <meta property="og:description" content="单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
 class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
-class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 不论调用多少次getInstance(),返回的都是同一对象  应用场景： 1." />
+class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 懒汉式的线程安全实现方法：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/designpatterns/" />
 <meta property="article:published_time" content="2022-08-23T11:52:56+08:00" />
@@ -67,7 +67,7 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
       </div>
     </header>
@@ -102,6 +102,54 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
 			instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
 		<span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span><span style="color:#75715e">//什么时候用什么时候创建，拖延症
 </span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>懒汉式的线程安全实现方法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//同步方法
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">synchronized</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+			instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
+		<span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span><span style="color:#75715e">//什么时候用什么时候创建，拖延症
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//同步代码块，效率差
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>New2<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+                instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">New2</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//同步代码块，效率更高
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">private</span> <span style="color:#a6e22e">New2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#75715e">//构造方法要私有化，不允许外部直接调用构造方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+
+	<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> New2 instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> New2 <span style="color:#a6e22e">getInstance</span><span style="color:#f92672">(){</span>
+		<span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+			<span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>New2<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+				<span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+					instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> New2<span style="color:#f92672">();</span>
+				<span style="color:#f92672">}</span>
+			<span style="color:#f92672">}</span>
+		<span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> instance<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><pre><code>不论调用多少次getInstance(),返回的都是同一对象
 </code></pre>

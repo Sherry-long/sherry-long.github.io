@@ -85,7 +85,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -188,6 +188,7 @@ Java中线程不是孤立的，线程之间存在一些联系。A线程创建了
 <h1 id="线程的同步线程安全-3种解决方式">线程的同步(线程安全)-3种解决方式</h1>
 <h3 id="主要解决问题多个线程对于临界资源的访问可能因为线程调度引起的访问冲突等问题">主要解决问题：多个线程对于临界资源的访问，可能因为线程调度引起的访问冲突等问题</h3>
 <p>当一个线程在操作临界资源的时候，其他线程不能参与进来，直到当前线程操作完临界资源后，其他线程才可操作。即使当前线程被阻塞，也不能改变。</p>
+<hr>
 <h3 id="在java中我们通过同步机制来解决线程问题">在Java中我们通过同步机制来解决线程问题</h3>
 <h4 id="方式一-同步代码块">方式一： 同步代码块</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>同步监视器<span style="color:#f92672">){</span>
@@ -203,6 +204,7 @@ Java中线程不是孤立的，线程之间存在一些联系。A线程创建了
 <p>当采用继承Thread类的方式创建线程时，可使用 线程类名.class 作为锁(类也是对象)</p>
 </li>
 </ul>
+<hr>
 <h4 id="方式二-同步方法">方式二： 同步方法</h4>
 <p>如果操作临界资源的代码完整的声明在一个方法中，将这个方法声明为同步的。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">operate</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
@@ -218,9 +220,43 @@ Java中线程不是孤立的，线程之间存在一些联系。A线程创建了
 <p>所以可以作为锁。</p>
 </li>
 <li>
-<p>当采用继承Thread类的方式创建线程时，默认锁为 当前类</p>
+<p>当采用继承Thread类的方式创建线程时，要将方法声明为静态的，此时默认锁不再为 this，而是是当前类本身 线程类名.class</p>
 </li>
 </ul>
+<hr>
+<h4 id="方法三-lock锁-reentrantlock类">方法三： Lock(锁) ReentrantLock类</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Window4</span> <span style="color:#66d9ef">implements</span> Runnable <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> tickets <span style="color:#f92672">=</span> 100<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> ReentrantLock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">();</span><span style="color:#75715e">//定义ReentrantLock对象
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//在临界资源操作前调用lock()方法上锁，并用try将方法调用语句和临界资源操作代码包含起来
+</span><span style="color:#75715e"></span>                lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>tickets <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                        Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>100<span style="color:#f92672">);</span>
+                    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span>
+                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> tickets<span style="color:#f92672">);</span>
+                    tickets<span style="color:#f92672">--;</span>
+                <span style="color:#f92672">}</span><span style="color:#66d9ef">else</span> <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span> <span style="color:#75715e">//在finally语句中调用unlock()方法解锁
+</span><span style="color:#75715e"></span>                lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h3 id="synchronized关键字-与-reentrantlock类-的异同">synchronized关键字 与 ReentrantLock类 的异同</h3>
+<p>都是用来解决线程安全问题的</p>
+<p>Lock需要自己手动启动同步(lock方法)以及结束同步(unlock方法)，sync执行完相应的同步代码或方法后自动释放同步监视器</p>
+<h3 id="lock更灵活一些优先使用顺序">Lock更灵活一些，优先使用顺序：</h3>
+<p>Lock -&gt; 同步代码块(已经进入了方法体，分配了相应资源) -&gt; 同步方法(在方法体之外)</p>
+<hr>
 <h4 id="解决了线程安全问题但是只有一个线程参与其他线程等待相当于是一个单线程的过程效率低一些">解决了线程安全问题，但是只有一个线程参与，其他线程等待。相当于是一个单线程的过程，效率低一些。</h4>
 
     </div>
