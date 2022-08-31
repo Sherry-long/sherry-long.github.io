@@ -9,10 +9,10 @@
     <lastBuildDate>Mon, 29 Aug 2022 09:22:08 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java线程</title>
-      <link>https://sherry-long.github.io/post/javathreadbundle/javathread/</link>
+      <link>https://sherry-long.github.io/post/javathread/</link>
       <pubDate>Mon, 29 Aug 2022 09:22:08 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javathreadbundle/javathread/</guid>
+      <guid>https://sherry-long.github.io/post/javathread/</guid>
       <description>多线程 主线程和子线程 JVM启动时会创建一个主线程，该主线程运行main方法 Java中线程不是孤立的，线程之间存在一些联系。A线程创建了B线程，B是A的子线程，A是B的父线程
 线程常用方法： currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程    进程与线程 进程是资源分配的单位，线程是调度和执行的单位 线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
 进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
