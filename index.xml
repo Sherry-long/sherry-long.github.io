@@ -13,8 +13,7 @@
       <pubDate>Mon, 29 Aug 2022 09:22:08 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/javathread/</guid>
-      <description>多线程 主线程和子线程 JVM启动时会创建一个主线程，该主线程运行main方法 Java中线程不是孤立的，线程之间存在一些联系。A线程创建了B线程，B是A的子线程，A是B的父线程
-线程常用方法： currentThread() 获得当前线程，Java中任何一段代码都是执行在某个线程当中的，执行当前代码的线程就是当前线程    进程与线程 进程是资源分配的单位，线程是调度和执行的单位 线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
+      <description>进程与线程 进程是资源分配的单位，线程是调度和执行的单位 线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
 进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
 并发与并行 并行是指两个或者多个事件在同一时刻发生，而并发是指两个或多个事件在同一时间间隔发生。
 并行是在不同实体上的多个事件，并发是在同一实体上的多个事件。
@@ -24,8 +23,8 @@
   何时需要多线程   程序需要同时执行两个或多个任务
   程序需要实现一些需要等待的任务时，如用户输入、文件读写操作、网络操作、搜索等
   需要一些后台运行的程序时
-   线程的创建和使用-4种创建方式 可以通过两种方法实现线程类：** 1）继承Thread类 **； **2 ）实现Runnable接口 ** 1） 1. 继承Thread类 2. 重写run方法，run方法内部就是你的线程要做的事情 3. 创建子线程对象 4. 启动线程 thread.start() 调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行 由线程调度器决定 Scheduler
- 2） 当线程类已经有父类了，就不能继承Thread类了， 1. 实现Runnable接口，重写run方法，run方法内部就是你的线程要做的事情 2. 创建Runnable接口实现类对象 Myrunnable runnable = new Myrunnable(); 3.</description>
+   线程的创建和使用-4种创建方式 可以通过两种方法实现线程类： 1）继承Thread类 ； 2 ）实现Runnable接口 1） 1. 继承Thread类 2. 重写run方法，run方法内部就是你的线程要做的事情 3. 创建子线程对象 4. 启动线程 thread.start() 调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行 由线程调度器决定 Scheduler
+ 2） 当线程类已经有父类了，就不能继承Thread类了， 1. 实现Runnable接口，重写run方法，run方法内部就是你的线程要做的事情 2. 创建Runnable接口实现类对象 Myrunnable runnable = new Myrunnable(); 3. 创建线程对象 Thread thread = new Thread(runnable); 4.</description>
     </item>
     
     <item>
