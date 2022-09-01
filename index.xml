@@ -6,7 +6,28 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Aug 2022 09:22:08 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Sep 2022 17:26:46 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java常用类2</title>
+      <link>https://sherry-long.github.io/post/javacommonclass1/</link>
+      <pubDate>Thu, 01 Sep 2022 17:26:46 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javacommonclass1/</guid>
+      <description>Java比较器  Comparable接口  Comparator接口   System类   Math类   BigInteger 与 BigDecimal </description>
+    </item>
+    
+    <item>
+      <title>Java常用类1</title>
+      <link>https://sherry-long.github.io/post/javacommonclass/</link>
+      <pubDate>Thu, 01 Sep 2022 17:11:14 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javacommonclass/</guid>
+      <description>String相关  String String是一个final类，无法被继承，支持序列化
+String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
+String str1 = &amp;#34;abc&amp;#34;; // 字面量，区别于new String str2 = &amp;#34;abc&amp;#34;; //此时str1和str2指向的是常量池中的同一地址 //字符串常量池中不会存储两个相同的字符串 str1 == str2.sout //结果为true   String不可变性体现：
+ 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( + )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值     StringBuffer, StringBuilder   JDK8前的日期时间API  System  Data  Calendar  SimpleDataFormat   JDK8中新日期时间API  LocalDate, LocalTime, LocalDateTime  Instant  DateTimeFormatter   others </description>
+    </item>
+    
     <item>
       <title>Java线程</title>
       <link>https://sherry-long.github.io/post/javathread/</link>
@@ -23,8 +44,8 @@
   何时需要多线程   程序需要同时执行两个或多个任务
   程序需要实现一些需要等待的任务时，如用户输入、文件读写操作、网络操作、搜索等
   需要一些后台运行的程序时
-   线程的创建和使用-4种创建方式 可以通过两种方法实现线程类： 1）继承Thread类 ； 2 ）实现Runnable接口 1） 1. 继承Thread类 2. 重写run方法，run方法内部就是你的线程要做的事情 3. 创建子线程对象 4. 启动线程 thread.start() 调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行 由线程调度器决定 Scheduler
- 2） 当线程类已经有父类了，就不能继承Thread类了， 1. 实现Runnable接口，重写run方法，run方法内部就是你的线程要做的事情 2. 创建Runnable接口实现类对象 Myrunnable runnable = new Myrunnable(); 3. 创建线程对象 Thread thread = new Thread(runnable); 4.</description>
+   线程的创建和使用-4种创建方式 可以通过两种方法实现线程类： 1）继承Thread类 ； 2 ）实现Runnable接口
+ 1） 1. 继承Thread类 2. 重写run方法，run方法内部就是你的线程要做的事情 3. 创建子线程对象 4. 启动线程 thread.start() 调用start()方法来启动线程，启动线程的实质就是请求JVM运行相应线程，这个线程具体在什么时候运行 由线程调度器决定 Scheduler 2） 当线程类已经有父类了，就不能继承Thread类了， 1. 实现Runnable接口，重写run方法，run方法内部就是你的线程要做的事情 2. 创建Runnable接口实现类对象 Myrunnable runnable = new Myrunnable(); 3. 创建线程对象 Thread thread = new Thread(runnable); 4.</description>
     </item>
     
     <item>
