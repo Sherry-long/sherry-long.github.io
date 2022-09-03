@@ -25,7 +25,7 @@
       <description>String相关  String String是一个final类，无法被继承，支持序列化
 String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
 String str1 = &amp;#34;abc&amp;#34;; // 字面量，区别于new String str2 = &amp;#34;abc&amp;#34;; //此时str1和str2指向的是常量池中的同一地址 //字符串常量池中不会存储两个相同的字符串 str1 == str2.sout //结果为true   String不可变性体现：
- 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( + )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值     StringBuffer, StringBuilder   JDK8前的日期时间API  System  Data  Calendar  SimpleDataFormat   JDK8中新日期时间API  LocalDate, LocalTime, LocalDateTime  Instant  DateTimeFormatter   others </description>
+ 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( + )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值    String对象的创建 String str = &amp;#34;hello&amp;#34;; String s1 = new String();// this.value = new char[0];  String s2 = new String(String original);// this.value = original.value;  String s3 = new String(char[] a);// this.</description>
     </item>
     
     <item>

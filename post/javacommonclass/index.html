@@ -16,13 +16,13 @@
 <meta name="twitter:description" content="String相关  String String是一个final类，无法被继承，支持序列化
 String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
 String str1 = &#34;abc&#34;; // 字面量，区别于new String str2 = &#34;abc&#34;; //此时str1和str2指向的是常量池中的同一地址 //字符串常量池中不会存储两个相同的字符串 str1 == str2.sout //结果为true   String不可变性体现：
- 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( &#43; )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值     StringBuffer, StringBuilder   JDK8前的日期时间API  System  Data  Calendar  SimpleDataFormat   JDK8中新日期时间API  LocalDate, LocalTime, LocalDateTime  Instant  DateTimeFormatter   others "/>
+ 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( &#43; )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值    String对象的创建 String str = &#34;hello&#34;; String s1 = new String();// this.value = new char[0];  String s2 = new String(String original);// this.value = original.value;  String s3 = new String(char[] a);// this."/>
 
     <meta property="og:title" content="Java常用类1" />
 <meta property="og:description" content="String相关  String String是一个final类，无法被继承，支持序列化
 String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
 String str1 = &#34;abc&#34;; // 字面量，区别于new String str2 = &#34;abc&#34;; //此时str1和str2指向的是常量池中的同一地址 //字符串常量池中不会存储两个相同的字符串 str1 == str2.sout //结果为true   String不可变性体现：
- 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( &#43; )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值     StringBuffer, StringBuilder   JDK8前的日期时间API  System  Data  Calendar  SimpleDataFormat   JDK8中新日期时间API  LocalDate, LocalTime, LocalDateTime  Instant  DateTimeFormatter   others " />
+ 1. 当对字符串重新赋值时，需要重新指定内存区域赋值 2. 当对现有字符串进行连接操作时( &#43; )，也需要重新制定内存区域进行赋值 3. 当调用String的 replace(oldChar, newChar) 方法修改指定字符或字符串时，也需要重新制定内存区域进行赋值    String对象的创建 String str = &#34;hello&#34;; String s1 = new String();// this.value = new char[0];  String s2 = new String(String original);// this.value = original.value;  String s3 = new String(char[] a);// this." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javacommonclass/" />
 <meta property="article:published_time" content="2022-09-01T17:11:14+08:00" />
@@ -67,7 +67,7 @@ String str1 = &#34;abc&#34;; // 字面量，区别于new String str2 = &#34;abc&
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -91,8 +91,75 @@ String str1 = &#34;abc&#34;; // 字面量，区别于new String str2 = &#34;abc&
 </code></pre>
 </li>
 </ul>
+<h4 id="string对象的创建">String对象的创建</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span><span style="color:#f92672">;</span>
+
+String s1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">();</span><span style="color:#75715e">// this.value = new char[0];
+</span><span style="color:#75715e"></span>
+String s2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>String original<span style="color:#f92672">);</span><span style="color:#75715e">// this.value = original.value;
+</span><span style="color:#75715e"></span>
+String s3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> a<span style="color:#f92672">);</span><span style="color:#75715e">// this.value = Arrays.copyOf(value, value.length);
+</span><span style="color:#75715e"></span>
+String s4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> a<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> startIndex<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> count<span style="color:#f92672">);</span>
+</code></pre></div><h5 id="string-str--abc-与-string-str--new-stringabc-有什么区别">String str = &ldquo;abc&rdquo;; 与 String str = new String(&ldquo;abc&rdquo;) 有什么区别</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">		String str1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abc&#34;</span><span style="color:#f92672">;</span> <span style="color:#75715e">//str指向常量池
+</span><span style="color:#75715e"></span>        String str2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abc&#34;</span><span style="color:#f92672">;</span> 
+        String str3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;abc&#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">//str3指向堆空间，堆空间对应的地址中存放的数据是常量池的地址
+</span><span style="color:#75715e"></span>        String str4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;abc&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str1 <span style="color:#f92672">==</span> str2<span style="color:#f92672">);</span><span style="color:#75715e">//true
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str2 <span style="color:#f92672">==</span> str3<span style="color:#f92672">);</span><span style="color:#75715e">//false
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str3 <span style="color:#f92672">==</span> str4<span style="color:#f92672">);</span><span style="color:#75715e">//false
+</span></code></pre></div><p>通过字面量的方式创建String，是将字面量在常量池中的地址赋予了引用
+通过new的方式创建，是在堆空间中开辟空间以后对应的地址值</p>
+<h5 id="注意new-stringstring-original-构造器已经不推荐使用">注意，new String(String original) 构造器已经不推荐使用</h5>
+<pre><code>    Initializes a newly created String object so that it represents the same sequence of characters as the argument; 
+    in other words, the newly created string is a copy of the argument string. 
+    Unless an explicit copy of original is needed, use of this constructor is unnecessary since Strings are immutable.
+	
+    初始化新创建的字符串对象，使其表示与 参数 相同的字符序列；换句话说，新创建的字符串是 参数字符串 的一个副本
+    由于String是不可变的，所以此构造器不必使用，除非你明确需要一个 参数字符串 的副本
+</code></pre>
+<p>String常量 + ：String str1 = &ldquo;123&rdquo; + &ldquo;456&rdquo;; === String str1 = &ldquo;123456&rdquo;;</p>
+<p>String变量 + ：String str1 = &ldquo;123&rdquo;, str2 = &ldquo;456&rdquo;, str3 = str1 + str2; === 先把str1转成SBuilder，使用append(str2)，再toString()转回来</p>
+<ul>
+<li>
+<p>常量与常量的拼接结果在常量池。且常量池中不会存在相同内容的常量</p>
+</li>
+<li>
+<p>只要其中有一个是变量，结果就在堆中</p>
+</li>
+<li>
+<p>如果拼接的结果调用intern()方法，返回值就在常量池中</p>
+</li>
+</ul>
 <hr>
 <h2 id="stringbuffer-stringbuilder">StringBuffer, StringBuilder</h2>
+<ul>
+<li>
+<p>StringBuffer 代表可变的字符序列，可以对字符串内容进行增删，不会产生新的对象</p>
+</li>
+<li>
+<p>很多方法与String相同</p>
+</li>
+<li>
+<p>作为参数传递时，方法内部可以改变其值</p>
+</li>
+</ul>
+<h4 id="stringbuffer常用方法">StringBuffer常用方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">StringBuffer <span style="color:#a6e22e">append</span><span style="color:#f92672">(</span>xxx<span style="color:#f92672">)</span> <span style="color:#75715e">//多个重载方法，用于进行字符串拼接
+</span><span style="color:#75715e"></span>StringBuffer <span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> start<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> end<span style="color:#f92672">)</span> <span style="color:#75715e">//删除指定位置内容
+</span><span style="color:#75715e"></span>StringBuffer <span style="color:#a6e22e">replace</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> start<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> end<span style="color:#f92672">,</span> String str<span style="color:#f92672">)</span> <span style="color:#75715e">//把 [start, end) 左闭右开 位置替换为str
+</span><span style="color:#75715e"></span>StringBuffer <span style="color:#a6e22e">insert</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> offset<span style="color:#f92672">,</span> xxx<span style="color:#f92672">)</span> <span style="color:#75715e">//在指定位置插入xxx
+</span><span style="color:#75715e"></span>StringBuffer <span style="color:#a6e22e">reverse</span><span style="color:#f92672">()</span> <span style="color:#75715e">//字符序列逆转
+</span></code></pre></div><h5 id="以上支持方法链且无论接不接受返回值修改都能成功">以上支持方法链，且无论接不接受返回值，修改都能成功</h5>
+<hr>
+<h2 id="string-stringbuffer-stringbuilder-之间的异同">String, StringBuffer, StringBuilder 之间的异同</h2>
+<h5 id="string---是不可变字符序列">String &ndash;是不可变字符序列，</h5>
+<h5 id="stringbuffer---可变字符序列线程安全效率低多线程且存在临界资源时选择stringbuffer">StringBuffer &ndash;可变字符序列，线程安全，效率低（多线程，且存在临界资源时，选择StringBuffer）</h5>
+<h5 id="stringbuilder---可变字符序列线程不安全效率高非多线程首选stringbuilder">StringBuilder &ndash;可变字符序列，线程不安全，效率高（非多线程，首选StringBuilder）</h5>
+<h5 id="三者底层都是使用char数组存储">三者底层都是使用char[]数组存储</h5>
+<p>StringBuffer(StringBuilder)调用空参构造器，默认长度是16。调用有参构造器，初始化长度为“参数”.Length() + 16，但是在调用length()时，显示的仍然是正常的长度。</p>
+<p>当进行扩容时，容量为原来的 2倍 + 2 ，同时将原有数组中的元素复制到新的数组中</p>
 <hr>
 <hr>
 <h1 id="jdk8前的日期时间api">JDK8前的日期时间API</h1>
