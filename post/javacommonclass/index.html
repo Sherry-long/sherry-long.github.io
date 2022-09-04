@@ -67,7 +67,7 @@ String str1 = &#34;abc&#34;; // 字面量，区别于new String str2 = &#34;abc&
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
       </div>
     </header>
@@ -165,24 +165,111 @@ String s4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</
 <h1 id="jdk8前的日期时间api">JDK8前的日期时间API</h1>
 <hr>
 <h2 id="system">System</h2>
-<hr>
-<h2 id="data">Data</h2>
-<hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">long</span> time <span style="color:#f92672">=</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">currentTimeMillis</span><span style="color:#f92672">();</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>time<span style="color:#f92672">);</span>
+</code></pre></div><hr>
+<h2 id="date">Date</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Date date <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Date<span style="color:#f92672">();</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>date<span style="color:#f92672">.</span><span style="color:#a6e22e">getTime</span><span style="color:#f92672">());</span><span style="color:#75715e">//其结果与System.currentTimeMillis()一致
+</span></code></pre></div><hr>
 <h2 id="calendar">Calendar</h2>
 <hr>
-<h2 id="simpledataformat">SimpleDataFormat</h2>
-<hr>
+<h2 id="simpledateformat">SimpleDateFormat</h2>
+<p>Date类的API不易于国际化，大部分被废弃了，java.text.SimpleDateFormat类是一个不与语言环境有关的方式来格式化和解析日期的具体类</p>
+<ul>
+<li>
+<p>格式化：日期 -&gt; 文本</p>
+</li>
+<li>
+<p>解析：文本 -&gt; 日期</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//格式化：
+</span><span style="color:#75715e"></span>SimpleDateFormat<span style="color:#f92672">()</span><span style="color:#75715e">//默认的模式和语言环境创建对象
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SimpleDateFormat</span><span style="color:#f92672">(</span>String pattern<span style="color:#f92672">)</span><span style="color:#75715e">//该构造方法可以用参数pattern指定的格式创建一个对象，该对象调用：
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">format</span><span style="color:#f92672">(</span>Date date<span style="color:#f92672">)</span><span style="color:#75715e">//方法格式化时间对象date
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//解析：
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> Date <span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span>String source<span style="color:#f92672">)</span><span style="color:#75715e">//从给定的字符串解析文本，生成一个日期
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//自定义格式
+</span><span style="color:#75715e"></span>SimpleDateFormat sdf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SimpleDateFormat<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;yyyy-MM-dd hh:mm:ss&#34;</span><span style="color:#f92672">);</span>
+Date date <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Date<span style="color:#f92672">();</span>
+String s <span style="color:#f92672">=</span> sdf<span style="color:#f92672">.</span><span style="color:#a6e22e">format</span><span style="color:#f92672">(</span>date<span style="color:#f92672">);</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>date<span style="color:#f92672">);</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>s<span style="color:#f92672">);</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>sdf<span style="color:#f92672">.</span><span style="color:#a6e22e">parse</span><span style="color:#f92672">(</span>s<span style="color:#f92672">));</span>
+
+<span style="color:#75715e">//输出：
+</span><span style="color:#75715e"></span>Sun Sep 04 11<span style="color:#f92672">:</span>40<span style="color:#f92672">:</span>16 CST 2022
+2022<span style="color:#f92672">-</span>09<span style="color:#f92672">-</span>04 11<span style="color:#f92672">:</span>40<span style="color:#f92672">:</span>16
+Sun Sep 04 11<span style="color:#f92672">:</span>40<span style="color:#f92672">:</span>16 CST 2022
+</code></pre></div><hr>
 <hr>
 <h1 id="jdk8中新日期时间api">JDK8中新日期时间API</h1>
-<hr>
+<h5 id="新时间日期api">新时间日期API</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">java<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span> <span style="color:#f92672">-</span> 包含值对象的基础包
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">.</span><span style="color:#a6e22e">chrono</span> <span style="color:#f92672">-</span> 提供对不同的日历系统的访问
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">.</span><span style="color:#a6e22e">format</span> <span style="color:#f92672">-</span> 格式化和解析时间和日期
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">.</span><span style="color:#a6e22e">temporal</span> <span style="color:#f92672">-</span> 包括底层框架和扩展特性
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">time</span><span style="color:#f92672">.</span><span style="color:#a6e22e">zone</span> <span style="color:#f92672">-</span> 包含时区支持的类
+</code></pre></div><hr>
 <h2 id="localdate-localtime-localdatetime">LocalDate, LocalTime, LocalDateTime</h2>
-<hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test3</span><span style="color:#f92672">(){</span>
+        LocalDate localDate <span style="color:#f92672">=</span> LocalDate<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span><span style="color:#75715e">//获取当前日期
+</span><span style="color:#75715e"></span>        LocalTime localTime <span style="color:#f92672">=</span> LocalTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span><span style="color:#75715e">//获取当前时间
+</span><span style="color:#75715e"></span>        LocalDateTime localDateTime <span style="color:#f92672">=</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span><span style="color:#75715e">//获取当前日期 + 时间
+</span><span style="color:#75715e"></span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDate<span style="color:#f92672">);</span><span style="color:#75715e">//2022-09-04
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localTime<span style="color:#f92672">);</span><span style="color:#75715e">//17:25:33.613702500
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDateTime<span style="color:#f92672">);</span><span style="color:#75715e">//2022-09-04T17:25:33.613702500
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//获取指定的日期时间，没有偏移量
+</span><span style="color:#75715e"></span>        LocalDateTime localDateTime1 <span style="color:#f92672">=</span> LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">of</span><span style="color:#f92672">(</span>2022<span style="color:#f92672">,</span> 9<span style="color:#f92672">,</span> 4<span style="color:#f92672">,</span> 17<span style="color:#f92672">,</span> 12<span style="color:#f92672">,</span> 56<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDateTime1<span style="color:#f92672">);</span><span style="color:#75715e">//2022-09-04T17:12:56
+</span><span style="color:#75715e"></span>		
+		<span style="color:#75715e">//获取方法
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">getDayOfMonth</span><span style="color:#f92672">());</span><span style="color:#75715e">//4
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">getDayOfWeek</span><span style="color:#f92672">());</span><span style="color:#75715e">//SUNDAY
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">getDayOfYear</span><span style="color:#f92672">());</span><span style="color:#75715e">//247
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">getMonthValue</span><span style="color:#f92672">());</span><span style="color:#75715e">//9
+</span><span style="color:#75715e"></span>		
+		<span style="color:#75715e">//设置属性方法，不可变性
+</span><span style="color:#75715e"></span>        LocalDate localDate1 <span style="color:#f92672">=</span> localDate<span style="color:#f92672">.</span><span style="color:#a6e22e">withDayOfMonth</span><span style="color:#f92672">(</span>24<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDate1<span style="color:#f92672">);</span><span style="color:#75715e">//2022-09-24
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDate<span style="color:#f92672">);</span><span style="color:#75715e">//2022-09-04
+</span><span style="color:#75715e"></span>		
+		<span style="color:#75715e">//增加，不可变性
+</span><span style="color:#75715e"></span>		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDate<span style="color:#f92672">.</span><span style="color:#a6e22e">plusMonths</span><span style="color:#f92672">(</span>2<span style="color:#f92672">));</span><span style="color:#75715e">//2022-11-04
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>localDate<span style="color:#f92672">);</span><span style="color:#75715e">//2022-09-04
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</code></pre></div><hr>
 <h2 id="instant">Instant</h2>
-<hr>
+<p>时间线上的一个瞬时点。可能被用来记录APP中的事件时间戳。Instant精度很高。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test4</span><span style="color:#f92672">(){</span>
+        <span style="color:#75715e">//获取本初子午线对应的时间
+</span><span style="color:#75715e"></span>        Instant instant <span style="color:#f92672">=</span> Instant<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">();</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>instant<span style="color:#f92672">);</span>
+        <span style="color:#75715e">//添加时间偏移量
+</span><span style="color:#75715e"></span>        OffsetDateTime offsetDateTime <span style="color:#f92672">=</span> instant<span style="color:#f92672">.</span><span style="color:#a6e22e">atOffset</span><span style="color:#f92672">(</span>ZoneOffset<span style="color:#f92672">.</span><span style="color:#a6e22e">ofHours</span><span style="color:#f92672">(</span>8<span style="color:#f92672">));</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>offsetDateTime<span style="color:#f92672">);</span>
+        <span style="color:#75715e">//获取从1970-1-1 00：00：00开始到现在的毫秒数
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>instant<span style="color:#f92672">.</span><span style="color:#a6e22e">toEpochMilli</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><hr>
 <h2 id="datetimeformatter">DateTimeFormatter</h2>
 <hr>
 <hr>
 <h1 id="others">others</h1>
+<p>ZoneId：该类中包含了所有的时区信息</p>
+<p>ZonedDateTime：一个在ISO-8601日历系统时区的日期时间</p>
+<p>Clock：使用时区提供对当前即时、日期和时间的访问的时钟</p>
+<p>Duration：用于计算两个“时间”间隔</p>
+<p>Period：用于计算两个“日期”间隔</p>
+<p>TemporalAdjuster：时间校正器。例如：将日期调整到下一个工作日</p>
+<p>TemporalAdjusters：该类通过静态方法提供了大量的常用TemporalAdjuster的实现</p>
 
     </div>
     <div class="post-footer">
