@@ -69,7 +69,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -163,16 +163,108 @@
 	
 </code></pre></div><hr>
 <h2 id="comparator接口定制排序">Comparator接口(定制排序)</h2>
-<p>当元素的类型没有实现Comparable接口而又不方便修改代码，或者实现了Comparable接口但重写的排序规则不适合当前操作，那么可以考虑使用Comparator对象来排序</p>
+<p>当元素的类型没有实现Comparable接口而又不方便修改代码，或者实现了Comparable接口但重写的排序规则不适合当前操作，那么可以考虑使用Comparator对象来排序，强行对多个对象进行整体排序的比较</p>
+<p>重写compare(Object o1, Object o2)方法，比较o1和o2的大小：如果方法返回正整数，则o1 &gt; o2，0 相等，负 小于</p>
+<p>可以将Comparator传递给sort方法，从而允许在排序顺序上实现精确控制</p>
+<p>还可以使用Comparator来控制某些数据结构(如有序set或有序映射)的顺序，或者为那些没有自然顺序的对象collection提供排序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">(){</span>
+        String<span style="color:#f92672">[]</span> arr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">[]{</span><span style="color:#e6db74">&#34;AA&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;CC&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;BB&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;DD&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;KK&#34;</span><span style="color:#f92672">};</span>
+        Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>arr<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> Comparator<span style="color:#f92672">(){</span>  <span style="color:#75715e">//匿名实现类匿名对象
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">@Override</span>  <span style="color:#75715e">//重写compare方法
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">compare</span><span style="color:#f92672">(</span>Object o1<span style="color:#f92672">,</span> Object o2<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>o1 <span style="color:#66d9ef">instanceof</span> String <span style="color:#f92672">&amp;&amp;</span> o2 <span style="color:#66d9ef">instanceof</span> String<span style="color:#f92672">){</span>
+                    String str1 <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>String<span style="color:#f92672">)</span> o1<span style="color:#f92672">;</span>
+                    String str2 <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>String<span style="color:#f92672">)</span> o2<span style="color:#f92672">;</span>
+                    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>str1<span style="color:#f92672">.</span><span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>str2<span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wrong class&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>String temp <span style="color:#f92672">:</span> arr<span style="color:#f92672">){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>temp<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+	
+	
+	Output<span style="color:#f92672">:</span>
+	KK
+	DD
+	CC
+	BB
+	AA
+</code></pre></div><hr>
+<h3 id="comparable-与-comparator-的使用对比">Comparable 与 Comparator 的使用对比</h3>
+<ul>
+<li>
+<p>Comparable接口的方式一旦确定，保证其实现类的对象在任何位置都可以比较大小</p>
+</li>
+<li>
+<p>Comparator接口属于临时性比较</p>
+</li>
+</ul>
 <hr>
 <hr>
 <h1 id="system类">System类</h1>
-<hr>
+<p>System类代表系统，系统级的很多属性和控制方法都放置在该类的内部。该类位于java.lang包</p>
+<p>该类无法实例化，其内部成员变量和成员方法都是static的，可以通过System类名直接调用</p>
+<p>System类内部包含in、out 和 err 三个成员变量，分别代表标准输入流(键盘输入)，标准输出流(显示器)和标准错误输出流(显示器)</p>
+<ul>
+<li>成员方法：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">native</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">currentTimeMillis</span><span style="color:#f92672">()</span>
+<span style="color:#75715e">//返回当前计算机时间
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exit</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> status<span style="color:#f92672">)</span>
+<span style="color:#75715e">//退出程序。0 正常退出，非0 异常退出
+</span><span style="color:#75715e">//使用该方法可以在图形界面编程中实现程序的退出功能等
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">gc</span><span style="color:#f92672">()</span>
+<span style="color:#75715e">//请求系统进行垃圾回收。系统是否立刻回收，取决于系统中垃圾回收算法的实现以及系统执行时的情况
+</span><span style="color:#75715e"></span>
+String <span style="color:#a6e22e">getProperty</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">)</span>
+<span style="color:#75715e">//获得系统中属性名为key的属性对应的值。常见属性名如下：
+</span><span style="color:#75715e"></span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">version</span> <span style="color:#f92672">-</span> Java运行时环境版本
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">home</span> <span style="color:#f92672">-</span> Java安装目录
+os<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">-</span> 操作系统名称
+os<span style="color:#f92672">.</span><span style="color:#a6e22e">version</span> <span style="color:#f92672">-</span> 操作系统版本
+user<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">-</span> 用户账户名称
+user<span style="color:#f92672">.</span><span style="color:#a6e22e">home</span> <span style="color:#f92672">-</span> 用户主目录
+user<span style="color:#f92672">.</span><span style="color:#a6e22e">dir</span> <span style="color:#f92672">-</span> 用户当前工作目录
+</code></pre></div><hr>
 <hr>
 <h1 id="math类">Math类</h1>
-<hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">abs <span style="color:#f92672">-</span> 绝对值
+acos<span style="color:#f92672">,</span> asin<span style="color:#f92672">,</span> atan<span style="color:#f92672">,</span> cos<span style="color:#f92672">,</span> sin<span style="color:#f92672">,</span> tan <span style="color:#f92672">-</span> 三角函数
+sqrt <span style="color:#f92672">-</span> 平方根
+<span style="color:#a6e22e">pow</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> a<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> a的b次幂
+log <span style="color:#f92672">-</span> 自然对数
+exp <span style="color:#f92672">-</span> e为底指数
+<span style="color:#a6e22e">max</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> a<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> max
+<span style="color:#a6e22e">min</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> a<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> min
+<span style="color:#a6e22e">random</span><span style="color:#f92672">()</span> <span style="color:#f92672">-</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span> <span style="color:#f92672">~</span> 1<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span> 随机数
+<span style="color:#66d9ef">long</span> <span style="color:#a6e22e">round</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> a<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> double型数据转换为long型<span style="color:#f92672">(</span>四舍五入<span style="color:#f92672">)</span>
+toDegrees<span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> angrad<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> 弧度转角度
+<span style="color:#a6e22e">toRadians</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> angdeg<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> 角度转弧度
+</code></pre></div><hr>
 <hr>
 <h1 id="biginteger-与-bigdecimal">BigInteger 与 BigDecimal</h1>
+<hr>
+<h2 id="biginteger">BigInteger</h2>
+<hr>
+<h2 id="bigdecimal">BigDecimal</h2>
+<pre><code>在使用BigDecimal时，禁止使用构造方法BigDecimal(double)的方式把double值转化为BigDecimal对象，因为可能会产生精度丢失
+优先推荐入参为String的构造方法，或使用BigDecimal的valueOf方法，此方法内部其实执行了Double的toString，
+而Double的toString按double的实际能表达的精度对尾数进行了截断。
+
+在判断两个BigDecimal类型的变量相等时，使用compareTo()而不是equals()或者 == 
+在BigDecimal类中，equals方法不止比较数值，还会比较标度(scale)
+    new BigDecimal(&quot;0.10000&quot;)的标度为5
+    new BigDecimal(&quot;0.1&quot;)的标度为1
+    两者数值上相等，但是使用equals方法来判断会返回false，因为equals也会比较标度
+    使用compareTo来比较即可
+</code></pre>
 
     </div>
     <div class="post-footer">
