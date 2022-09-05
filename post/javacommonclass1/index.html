@@ -13,10 +13,18 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java常用类2"/>
-<meta name="twitter:description" content="Java比较器  Comparable接口  Comparator接口   System类   Math类   BigInteger 与 BigDecimal "/>
+<meta name="twitter:description" content="Java比较器 Java中的对象，正常情况下，只能进行比较 == 或 !=，不能使用 &gt; 或 &lt;
+但有时，我们需要对多个对象进行排序，需要比较对象的大小
+通过使用 Comparable 或 Comparator 接口来实现
+ Comparable接口(自然排序) 重写compareTo(obj)方法：
+ 如果当前对象this大于形参对象obj，返回正整数 如果当前对象this小于形参对象obj，返回负整数 如果当前对象this等于形参对象obj，返回零  class Goods implements Comparable{ private String name; private double price; @Override public String toString() { return &#34;Goods{&#34; &#43; &#34;name=&#39;&#34; &#43; name &#43; &#39;\&#39;&#39; &#43; &#34;, price=&#34; &#43; price &#43; &#39;}&#39;; } public String getName() { return name; } public void setName(String name) { this.name = name; } public double getPrice() { return price; } public void setPrice(double price) { this."/>
 
     <meta property="og:title" content="Java常用类2" />
-<meta property="og:description" content="Java比较器  Comparable接口  Comparator接口   System类   Math类   BigInteger 与 BigDecimal " />
+<meta property="og:description" content="Java比较器 Java中的对象，正常情况下，只能进行比较 == 或 !=，不能使用 &gt; 或 &lt;
+但有时，我们需要对多个对象进行排序，需要比较对象的大小
+通过使用 Comparable 或 Comparator 接口来实现
+ Comparable接口(自然排序) 重写compareTo(obj)方法：
+ 如果当前对象this大于形参对象obj，返回正整数 如果当前对象this小于形参对象obj，返回负整数 如果当前对象this等于形参对象obj，返回零  class Goods implements Comparable{ private String name; private double price; @Override public String toString() { return &#34;Goods{&#34; &#43; &#34;name=&#39;&#34; &#43; name &#43; &#39;\&#39;&#39; &#43; &#34;, price=&#34; &#43; price &#43; &#39;}&#39;; } public String getName() { return name; } public void setName(String name) { this.name = name; } public double getPrice() { return price; } public void setPrice(double price) { this." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javacommonclass1/" />
 <meta property="article:published_time" content="2022-09-01T17:26:46+08:00" />
@@ -67,10 +75,95 @@
     </header>
     <div class="post-content">
       <h1 id="java比较器">Java比较器</h1>
+<p>Java中的对象，正常情况下，只能进行比较 == 或 !=，不能使用 &gt; 或 &lt;</p>
+<p>但有时，我们需要对多个对象进行排序，需要比较对象的大小</p>
+<p>通过使用 Comparable 或 Comparator 接口来实现</p>
 <hr>
-<h2 id="comparable接口">Comparable接口</h2>
-<hr>
-<h2 id="comparator接口">Comparator接口</h2>
+<h2 id="comparable接口自然排序">Comparable接口(自然排序)</h2>
+<p>重写compareTo(obj)方法：</p>
+<pre><code>    如果当前对象this大于形参对象obj，返回正整数
+    如果当前对象this小于形参对象obj，返回负整数
+    如果当前对象this等于形参对象obj，返回零
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Goods</span> <span style="color:#66d9ef">implements</span> Comparable<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">double</span> price<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Goods{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;name=&#39;&#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, price=&#34;</span> <span style="color:#f92672">+</span> price <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setName</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">getPrice</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> price<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setPrice</span><span style="color:#f92672">(</span><span style="color:#66d9ef">double</span> price<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">price</span> <span style="color:#f92672">=</span> price<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Goods</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">double</span> price<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">price</span> <span style="color:#f92672">=</span> price<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Goods</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//指明商品比较大小的方式
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>o <span style="color:#66d9ef">instanceof</span> Goods<span style="color:#f92672">){</span>
+            Goods good <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Goods<span style="color:#f92672">)</span>o<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getPrice</span><span style="color:#f92672">()</span> <span style="color:#f92672">&lt;</span> good<span style="color:#f92672">.</span><span style="color:#a6e22e">getPrice</span><span style="color:#f92672">())</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getPrice</span><span style="color:#f92672">()</span> <span style="color:#f92672">&gt;</span> good<span style="color:#f92672">.</span><span style="color:#a6e22e">getPrice</span><span style="color:#f92672">())</span>
+                <span style="color:#66d9ef">return</span> 1<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">else</span>
+                <span style="color:#66d9ef">return</span> 0<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wrong class&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+
+	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test1</span><span style="color:#f92672">(){</span>
+        Goods<span style="color:#f92672">[]</span> goods <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Goods<span style="color:#f92672">[</span>4<span style="color:#f92672">];</span>
+        goods<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Goods<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Dell&#34;</span><span style="color:#f92672">,</span> 4000<span style="color:#f92672">);</span>
+        goods<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Goods<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Lenovo&#34;</span><span style="color:#f92672">,</span> 3000<span style="color:#f92672">);</span>
+        goods<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Goods<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Hasee&#34;</span><span style="color:#f92672">,</span> 2000<span style="color:#f92672">);</span>
+        goods<span style="color:#f92672">[</span>3<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Goods<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Apple&#34;</span><span style="color:#f92672">,</span> 1000<span style="color:#f92672">);</span>
+
+        Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>goods<span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>Goods temp <span style="color:#f92672">:</span> goods<span style="color:#f92672">){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>temp<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+	
+	Output<span style="color:#f92672">:</span>
+	Goods<span style="color:#f92672">{</span>name<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">&#39;</span>Apple<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">,</span> price<span style="color:#f92672">=</span>1000<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">}</span>
+	Goods<span style="color:#f92672">{</span>name<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">&#39;</span>Hasee<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">,</span> price<span style="color:#f92672">=</span>2000<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">}</span>
+	Goods<span style="color:#f92672">{</span>name<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">&#39;</span>Lenovo<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">,</span> price<span style="color:#f92672">=</span>3000<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">}</span>
+	Goods<span style="color:#f92672">{</span>name<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">&#39;</span>Dell<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">,</span> price<span style="color:#f92672">=</span>4000<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">}</span>
+	
+	
+</code></pre></div><hr>
+<h2 id="comparator接口定制排序">Comparator接口(定制排序)</h2>
+<p>当元素的类型没有实现Comparable接口而又不方便修改代码，或者实现了Comparable接口但重写的排序规则不适合当前操作，那么可以考虑使用Comparator对象来排序</p>
 <hr>
 <hr>
 <h1 id="system类">System类</h1>

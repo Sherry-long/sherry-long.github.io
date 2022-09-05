@@ -13,7 +13,11 @@
       <pubDate>Thu, 01 Sep 2022 17:26:46 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/javacommonclass1/</guid>
-      <description>Java比较器  Comparable接口  Comparator接口   System类   Math类   BigInteger 与 BigDecimal </description>
+      <description>Java比较器 Java中的对象，正常情况下，只能进行比较 == 或 !=，不能使用 &amp;gt; 或 &amp;lt;
+但有时，我们需要对多个对象进行排序，需要比较对象的大小
+通过使用 Comparable 或 Comparator 接口来实现
+ Comparable接口(自然排序) 重写compareTo(obj)方法：
+ 如果当前对象this大于形参对象obj，返回正整数 如果当前对象this小于形参对象obj，返回负整数 如果当前对象this等于形参对象obj，返回零  class Goods implements Comparable{ private String name; private double price; @Override public String toString() { return &amp;#34;Goods{&amp;#34; + &amp;#34;name=&amp;#39;&amp;#34; + name + &amp;#39;\&amp;#39;&amp;#39; + &amp;#34;, price=&amp;#34; + price + &amp;#39;}&amp;#39;; } public String getName() { return name; } public void setName(String name) { this.name = name; } public double getPrice() { return price; } public void setPrice(double price) { this.</description>
     </item>
     
     <item>
