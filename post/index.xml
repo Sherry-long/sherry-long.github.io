@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Sep 2022 17:26:46 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Sep 2022 09:18:27 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java枚举类与注解</title>
+      <link>https://sherry-long.github.io/post/javaenum/</link>
+      <pubDate>Tue, 06 Sep 2022 09:18:27 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javaenum/</guid>
+      <description>枚举类 什么是枚举类 类的对象只有确定的有限个 星期：周一二三 性别：男女 季节：春夏秋冬 支付方式：扫码现金 就职状态：Busy，Free，Vacation，Dismissed 订单状态：。。。 线程状态：创建，就绪，运行，阻塞，死亡
+当需要定义一组常量时，建议使用枚举类 如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&amp;#34;Monday&amp;#34;, 1); public static final Weekday Tuesday = new Weekday(&amp;#34;Tuesday&amp;#34;, 2); public static final Weekday Wednesday = new Weekday(&amp;#34;Wednesday&amp;#34;, 3); public static final Weekday Thursday = new Weekday(&amp;#34;Thursday&amp;#34;, 4); public static final Weekday Friday = new Weekday(&amp;#34;Friday&amp;#34;, 5); public static final Weekday Saturday = new Weekday(&amp;#34;Saturday&amp;#34;, 6); public static final Weekday Sunday = new Weekday(&amp;#34;Sunday&amp;#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &amp;#34;Weekday{&amp;#34; + &amp;#34;DayName=&amp;#39;&amp;#34; + DayName + &amp;#39;\&amp;#39;&amp;#39; + &amp;#34;, DayNum=&amp;#34; + DayNum + &amp;#39;}&amp;#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java.</description>
+    </item>
+    
     <item>
       <title>Java常用类2</title>
       <link>https://sherry-long.github.io/post/javacommonclass1/</link>

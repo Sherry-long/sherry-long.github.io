@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java枚举类与注解 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java枚举类与注解"/>
+<meta name="twitter:description" content="枚举类 什么是枚举类 类的对象只有确定的有限个 星期：周一二三 性别：男女 季节：春夏秋冬 支付方式：扫码现金 就职状态：Busy，Free，Vacation，Dismissed 订单状态：。。。 线程状态：创建，就绪，运行，阻塞，死亡
+当需要定义一组常量时，建议使用枚举类 如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&#34;Monday&#34;, 1); public static final Weekday Tuesday = new Weekday(&#34;Tuesday&#34;, 2); public static final Weekday Wednesday = new Weekday(&#34;Wednesday&#34;, 3); public static final Weekday Thursday = new Weekday(&#34;Thursday&#34;, 4); public static final Weekday Friday = new Weekday(&#34;Friday&#34;, 5); public static final Weekday Saturday = new Weekday(&#34;Saturday&#34;, 6); public static final Weekday Sunday = new Weekday(&#34;Sunday&#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &#34;Weekday{&#34; &#43; &#34;DayName=&#39;&#34; &#43; DayName &#43; &#39;\&#39;&#39; &#43; &#34;, DayNum=&#34; &#43; DayNum &#43; &#39;}&#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java."/>
+
+    <meta property="og:title" content="Java枚举类与注解" />
+<meta property="og:description" content="枚举类 什么是枚举类 类的对象只有确定的有限个 星期：周一二三 性别：男女 季节：春夏秋冬 支付方式：扫码现金 就职状态：Busy，Free，Vacation，Dismissed 订单状态：。。。 线程状态：创建，就绪，运行，阻塞，死亡
+当需要定义一组常量时，建议使用枚举类 如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&#34;Monday&#34;, 1); public static final Weekday Tuesday = new Weekday(&#34;Tuesday&#34;, 2); public static final Weekday Wednesday = new Weekday(&#34;Wednesday&#34;, 3); public static final Weekday Thursday = new Weekday(&#34;Thursday&#34;, 4); public static final Weekday Friday = new Weekday(&#34;Friday&#34;, 5); public static final Weekday Saturday = new Weekday(&#34;Saturday&#34;, 6); public static final Weekday Sunday = new Weekday(&#34;Sunday&#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &#34;Weekday{&#34; &#43; &#34;DayName=&#39;&#34; &#43; DayName &#43; &#39;\&#39;&#39; &#43; &#34;, DayNum=&#34; &#43; DayNum &#43; &#39;}&#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javaenum/" />
+<meta property="article:published_time" content="2022-09-06T09:18:27+08:00" />
+<meta property="article:modified_time" content="2022-09-06T09:18:27+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java枚举类与注解</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 6, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h1 id="枚举类">枚举类</h1>
+<h5 id="什么是枚举类">什么是枚举类</h5>
+<p>类的对象只有确定的有限个
+星期：周一二三
+性别：男女
+季节：春夏秋冬
+支付方式：扫码现金
+就职状态：Busy，Free，Vacation，Dismissed
+订单状态：。。。
+线程状态：创建，就绪，运行，阻塞，死亡</p>
+<h5 id="当需要定义一组常量时建议使用枚举类">当需要定义一组常量时，建议使用枚举类</h5>
+<h2 id="如何自定义枚举类jdk5之前">如何自定义枚举类(JDK5之前)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Weekday</span><span style="color:#f92672">{</span>
+    <span style="color:#75715e">//声明对象属性， private final 修饰
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String DayName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> DayNum<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">//私有化构造方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Weekday</span><span style="color:#f92672">(</span>String dayName<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> dayNum<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">DayNum</span> <span style="color:#f92672">=</span> dayNum<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">DayName</span> <span style="color:#f92672">=</span> dayName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//创建多个对象，public static final 修饰
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Monday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Monday&#34;</span><span style="color:#f92672">,</span> 1<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Tuesday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Tuesday&#34;</span><span style="color:#f92672">,</span> 2<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Wednesday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wednesday&#34;</span><span style="color:#f92672">,</span> 3<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Thursday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Thursday&#34;</span><span style="color:#f92672">,</span> 4<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Friday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Friday&#34;</span><span style="color:#f92672">,</span> 5<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Saturday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Saturday&#34;</span><span style="color:#f92672">,</span> 6<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Weekday Sunday <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Weekday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Sunday&#34;</span><span style="color:#f92672">,</span> 7<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">//Getters、toString方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getDayName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> DayName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getDayNum</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> DayNum<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Weekday{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;DayName=&#39;&#34;</span> <span style="color:#f92672">+</span> DayName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, DayNum=&#34;</span> <span style="color:#f92672">+</span> DayNum <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h2 id="如何使用关键字enum定义枚举类jdk5新特性">如何使用关键字enum定义枚举类(JDK5新特性)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">enum</span> Weekday<span style="color:#f92672">{</span><span style="color:#75715e">//enum类继承于java.lang.Enum，重写了toString()方法，默认输出对象名
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//省略关键字，对象之间用逗号隔开
+</span><span style="color:#75715e"></span>    Monday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Monday&#34;</span><span style="color:#f92672">,</span> 1<span style="color:#f92672">),</span>
+    Tuesday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Tuesday&#34;</span><span style="color:#f92672">,</span> 2<span style="color:#f92672">),</span>
+    Wednesday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wednesday&#34;</span><span style="color:#f92672">,</span> 3<span style="color:#f92672">),</span>
+    Thursday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Thursday&#34;</span><span style="color:#f92672">,</span> 4<span style="color:#f92672">),</span>
+    Friday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Friday&#34;</span><span style="color:#f92672">,</span> 5<span style="color:#f92672">),</span>
+    Saturday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Saturday&#34;</span><span style="color:#f92672">,</span> 6<span style="color:#f92672">),</span>
+    Sunday<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Sunday&#34;</span><span style="color:#f92672">,</span> 7<span style="color:#f92672">);</span>
+	
+	
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String DayName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> DayNum<span style="color:#f92672">;</span>
+
+    <span style="color:#75715e">//私有化构造方法
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Weekday</span><span style="color:#f92672">(</span>String dayName<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> dayNum<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">DayNum</span> <span style="color:#f92672">=</span> dayNum<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">DayName</span> <span style="color:#f92672">=</span> dayName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//创建多个对象，public static final 修饰
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//Getters、toString方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getDayName</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> DayName<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getDayNum</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> DayNum<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="enum类的主要方法">Enum类的主要方法</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">values<span style="color:#f92672">()</span> <span style="color:#75715e">// 返回枚举类型的对象数组，该方法可以很方便的遍历所有枚举值
+</span><span style="color:#75715e"></span>
+valueOf <span style="color:#75715e">// 传递枚举类型的Class对象和枚举常量名称给静态方法valueOf，会得到与参数匹配的枚举常量
+</span><span style="color:#75715e"></span>
+toString <span style="color:#75715e">// 得到当前枚举常量的名称。可重写
+</span><span style="color:#75715e"></span>
+equals <span style="color:#75715e">// 在枚举类型中可以直接使用 == 来比较两个枚举常量是否相等。此方法也是使用 == 来实现的。
+</span><span style="color:#75715e"></span>	   <span style="color:#75715e">// 它的存在是为了在Set、List和Map中使用。此方法为final方法，不可重写
+</span><span style="color:#75715e"></span>
+hashCode <span style="color:#75715e">// final方法，不可重写
+</span><span style="color:#75715e"></span>
+getDeclaringClass <span style="color:#75715e">// 得到枚举常量所属枚举类型的Class对象。可以用它来判断两个枚举常量是否属于
+</span><span style="color:#75715e"></span>                  <span style="color:#75715e">// 同一个枚举类型
+</span><span style="color:#75715e"></span>
+name <span style="color:#75715e">// 得到当前枚举常量的名称。优先使用toString
+</span><span style="color:#75715e"></span>
+ordinal <span style="color:#75715e">// 得到当前枚举常量的次序
+</span><span style="color:#75715e"></span>
+compareTo <span style="color:#75715e">// 比较两个枚举常量的大小(按照声明的顺序排列)
+</span><span style="color:#75715e"></span>
+clone <span style="color:#75715e">// 枚举类型不能被克隆。为了防止子类实现此方法，Enum实现了一个进抛出异常的final clone()方法
+</span><span style="color:#75715e"></span>
+</code></pre></div><hr>
+<h2 id="实现接口的枚举类使用enum关键字">实现接口的枚举类(使用enum关键字)</h2>
+<ul>
+<li>情况一：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">enum</span> <span style="color:#f92672">***</span> <span style="color:#66d9ef">implements</span> <span style="color:#f92672">***{</span>
+	<span style="color:#f92672">....</span><span style="color:#75715e">//各种枚举常量
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">....</span>
+	
+	<span style="color:#a6e22e">@override</span>
+	<span style="color:#66d9ef">public</span> <span style="color:#f92672">...</span> <span style="color:#75715e">//重写方法
+</span><span style="color:#75715e"></span>	
+	<span style="color:#75715e">//此时所有枚举对象共享此方法
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>情况二：</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">enum</span> Season <span style="color:#66d9ef">implements</span> <span style="color:#f92672">***{</span>
+	SPRING<span style="color:#f92672">(***){</span>
+		<span style="color:#a6e22e">@override</span>
+		<span style="color:#66d9ef">public</span> <span style="color:#f92672">...</span><span style="color:#75715e">//重写方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">},</span>
+	SUNMMER<span style="color:#f92672">(***){</span>
+		<span style="color:#a6e22e">@override</span>
+		<span style="color:#66d9ef">public</span> <span style="color:#f92672">...</span><span style="color:#75715e">//重写方法
+</span><span style="color:#75715e"></span>	<span style="color:#f92672">}</span>
+	<span style="color:#f92672">...</span>
+	<span style="color:#75715e">//此时为每个枚举对象重写方法，每个对象调用方法可以实现不同操作
+</span><span style="color:#75715e"></span>	
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<hr>
+<h1 id="注解">注解</h1>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
