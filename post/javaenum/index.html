@@ -14,11 +14,11 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java枚举类与注解"/>
 <meta name="twitter:description" content="枚举类 什么是枚举类 类的对象只有确定的有限个 星期：周一二三 性别：男女 季节：春夏秋冬 支付方式：扫码现金 就职状态：Busy，Free，Vacation，Dismissed 订单状态：。。。 线程状态：创建，就绪，运行，阻塞，死亡
-当需要定义一组常量时，建议使用枚举类 如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&#34;Monday&#34;, 1); public static final Weekday Tuesday = new Weekday(&#34;Tuesday&#34;, 2); public static final Weekday Wednesday = new Weekday(&#34;Wednesday&#34;, 3); public static final Weekday Thursday = new Weekday(&#34;Thursday&#34;, 4); public static final Weekday Friday = new Weekday(&#34;Friday&#34;, 5); public static final Weekday Saturday = new Weekday(&#34;Saturday&#34;, 6); public static final Weekday Sunday = new Weekday(&#34;Sunday&#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &#34;Weekday{&#34; &#43; &#34;DayName=&#39;&#34; &#43; DayName &#43; &#39;\&#39;&#39; &#43; &#34;, DayNum=&#34; &#43; DayNum &#43; &#39;}&#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java."/>
+当需要定义一组常量时，建议使用枚举类  如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&#34;Monday&#34;, 1); public static final Weekday Tuesday = new Weekday(&#34;Tuesday&#34;, 2); public static final Weekday Wednesday = new Weekday(&#34;Wednesday&#34;, 3); public static final Weekday Thursday = new Weekday(&#34;Thursday&#34;, 4); public static final Weekday Friday = new Weekday(&#34;Friday&#34;, 5); public static final Weekday Saturday = new Weekday(&#34;Saturday&#34;, 6); public static final Weekday Sunday = new Weekday(&#34;Sunday&#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &#34;Weekday{&#34; &#43; &#34;DayName=&#39;&#34; &#43; DayName &#43; &#39;\&#39;&#39; &#43; &#34;, DayNum=&#34; &#43; DayNum &#43; &#39;}&#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java."/>
 
     <meta property="og:title" content="Java枚举类与注解" />
 <meta property="og:description" content="枚举类 什么是枚举类 类的对象只有确定的有限个 星期：周一二三 性别：男女 季节：春夏秋冬 支付方式：扫码现金 就职状态：Busy，Free，Vacation，Dismissed 订单状态：。。。 线程状态：创建，就绪，运行，阻塞，死亡
-当需要定义一组常量时，建议使用枚举类 如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&#34;Monday&#34;, 1); public static final Weekday Tuesday = new Weekday(&#34;Tuesday&#34;, 2); public static final Weekday Wednesday = new Weekday(&#34;Wednesday&#34;, 3); public static final Weekday Thursday = new Weekday(&#34;Thursday&#34;, 4); public static final Weekday Friday = new Weekday(&#34;Friday&#34;, 5); public static final Weekday Saturday = new Weekday(&#34;Saturday&#34;, 6); public static final Weekday Sunday = new Weekday(&#34;Sunday&#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &#34;Weekday{&#34; &#43; &#34;DayName=&#39;&#34; &#43; DayName &#43; &#39;\&#39;&#39; &#43; &#34;, DayNum=&#34; &#43; DayNum &#43; &#39;}&#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java." />
+当需要定义一组常量时，建议使用枚举类  如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&#34;Monday&#34;, 1); public static final Weekday Tuesday = new Weekday(&#34;Tuesday&#34;, 2); public static final Weekday Wednesday = new Weekday(&#34;Wednesday&#34;, 3); public static final Weekday Thursday = new Weekday(&#34;Thursday&#34;, 4); public static final Weekday Friday = new Weekday(&#34;Friday&#34;, 5); public static final Weekday Saturday = new Weekday(&#34;Saturday&#34;, 6); public static final Weekday Sunday = new Weekday(&#34;Sunday&#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &#34;Weekday{&#34; &#43; &#34;DayName=&#39;&#34; &#43; DayName &#43; &#39;\&#39;&#39; &#43; &#34;, DayNum=&#34; &#43; DayNum &#43; &#39;}&#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javaenum/" />
 <meta property="article:published_time" content="2022-09-06T09:18:27+08:00" />
@@ -79,6 +79,7 @@
 订单状态：。。。
 线程状态：创建，就绪，运行，阻塞，死亡</p>
 <h5 id="当需要定义一组常量时建议使用枚举类">当需要定义一组常量时，建议使用枚举类</h5>
+<hr>
 <h2 id="如何自定义枚举类jdk5之前">如何自定义枚举类(JDK5之前)</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Weekday</span><span style="color:#f92672">{</span>
     <span style="color:#75715e">//声明对象属性， private final 修饰
@@ -151,7 +152,8 @@
     <span style="color:#f92672">}</span>
 
 <span style="color:#f92672">}</span>
-</code></pre></div><h2 id="enum类的主要方法">Enum类的主要方法</h2>
+</code></pre></div><hr>
+<h2 id="enum类的主要方法">Enum类的主要方法</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">values<span style="color:#f92672">()</span> <span style="color:#75715e">// 返回枚举类型的对象数组，该方法可以很方便的遍历所有枚举值
 </span><span style="color:#75715e"></span>
 valueOf <span style="color:#75715e">// 传递枚举类型的Class对象和枚举常量名称给静态方法valueOf，会得到与参数匹配的枚举常量
@@ -206,8 +208,105 @@ clone <span style="color:#75715e">// 枚举类型不能被克隆。为了防止�
 <span style="color:#f92672">}</span>
 </code></pre></div><hr>
 <hr>
-<h1 id="注解">注解</h1>
+<h1 id="注解annotation">注解(Annotation)</h1>
+<hr>
+<h2 id="概述">概述</h2>
+<ul>
+<li>
+<p>从JDK 5.0开始，Java增加了对元数据(MetaData)的支持，也就是Annotation(注解)</p>
+</li>
+<li>
+<p>注解其实就是代码里的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过使用注解，程序员可以在不改变原有逻辑的情况下，在源文件中嵌入一些补充信息。代码分析工具、开发工具和部署工具可以通过这些补充信息进行验证或者进行部署</p>
+</li>
+<li>
+<p>注解可以像修饰符一样被使用，可用于修饰包，类，构造器，方法，成员变量，参数，局部变量声明，这些信息被保存在注解的&quot;name = value&quot;对中</p>
+</li>
+</ul>
+<p>注解是一种趋势</p>
+<hr>
+<h2 id="常见注解">常见注解</h2>
+<p>使用注解时要在其前面增加 @ 符号，并把该注解当成一个修饰符使用。用于修饰它支持的程序元素</p>
+<h4 id="生成文档的相关注解">生成文档的相关注解</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@author</span> 标明开发该模块的作者
+<span style="color:#a6e22e">@version</span> <span style="color:#f92672">-</span> 标明该类模块的版本
+<span style="color:#a6e22e">@see</span> <span style="color:#f92672">-</span> 参考转向<span style="color:#960050;background-color:#1e0010">，</span>也就是相关主题
+<span style="color:#a6e22e">@since</span> <span style="color:#f92672">-</span> 从哪个版本开始增加
+<span style="color:#a6e22e">@param</span> <span style="color:#f92672">-</span> 对方法中某参数的说明<span style="color:#960050;background-color:#1e0010">，</span>没有参数就不能写
+<span style="color:#a6e22e">@return</span> <span style="color:#f92672">-</span> 对方法返回值的说明<span style="color:#960050;background-color:#1e0010">，</span>如果是void就不能写
+<span style="color:#a6e22e">@exception</span> <span style="color:#f92672">-</span> 对方法可能抛出的异常进行说明<span style="color:#960050;background-color:#1e0010">，</span>如果方法没有用throws显示抛出的异常就不能写
 
+其中
+<span style="color:#a6e22e">@param</span> <span style="color:#a6e22e">@return</span> <span style="color:#a6e22e">@exception只用于方法</span>
+<span style="color:#a6e22e">@param</span> 格式要求<span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">@param</span> 形参名 形参类型 形参说明
+<span style="color:#a6e22e">@return</span> 格式要求<span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">@return</span> 返回值类型 返回值说明
+<span style="color:#a6e22e">@exception</span> 格式要求<span style="color:#960050;background-color:#1e0010">：</span><span style="color:#a6e22e">@exception</span> 异常类型 异常说明
+
+<span style="color:#a6e22e">@param</span> 和 <span style="color:#a6e22e">@exception可以并列多个</span>
+</code></pre></div><h4 id="jdk内置的注解">JDK内置的注解</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Override</span> <span style="color:#f92672">-</span> 重写方法注解<span style="color:#960050;background-color:#1e0010">，</span>在编译时会校验方法是不是重写的<span style="color:#960050;background-color:#1e0010">，</span>如果不是就报错
+
+<span style="color:#a6e22e">@Deprecated</span> <span style="color:#f92672">-</span> 用于表示所修饰的元素<span style="color:#f92672">(</span>类<span style="color:#960050;background-color:#1e0010">，</span>方法等<span style="color:#f92672">)</span>已过时<span style="color:#960050;background-color:#1e0010">，</span>不再推荐使用<span style="color:#960050;background-color:#1e0010">。</span>通常是因为所修饰的结构危险或存在更好的选择
+
+<span style="color:#a6e22e">@SuppressWarnings</span> <span style="color:#f92672">-</span> 抑制编译器警告
+
+</code></pre></div><hr>
+<h2 id="自定义注解">自定义注解</h2>
+<p>定义新的Annotation类型使用 @interface 关键字</p>
+<p>自定义注解自动继承了 java.lang.annotation.Annotation 接口</p>
+<p>Annotation的成员变量在Annotation定义中以无参数方法的形式来声明。其方法名和返回值定义了该成员的名字和类型，称为配置参数。类型只能是 八种基本数据类型 、 String 、 Class 、 enum 、 Annotation ，以及以上所有类型的数组</p>
+<p>可以在定义Annotation的成员变量时为其指定初始值，指定成员变量的初始值可使用default关键字</p>
+<p>如果只有一个参数成员，建议使用参数名为value</p>
+<p>如果定义的注解含有配置参数，那么使用时必须指定参数值，除非它有默认值。格式是“参数名 = 参数值”，如果只有一个参数成员，且名称为value，可以省略“value = ”</p>
+<p>没有成员定义的Annotation称为标记，包含成员变量的Annotation称为元数据Annotation</p>
+<h5 id="注意自定义注解必须配上注解的信息处理流程使用反射才有意义">注意：自定义注解必须配上注解的信息处理流程(使用反射)才有意义</h5>
+<hr>
+<h2 id="jdk元注解">JDK元注解</h2>
+<p>JDK的元注解用于修饰其他的注解定义</p>
+<ul>
+<li>Retention</li>
+</ul>
+<pre><code>//用于修饰注解定义，指定该注解的生命周期。
+//@Retention包含一个RetentionPolicy类型的成员变量，使用该注解时必须为该value成员变量指定值
+
+RetentionPolicy.SOURCE //在源文件中有效(即源文件保留)，编译器直接丢弃这种策略的注释
+RetentionPolicy.CLASS //在class文件中有效(class保留)，当运行java程序时，JVM不会保留注释。这是默认值
+RetentionPolicy.RUNTIME //运行时有效(运行时保留)，当运行java程序时，JVM会保留注释。程序可以通过反射获取该注释
+</code></pre><ul>
+<li>Target</li>
+</ul>
+<pre><code>//用于修饰注解定义，用于指定被修饰的注解能用于修饰哪些程序元素。
+//@Target也包含一个名为value的成员变量
+
+CONSTRUCTOR //用于描述构造器
+PACKAGE //包
+FIELD //域
+PARAMETER //参数
+LOCAL_VARIABLE //局部变量
+TYPE //类、接口(包括注解类型)或enum声明
+METHOD //方法
+</code></pre><ul>
+<li>Documented</li>
+</ul>
+<p>表示它所修饰的注解在被javadoc解析时保留下来</p>
+<ul>
+<li>Inherited</li>
+</ul>
+<p>被它修饰的注解将具有继承性</p>
+<h5 id="自定义注解通常都会指明两个元注解retention-和-target">自定义注解通常都会指明两个元注解：@Retention 和 @Target</h5>
+<hr>
+<h2 id="利用反射获取注解信息">利用反射获取注解信息</h2>
+<hr>
+<h2 id="jdk8-注解新特性">JDK8 注解新特性</h2>
+<h4 id="可重复注解">可重复注解</h4>
+<pre><code>@Repeatable //在 MyAnnotation 上声明此注解，成员值为 MyAnnotations.class
+			//MyAnnotation 的 Target 与 Retention 应与 MyAnnotations 相同
+</code></pre><hr>
+<h4 id="类型注解">类型注解</h4>
+<p>JDK8之后，关于元注解 @Target 的参数类型ElementType枚举值多了两个：TYPE_PARAMETER，TYPE_USE</p>
+<p>在Java8之前，注解只能是在声明的地方所使用，Java8开始，注解可以应用在任何地方</p>
+<pre><code>ElementType.TYPE_PARAMETER //表示该注解能写在类型变量的声明语句中(如：泛型声明)
+ElementType.TYPE_USE //表示该注解能写在使用类型的任何语句中
+</code></pre>
     </div>
     <div class="post-footer">
       
