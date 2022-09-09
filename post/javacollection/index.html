@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java集合 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java集合"/>
+<meta name="twitter:description" content="概述 使用Array存储对象方面具有一些弊端，而Java集合就像一种容器，可以动态的把多个对象的引用放入容器中
+ 数组在内存存储方面的特点：  数组初始化以后，长度就确定了 数组声明的类型，就决定了进行元素初始化时的类型  数组在存储数据方面的弊端  数组初始化以后，长度就不可变了，不便于扩展 数组中提供的属性和方法少，不便于进行添加、删除、插入等操作，且效率不高 无法直接获取存储元素的个数 数组存储的数据是有序的、可以重复的，存储数据特点单一 Java集合类可以用于存储数量不等的多个对象，还可用于保存具有映射关系的关联数组 Java集合可分为 Collection 和 Map 两种体系 Collection接口：单列数据，定义了存取一组对象的方法的集合 List：元素有序，可重复的集合(动态数组) ArrayList, LinkedList, Vector Set：元素无序，不可重复的集合 HashSet, LinkedHashSet, TreeSet Map接口：双列数据，保存具有映射关系&quot;key-value对&quot;的集合 HashMap LinkedHashMap TreeMap HashTable Properties   Collection  Collection接口中的常用方法 @Test public void test1(){ Collection coll = new ArrayList(); //add(obj) 将元素obj添加到集合中  coll.add(&#34;this is a sentence&#34;); coll.add(1); coll.add(1.5); coll.add(1234L); System.out.println(coll.size()); //addAll(Collection coll) 将集合coll中的所有元素添加到coll1中  Collection coll1 = new ArrayList(); coll1.addAll(coll); coll1."/>
+
+    <meta property="og:title" content="Java集合" />
+<meta property="og:description" content="概述 使用Array存储对象方面具有一些弊端，而Java集合就像一种容器，可以动态的把多个对象的引用放入容器中
+ 数组在内存存储方面的特点：  数组初始化以后，长度就确定了 数组声明的类型，就决定了进行元素初始化时的类型  数组在存储数据方面的弊端  数组初始化以后，长度就不可变了，不便于扩展 数组中提供的属性和方法少，不便于进行添加、删除、插入等操作，且效率不高 无法直接获取存储元素的个数 数组存储的数据是有序的、可以重复的，存储数据特点单一 Java集合类可以用于存储数量不等的多个对象，还可用于保存具有映射关系的关联数组 Java集合可分为 Collection 和 Map 两种体系 Collection接口：单列数据，定义了存取一组对象的方法的集合 List：元素有序，可重复的集合(动态数组) ArrayList, LinkedList, Vector Set：元素无序，不可重复的集合 HashSet, LinkedHashSet, TreeSet Map接口：双列数据，保存具有映射关系&quot;key-value对&quot;的集合 HashMap LinkedHashMap TreeMap HashTable Properties   Collection  Collection接口中的常用方法 @Test public void test1(){ Collection coll = new ArrayList(); //add(obj) 将元素obj添加到集合中  coll.add(&#34;this is a sentence&#34;); coll.add(1); coll.add(1.5); coll.add(1234L); System.out.println(coll.size()); //addAll(Collection coll) 将集合coll中的所有元素添加到coll1中  Collection coll1 = new ArrayList(); coll1.addAll(coll); coll1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javacollection/" />
+<meta property="article:published_time" content="2022-09-08T12:35:51+08:00" />
+<meta property="article:modified_time" content="2022-09-08T12:35:51+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java集合</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 8, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h2 id="概述">概述</h2>
+<p>使用Array存储对象方面具有一些弊端，而Java集合就像一种容器，可以动态的把多个对象的引用放入容器中</p>
+<ul>
+<li>数组在内存存储方面的特点：</li>
+</ul>
+<pre><code>数组初始化以后，长度就确定了
+数组声明的类型，就决定了进行元素初始化时的类型
+</code></pre><ul>
+<li>数组在存储数据方面的弊端</li>
+</ul>
+<pre><code>数组初始化以后，长度就不可变了，不便于扩展
+数组中提供的属性和方法少，不便于进行添加、删除、插入等操作，且效率不高
+无法直接获取存储元素的个数
+数组存储的数据是有序的、可以重复的，存储数据特点单一
+</code></pre><h5 id="java集合类可以用于存储数量不等的多个对象还可用于保存具有映射关系的关联数组">Java集合类可以用于存储数量不等的多个对象，还可用于保存具有映射关系的关联数组</h5>
+<h4 id="java集合可分为-collection-和-map-两种体系">Java集合可分为 Collection 和 Map 两种体系</h4>
+<pre><code>Collection接口：单列数据，定义了存取一组对象的方法的集合
+	List：元素有序，可重复的集合(动态数组)
+		ArrayList, LinkedList, Vector
+	Set：元素无序，不可重复的集合
+		HashSet, LinkedHashSet, TreeSet
+Map接口：双列数据，保存具有映射关系&quot;key-value对&quot;的集合
+	HashMap
+	LinkedHashMap
+	TreeMap
+	HashTable
+	Properties
+</code></pre><hr>
+<hr>
+<h2 id="collection">Collection</h2>
+<hr>
+<h4 id="collection接口中的常用方法">Collection接口中的常用方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test1</span><span style="color:#f92672">(){</span>
+        Collection coll <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        <span style="color:#75715e">//add(obj) 将元素obj添加到集合中
+</span><span style="color:#75715e"></span>        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">5</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1234L<span style="color:#f92672">);</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">());</span>
+        <span style="color:#75715e">//addAll(Collection coll) 将集合coll中的所有元素添加到coll1中
+</span><span style="color:#75715e"></span>        Collection coll1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        coll1<span style="color:#f92672">.</span><span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">);</span>
+        coll1<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ee&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//输出coll1，默认调用toString, 输出所有元素
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll1<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll1<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+        <span style="color:#75715e">//toString()方法在AbstractCollection类中重写，AbstractList继承此类，ArrayList继承AbstractList类
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//clear() 清空集合元素
+</span><span style="color:#75715e"></span>        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">clear</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">//isEmpty() 判断当前集合是否为空
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">());</span>
+
+        <span style="color:#75715e">//contains(obj) 判断集合中是否含有obj
+</span><span style="color:#75715e"></span>        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">.</span><span style="color:#a6e22e">contains</span><span style="color:#f92672">(</span><span style="color:#66d9ef">false</span><span style="color:#f92672">));</span>
+        <span style="color:#75715e">//contains(obj) 会自动调用对应类型的equals()方法
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//要求在向Collection接口实现类对象中添加元素obj时，obj所在类必须在重写equals()方法
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//containsAll(Collection coll1) 判断coll中是否含有coll1中的所有元素
+</span><span style="color:#75715e"></span>        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>coll1<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;qwer&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">.</span><span style="color:#a6e22e">containsAll</span><span style="color:#f92672">(</span>coll1<span style="color:#f92672">));</span>
+
+    <span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">(){</span>
+        Collection coll <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">5</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1234L<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;what&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+
+        <span style="color:#75715e">//remove(obj) 如果集合中含有obj，移除
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//remove同样会调用equals方法
+</span><span style="color:#75715e"></span>        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;what&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span><span style="color:#75715e">//true
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#960050;background-color:#1e0010">`</span><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test3</span><span style="color:#f92672">(){</span>
+        Collection coll <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">5</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1234L<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;what&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+
+        Collection coll1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        coll1<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;what&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+        <span style="color:#75715e">//retainAll(Collection coll1) 求coll与coll1交集，会修改当前集合
+</span><span style="color:#75715e"></span>        coll1<span style="color:#f92672">.</span><span style="color:#a6e22e">retainAll</span><span style="color:#f92672">(</span>coll<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>coll1<span style="color:#f92672">);</span><span style="color:#75715e">//[sample{name=&#39;what&#39;, age=23}]
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//equals(coll1) coll与coll1所含元素相同，返回true
+</span><span style="color:#75715e"></span>        
+    <span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+</code></pre></div><hr>
+<h4 id="iterator迭代器">iterator迭代器</h4>
+<p>iterator对象称为迭代器(设计模式的一种)，主要用于遍历Collection集合中的元素</p>
+<p>迭代器模式：提供一种方法访问一个容器对象中的各个元素，而又不暴露该对象的内部细节。</p>
+<h5 id="iterator仅用于遍历集合本身不提供承装对象的能力">iterator仅用于遍历集合，本身不提供承装对象的能力</h5>
+<h5 id="集合对象每次调用iterator方法都会得到一个全新的迭代器对象默认游标在集合第一个元素之前">集合对象每次调用iterator()方法都会得到一个全新的迭代器对象，默认游标在集合第一个元素之前</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test4</span><span style="color:#f92672">(){</span>
+        Collection coll <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">5</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1234L<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;what&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+
+        <span style="color:#75715e">//iterator() 返回iterator接口的实例，用于遍历集合元素
+</span><span style="color:#75715e"></span>        Iterator iterator <span style="color:#f92672">=</span> coll<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">()){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">/**
+</span><span style="color:#75715e">         * this is a sentence
+</span><span style="color:#75715e">         * 1
+</span><span style="color:#75715e">         * 1.5
+</span><span style="color:#75715e">         * 1234
+</span><span style="color:#75715e">         * sample{name=&#39;what&#39;, age=23}
+</span><span style="color:#75715e">         */</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">(){</span>
+        Collection coll <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">5</span><span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1234L<span style="color:#f92672">);</span>
+        coll<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;what&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+
+        <span style="color:#75715e">//iterator() 返回iterator接口的实例，用于遍历集合元素
+</span><span style="color:#75715e"></span>        Iterator iterator <span style="color:#f92672">=</span> coll<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">()){</span>
+            Object obj <span style="color:#f92672">=</span> iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>obj<span style="color:#f92672">)){</span>
+                iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+
+        iterator <span style="color:#f92672">=</span> coll<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">()){</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">/**
+</span><span style="color:#75715e">         * 1
+</span><span style="color:#75715e">         * 1.5
+</span><span style="color:#75715e">         * 1234
+</span><span style="color:#75715e">         * sample{name=&#39;what&#39;, age=23}
+</span><span style="color:#75715e">         */</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h4 id="collection子接口list接口">Collection子接口：List接口</h4>
+<h5 id="list接口的三个实现类arraylist最主要的实现类最常用-linkedlist-vector三者的异同">List接口的三个实现类：ArrayList(最主要的实现类，最常用), LinkedList, Vector。三者的异同？</h5>
+<pre><code>相同：三个类都实现了List接口，存储数据的特点相同，有序可重复
+
+不同：Vector：最早的实现类，线程安全，效率低，底层使用Object[]存储
+	  ArrayList：主要实现类，线程不安全，效率高，底层使用Object[]存储，进行频繁的查找修改操作效率更高
+	  LinkedList：底层使用双向链表存储实现，对于频繁的增删操作，效率更高
+</code></pre>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

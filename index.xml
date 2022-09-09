@@ -6,7 +6,17 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Sep 2022 09:18:27 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Sep 2022 12:35:51 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java集合</title>
+      <link>https://sherry-long.github.io/post/javacollection/</link>
+      <pubDate>Thu, 08 Sep 2022 12:35:51 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javacollection/</guid>
+      <description>概述 使用Array存储对象方面具有一些弊端，而Java集合就像一种容器，可以动态的把多个对象的引用放入容器中
+ 数组在内存存储方面的特点：  数组初始化以后，长度就确定了 数组声明的类型，就决定了进行元素初始化时的类型  数组在存储数据方面的弊端  数组初始化以后，长度就不可变了，不便于扩展 数组中提供的属性和方法少，不便于进行添加、删除、插入等操作，且效率不高 无法直接获取存储元素的个数 数组存储的数据是有序的、可以重复的，存储数据特点单一 Java集合类可以用于存储数量不等的多个对象，还可用于保存具有映射关系的关联数组 Java集合可分为 Collection 和 Map 两种体系 Collection接口：单列数据，定义了存取一组对象的方法的集合 List：元素有序，可重复的集合(动态数组) ArrayList, LinkedList, Vector Set：元素无序，不可重复的集合 HashSet, LinkedHashSet, TreeSet Map接口：双列数据，保存具有映射关系&amp;quot;key-value对&amp;quot;的集合 HashMap LinkedHashMap TreeMap HashTable Properties   Collection  Collection接口中的常用方法 @Test public void test1(){ Collection coll = new ArrayList(); //add(obj) 将元素obj添加到集合中  coll.add(&amp;#34;this is a sentence&amp;#34;); coll.add(1); coll.add(1.5); coll.add(1234L); System.out.println(coll.size()); //addAll(Collection coll) 将集合coll中的所有元素添加到coll1中  Collection coll1 = new ArrayList(); coll1.addAll(coll); coll1.</description>
+    </item>
+    
     <item>
       <title>Java枚举类与注解</title>
       <link>https://sherry-long.github.io/post/javaenum/</link>
