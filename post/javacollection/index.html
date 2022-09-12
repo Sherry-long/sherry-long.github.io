@@ -238,7 +238,60 @@ Map接口：双列数据，保存具有映射关系&quot;key-value对&quot;的�
 不同：Vector：最早的实现类，线程安全，效率低，底层使用Object[]存储
 	  ArrayList：主要实现类，线程不安全，效率高，底层使用Object[]存储，进行频繁的查找修改操作效率更高
 	  LinkedList：底层使用双向链表存储实现，对于频繁的增删操作，效率更高
-</code></pre>
+</code></pre><h4 id="list接口中的常用方法">List接口中的常用方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test1</span><span style="color:#f92672">(){</span>
+        ArrayList list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>123<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>456<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;helloWorld&#34;</span><span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Tom&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>456<span style="color:#f92672">);</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, 456, helloWorld, sample{name=&#39;Tom&#39;, age=23}, 456]
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//void add(int index, Object ele) 在index位置插入ele元素
+</span><span style="color:#75715e"></span>        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;insert&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, insert, 456, helloWorld, sample{name=&#39;Tom&#39;, age=23}, 456]
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//boolean addAll(int index, Collection eles) 从index位置开始将eles中所有元素添加到list中
+</span><span style="color:#75715e"></span>        List list1 <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">asList</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 2<span style="color:#f92672">,</span> 3<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>list1<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, insert, 456, helloWorld, sample{name=&#39;Tom&#39;, age=23}, 456, 1, 2, 3]
+</span><span style="color:#75715e"></span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> list1<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, 1, 2, 3, insert, 456, helloWorld, sample{name=&#39;Tom&#39;, age=23}, 456, 1, 2, 3]
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">(){</span>
+        ArrayList list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>123<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>456<span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;helloWorld&#34;</span><span style="color:#f92672">);</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> sample<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Tom&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">));</span>
+        list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>456<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, 456, helloWorld, sample{name=&#39;Tom&#39;, age=23}, 456]
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//int indexOf(Object obj) 返回obj在集合中首次出现的位置索引
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">indexOf</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;helloWorld&#34;</span><span style="color:#f92672">));</span><span style="color:#75715e">//2
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//int lastIndexOf(Object obj) 返回obj在集合中最后一次出现的位置索引
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">lastIndexOf</span><span style="color:#f92672">(</span>456<span style="color:#f92672">));</span><span style="color:#75715e">//4
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//Object remove(int index) 移除指定索引位置的元素，并将其返回
+</span><span style="color:#75715e"></span>        Object o <span style="color:#f92672">=</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>o<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span><span style="color:#75715e">//sample{name=&#39;Tom&#39;, age=23}
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, 456, helloWorld, 456]
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//Object set(int index, Object ele) 设置指定索引位置的元素为ele，并返回被修改的元素
+</span><span style="color:#75715e"></span>        o <span style="color:#f92672">=</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;replaced&#34;</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>o<span style="color:#f92672">);</span><span style="color:#75715e">//helloWorld
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">);</span><span style="color:#75715e">//[123, 456, replaced, 456]
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//List subList(int fromIndex, int toIndex) 返回从fromIndex到toIndex位置的子集合（左闭右开）
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">subList</span><span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> 2<span style="color:#f92672">));</span><span style="color:#75715e">//[123, 456]
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       
