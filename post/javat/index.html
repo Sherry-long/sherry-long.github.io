@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java泛型 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java泛型"/>
+<meta name="twitter:description" content="为什么要有泛型 所谓泛型，就是允许在定义类、接口时通过一个标识表示类中某个属性的类型或者是某个方法的返回值及参数类型。
+这个类型参数将在使用时(例如，继承或实现这个接口，用这个类型声明变量、创建对象时)确定(即传入实际的类型参数，也称为类型实参)
+ 在集合中使用泛型   集合接口或集合类在jdk5.0时都修改为带泛型的结构
+  在实例化集合类时，可以指明具体的泛型类型
+  指明完以后，在集合类或接口中凡是定义类或接口时，内部结构使用到类的泛型的位置，都指定为实例化的泛型类型
+  比如：add(E e) &mdash;&gt; 实例化以后：add(Integer e)
+  注意点：泛型的类型必须是一个类，不能是基本数据类型，要使用包装类
+  如果实例化时没有指明泛型的类型，默认类型为 Object 类型
+   自定义范型结构 泛型类、泛型接口 public class Order&lt;T&gt; { String orderName; int orderId; //把参数T当成一个类型来用(但T其实并不是一个类，它只是一个参数)  T orderT; public Order(){}; public Order(String orderName, int orderId, T orderT){ this.orderName = orderName; this.orderId = orderId; this.orderT = orderT; } public T getOrderT() { return orderT; } public void setOrderT(T orderT) { this."/>
+
+    <meta property="og:title" content="Java泛型" />
+<meta property="og:description" content="为什么要有泛型 所谓泛型，就是允许在定义类、接口时通过一个标识表示类中某个属性的类型或者是某个方法的返回值及参数类型。
+这个类型参数将在使用时(例如，继承或实现这个接口，用这个类型声明变量、创建对象时)确定(即传入实际的类型参数，也称为类型实参)
+ 在集合中使用泛型   集合接口或集合类在jdk5.0时都修改为带泛型的结构
+  在实例化集合类时，可以指明具体的泛型类型
+  指明完以后，在集合类或接口中凡是定义类或接口时，内部结构使用到类的泛型的位置，都指定为实例化的泛型类型
+  比如：add(E e) &mdash;&gt; 实例化以后：add(Integer e)
+  注意点：泛型的类型必须是一个类，不能是基本数据类型，要使用包装类
+  如果实例化时没有指明泛型的类型，默认类型为 Object 类型
+   自定义范型结构 泛型类、泛型接口 public class Order&lt;T&gt; { String orderName; int orderId; //把参数T当成一个类型来用(但T其实并不是一个类，它只是一个参数)  T orderT; public Order(){}; public Order(String orderName, int orderId, T orderT){ this.orderName = orderName; this.orderId = orderId; this.orderT = orderT; } public T getOrderT() { return orderT; } public void setOrderT(T orderT) { this." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javat/" />
+<meta property="article:published_time" content="2022-09-17T08:32:14+08:00" />
+<meta property="article:modified_time" content="2022-09-17T08:32:14+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java泛型</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 17, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h3 id="为什么要有泛型">为什么要有泛型</h3>
+<p>所谓泛型，就是允许在定义类、接口时通过一个标识表示类中某个属性的类型或者是某个方法的返回值及参数类型。</p>
+<p>这个类型参数将在使用时(例如，继承或实现这个接口，用这个类型声明变量、创建对象时)确定(即传入实际的类型参数，也称为类型实参)</p>
+<hr>
+<h3 id="在集合中使用泛型">在集合中使用泛型</h3>
+<ul>
+<li>
+<p>集合接口或集合类在jdk5.0时都修改为带泛型的结构</p>
+</li>
+<li>
+<p>在实例化集合类时，可以指明具体的泛型类型</p>
+</li>
+<li>
+<p>指明完以后，在集合类或接口中凡是定义类或接口时，内部结构使用到类的泛型的位置，都指定为实例化的泛型类型</p>
+</li>
+</ul>
+<p>比如：add(E e) &mdash;&gt; 实例化以后：add(Integer e)</p>
+<ul>
+<li>
+<p>注意点：泛型的类型必须是一个类，不能是基本数据类型，要使用包装类</p>
+</li>
+<li>
+<p>如果实例化时没有指明泛型的类型，默认类型为 Object 类型</p>
+</li>
+</ul>
+<hr>
+<h3 id="自定义范型结构">自定义范型结构</h3>
+<h4 id="泛型类泛型接口">泛型类、泛型接口</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Order</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+
+    String orderName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> orderId<span style="color:#f92672">;</span>
+	<span style="color:#75715e">//把参数T当成一个类型来用(但T其实并不是一个类，它只是一个参数)
+</span><span style="color:#75715e"></span>    T orderT<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Order</span><span style="color:#f92672">(){};</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Order</span><span style="color:#f92672">(</span>String orderName<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> orderId<span style="color:#f92672">,</span> T orderT<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">orderName</span> <span style="color:#f92672">=</span> orderName<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">orderId</span> <span style="color:#f92672">=</span> orderId<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">orderT</span> <span style="color:#f92672">=</span> orderT<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> T <span style="color:#a6e22e">getOrderT</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> orderT<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setOrderT</span><span style="color:#f92672">(</span>T orderT<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">orderT</span> <span style="color:#f92672">=</span> orderT<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Order{&#34;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;orderName=&#39;&#34;</span> <span style="color:#f92672">+</span> orderName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, orderId=&#34;</span> <span style="color:#f92672">+</span> orderId <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;, orderT=&#34;</span> <span style="color:#f92672">+</span> orderT <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#39;}&#39;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="自定义泛型类泛型接口的注意点">自定义泛型类、泛型接口的注意点：</h5>
+<pre><code>1.泛型类可能有多个参数，此时应将多个参数一起放在尖括号内：&lt;T1, T2, T3&gt;
+2.泛型类的构造器：public GenericClass(){}
+3.实例化后，操作原来泛型位置的结构必须与指定的泛型类型一致
+4.泛型不同 的引用 不能相互赋值
+5.泛型如果不指定，会被擦除，泛型对应的类型均按照Object处理，但不等价于Object
+6.泛型指定不能使用基本数据类型，要使用其包装类
+7.在类/接口上声明的泛型，在本类或本接口中即代表某种类型，可以作为非静态属性的类型、非静态方法的参数或返回值类型。
+  但在静态方法中不能使用类的泛型
+8.异常类不能是泛型的
+9. T[] arr = new T[10];//错误的 
+   T[] arr = (T[]) new Object[10];//正确的
+</code></pre><h4 id="泛型方法">泛型方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">(){</span>
+        Integer<span style="color:#f92672">[]</span> arr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Integer<span style="color:#f92672">[]{</span>1<span style="color:#f92672">,</span> 2<span style="color:#f92672">,</span> 3<span style="color:#f92672">,</span> 4<span style="color:#f92672">,</span> 5<span style="color:#f92672">};</span><span style="color:#75715e">//不能使用基本数据类型，要使用包装类
+</span><span style="color:#75715e"></span>        Collection<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> collection <span style="color:#f92672">=</span> copyFromArrayToList<span style="color:#f92672">(</span>arr<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>collection<span style="color:#f92672">);</span><span style="color:#75715e">//[1, 2, 3, 4, 5]
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> List<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">copyFromArrayToList</span><span style="color:#f92672">(</span>E<span style="color:#f92672">[]</span> arr<span style="color:#f92672">){</span>
+        ArrayList<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>E e <span style="color:#f92672">:</span> arr<span style="color:#f92672">){</span>
+            list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> list<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><h5 id="泛型方法可以声明为静态的">泛型方法可以声明为静态的</h5>
+<hr>
+<h3 id="泛型在继承上的体现">泛型在继承上的体现</h3>
+<p>当一个类继承泛型类时，指明了泛型的类型，那么此类不再是泛型类</p>
+<p>当其未指明泛型类型时：</p>
+<pre><code>//已知Order为泛型类
+形如 class sample&lt;T&gt; extends Order&lt;T&gt;{} 时，此类为泛型类
+
+形如 class sample extends Order{} 时，此类不再是泛型类，泛型按Object类型处理
+</code></pre><ul>
+<li>
+<p>类A 是 类B 的父类，但是 G<!-- raw HTML omitted --> 和 G<!-- raw HTML omitted --> 二者并不具备子父类关系，二者是并列关系</p>
+</li>
+<li>
+<p>类A 是 类B 的父类，A<!-- raw HTML omitted --> 是 B<!-- raw HTML omitted --> 的父类</p>
+</li>
+</ul>
+<hr>
+<h3 id="通配符的使用">通配符的使用</h3>
+<p>通配符：？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">List<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> list1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+list1 <span style="color:#f92672">=</span> list2<span style="color:#f92672">;</span><span style="color:#75715e">//不可以
+</span><span style="color:#75715e"></span>
+List<span style="color:#f92672">&lt;?&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+list <span style="color:#f92672">=</span> list1<span style="color:#f92672">;</span>
+list <span style="color:#f92672">=</span> list2<span style="color:#f92672">;</span><span style="color:#75715e">//可以
+</span></code></pre></div><ul>
+<li>类A 是 类B 的父类，G<!-- raw HTML omitted --> 和 G<!-- raw HTML omitted --> 是没有关系的，二者的共同父类是 G&lt;?&gt;</li>
+</ul>
+<h5 id="对于-list-不能向其内部添加数据null除外可以读取数据用object接受">对于 List&lt;?&gt; ，不能向其内部添加数据，null除外；可以读取数据，用Object接受</h5>
+<h4 id="有限制条件的通配符的使用">有限制条件的通配符的使用</h4>
+<ul>
+<li>通配符指定上下限 ： 上限：extends， 下限：super</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Number<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">//只允许泛型为Number及Number子类的引用调用
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">super</span> Number<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">//只允许泛型为Number及Number父类的引用调用
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> Comparable<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">//只允许泛型为实现Comparable接口的实现类的引用调用
+</span></code></pre></div><hr>
+<h3 id="泛型应用举例">泛型应用举例</h3>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
