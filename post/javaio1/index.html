@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>JavaIO流 2 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JavaIO流 2"/>
+<meta name="twitter:description" content="转换流(处理流的一种，属于字符流) (utf-8.txt) ==字节流==&gt; InputStreamReader(utf-8) ==字符流==&gt; [程序]
+[程序] ==字符流==&gt; OutputStreamWriter(gbk) ==字节流==&gt; (gbk.txt)
+ 1.转换流： InputStreamReader：将一个字节的输入流转换为字符输入流 OutputStreamWriter：将一个字符输出流转换为字节输出流 2.作用：提供字节流与字符流之间的转换 3.解码：字节、字节数组 ---&gt; 字符数组、字符串 编码：字符数组、字符串 ---&gt; 字节、字节数组 4.字符集 略  了解  标准输入输出流 System.in和System.out分别代表了系统标准的输入和输出设备 默认输入设备是：键盘，输出设备是：显示器 System.in的类型是InputStream System.out的类型是PrintStream，是OutputStream的子类FilterOutputStream的子类 重定向：通过System类的setIn，setOut方法对默认设备进行改变 public static void setIn(InputStream in) public static void setOut(PrintStream out)  使用标准输入流自定义接受键盘输入  public static void main(String[] args) { BufferedReader br = null; try { InputStreamReader isr = new InputStreamReader(System.in); br = new BufferedReader(isr); String str = br."/>
+
+    <meta property="og:title" content="JavaIO流 2" />
+<meta property="og:description" content="转换流(处理流的一种，属于字符流) (utf-8.txt) ==字节流==&gt; InputStreamReader(utf-8) ==字符流==&gt; [程序]
+[程序] ==字符流==&gt; OutputStreamWriter(gbk) ==字节流==&gt; (gbk.txt)
+ 1.转换流： InputStreamReader：将一个字节的输入流转换为字符输入流 OutputStreamWriter：将一个字符输出流转换为字节输出流 2.作用：提供字节流与字符流之间的转换 3.解码：字节、字节数组 ---&gt; 字符数组、字符串 编码：字符数组、字符串 ---&gt; 字节、字节数组 4.字符集 略  了解  标准输入输出流 System.in和System.out分别代表了系统标准的输入和输出设备 默认输入设备是：键盘，输出设备是：显示器 System.in的类型是InputStream System.out的类型是PrintStream，是OutputStream的子类FilterOutputStream的子类 重定向：通过System类的setIn，setOut方法对默认设备进行改变 public static void setIn(InputStream in) public static void setOut(PrintStream out)  使用标准输入流自定义接受键盘输入  public static void main(String[] args) { BufferedReader br = null; try { InputStreamReader isr = new InputStreamReader(System.in); br = new BufferedReader(isr); String str = br." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javaio1/" />
+<meta property="article:published_time" content="2022-09-23T09:14:51+08:00" />
+<meta property="article:modified_time" content="2022-09-23T09:14:51+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">JavaIO流 2</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 23, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h2 id="转换流处理流的一种属于字符流">转换流(处理流的一种，属于字符流)</h2>
+<p>(utf-8.txt)  ==字节流==&gt;   InputStreamReader(utf-8)   ==字符流==&gt;   [程序]</p>
+<p>[程序]   ==字符流==&gt;   OutputStreamWriter(gbk)   ==字节流==&gt;   (gbk.txt)</p>
+<hr>
+<pre><code>1.转换流：
+  InputStreamReader：将一个字节的输入流转换为字符输入流
+  OutputStreamWriter：将一个字符输出流转换为字节输出流
+  
+2.作用：提供字节流与字符流之间的转换
+
+3.解码：字节、字节数组 ---&gt; 字符数组、字符串
+  编码：字符数组、字符串 ---&gt; 字节、字节数组
+  
+4.字符集
+  略
+</code></pre><hr>
+<h2 id="了解">了解</h2>
+<hr>
+<h3 id="标准输入输出流">标准输入输出流</h3>
+<pre><code>System.in和System.out分别代表了系统标准的输入和输出设备
+默认输入设备是：键盘，输出设备是：显示器
+System.in的类型是InputStream
+System.out的类型是PrintStream，是OutputStream的子类FilterOutputStream的子类
+重定向：通过System类的setIn，setOut方法对默认设备进行改变
+	public static void setIn(InputStream in)
+	public static void setOut(PrintStream out)
+
+</code></pre><ul>
+<li>使用标准输入流自定义接受键盘输入</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        BufferedReader br <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            InputStreamReader isr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InputStreamReader<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+            br <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedReader<span style="color:#f92672">(</span>isr<span style="color:#f92672">);</span>
+            String str <span style="color:#f92672">=</span> br<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(!</span>str<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;e&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>str<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;exit&#34;</span><span style="color:#f92672">)){</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>str<span style="color:#f92672">.</span><span style="color:#a6e22e">toUpperCase</span><span style="color:#f92672">());</span>
+                str <span style="color:#f92672">=</span> br<span style="color:#f92672">.</span><span style="color:#a6e22e">readLine</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>br <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    br<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+</code></pre></div><hr>
+<h3 id="打印流">打印流</h3>
+<hr>
+<h3 id="数据流">数据流</h3>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

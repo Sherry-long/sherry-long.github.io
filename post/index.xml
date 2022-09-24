@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Sep 2022 11:02:18 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Sep 2022 09:14:51 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaIO流 2</title>
+      <link>https://sherry-long.github.io/post/javaio1/</link>
+      <pubDate>Fri, 23 Sep 2022 09:14:51 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javaio1/</guid>
+      <description>转换流(处理流的一种，属于字符流) (utf-8.txt) ==字节流==&amp;gt; InputStreamReader(utf-8) ==字符流==&amp;gt; [程序]
+[程序] ==字符流==&amp;gt; OutputStreamWriter(gbk) ==字节流==&amp;gt; (gbk.txt)
+ 1.转换流： InputStreamReader：将一个字节的输入流转换为字符输入流 OutputStreamWriter：将一个字符输出流转换为字节输出流 2.作用：提供字节流与字符流之间的转换 3.解码：字节、字节数组 ---&amp;gt; 字符数组、字符串 编码：字符数组、字符串 ---&amp;gt; 字节、字节数组 4.字符集 略  了解  标准输入输出流 System.in和System.out分别代表了系统标准的输入和输出设备 默认输入设备是：键盘，输出设备是：显示器 System.in的类型是InputStream System.out的类型是PrintStream，是OutputStream的子类FilterOutputStream的子类 重定向：通过System类的setIn，setOut方法对默认设备进行改变 public static void setIn(InputStream in) public static void setOut(PrintStream out)  使用标准输入流自定义接受键盘输入  public static void main(String[] args) { BufferedReader br = null; try { InputStreamReader isr = new InputStreamReader(System.in); br = new BufferedReader(isr); String str = br.</description>
+    </item>
+    
     <item>
       <title>JavaIO流 1</title>
       <link>https://sherry-long.github.io/post/javaio/</link>
