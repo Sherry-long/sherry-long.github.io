@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java网络编程-UDP、URL // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java网络编程-UDP、URL"/>
+<meta name="twitter:description" content="UDP网络编程 UDP协议 数据传输 public class UDPTest { //发送端  @Test public void send() throws IOException { //TCP使用Socket，UDP使用DatagramSocket  DatagramSocket ds = new DatagramSocket(); byte[] data = &#34;this is a sentence&#34;.getBytes(); //将要传输的数据封装在DatagramPacket中  DatagramPacket packet = new DatagramPacket(data, 0, data.length, InetAddress.getLocalHost(), 8989); //使用DatagramSocket对象传输packet  ds.send(packet); ds.close(); } //接收端  @Test public void receive() throws IOException { //指定DatagramSocket端口  DatagramSocket ds = new DatagramSocket(8989); byte[] data = new byte[100]; //使用DatagramPacket对象接收数据  DatagramPacket packet = new DatagramPacket(data, 0, data."/>
+
+    <meta property="og:title" content="Java网络编程-UDP、URL" />
+<meta property="og:description" content="UDP网络编程 UDP协议 数据传输 public class UDPTest { //发送端  @Test public void send() throws IOException { //TCP使用Socket，UDP使用DatagramSocket  DatagramSocket ds = new DatagramSocket(); byte[] data = &#34;this is a sentence&#34;.getBytes(); //将要传输的数据封装在DatagramPacket中  DatagramPacket packet = new DatagramPacket(data, 0, data.length, InetAddress.getLocalHost(), 8989); //使用DatagramSocket对象传输packet  ds.send(packet); ds.close(); } //接收端  @Test public void receive() throws IOException { //指定DatagramSocket端口  DatagramSocket ds = new DatagramSocket(8989); byte[] data = new byte[100]; //使用DatagramPacket对象接收数据  DatagramPacket packet = new DatagramPacket(data, 0, data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javanetprogram1/" />
+<meta property="article:published_time" content="2022-09-30T16:08:51+08:00" />
+<meta property="article:modified_time" content="2022-09-30T16:08:51+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java网络编程-UDP、URL</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 30, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h3 id="udp网络编程">UDP网络编程</h3>
+<h5 id="udp协议-数据传输">UDP协议 数据传输</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UDPTest</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">//发送端
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">send</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//TCP使用Socket，UDP使用DatagramSocket
+</span><span style="color:#75715e"></span>        DatagramSocket ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramSocket<span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;this is a sentence&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">//将要传输的数据封装在DatagramPacket中
+</span><span style="color:#75715e"></span>        DatagramPacket packet <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramPacket<span style="color:#f92672">(</span>data<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> data<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">,</span> InetAddress<span style="color:#f92672">.</span><span style="color:#a6e22e">getLocalHost</span><span style="color:#f92672">(),</span> 8989<span style="color:#f92672">);</span>
+        <span style="color:#75715e">//使用DatagramSocket对象传输packet
+</span><span style="color:#75715e"></span>        ds<span style="color:#f92672">.</span><span style="color:#a6e22e">send</span><span style="color:#f92672">(</span>packet<span style="color:#f92672">);</span>
+
+        ds<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//接收端
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">receive</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//指定DatagramSocket端口
+</span><span style="color:#75715e"></span>        DatagramSocket ds <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramSocket<span style="color:#f92672">(</span>8989<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>100<span style="color:#f92672">];</span>
+        <span style="color:#75715e">//使用DatagramPacket对象接收数据
+</span><span style="color:#75715e"></span>        DatagramPacket packet <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DatagramPacket<span style="color:#f92672">(</span>data<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> data<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">);</span>
+        ds<span style="color:#f92672">.</span><span style="color:#a6e22e">receive</span><span style="color:#f92672">(</span>packet<span style="color:#f92672">);</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>packet<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(),</span> 0<span style="color:#f92672">,</span> packet<span style="color:#f92672">.</span><span style="color:#a6e22e">getLength</span><span style="color:#f92672">()));</span>
+
+        ds<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><hr>
+<h3 id="url编程">URL编程</h3>
+<p>URL(Uniform Resource Locator)：统一资源定位符，它表示Internet上某一资源的地址</p>
+<p>它是一种具体的URI，即URL可以用来标识一个资源，而且还指明了如何locate这个资源</p>
+<p>通过URL我们可以访问Internet上的各种网络资源，浏览器通过解析URL可以在网络上查找相应的文件或其他资源</p>
+<ul>
+<li>URL的基本结构由5部分组成</li>
+</ul>
+<pre><code>&lt;传输协议&gt;://&lt;主机名&gt;:&lt;端口号&gt;/&lt;文件名&gt;#片段名?参数列表
+	&gt;例如：
+		http://192.168.1.100:8080/helloworld/index.jsp#a?username=shkstart&amp;password=123
+	&gt;#片段名：即锚点
+	&gt;参数列表格式：参数名=参数值&amp;参数名=参数值....
+</code></pre><h5 id="url类常用方法">URL类常用方法</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">URLtest</span><span style="color:#f92672">(){</span>
+        URL url <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            url <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> URL<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://192.168.1.100:8080/helloworld/index.jsp#a?username=shkstart&amp;password=123&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#75715e">//获取协议
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">getProtocol</span><span style="color:#f92672">());</span>
+            <span style="color:#75715e">//获取主机名
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">getHost</span><span style="color:#f92672">());</span>
+            <span style="color:#75715e">//获取文件路径
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">getPath</span><span style="color:#f92672">());</span>
+            <span style="color:#75715e">//获取端口号
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">getPort</span><span style="color:#f92672">());</span>
+            <span style="color:#75715e">//获取文件名
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">getFile</span><span style="color:#f92672">());</span>
+            <span style="color:#75715e">//获取查询名
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">getQuery</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>MalformedURLException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">/**
+</span><span style="color:#75715e">         * http
+</span><span style="color:#75715e">         * 192.168.1.100
+</span><span style="color:#75715e">         * /helloworld/index.jsp
+</span><span style="color:#75715e">         * 8080
+</span><span style="color:#75715e">         * /helloworld/index.jsp
+</span><span style="color:#75715e">         * null
+</span><span style="color:#75715e">         */</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><h5 id="url网络编程实现tomcat服务器文件下载">URL网络编程实现Tomcat服务器文件下载</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">URLDownload</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        HttpURLConnection connection <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        BufferedOutputStream bos <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//创建url对象
+</span><span style="color:#75715e"></span>            URL url <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> URL<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://localhost:8080/examples/huoyuanjia(instrumental).mp3&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#75715e">//获取http连接
+</span><span style="color:#75715e"></span>            connection <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>HttpURLConnection<span style="color:#f92672">)</span>url<span style="color:#f92672">.</span><span style="color:#a6e22e">openConnection</span><span style="color:#f92672">();</span>
+            <span style="color:#75715e">//连接
+</span><span style="color:#75715e"></span>            connection<span style="color:#f92672">.</span><span style="color:#a6e22e">connect</span><span style="color:#f92672">();</span>
+            <span style="color:#75715e">//获取输入流，下载文件
+</span><span style="color:#75715e"></span>            InputStream is <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span><span style="color:#a6e22e">getInputStream</span><span style="color:#f92672">();</span>
+            bos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BufferedOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;download.mp3&#34;</span><span style="color:#f92672">));</span>
+
+            <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">];</span>
+            <span style="color:#66d9ef">int</span> len<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>len <span style="color:#f92672">=</span> is<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>data<span style="color:#f92672">))</span> <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">){</span>
+                bos<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>data<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Download complete....&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>bos <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    bos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>connection <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                connection<span style="color:#f92672">.</span><span style="color:#a6e22e">disconnect</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

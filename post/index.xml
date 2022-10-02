@@ -6,7 +6,31 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Sep 2022 09:14:51 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Sep 2022 16:08:51 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java网络编程-UDP、URL</title>
+      <link>https://sherry-long.github.io/post/javanetprogram1/</link>
+      <pubDate>Fri, 30 Sep 2022 16:08:51 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javanetprogram1/</guid>
+      <description>UDP网络编程 UDP协议 数据传输 public class UDPTest { //发送端  @Test public void send() throws IOException { //TCP使用Socket，UDP使用DatagramSocket  DatagramSocket ds = new DatagramSocket(); byte[] data = &amp;#34;this is a sentence&amp;#34;.getBytes(); //将要传输的数据封装在DatagramPacket中  DatagramPacket packet = new DatagramPacket(data, 0, data.length, InetAddress.getLocalHost(), 8989); //使用DatagramSocket对象传输packet  ds.send(packet); ds.close(); } //接收端  @Test public void receive() throws IOException { //指定DatagramSocket端口  DatagramSocket ds = new DatagramSocket(8989); byte[] data = new byte[100]; //使用DatagramPacket对象接收数据  DatagramPacket packet = new DatagramPacket(data, 0, data.</description>
+    </item>
+    
+    <item>
+      <title>Java网络编程-TCP</title>
+      <link>https://sherry-long.github.io/post/javanetprogram/</link>
+      <pubDate>Tue, 27 Sep 2022 11:28:54 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javanetprogram/</guid>
+      <description>概述 Java从语言级上提供了对网络应用程序的支持。Java提供的网络类库，可以实现无痛的网络连接，联网的底层细节被隐藏在Java的本机安装系统里，由JVM进行控制。 并且Java实现了一个跨平台的网络库，程序员面对的是一个统一的网络编程环境。
+ InetAddress类 代表IP地址，此类用于获取IP地址，可通过域名解析方式获取
+端口号 + IP地址 &amp;mdash;包装&amp;mdash;&amp;gt; 网络套接字(Socket) 端口号标识正在计算机上运行的程序(进程)
+  不同的进程有不同的端口号
+  被规定为一个16位的整数0~65535
+  端口分类：
+  &amp;gt;公认端口：0~1023。被预先定义的服务通信占用(HTTP:80, FTP:21, Telnet:23等) &amp;gt;注册端口：1024~49151。分配给用户进程或应用程序(Tomcat:8080, MySQL:3306, Oracle:1521等) &amp;gt;动态/私有端口：49152~65535 端口号与IP地址的组合得出一个网络套接字：Socket  TCP网络编程 /** * @author sherry-long * @create 2022-09-29 上午 10:39 */ public class TCPTest { @Test public void client() {//客户端  Socket socket = null; OutputStream os = null; try { InetAddress inet = InetAddress.getByName(&amp;#34;127.0.0.1&amp;#34;);//本机IP  socket = new Socket(inet, 8880);//使用IP + 端口号创建套接字  os = socket.</description>
+    </item>
+    
     <item>
       <title>JavaIO流 2</title>
       <link>https://sherry-long.github.io/post/javaio1/</link>

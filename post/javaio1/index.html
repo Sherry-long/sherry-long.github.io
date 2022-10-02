@@ -65,7 +65,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          5 min read
         </div>
       </div>
     </header>
@@ -123,10 +123,384 @@ System.out的类型是PrintStream，是OutputStream的子类FilterOutputStream�
     <span style="color:#f92672">}</span>
 
 </code></pre></div><hr>
-<h3 id="打印流">打印流</h3>
-<hr>
-<h3 id="数据流">数据流</h3>
+<h3 id="打印流处理流的一种">打印流(处理流的一种)</h3>
+<p>实现将基本数据类型的数据格式转化为字符串输出</p>
+<p>打印流：PrintStream和PrintWriter</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&gt;</span>提供了一系列重载的print<span style="color:#f92672">()</span>和println<span style="color:#f92672">()</span>方法<span style="color:#960050;background-color:#1e0010">，</span>用于多种数据类型的输出
+<span style="color:#f92672">&gt;</span>PrintStream和PrintWriter的输出不会抛出IOException异常
+<span style="color:#f92672">&gt;</span>PrintStream和PrintWriter有自动flush功能
+<span style="color:#f92672">&gt;</span>PrintStream打印的所有字符都使用平台的默认字符编码转换为字节<span style="color:#960050;background-color:#1e0010">。</span>
+ 在需要写入字符而不是写入字节的情况下<span style="color:#960050;background-color:#1e0010">，</span>应该使用PrintWriter类
+<span style="color:#f92672">&gt;</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">out返回的是PrintStream的实例</span>
 
+	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+        PrintStream ps <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            FileOutputStream fos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;out.txt&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#75715e">//创建打印输出流，设置为自动刷新模式(写入换行符或&#39;\n&#39;时都会刷新输出缓冲区)
+</span><span style="color:#75715e"></span>            ps <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PrintStream<span style="color:#f92672">(</span>fos<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>ps <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">setOut</span><span style="color:#f92672">(</span>ps<span style="color:#f92672">);</span><span style="color:#75715e">//将标准输出流(控制台)改成文件
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+
+            <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;=</span> 255<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span><span style="color:#75715e">//输出ASCII字符
+</span><span style="color:#75715e"></span>                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">((</span><span style="color:#66d9ef">char</span><span style="color:#f92672">)</span>i<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>i <span style="color:#f92672">%</span> 50 <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span>
+                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>FileNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>ps <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                ps<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+
+    <span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h3 id="数据流">数据流</h3>
+<p>DataInputStream和DataOutputStream</p>
+<p>作用：为了方便地操作Java语言的基本数据类型和String的数据，可以使用数据流。(数据持久化)</p>
+<p>数据流有两个类：DataInputStream和DataOutputStream，分别套接在InputStream和OutputStream子类的流上</p>
+<ul>
+<li>DataInputStream中的方法</li>
+</ul>
+<pre><code>boolean readBoolean()
+byte readByte()
+char readChar()
+float readFloat()
+double readDouble()
+short readShort()
+long readLong()
+int readInt()
+String readUTF()
+void readFully(byte[] b)
+</code></pre><ul>
+<li>DataOutputStream中的方法</li>
+</ul>
+<p>将上述方法read改为write</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DOSout</span><span style="color:#f92672">(){</span>
+        DataOutputStream dos <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            dos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;data.txt&#34;</span><span style="color:#f92672">));</span>
+            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeUTF</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;小明&#34;</span><span style="color:#f92672">);</span>
+            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span><span style="color:#75715e">//刷新操作，将内存中的数据写入文件
+</span><span style="color:#75715e"></span>            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeInt</span><span style="color:#f92672">(</span>23<span style="color:#f92672">);</span>
+            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeBoolean</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+            dos<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+            <span style="color:#75715e">/*
+</span><span style="color:#75715e">            data.txt打开是乱码，此文件并不能直接打开使用，需通过
+</span><span style="color:#75715e">            DataInputStream来读入数据
+</span><span style="color:#75715e">             */</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>dos <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                    dos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DISin</span><span style="color:#f92672">(){</span>
+        DataInputStream dis <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            dis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;data.txt&#34;</span><span style="color:#f92672">));</span>
+            String utf <span style="color:#f92672">=</span> dis<span style="color:#f92672">.</span><span style="color:#a6e22e">readUTF</span><span style="color:#f92672">();</span><span style="color:#75715e">//按存储的顺序读入
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> anInt <span style="color:#f92672">=</span> dis<span style="color:#f92672">.</span><span style="color:#a6e22e">readInt</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">boolean</span> b <span style="color:#f92672">=</span> dis<span style="color:#f92672">.</span><span style="color:#a6e22e">readBoolean</span><span style="color:#f92672">();</span>
+
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>utf <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> anInt <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> b<span style="color:#f92672">);</span>
+            <span style="color:#75715e">//小明 23 true
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>dis <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    dis<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h3 id="对象流">对象流</h3>
+<p>用于存储和读取基本数据类型数据或对象的处理流。它可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来</p>
+<ul>
+<li>
+<p>序列化：用ObjectOutputStream类保存基本数据类型数据或对象的机制</p>
+</li>
+<li>
+<p>反序列化：用ObjectInputStream类读取基本数据类型数据或对象的机制</p>
+</li>
+</ul>
+<p>ObjectOutputStream和ObjectInputStream不能序列化static和transient修饰的成员变量</p>
+<h5 id="如果需要让某个对象支持序列化机制则必须让对象所属的类及其属性是可序列化的为了让某个类是可序列化的该类必须实现如下两个接口之一">如果需要让某个对象支持序列化机制，则必须让对象所属的类及其属性是可序列化的，为了让某个类是可序列化的，该类必须实现如下两个接口之一</h5>
+<ul>
+<li>
+<blockquote>
+<p>Serializable</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p>Externalizable</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="除此之外需要序列化的类的内部属性也必须都是可序列化的基本数据类型默认可序列化string可序列化">除此之外，需要序列化的类的内部属性也必须都是可序列化的。(基本数据类型默认可序列化，String可序列化)</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">OOSout</span><span style="color:#f92672">(){</span>
+        ObjectOutputStream oos <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            oos <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ObjectOutputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;data.txt&#34;</span><span style="color:#f92672">));</span>
+            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeObject</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> person<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;小明&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;1645678&#34;</span><span style="color:#f92672">));</span><span style="color:#75715e">//重写toString方法，实现相应接口
+</span><span style="color:#75715e"></span>            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeObject</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> person<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;小红&#34;</span><span style="color:#f92672">,</span> 24<span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;12323578&#34;</span><span style="color:#f92672">));</span>
+            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">writeObject</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> person<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;小往&#34;</span><span style="color:#f92672">,</span> 23<span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;1234554578&#34;</span><span style="color:#f92672">));</span>
+            oos<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">();</span>
+			<span style="color:#75715e">/*
+</span><span style="color:#75715e">            同上，data.txt打开是乱码，此文件并不能直接打开使用，需通过
+</span><span style="color:#75715e">            ObjectInputStream来读入数据
+</span><span style="color:#75715e">             */</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>oos <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    oos<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">OISin</span><span style="color:#f92672">(){</span>
+        ObjectInputStream ois <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            ois <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ObjectInputStream<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;data.txt&#34;</span><span style="color:#f92672">));</span>
+            Object p <span style="color:#f92672">=</span> ois<span style="color:#f92672">.</span><span style="color:#a6e22e">readObject</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p <span style="color:#66d9ef">instanceof</span> person<span style="color:#f92672">){</span>
+                person p1 <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>person<span style="color:#f92672">)</span> p<span style="color:#f92672">;</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>p1<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+            p <span style="color:#f92672">=</span> ois<span style="color:#f92672">.</span><span style="color:#a6e22e">readObject</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p <span style="color:#66d9ef">instanceof</span> person<span style="color:#f92672">){</span>
+                person p1 <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>person<span style="color:#f92672">)</span> p<span style="color:#f92672">;</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>p1<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+            p <span style="color:#f92672">=</span> ois<span style="color:#f92672">.</span><span style="color:#a6e22e">readObject</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>p <span style="color:#66d9ef">instanceof</span> person<span style="color:#f92672">){</span>
+                person p1 <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>person<span style="color:#f92672">)</span> p<span style="color:#f92672">;</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>p1<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+
+            <span style="color:#75715e">/*
+</span><span style="color:#75715e">            name = 小明 age = 23 isMale? = true tele = 1645678
+</span><span style="color:#75715e">            name = 小红 age = 24 isMale? = false tele = 12323578
+</span><span style="color:#75715e">            name = 小往 age = 23 isMale? = true tele = 1234554578
+</span><span style="color:#75715e">             */</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>ClassNotFoundException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>ois <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    ois<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+	
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">person</span> <span style="color:#66d9ef">implements</span> Serializable<span style="color:#f92672">{</span><span style="color:#75715e">//实现Serializable接口，此接口内部无任何方法，标识接口
+</span><span style="color:#75715e"></span>    String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">boolean</span> isMale<span style="color:#f92672">;</span>
+    String tele<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> serialVersionUID <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>6823098674667710L<span style="color:#f92672">;</span><span style="color:#75715e">//补充一个序列版本号，必须
+</span><span style="color:#75715e"></span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">person</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> isMale<span style="color:#f92672">,</span> String tele<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">isMale</span> <span style="color:#f92672">=</span> isMale<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">tele</span> <span style="color:#f92672">=</span> tele<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;name = &#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; age = &#34;</span> <span style="color:#f92672">+</span> age <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; isMale? = &#34;</span> <span style="color:#f92672">+</span> isMale <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; tele = &#34;</span> <span style="color:#f92672">+</span> tele<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="关于serialversionuid的理解">关于serialVersionUID的理解</h4>
+<p>凡是实现Serializable接口的类都有一个表示序列化版本标识符的静态变量：</p>
+<blockquote>
+<p>private static final long serialVersionUID</p>
+</blockquote>
+<blockquote>
+<p>serialVersionUID用来表明类的不同版本间的兼容性。简言之，其目的是以序列化对象进行版本控制，有关各版本反序列化时是否兼容</p>
+</blockquote>
+<blockquote>
+<p>如果类没有显式定义这个静态变量，它的值是JRE根据类的内部细节自动生成的。若类的实例变量做了修改，serialVersionUID可能会发生变化。故建议显式声明。</p>
+</blockquote>
+<p>简单来说，Java的序列化机制是通过在运行时判断类的serialVersionUID来验证版本一致性的。在进行反序列化时，JVM会把传来的字节流中的serialVersionUID与本地相应实体类的serialVersionUID进行比较，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常。(InvalidCastException)</p>
+<hr>
+<h3 id="randomaccessfile-随机存取文件流">RandomAccessFile 随机存取文件流</h3>
+<p>RandomAccessFile声明在java.io包下，但直接继承于java.lang.Object类。并且它实现了Datalnput、DataOutput这两个接口，也就意味着这个类* 既可以读也可以写 *。</p>
+<p>RandomAccessFile类支持“随机访问”的方式，程序可以直接跳到文件的任意地方来读、写文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#f92672">&gt;</span>支持只访问文件的部分内容
+	<span style="color:#f92672">&gt;</span>可以向己存在的文件后追加内容
+</code></pre></div><p>RandomAccessFile对象包含一个记录指针，用以标示当前读写处的位置。</p>
+<p>RandomAccessFile类对象可以自由移动记录指针:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#f92672">&gt;</span><span style="color:#66d9ef">long</span> <span style="color:#a6e22e">getFilePointer</span><span style="color:#f92672">():</span>获取文件记录指针的当前位置
+	<span style="color:#f92672">&gt;</span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">seek</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> pos<span style="color:#f92672">):</span>将文件记录指针定位到pos位置
+</code></pre></div><h4 id="构造方法">构造方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">RandomAccessFile<span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> String mode<span style="color:#f92672">)</span>
+RandomAccessFile<span style="color:#f92672">(</span>File file<span style="color:#f92672">,</span> String mode<span style="color:#f92672">)</span>
+RandomAccessFile<span style="color:#f92672">(</span>File file<span style="color:#f92672">,</span> String mode<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> openAndDelete<span style="color:#f92672">)</span>
+
+<span style="color:#75715e">/*	mode: 创建RandomAccessFile类实例需要指定一个mode参数，该参数指定RandomAccessFile的访问模式:|
+</span><span style="color:#75715e">		&gt;r:以只读方式打开
+</span><span style="color:#75715e">		&gt;rw:打开以便读取和写入
+</span><span style="color:#75715e">		&gt;rwd:打开以便读取和写入;同步文件内容的更新
+</span><span style="color:#75715e">		&gt;rws:打开以便读取和写入;同步文件内容和元数据的更新
+</span><span style="color:#75715e">	如果模式为只读r，则不会创建文件，而是会去读取一个已经存在的文件，如果读取的文件不存在则会出现异常。
+</span><span style="color:#75715e">	如果模式为rw读写，如果文件不存在则会去创建文件，如果存在则不会创建。
+</span><span style="color:#75715e">*/</span>
+</code></pre></div><h4 id="raf的写入操作">RAF的写入操作</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/*text.txt中的内容：
+</span><span style="color:#75715e">this is a sentence
+</span><span style="color:#75715e">this is another sentence
+</span><span style="color:#75715e">this is the third sentence
+</span><span style="color:#75715e">*/</span>
+
+	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test1</span><span style="color:#f92672">(){</span>
+        RandomAccessFile raf <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            raf <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RandomAccessFile<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;text.txt&#34;</span><span style="color:#f92672">),</span> <span style="color:#e6db74">&#34;rw&#34;</span><span style="color:#f92672">);</span><span style="color:#75715e">//读写模式
+</span><span style="color:#75715e"></span>            raf<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>raf <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    raf<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+	
+<span style="color:#75715e">/*修改后的text.txt:
+</span><span style="color:#75715e">HelloWorldsentence
+</span><span style="color:#75715e">this is another sentence
+</span><span style="color:#75715e">this is the third sentence
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">RAF对文件的写入不是直接覆盖全部文件，也不是在后面追加，而是从开头对原有的文件内容进行一个一个的覆盖
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">可以通过seek(long position)方法设置指针位置，默认为0
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">*/</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//使用RAF实现数据的插入效果
+</span><span style="color:#75715e"></span><span style="color:#75715e">/*text.txt中的内容：
+</span><span style="color:#75715e">this is a sentence
+</span><span style="color:#75715e">this is another sentence
+</span><span style="color:#75715e">this is the third sentence
+</span><span style="color:#75715e">*/</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">insertUsingRAF</span><span style="color:#f92672">(){</span>
+        RandomAccessFile srcFile <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            srcFile <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RandomAccessFile<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;text.txt&#34;</span><span style="color:#f92672">),</span> <span style="color:#e6db74">&#34;rw&#34;</span><span style="color:#f92672">);</span>
+
+            srcFile<span style="color:#f92672">.</span><span style="color:#a6e22e">seek</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>10<span style="color:#f92672">];</span>
+            StringBuilder sb <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> StringBuilder<span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">int</span> len<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>len <span style="color:#f92672">=</span> srcFile<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>data<span style="color:#f92672">))</span> <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">){</span>
+                sb<span style="color:#f92672">.</span><span style="color:#a6e22e">append</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> String<span style="color:#f92672">(</span>data<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> len<span style="color:#f92672">));</span>
+            <span style="color:#f92672">}</span>
+            srcFile<span style="color:#f92672">.</span><span style="color:#a6e22e">seek</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+            srcFile<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;HelloWorld&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">());</span>
+            srcFile<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>sb<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getBytes</span><span style="color:#f92672">());</span>
+
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>srcFile <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    srcFile<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#75715e">/*插入后的text.txt：
+</span><span style="color:#75715e">thiHelloWorlds is a sentence
+</span><span style="color:#75715e">this is another sentence
+</span><span style="color:#75715e">this is the third sentence
+</span><span style="color:#75715e">*/</span>
+
+</code></pre></div><hr>
+<h3 id="nio2中pathpathsfiles类的使用">NIO.2中，Path,Paths,Files类的使用</h3>
+<h4 id="java-nio概述">Java NIO概述</h4>
+<p>Java NIO(New IO, Non-Blocking IO)是从Java 1.4版本开始引入的一套新的IO API, 可以替代标准的Java IO API。
+NIO与原来的IO有同样的作用和目的，但是使用的方式完全不同，NIO支持面向缓冲区的(IO是面向流的)、基于通道的IO操作。</p>
+<p>NIO将以更加高效的方式进行文件的读写操作。</p>
+<ul>
+<li>Java API中提供了两套NIO，一套是针对标准输入输出的NIO，另一套是网络编程NIO</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&gt;|----</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">nio</span><span style="color:#f92672">.</span><span style="color:#a6e22e">channels</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Channel</span>
+	<span style="color:#f92672">&gt;|----</span>FileChannel<span style="color:#960050;background-color:#1e0010">：</span>处理本地文件
+	<span style="color:#f92672">&gt;|----</span>SocketChannel<span style="color:#960050;background-color:#1e0010">：</span>TCP网络编程的客户端的Channel
+	<span style="color:#f92672">&gt;|----</span>ServerSocketChannel<span style="color:#960050;background-color:#1e0010">：</span>TCP网络编程的服务器端的Channel
+	<span style="color:#f92672">&gt;|----</span>DatagramChannel<span style="color:#960050;background-color:#1e0010">：</span>UDP网络编程中发送端和接收端的Channel
+</code></pre></div><h4 id="path-paths-files核心api">Path, Paths, Files核心API</h4>
+<ul>
+<li>
+<p>File类功能比较有限，大多数方法在出错时仅返回失败，并不会提供异常信息</p>
+</li>
+<li>
+<p>NIO.2为了弥补这种不足，引入了Path接口，代表一个平台无关的平台路径。Path可以看成是File类的升级版，实际引用的资源也可以不存在</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//File类
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> java.io.File
+<span style="color:#f92672">...</span>
+File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;index.html&#34;</span><span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//Path类
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> java.nio.file.Path<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.nio.file.Paths<span style="color:#f92672">;</span>
+<span style="color:#f92672">...</span>
+Path path <span style="color:#f92672">=</span> Paths<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;index.html&#34;</span><span style="color:#f92672">);</span>
+</code></pre></div><ul>
+<li>同时，NIO.2在java.nio.file包下还提供了Files、Paths工具类</li>
+</ul>
+<pre><code>Files：包含了大量静态的工具方法来操作文件，常用方法：
+	&gt;Path copy(Path src,Path dest, CopyOption ... how)：	文件的复制
+	&gt;Path createDirectory(Path path, FileAttribute&lt;?&gt; ... attr)：	创建一个目录
+	&gt;Path createFile(Path path, FileAttribute&lt;?&gt; ...arr)：	创建一个文件
+	&gt;void delete(Path path)：	删除一个文件/目录，如果不存在，执行报错
+	&gt;void deletelfExists(Path path)：	Path对应的文件/目录如果存在，执行删除
+	&gt;Path move(Path src,Path dest, CopyOption...how)：	将src移动到dest位置
+	&gt;long size(Path path)：	返回path指定文件的大小
+
+Paths：包含两个返回Path的静态工厂方法
+	&gt;static Path get(String first, String ... more)：用于将多个字符串串联成路径
+	&gt;static Path get(URI uri)：返回指定uri对应的Path路径
+</code></pre>
     </div>
     <div class="post-footer">
       
