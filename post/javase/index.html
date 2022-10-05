@@ -513,19 +513,19 @@ str.  (当键入.之后，编辑器会自动弹出下拉列表可选方法或属
 <p>同一个字节码文件再一次程序运行的过程中，只会被加载一次，无论通过哪一种方式获取的class对象都是同一个</p>
 <p>使用class对象：(大部分都是获取的功能)</p>
 <pre><code>    1.获取成员变量
-        getFields 获取所有public修饰的变量
-        getDeclaredFields
-        getField() 获取指定名字的成员变量
+        getFields 获取所有public修饰的变量，包括父类中的public变量(下同)
+        getDeclaredFields 获取指定类中声明的全部变量，不包括父类(下同)
+        getField(String) 获取指定名字的成员变量
         使用set和get方法可以修改成员变量，但是对于private不可修改
         可以使用setAccessible(true)来忽略访问权限修饰符的安全检查，暴力反射
     2.获取构造方法
-        ...
-        ...
+        get...
+        getDeclared...
         创建对象 newInstance() 创建对应的对象
         如果构造使用空参数的构造方法创建对象，操作可以简化：可使用class对象的newInstance()方法
     3.获取成员方法
-        ...
-        ...
+        get...
+        getDeclared...
         getMethods() 不止获取你看到的方法，还会获取到Object的一些方法
 		
         执行方法 invoke(对象, 参数);

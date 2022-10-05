@@ -6,7 +6,20 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Sep 2022 16:08:51 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Oct 2022 15:57:12 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java反射</title>
+      <link>https://sherry-long.github.io/post/javareflection/</link>
+      <pubDate>Sun, 02 Oct 2022 15:57:12 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javareflection/</guid>
+      <description>反射机制概述 反射被视为动态语言的关键，反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法  加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象)，这个对象就包含了完整的类的结构信息。我们可以通过这个对象看到类的结构。  动态语言 在运行时可以改变其结构的语言：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。
+ 在运行时代码可以根据某些条件改变自身结构 *  如Object-C、C#、JavaScript、PHP、Python、Erlang
+静态语言 与动态语言相对应的，运行时结构不可变的语言就是静态语言。如Java、C、C++
+ Java不是动态语言，但是Java有一定的动态性，我们可以利用反射机制、字节码操作获得类似动态语言的特性   Java反射机制提供的功能
+&amp;gt;在运行时判断任意一个对象所属的类 &amp;gt;在运行时构造任意一个类的对象 &amp;gt;在运行时判断任意一个类所具有的成员变量和方法 &amp;gt;在运行时获取泛型信息 &amp;gt;在运行时调用任意一个对象的成员变量和方法 &amp;gt;在运行时处理注解 &amp;gt;生成动态代理  @Test public void test() throws Exception { //通过反射方式获取类，构造器，并创建对象  Class&amp;lt;?&amp;gt; personClass = Class.forName(&amp;#34;Person&amp;#34;); Object o = personClass.getDeclaredConstructor(String.class, int.class, boolean.class).newInstance(&amp;#34;Tom&amp;#34;, 24, true); Person p = (Person) o; //通过反射调用方法  System.out.println(personClass.getDeclaredMethod(&amp;#34;toString&amp;#34;).invoke(p)); // Person{name=&amp;#39;Tom&amp;#39;, age=24, isMale=true, privateMember=&amp;#39;can not access&amp;#39;}  //通过反射修改属性值  personClass.getField(&amp;#34;name&amp;#34;).set(p, &amp;#34;Jerry&amp;#34;); System.out.println(personClass.getDeclaredMethod(&amp;#34;toString&amp;#34;).invoke(p)); // Person{name=&amp;#39;Jerry&amp;#39;, age=24, isMale=true, privateMember=&amp;#39;can not access&amp;#39;}  //通过反射可以调用类的私有结构  Field privateMember = personClass.</description>
+    </item>
+    
     <item>
       <title>Java网络编程-UDP、URL</title>
       <link>https://sherry-long.github.io/post/javanetprogram1/</link>
