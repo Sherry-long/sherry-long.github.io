@@ -69,7 +69,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          4 min read
+          5 min read
         </div>
       </div>
     </header>
@@ -323,7 +323,10 @@
         <span style="color:#f92672">}</span>
         System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;getFields--------------------------&#34;</span><span style="color:#f92672">);</span>
         <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Field field <span style="color:#f92672">:</span> creature<span style="color:#f92672">.</span><span style="color:#a6e22e">getFields</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
-            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>field<span style="color:#f92672">);</span>
+			<span style="color:#75715e">//获取修饰符
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">//int modifier = field.getModifiers();
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">//Modifier.toString(modifier).sout;
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>field<span style="color:#f92672">);</span>
         <span style="color:#f92672">}</span>
         System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;getDeclaredFields--------------------------&#34;</span><span style="color:#f92672">);</span>
         <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Field declaredField <span style="color:#f92672">:</span> creature<span style="color:#f92672">.</span><span style="color:#a6e22e">getDeclaredFields</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
@@ -405,14 +408,124 @@
 <p>执行方法 invoke(对象, 参数);</p>
 <p>setAccessible()也可以使用</p>
 <p>获取方法名称 getName()</p>
-<p>使用invoke()方法可以执行方法</p>
+<p>使用invoke()方法可以执行方法(当执行的方法为静态方法时，obj参数应赋值null或当前 类.class)</p>
 </li>
 <li>
 <p>4.获取类名等</p>
 <p>getName()</p>
 </li>
+<li>
+<p>5.获取注解</p>
+<p>getAnnotations()</p>
+<p>get&hellip;</p>
+</li>
 </ul>
+<h5 id="总结使用反射可以获取运行时类的方法方法的内部结构构造器父类和父类的泛型接口所在包注解指定的属性指定的方法以及指定的构造器">总结：使用反射可以获取运行时类的：方法、方法的内部结构、构造器、父类和父类的泛型、接口、所在包、注解、指定的属性、指定的方法，以及指定的构造器</h5>
+<hr>
+<hr>
+<h3 id="动态代理">动态代理</h3>
+<p>区别于静态代理。静态代理的类和目标对象类都是在编译期确定下来的，不利于程序的扩展。</p>
+<ul>
+<li>实现动态代理所需要解决的问题：</li>
+</ul>
+<pre><code>1. 如何根据加载到内存中的被代理类，动态的创建一个代理类及其对象
+2. 当通过代理类的对象调用方法时，如何动态地去调用被代理类中的同名方法
+</code></pre><h4 id="实现">实现</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProxyTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+        <span style="color:#75715e">//通过接口的引用指向实现类的对象
+</span><span style="color:#75715e"></span>        Star ZJL <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RealStar<span style="color:#f92672">();</span>
+        Star proxyInstance <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Star<span style="color:#f92672">)</span> ProxyFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">getProxyInstance</span><span style="color:#f92672">(</span>ZJL<span style="color:#f92672">);</span>
+        
+        <span style="color:#75715e">//通过代理类调用方法
+</span><span style="color:#75715e"></span>        proxyInstance<span style="color:#f92672">.</span><span style="color:#a6e22e">BookTicket</span><span style="color:#f92672">();</span>
+        proxyInstance<span style="color:#f92672">.</span><span style="color:#a6e22e">Confer</span><span style="color:#f92672">();</span>
+        proxyInstance<span style="color:#f92672">.</span><span style="color:#a6e22e">Sing</span><span style="color:#f92672">();</span>
+        proxyInstance<span style="color:#f92672">.</span><span style="color:#a6e22e">SignContract</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">/**
+</span><span style="color:#75715e">         * Proxy processing...
+</span><span style="color:#75715e">         * Real Star BookTicket...
+</span><span style="color:#75715e">         * Proxy process complete
+</span><span style="color:#75715e">         * Proxy processing...
+</span><span style="color:#75715e">         * Real Star Confer...
+</span><span style="color:#75715e">         * Proxy process complete
+</span><span style="color:#75715e">         * Proxy processing...
+</span><span style="color:#75715e">         * Real Star Sing...
+</span><span style="color:#75715e">         * Proxy process complete
+</span><span style="color:#75715e">         * Proxy processing...
+</span><span style="color:#75715e">         * Real Star SignContract...
+</span><span style="color:#75715e">         * Proxy process complete
+</span><span style="color:#75715e">         * 
+</span><span style="color:#75715e">         */</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 
+
+<span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Star</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Confer</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BookTicket</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SignContract</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Sing</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RealStar</span> <span style="color:#66d9ef">implements</span> Star<span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Confer</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Real Star Confer...&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">BookTicket</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Real Star BookTicket...&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SignContract</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Real Star SignContract...&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Sing</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Real Star Sing...&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProxyFactory</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//调用此方法，返回一个代理类对象，解决问题一
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Object <span style="color:#a6e22e">getProxyInstance</span><span style="color:#f92672">(</span>Object obj<span style="color:#f92672">){</span>
+        MyInvocationHandler handler <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyInvocationHandler<span style="color:#f92672">();</span>
+        handler<span style="color:#f92672">.</span><span style="color:#a6e22e">bind</span><span style="color:#f92672">(</span>obj<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span>  Proxy<span style="color:#f92672">.</span><span style="color:#a6e22e">newProxyInstance</span><span style="color:#f92672">(</span>obj<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getClassLoader</span><span style="color:#f92672">(),</span> obj<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getInterfaces</span><span style="color:#f92672">(),</span> handler<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyInvocationHandler</span> <span style="color:#66d9ef">implements</span> InvocationHandler<span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> Object obj<span style="color:#f92672">;</span><span style="color:#75715e">//被代理类的对象，其类型不确定，所以定义为Object
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bind</span><span style="color:#f92672">(</span>Object obj<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> obj<span style="color:#f92672">;</span><span style="color:#75715e">//将被代理类对象与obj绑定
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//当通过代理类对象调用方法method时，会自动调用invoke()方法，解决问题二
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//参数proxy：代理类对象
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//参数method：要执行的方法
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//参数args：参数列表
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>Object proxy<span style="color:#f92672">,</span> Method method<span style="color:#f92672">,</span> Object<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Throwable <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Proxy processing...&#34;</span><span style="color:#f92672">);</span>
+        Object res <span style="color:#f92672">=</span> method<span style="color:#f92672">.</span><span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>obj<span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Proxy process complete&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> res<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       

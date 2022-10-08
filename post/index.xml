@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Oct 2022 15:57:12 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 08 Oct 2022 19:36:49 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java8新特性</title>
+      <link>https://sherry-long.github.io/post/java8news/</link>
+      <pubDate>Sat, 08 Oct 2022 19:36:49 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/java8news/</guid>
+      <description>Lambda表达式 Lambda是一个匿名函数，我们可以把Lambda表达式理解为是一段可以传递的代码(将代码像数据一样进行传递)。 使用它可以写出更简洁、更灵活的代码。作为一种更紧凑的代码风格，使Java的语言表达能力得到了提升。
+  函数式(Functional)接口   方法引用与构造器引用   Stream API   Optional类 </description>
+    </item>
+    
     <item>
       <title>Java反射</title>
       <link>https://sherry-long.github.io/post/javareflection/</link>
