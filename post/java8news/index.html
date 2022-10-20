@@ -254,7 +254,37 @@
 一旦执行终止操作，就执行中间操作链，并产生结果。之后不会再被使用</p>
 </li>
 </ul>
-<hr>
+<h3 id="创建stream的方式">创建Stream的方式</h3>
+<ul>
+<li>一 通过集合
+Java8中的Collection接口被扩展，提供了两个获取流的方法：</li>
+</ul>
+<pre><code>default Stream&lt;E&gt; stream() : 返回一个顺序流
+default Stream&lt;E&gt; parallelStream() : 返回一个并行流
+</code></pre><ul>
+<li>二 通过数组
+Java8中的Arrays的静态方法stream()可以获取数组流：</li>
+</ul>
+<pre><code>static &lt;T&gt; Stream&lt;T&gt; stream(T[] array) : 返回一个流
+
+重载形式：
+public static IntStream stream(int[] array)
+public static LongStream stream(long[] array)
+public static DoubleStream stream(double[] array)
+</code></pre><ul>
+<li>三 通过Stream的of()
+可以调用Stream类静态方法of()，通过显示值创建一个流。他可以接受任意数量的参数</li>
+</ul>
+<pre><code>public static&lt;T&gt; Stream&lt;T&gt; of(T... values) : 返回一个流
+</code></pre><ul>
+<li>四 创建无限流
+可以使用静态方法Stream.iterate()和Stream.generate()，创建无限流</li>
+</ul>
+<pre><code>迭代
+public static&lt;T&gt; Stream&lt;T&gt; iterate(final T seed, final UnaryOperator&lt;T&gt; f)
+生成
+public static&lt;T&gt; Stream&lt;T&gt; generate(Supplier&lt;T&gt; s)
+</code></pre><hr>
 <hr>
 <h3 id="optional类">Optional类</h3>
 

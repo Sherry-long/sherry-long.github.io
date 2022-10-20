@@ -6,7 +6,36 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Oct 2022 19:36:49 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Oct 2022 11:41:55 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring5</title>
+      <link>https://sherry-long.github.io/post/javaspring/</link>
+      <pubDate>Wed, 12 Oct 2022 11:41:55 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javaspring/</guid>
+      <description>Spring框架概述 Spring框架是一个开源的J2EE应用程序框架，针对bean生命周期进行管理的轻量级容器。
+Spring有两个核心部分：IoC(控制反转) 和 AOP(面向切面编程)
+Spring框架主要由七部分组成：Spring Core, Spring AOP, Spring ORM, Spring DAO, Spring Context, Spring Web, Spring Web MVC
+  IoC容器  什么是IoC？ 控制反转(Inversion of Control)，是一种设计原则，可以用来降低代码之间的耦合度。其中最常见的方式叫做依赖注入(Dependency Injection, DI for short)， 还有一种方式叫“依赖查找”(Dependency Lookup)。  把对象的创建和对象之间的调用过程，交给Spring进行管理。
+ IoC底层原理  xml解析、工厂模式、反射  首先，在xml中配置bean，IoC会根据id，通过class的路径，使用ClassforName来创建对应的对象并返回，降低了耦合
+IoC思想基于IoC容器完成，IoC容器底层就是对象工厂
+  Spring提供IoC容器实现两种方式(两个接口)  IoC接口(BeanFactory) IoC容器基本实现，是Spring内部的使用接口，开发人员一般不进行使用
+ 加载配置文件时，不会创建对象。只有在获取对象(getBean)，或者使用对象时，才会创建对象   IoC接口(ApplicationContext，BeanFactory的子接口) BeanFactory的子接口，提供更多更强大的功能，一般由开发人员使用
+ApplicationContext接口有两个实现类，ClassPathXmlApplicationContext 以及 FileSystemXmlApplicationContext
+ 加载配置文件时，就会把在配置文件中的对象创建  @Test public void test1(){ //通过类路径的方式加载配置文件  //ApplicationContext context = new ClassPathXmlApplicationContext(&amp;#34;bean1.</description>
+    </item>
+    
+    <item>
+      <title>SpringMVC</title>
+      <link>https://sherry-long.github.io/post/springmvc/</link>
+      <pubDate>Tue, 11 Oct 2022 11:02:42 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/springmvc/</guid>
+      <description>SpringMVC是Spring的一个后续产品，是Spring的一个子项目
+SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
+SpringMVC的特点 Spring 家族原生产品，与IOC容器等基础设施无缝对接 基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 代码清新简洁，大幅度提升开发效率 内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 性能卓著，尤其适合现代大型、超大型互联网项目要求 </description>
+    </item>
+    
     <item>
       <title>Java8新特性</title>
       <link>https://sherry-long.github.io/post/java8news/</link>

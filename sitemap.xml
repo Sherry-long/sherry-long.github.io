@@ -3,17 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://sherry-long.github.io/post/java8news/</loc>
-    <lastmod>2022-10-08T19:36:49+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://sherry-long.github.io/post/</loc>
-    <lastmod>2022-10-08T19:36:49+08:00</lastmod>
+    <lastmod>2022-10-12T11:41:55+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://sherry-long.github.io/</loc>
+    <lastmod>2022-10-12T11:41:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sherry-long.github.io/post/javaspring/</loc>
+    <lastmod>2022-10-12T11:41:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sherry-long.github.io/post/springmvc/</loc>
+    <lastmod>2022-10-11T11:02:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sherry-long.github.io/post/java8news/</loc>
     <lastmod>2022-10-08T19:36:49+08:00</lastmod>
   </url>
   
