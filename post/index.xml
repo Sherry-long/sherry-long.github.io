@@ -6,7 +6,26 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Oct 2022 11:41:55 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Oct 2022 15:05:02 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring-IoC操作 Bean管理(基于注解)</title>
+      <link>https://sherry-long.github.io/post/javaspring2/</link>
+      <pubDate>Fri, 21 Oct 2022 15:05:02 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javaspring2/</guid>
+      <description>IoC操作 Bean管理(基于注解)   </description>
+    </item>
+    
+    <item>
+      <title>Spring-IoC操作 Bean管理(基于xml配置文件)</title>
+      <link>https://sherry-long.github.io/post/javaspring1/</link>
+      <pubDate>Fri, 21 Oct 2022 15:03:31 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javaspring1/</guid>
+      <description>IoC操作 Bean管理(基于xml配置文件)  什么是Bean管理： Bean管理指的是两个操作：1，创建对象 2，注入属性  基于xml方式创建对象 &amp;lt;bean id=&amp;#34;user&amp;#34; class=&amp;#34;com.sherry.Spring.User&amp;#34;&amp;gt;&amp;lt;/bean&amp;gt; 在spring配置文件中，使用bean标签，标签里面添加对应属性，就可以实现对象创建 在bean标签中有很多属性，常用属性： id：唯一标识 class：类全路径（包类路径） 创建对象的时候，默认执行无参构造方法，实体类内部要么无构造方法，要么显式定义无参构造方法，否则会报错  基于xml方式注入属性 第一种注入方式：在实体类内部编写set方法，通过方法进行注入 （可以使用p名称空间进行简化）
+//实体类 public class User { private String userName; private int userAge; public void setUserName(String userName) { this.userName = userName; } public void setUserAge(int userAge) { this.userAge = userAge; } public void add(){ System.out.println(&amp;#34;add .................&amp;#34;); } public void show(){ System.out.println(userName + &amp;#34;: &amp;#34; + userAge); } } //配置文件 &amp;lt;beans ...&amp;gt; &amp;lt;bean id=&amp;#34;user&amp;#34; class=&amp;#34;com.</description>
+    </item>
+    
     <item>
       <title>Spring5</title>
       <link>https://sherry-long.github.io/post/javaspring/</link>
