@@ -140,7 +140,83 @@ Spring针对Bean管理中 创建对象提供的注解 1）@Component
     <span style="color:#f92672">&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
 </code></pre></div><hr>
 <hr>
+<h4 id="基于注解方式实现bean属性注入">基于注解方式实现bean属性注入</h4>
+<p>1）@Autowired 根据属性类型进行自动装配</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//UserDao接口与UserDaoImpl实体类
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserDao</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
 
+
+<span style="color:#a6e22e">@Repository</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserDaoImpl</span> <span style="color:#66d9ef">implements</span> UserDao<span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userDao add..........&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//UserService
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Service</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">)</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserService</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Autowired</span> <span style="color:#75715e">//根据类型进行装配
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> UserDao userDao<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;service add .......&#34;</span><span style="color:#f92672">);</span>
+        userDao<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//配置文件
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
+<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       xmlns<span style="color:#f92672">:</span>p<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
+       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">&gt;&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
+
+<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+
+</code></pre></div><p>2）@Qualifier 根据属性名称进行注入（此注解须与@Autowired一起使用）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//UserDao可能有多个实现类，此时使用@Autowired注解就不行了，搭配@Qualifier一起使用
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//假设此实现类是想要装配的实现类
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Repository</span><span style="color:#f92672">(</span>value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;WantedImpl&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">//value默认是首字母小写的类名
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserDaoImpl</span> <span style="color:#66d9ef">implements</span> UserDao<span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userDao add..........&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//UserService
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Service</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserService</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span> <span style="color:#75715e">//根据类型进行装配
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">@Qualifier</span><span style="color:#f92672">(</span>value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;WantedImpl&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> UserDao userDao<span style="color:#f92672">;</span><span style="color:#75715e">//假设此时UserDao有多个实现类，此时Spring无法判断需要使用哪个实现类进行装配
+</span><span style="color:#75715e"></span>	
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;service add .......&#34;</span><span style="color:#f92672">);</span>
+        userDao<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>3）@Resource 可以根据类型注入，也可以根据名称注入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//@Resource 直接使用，根据类型装配
+</span><span style="color:#75715e">//@Resource(name=&#34;...&#34;) 设置name属性，根据名称装配
+</span><span style="color:#75715e">//此注解是javax中的注解，不是Spring中的注解，能实现功能但是Spring不推荐使用
+</span></code></pre></div><p>4）@Value 注入普通类型属性</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Value</span><span style="color:#f92672">(</span>value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;abc&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+
+
+</code></pre></div>
     </div>
     <div class="post-footer">
       
