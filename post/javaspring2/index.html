@@ -13,10 +13,28 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Spring-IoC操作 Bean管理(基于注解)"/>
-<meta name="twitter:description" content="IoC操作 Bean管理(基于注解)   "/>
+<meta name="twitter:description" content="IoC操作 Bean管理(基于注解) 使用注解的目的：简化xml配置
+Spring针对Bean管理中 创建对象提供的注解 1）@Component
+2）@Service（用在业务层）
+3）@Controller（用在Web层）
+4）@Repository（用在持久层（dao层））
+上面四个注解功能是一样的，都可以用来创建bean实例   基于注解方式实现bean对象创建 1）引入依赖 spring-aop-n.n.n.RELEASE.jar
+2）开启组件扫描
+//配置文件引入context名称空间，开启组件扫描 &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:p=&#34;http://www.springframework.org/schema/p&#34; xmlns:context=&#34;http://www.springframework.org/schema/context&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&#34;&gt; &lt;!--开启组件扫描 如果扫描多个包，使用逗号隔开 或者直接扫描这多个包的上层目录 --&gt; &lt;context:component-scan base-package=&#34;com.sherry.Spring.TestDemo, 。。。&#34;&gt;&lt;/context:component-scan&gt; &lt;/beans&gt; 3）在类中使用注解
+//注解里的value可以省略不写。默认值是首字母小写的类名 //此注解等效于使用bean标签进行配置 @Component(value = &#34;userService&#34;) public class UserService { public void add(){ System.out.println(&#34;service add .......&#34;); } } 4）开启组件扫描细节配置
+&lt;!--示例一 use-default-filters: 是否使用默认过滤器 context:include-filter：设置扫描哪些内容 --&gt; &lt;context:component-scan base-package=&#34;com.sherry&#34; use-default-filters=&#34;false&#34;&gt; &lt;context:include-filter type=&#34;annotation&#34; expression=&#34;org.springframework.stereotype.Controller&#34;/&gt; &lt;/context:component-scan&gt; &lt;!--示例一 context:exclude-filter：设置不扫描哪些内容 --&gt; &lt;context:component-scan base-package=&#34;com.sherry&#34;&gt; &lt;context:exclude-filter type=&#34;annotation&#34; expression=&#34;org."/>
 
     <meta property="og:title" content="Spring-IoC操作 Bean管理(基于注解)" />
-<meta property="og:description" content="IoC操作 Bean管理(基于注解)   " />
+<meta property="og:description" content="IoC操作 Bean管理(基于注解) 使用注解的目的：简化xml配置
+Spring针对Bean管理中 创建对象提供的注解 1）@Component
+2）@Service（用在业务层）
+3）@Controller（用在Web层）
+4）@Repository（用在持久层（dao层））
+上面四个注解功能是一样的，都可以用来创建bean实例   基于注解方式实现bean对象创建 1）引入依赖 spring-aop-n.n.n.RELEASE.jar
+2）开启组件扫描
+//配置文件引入context名称空间，开启组件扫描 &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:p=&#34;http://www.springframework.org/schema/p&#34; xmlns:context=&#34;http://www.springframework.org/schema/context&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&#34;&gt; &lt;!--开启组件扫描 如果扫描多个包，使用逗号隔开 或者直接扫描这多个包的上层目录 --&gt; &lt;context:component-scan base-package=&#34;com.sherry.Spring.TestDemo, 。。。&#34;&gt;&lt;/context:component-scan&gt; &lt;/beans&gt; 3）在类中使用注解
+//注解里的value可以省略不写。默认值是首字母小写的类名 //此注解等效于使用bean标签进行配置 @Component(value = &#34;userService&#34;) public class UserService { public void add(){ System.out.println(&#34;service add .......&#34;); } } 4）开启组件扫描细节配置
+&lt;!--示例一 use-default-filters: 是否使用默认过滤器 context:include-filter：设置扫描哪些内容 --&gt; &lt;context:component-scan base-package=&#34;com.sherry&#34; use-default-filters=&#34;false&#34;&gt; &lt;context:include-filter type=&#34;annotation&#34; expression=&#34;org.springframework.stereotype.Controller&#34;/&gt; &lt;/context:component-scan&gt; &lt;!--示例一 context:exclude-filter：设置不扫描哪些内容 --&gt; &lt;context:component-scan base-package=&#34;com.sherry&#34;&gt; &lt;context:exclude-filter type=&#34;annotation&#34; expression=&#34;org." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javaspring2/" />
 <meta property="article:published_time" content="2022-10-21T15:05:02+08:00" />
@@ -67,7 +85,60 @@
     </header>
     <div class="post-content">
       <h3 id="ioc操作-bean管理基于注解">IoC操作 Bean管理(基于注解)</h3>
+<p>使用注解的目的：简化xml配置</p>
+<h4 id="spring针对bean管理中-创建对象提供的注解">Spring针对Bean管理中 创建对象提供的注解</h4>
+<p>1）@Component</p>
+<p>2）@Service（用在业务层）</p>
+<p>3）@Controller（用在Web层）</p>
+<p>4）@Repository（用在持久层（dao层））</p>
+<h5 id="上面四个注解功能是一样的都可以用来创建bean实例">上面四个注解功能是一样的，都可以用来创建bean实例</h5>
 <hr>
+<hr>
+<h4 id="基于注解方式实现bean对象创建">基于注解方式实现bean对象创建</h4>
+<p>1）引入依赖 spring-aop-n.n.n.RELEASE.jar</p>
+<p>2）开启组件扫描</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//配置文件引入context名称空间，开启组件扫描
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       xmlns<span style="color:#f92672">:</span>p<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
+       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;!--</span>开启组件扫描
+        如果扫描多个包<span style="color:#960050;background-color:#1e0010">，</span>使用逗号隔开
+        或者直接扫描这多个包的上层目录
+    <span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.TestDemo, 。。。&#34;</span><span style="color:#f92672">&gt;&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+</code></pre></div><p>3）在类中使用注解</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//注解里的value可以省略不写。默认值是首字母小写的类名
+</span><span style="color:#75715e">//此注解等效于使用bean标签进行配置
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Component</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserService</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;service add .......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>4）开启组件扫描细节配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#f92672">&lt;!--</span>示例一
+        use<span style="color:#f92672">-</span><span style="color:#66d9ef">default</span><span style="color:#f92672">-</span>filters<span style="color:#f92672">:</span> 是否使用默认过滤器
+        context<span style="color:#f92672">:</span>include<span style="color:#f92672">-</span>filter<span style="color:#960050;background-color:#1e0010">：</span>设置扫描哪些内容
+    <span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry&#34;</span> use<span style="color:#f92672">-</span><span style="color:#66d9ef">default</span><span style="color:#f92672">-</span>filters<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>include<span style="color:#f92672">-</span>filter type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;annotation&#34;</span>
+                                expression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.stereotype.Controller&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
+
+
+    <span style="color:#f92672">&lt;!--</span>示例一
+        context<span style="color:#f92672">:</span>exclude<span style="color:#f92672">-</span>filter<span style="color:#960050;background-color:#1e0010">：</span>设置不扫描哪些内容
+    <span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>exclude<span style="color:#f92672">-</span>filter type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;annotation&#34;</span>
+                                expression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.stereotype.Controller&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
+</code></pre></div><hr>
 <hr>
 
     </div>

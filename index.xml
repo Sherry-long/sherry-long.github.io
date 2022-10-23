@@ -13,7 +13,16 @@
       <pubDate>Fri, 21 Oct 2022 15:05:02 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/javaspring2/</guid>
-      <description>IoC操作 Bean管理(基于注解)   </description>
+      <description>IoC操作 Bean管理(基于注解) 使用注解的目的：简化xml配置
+Spring针对Bean管理中 创建对象提供的注解 1）@Component
+2）@Service（用在业务层）
+3）@Controller（用在Web层）
+4）@Repository（用在持久层（dao层））
+上面四个注解功能是一样的，都可以用来创建bean实例   基于注解方式实现bean对象创建 1）引入依赖 spring-aop-n.n.n.RELEASE.jar
+2）开启组件扫描
+//配置文件引入context名称空间，开启组件扫描 &amp;lt;beans xmlns=&amp;#34;http://www.springframework.org/schema/beans&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xmlns:p=&amp;#34;http://www.springframework.org/schema/p&amp;#34; xmlns:context=&amp;#34;http://www.springframework.org/schema/context&amp;#34; xsi:schemaLocation=&amp;#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&amp;#34;&amp;gt; &amp;lt;!--开启组件扫描 如果扫描多个包，使用逗号隔开 或者直接扫描这多个包的上层目录 --&amp;gt; &amp;lt;context:component-scan base-package=&amp;#34;com.sherry.Spring.TestDemo, 。。。&amp;#34;&amp;gt;&amp;lt;/context:component-scan&amp;gt; &amp;lt;/beans&amp;gt; 3）在类中使用注解
+//注解里的value可以省略不写。默认值是首字母小写的类名 //此注解等效于使用bean标签进行配置 @Component(value = &amp;#34;userService&amp;#34;) public class UserService { public void add(){ System.out.println(&amp;#34;service add .......&amp;#34;); } } 4）开启组件扫描细节配置
+&amp;lt;!--示例一 use-default-filters: 是否使用默认过滤器 context:include-filter：设置扫描哪些内容 --&amp;gt; &amp;lt;context:component-scan base-package=&amp;#34;com.sherry&amp;#34; use-default-filters=&amp;#34;false&amp;#34;&amp;gt; &amp;lt;context:include-filter type=&amp;#34;annotation&amp;#34; expression=&amp;#34;org.springframework.stereotype.Controller&amp;#34;/&amp;gt; &amp;lt;/context:component-scan&amp;gt; &amp;lt;!--示例一 context:exclude-filter：设置不扫描哪些内容 --&amp;gt; &amp;lt;context:component-scan base-package=&amp;#34;com.sherry&amp;#34;&amp;gt; &amp;lt;context:exclude-filter type=&amp;#34;annotation&amp;#34; expression=&amp;#34;org.</description>
     </item>
     
     <item>

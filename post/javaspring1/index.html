@@ -482,10 +482,86 @@ public class Course {
 <h3 id="bean生命周期">bean生命周期</h3>
 <p>1）通过构造器创建bean实例（无参构造）</p>
 <p>2）为bean的属性设置值、对其他bean的引用</p>
-<p>3）调用bean的初始化方法（需要进行配置初始化方法）</p>
+<p>3）调用bean的初始化方法（需要进行配置初始化方法，在bean标签中设置属性initMethod）</p>
 <p>4）获取使用bean</p>
-<p>5）当容器关闭时，调用bean的销毁方法（需要进行配置销毁的方法）</p>
+<p>5）当容器关闭时，调用bean的销毁方法（需要进行配置销毁的方法，在bean标签中设置属性destroyMethod）</p>
+<ul>
+<li>在加入bean的后置处理器之后，生命周期变为7部分</li>
+</ul>
+<p>分别在3）之前和之后，把bean实例传递给bean后置处理器的方法</p>
+<h5 id="实现演示">实现演示</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//创建实体类，并实现BeanPostProcessor接口（bean后置处理器接口）
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BPPBean</span> <span style="color:#66d9ef">implements</span> BeanPostProcessor <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">postProcessBeforeInitialization</span><span style="color:#f92672">(</span>Object bean<span style="color:#f92672">,</span> String beanName<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> BeansException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> BeanPostProcessor<span style="color:#f92672">.</span><span style="color:#a6e22e">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">postProcessBeforeInitialization</span><span style="color:#f92672">(</span>bean<span style="color:#f92672">,</span> beanName<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
 
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">postProcessAfterInitialization</span><span style="color:#f92672">(</span>Object bean<span style="color:#f92672">,</span> String beanName<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> BeansException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> BeanPostProcessor<span style="color:#f92672">.</span><span style="color:#a6e22e">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">postProcessAfterInitialization</span><span style="color:#f92672">(</span>bean<span style="color:#f92672">,</span> beanName<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//配置文件
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;MyBPP&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.bean.BPPBean&#34;</span><span style="color:#f92672">&gt;&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+<span style="color:#75715e">//在配置文件配置实现BPP接口的bean之后，对当前配置文件的所有bean都有效
+</span></code></pre></div><hr>
+<hr>
+<h3 id="自动装配">自动装配</h3>
+<p>根据指定的装配规则，Spring自动将匹配的属性值注入</p>
+<p>1）根据属性名称装配（无视大小写）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//配置文件
+</span><span style="color:#75715e">//***类中有一个名为address的属性
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***&#34;</span> autowire<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;byName&#34;</span><span style="color:#f92672">&gt;&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">//Spring会自动识别id与属性名，进行自动装配
+</span><span style="color:#75715e">//bean名必须与属性名一致（大小写可不一致）
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;address&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***.Address&#34;</span><span style="color:#f92672">&gt;</span>略<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+</code></pre></div><p>2）根据属性类型装配</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//配置文件
+</span><span style="color:#75715e">//***类中有一个类型为Address的属性
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***&#34;</span> autowire<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;byName&#34;</span><span style="color:#f92672">&gt;&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">//Spring会自动识别bean类型与属性类型，进行自动装配
+</span><span style="color:#75715e">//bean名不需要与属性名一致，但是同一类型不能有多个bean，否则无法装配
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;not_address&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;***.Address&#34;</span><span style="color:#f92672">&gt;</span>略<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+
+</code></pre></div><hr>
+<hr>
+<h3 id="外部属性文件">外部属性文件</h3>
+<p>1）直接配置数据库信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//引入druid依赖，配置druid连接池
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span><span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.driver&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/userDb&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+</code></pre></div><p>2）引入外部属性文件配置数据库连接池</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//创建外部属性文件，properties格式文件，写入数据库信息（略）
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//配置文件：引入context命名空间，使用context标签以及Spring表达式进行配置
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>property<span style="color:#f92672">-</span>placeholder location<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;classpath: properties文件的名称&#34;</span><span style="color:#f92672">/&gt;</span>
+
+	<span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span><span style="color:#f92672">&gt;</span>
+		<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${properties文件中对应的键}&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+		<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${properties文件中对应的键}&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+		<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${properties文件中对应的键}&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+		<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${properties文件中对应的键}&#34;</span><span style="color:#f92672">&gt;&lt;/</span>property<span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+
+<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+
+</code></pre></div>
     </div>
     <div class="post-footer">
       
