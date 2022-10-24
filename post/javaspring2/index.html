@@ -79,7 +79,7 @@ Spring针对Bean管理中 创建对象提供的注解 1）@Component
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -216,7 +216,29 @@ Spring针对Bean管理中 创建对象提供的注解 1）@Component
 <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
 
 
-</code></pre></div>
+</code></pre></div><hr>
+<hr>
+<h3 id="完全注解开发">完全注解开发</h3>
+<p>1）创建配置类，替代xml配置文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#a6e22e">@Configuration</span> <span style="color:#75715e">//作为配置类，替代xml配置文件
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@ComponentScan</span><span style="color:#f92672">(</span>basePackages <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">})</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpringConfig</span> <span style="color:#f92672">{</span>
+    
+<span style="color:#f92672">}</span>
+</code></pre></div><p>2）测试类中有所不同</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//之前
+</span><span style="color:#75715e"></span>ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bean1.xml&#34;</span><span style="color:#f92672">);</span>
+UserService userService <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">,</span> UserService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+userService<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+
+<span style="color:#75715e">//现在已经没有配置文件了，所以不能用ClassPathXmlApplicationContext方式创建ApplicationContext
+</span><span style="color:#75715e"></span>ApplicationContext context <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AnnotationConfigApplicationContext<span style="color:#f92672">(</span>SpringConfig<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+UserService userService <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;userService&#34;</span><span style="color:#f92672">,</span> UserService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+userService<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">();</span>
+</code></pre></div><p>3）其他没区别，但实际开发中一般都是基于SpringBoot来实现</p>
+<hr>
+
     </div>
     <div class="post-footer">
       
