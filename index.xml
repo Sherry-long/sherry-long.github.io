@@ -17,7 +17,20 @@
 AOP底层原理 1）AOP底层使用动态代理来实现，有两种情况
 第一种 有接口，使用JDK动态代理，创建当前接口实现类的代理对象
 第二种 没有接口，使用CGLIB动态代理，创建当前类子类的代理对象
- AOP（JDK动态代理） 详见 Java反射-动态代理 部分  </description>
+ AOP（JDK动态代理） 详见 Java反射-动态代理 部分    AOP术语  连接点  类里边哪些方法可以被增强（增加功能），这些方法就被称为连接点
+ 切入点  实际真正被增强的方法，就叫切入点
+ 通知（增强）  实际增强的逻辑部分，就叫通知，通知有多种类型
+前置通知：在方法执行之前执行 后置通知：在方法执行之后执行 环绕通知：在方法执行之前与之后都执行 异常通知：当该方法抛出异常时执行 最终通知：无论有没有异常，都会执行  切面  是一个动作，把通知应用到切入点的过程，叫切面
+  实现AOP操作 1）Spring框架中，一般基于AspectJ实现AOP操作
+AspectJ不是Spring组成部分，是一个独立AOP框架，一般把AspectJ和Spring一起使用，进行AOP操作
+2）基于AspectJ实现AOP操作有两种方式
+  基于xml配置文件实现
+  基于注解方式实现
+  3）在项目中引入AOP依赖 spring-aop-n.n.n.RELEASE.jar com.springsource.net.* com.springsource.org.*
+4）切入点表达式
+作用：知道对哪个类里的哪个方法进行增强
+语法结构：execution([权限修饰符] [返回类型] [类全路径] [参数列表])
+//举例1：对com.sherry.Spring.Dao类里的add方法进行增强 execution(*(代表任意权限) com.sherry.Spring.Dao.add(..)) //举例2：对com.sherry.Spring.Dao类里的所有方法进行增强 execution(*(代表任意权限) com.sherry.Spring.Dao.*(..)) //举例3：对com.sherry.Spring包里的所有类的所有方法进行增强 execution(*(代表任意权限) com.sherry.Spring.*.*(..))   AOP操作（AspectJ注解） 1）创建类，在类里面定义方法</description>
     </item>
     
     <item>

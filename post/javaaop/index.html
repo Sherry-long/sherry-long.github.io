@@ -17,14 +17,40 @@
 AOP底层原理 1）AOP底层使用动态代理来实现，有两种情况
 第一种 有接口，使用JDK动态代理，创建当前接口实现类的代理对象
 第二种 没有接口，使用CGLIB动态代理，创建当前类子类的代理对象
- AOP（JDK动态代理） 详见 Java反射-动态代理 部分  "/>
+ AOP（JDK动态代理） 详见 Java反射-动态代理 部分    AOP术语  连接点  类里边哪些方法可以被增强（增加功能），这些方法就被称为连接点
+ 切入点  实际真正被增强的方法，就叫切入点
+ 通知（增强）  实际增强的逻辑部分，就叫通知，通知有多种类型
+前置通知：在方法执行之前执行 后置通知：在方法执行之后执行 环绕通知：在方法执行之前与之后都执行 异常通知：当该方法抛出异常时执行 最终通知：无论有没有异常，都会执行  切面  是一个动作，把通知应用到切入点的过程，叫切面
+  实现AOP操作 1）Spring框架中，一般基于AspectJ实现AOP操作
+AspectJ不是Spring组成部分，是一个独立AOP框架，一般把AspectJ和Spring一起使用，进行AOP操作
+2）基于AspectJ实现AOP操作有两种方式
+  基于xml配置文件实现
+  基于注解方式实现
+  3）在项目中引入AOP依赖 spring-aop-n.n.n.RELEASE.jar com.springsource.net.* com.springsource.org.*
+4）切入点表达式
+作用：知道对哪个类里的哪个方法进行增强
+语法结构：execution([权限修饰符] [返回类型] [类全路径] [参数列表])
+//举例1：对com.sherry.Spring.Dao类里的add方法进行增强 execution(*(代表任意权限) com.sherry.Spring.Dao.add(..)) //举例2：对com.sherry.Spring.Dao类里的所有方法进行增强 execution(*(代表任意权限) com.sherry.Spring.Dao.*(..)) //举例3：对com.sherry.Spring包里的所有类的所有方法进行增强 execution(*(代表任意权限) com.sherry.Spring.*.*(..))   AOP操作（AspectJ注解） 1）创建类，在类里面定义方法"/>
 
     <meta property="og:title" content="AOP" />
 <meta property="og:description" content="不通过修改源代码，在主干功能里添加新功能
 AOP底层原理 1）AOP底层使用动态代理来实现，有两种情况
 第一种 有接口，使用JDK动态代理，创建当前接口实现类的代理对象
 第二种 没有接口，使用CGLIB动态代理，创建当前类子类的代理对象
- AOP（JDK动态代理） 详见 Java反射-动态代理 部分  " />
+ AOP（JDK动态代理） 详见 Java反射-动态代理 部分    AOP术语  连接点  类里边哪些方法可以被增强（增加功能），这些方法就被称为连接点
+ 切入点  实际真正被增强的方法，就叫切入点
+ 通知（增强）  实际增强的逻辑部分，就叫通知，通知有多种类型
+前置通知：在方法执行之前执行 后置通知：在方法执行之后执行 环绕通知：在方法执行之前与之后都执行 异常通知：当该方法抛出异常时执行 最终通知：无论有没有异常，都会执行  切面  是一个动作，把通知应用到切入点的过程，叫切面
+  实现AOP操作 1）Spring框架中，一般基于AspectJ实现AOP操作
+AspectJ不是Spring组成部分，是一个独立AOP框架，一般把AspectJ和Spring一起使用，进行AOP操作
+2）基于AspectJ实现AOP操作有两种方式
+  基于xml配置文件实现
+  基于注解方式实现
+  3）在项目中引入AOP依赖 spring-aop-n.n.n.RELEASE.jar com.springsource.net.* com.springsource.org.*
+4）切入点表达式
+作用：知道对哪个类里的哪个方法进行增强
+语法结构：execution([权限修饰符] [返回类型] [类全路径] [参数列表])
+//举例1：对com.sherry.Spring.Dao类里的add方法进行增强 execution(*(代表任意权限) com.sherry.Spring.Dao.add(..)) //举例2：对com.sherry.Spring.Dao类里的所有方法进行增强 execution(*(代表任意权限) com.sherry.Spring.Dao.*(..)) //举例3：对com.sherry.Spring包里的所有类的所有方法进行增强 execution(*(代表任意权限) com.sherry.Spring.*.*(..))   AOP操作（AspectJ注解） 1）创建类，在类里面定义方法" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javaaop/" />
 <meta property="article:published_time" content="2022-10-24T09:48:19+08:00" />
@@ -69,7 +95,7 @@ AOP底层原理 1）AOP底层使用动态代理来实现，有两种情况
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -83,6 +109,219 @@ AOP底层原理 1）AOP底层使用动态代理来实现，有两种情况
 <li>AOP（JDK动态代理）
 详见 Java反射-动态代理 部分</li>
 </ul>
+<hr>
+<hr>
+<h3 id="aop术语">AOP术语</h3>
+<ul>
+<li>连接点</li>
+</ul>
+<p>类里边哪些方法可以被增强（增加功能），这些方法就被称为连接点</p>
+<ul>
+<li>切入点</li>
+</ul>
+<p>实际真正被增强的方法，就叫切入点</p>
+<ul>
+<li>通知（增强）</li>
+</ul>
+<p>实际增强的逻辑部分，就叫通知，通知有多种类型</p>
+<pre><code>前置通知：在方法执行之前执行
+
+后置通知：在方法执行之后执行
+
+环绕通知：在方法执行之前与之后都执行
+
+异常通知：当该方法抛出异常时执行
+
+最终通知：无论有没有异常，都会执行
+
+</code></pre><ul>
+<li>切面</li>
+</ul>
+<p>是一个动作，把通知应用到切入点的过程，叫切面</p>
+<hr>
+<hr>
+<h3 id="实现aop操作">实现AOP操作</h3>
+<p>1）Spring框架中，一般基于AspectJ实现AOP操作</p>
+<p>AspectJ不是Spring组成部分，是一个独立AOP框架，一般把AspectJ和Spring一起使用，进行AOP操作</p>
+<p>2）基于AspectJ实现AOP操作有两种方式</p>
+<ul>
+<li>
+<p>基于xml配置文件实现</p>
+</li>
+<li>
+<p>基于注解方式实现</p>
+</li>
+</ul>
+<p>3）在项目中引入AOP依赖
+spring-aop-n.n.n.RELEASE.jar
+com.springsource.net.*
+com.springsource.org.*</p>
+<p>4）切入点表达式</p>
+<p>作用：知道对哪个类里的哪个方法进行增强</p>
+<p>语法结构：execution([权限修饰符] [返回类型] [类全路径] [参数列表])</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//举例1：对com.sherry.Spring.Dao类里的add方法进行增强
+</span><span style="color:#75715e"></span>execution<span style="color:#f92672">(*(</span>代表任意权限<span style="color:#f92672">)</span> com<span style="color:#f92672">.</span><span style="color:#a6e22e">sherry</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Spring</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Dao</span><span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(..))</span>
+
+<span style="color:#75715e">//举例2：对com.sherry.Spring.Dao类里的所有方法进行增强
+</span><span style="color:#75715e"></span>execution<span style="color:#f92672">(*(</span>代表任意权限<span style="color:#f92672">)</span> com<span style="color:#f92672">.</span><span style="color:#a6e22e">sherry</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Spring</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Dao</span><span style="color:#f92672">.*(..))</span>
+
+<span style="color:#75715e">//举例3：对com.sherry.Spring包里的所有类的所有方法进行增强
+</span><span style="color:#75715e"></span>execution<span style="color:#f92672">(*(</span>代表任意权限<span style="color:#f92672">)</span> com<span style="color:#f92672">.</span><span style="color:#a6e22e">sherry</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Spring</span><span style="color:#f92672">.*.*(..))</span>
+</code></pre></div><hr>
+<hr>
+<h3 id="aop操作aspectj注解">AOP操作（AspectJ注解）</h3>
+<p>1）创建类，在类里面定义方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;aop User add ......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<p>2）创建增强类，编写增强逻辑</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//在增强类里面，创建方法，让不同方法代表不同通知类型
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
+<span style="color:#75715e">//前置通知
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+	
+	<span style="color:#f92672">...</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<p>3）进行通知的配置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
+<span style="color:#75715e">//在spring配置文件中，开启注解扫描
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
+<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       xmlns<span style="color:#f92672">:</span>aop<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.aopAnno&#34;</span><span style="color:#f92672">&gt;&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+
+<span style="color:#75715e">//使用注解创建User和UserExtra对象
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">@Component</span>
+
+<span style="color:#75715e">//在增强类上添加注解@Aspect
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
+<span style="color:#75715e">//前置通知
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//在spring配置文件中开启生成代理对象
+</span><span style="color:#75715e"></span>
+    <span style="color:#f92672">&lt;!--</span>开始Aspect生成代理对象<span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>aspectj<span style="color:#f92672">-</span>autoproxy<span style="color:#f92672">&gt;&lt;/</span>aop<span style="color:#f92672">:</span>aspectj<span style="color:#f92672">-</span>autoproxy<span style="color:#f92672">&gt;</span>
+
+</code></pre></div><hr>
+<p>4）配置不同类型的通知</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
+
+<span style="color:#75715e">//前置通知，在方法执行前执行
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Before</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopAnno.User.add(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+	
+<span style="color:#75715e">//后置通知，在方法返回值之后执行，如果切入点有异常，就不会执行了
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@AfterReturning</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopAnno.User.add(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">afterReturn</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;afterReturn.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>	
+	
+<span style="color:#75715e">//最终通知，在方法执行后执行，就算切入点有异常了，也会继续执行
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@After</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopAnno.User.add(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">after</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;after.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//异常通知，切入点出现异常时执行
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@AfterThrowing</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopAnno.User.add(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">afterThrow</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;afterThrow.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+	
+<span style="color:#75715e">//环绕通知，在切入点之前和之后执行，通过ProceedingJoinPoint来实现
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Around</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopAnno.User.add(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">around</span><span style="color:#f92672">(</span>ProceedingJoinPoint proceedingJoinPoint<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Throwable <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before AROUND.......&#34;</span><span style="color:#f92672">);</span>
+
+        proceedingJoinPoint<span style="color:#f92672">.</span><span style="color:#a6e22e">proceed</span><span style="color:#f92672">();</span><span style="color:#75715e">//执行切入点方法
+</span><span style="color:#75715e"></span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;after AROUND.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+<span style="color:#f92672">---------------------------------------------------</span>
+
+
+<span style="color:#75715e">//执行结果
+</span><span style="color:#75715e"></span>before AROUND<span style="color:#f92672">.......</span>
+before<span style="color:#f92672">.......</span>
+aop User add <span style="color:#f92672">......</span><span style="color:#960050;background-color:#1e0010">（</span>此为切入点<span style="color:#960050;background-color:#1e0010">）</span>
+afterReturn<span style="color:#f92672">.......</span>
+after<span style="color:#f92672">.......</span>
+after AROUND<span style="color:#f92672">.......</span>
+
+
+<span style="color:#75715e">//当切入点出现异常（10 / 0）之后的输出结果
+</span><span style="color:#75715e"></span>before AROUND<span style="color:#f92672">.......</span>
+before<span style="color:#f92672">.......</span>
+aop User add <span style="color:#f92672">......</span><span style="color:#960050;background-color:#1e0010">（</span>此为切入点<span style="color:#960050;background-color:#1e0010">）</span>
+afterThrow<span style="color:#f92672">.......</span>
+after<span style="color:#f92672">.......</span>
+</code></pre></div><hr>
+<p>5）对相同的切入点进行抽取（重用切入点的定义）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Pointcut</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopAnno.User.add(..))&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PointDemo</span><span style="color:#f92672">(){</span><span style="color:#75715e">/*注解工具人罢了*/</span><span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//前置通知
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Before</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;PointDemo()&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#75715e">//后置通知，在方法执行后执行
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@After</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;PointDemo()&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">after</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;after.......&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+	
+	<span style="color:#75715e">//...略
+</span><span style="color:#75715e"></span>	
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<p>6）有多个增强类对同一个切入点进行增强，设置增强优先级</p>
+<ul>
+<li>在增强类的上方添加注解@Order(数字)，数字越小优先级越高</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Order</span><span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
+	<span style="color:#75715e">//略
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+
+</code></pre></div><hr>
+<hr>
+<h3 id="aop操作aspectj配置文件较少使用了解即可">AOP操作（AspectJ配置文件，较少使用，了解即可）</h3>
 
     </div>
     <div class="post-footer">
