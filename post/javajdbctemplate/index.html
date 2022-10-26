@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>JDBC Template // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JDBC Template"/>
+<meta name="twitter:description" content="JDBC Template 1）什么是JDBC Template
+ Spring框架对JDBC进行了封装，使用JDBC Template可以很方便实现对数据库的操作  2）准备工作
+  引入相关的依赖 druid-1.2.14.jar
+mysql-connector-java-8.0.30.jar
+spring-jdbc-5.3.9.jar
+spring-orm-5.3.9.jar
+spring-tx-5.3.9.jar
+  在Spring配置文件中配置数据库连接池
+  &lt;bean id=&#34;dataSource&#34; class=&#34;com.alibaba.druid.pool.DruidDataSource&#34; destroy-method=&#34;close&#34;&gt; &lt;property name=&#34;url&#34; value=&#34;jdbc:mysql:///user_db&#34;/&gt; &lt;property name=&#34;username&#34; value=&#34;root&#34;/&gt; &lt;property name=&#34;password&#34; value=&#34;root&#34;/&gt; &lt;!--Loading class `com.mysql.jdbc.Driver&#39;. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver&#39;. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.--&gt; &lt;property name=&#34;driverClassName&#34; value=&#34;com.mysql.jdbc.Driver&#34;/&gt;&lt;!--此行可注释掉--&gt; &lt;/bean&gt;  配置JDBC Template对象，注入DataSource  &lt;bean id=&#34;jdbcTemplate&#34; class=&#34;org."/>
+
+    <meta property="og:title" content="JDBC Template" />
+<meta property="og:description" content="JDBC Template 1）什么是JDBC Template
+ Spring框架对JDBC进行了封装，使用JDBC Template可以很方便实现对数据库的操作  2）准备工作
+  引入相关的依赖 druid-1.2.14.jar
+mysql-connector-java-8.0.30.jar
+spring-jdbc-5.3.9.jar
+spring-orm-5.3.9.jar
+spring-tx-5.3.9.jar
+  在Spring配置文件中配置数据库连接池
+  &lt;bean id=&#34;dataSource&#34; class=&#34;com.alibaba.druid.pool.DruidDataSource&#34; destroy-method=&#34;close&#34;&gt; &lt;property name=&#34;url&#34; value=&#34;jdbc:mysql:///user_db&#34;/&gt; &lt;property name=&#34;username&#34; value=&#34;root&#34;/&gt; &lt;property name=&#34;password&#34; value=&#34;root&#34;/&gt; &lt;!--Loading class `com.mysql.jdbc.Driver&#39;. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver&#39;. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.--&gt; &lt;property name=&#34;driverClassName&#34; value=&#34;com.mysql.jdbc.Driver&#34;/&gt;&lt;!--此行可注释掉--&gt; &lt;/bean&gt;  配置JDBC Template对象，注入DataSource  &lt;bean id=&#34;jdbcTemplate&#34; class=&#34;org." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/javajdbctemplate/" />
+<meta property="article:published_time" content="2022-10-26T11:10:50+08:00" />
+<meta property="article:modified_time" content="2022-10-26T11:10:50+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">JDBC Template</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Oct 26, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h3 id="jdbc-template">JDBC Template</h3>
+<p>1）什么是JDBC Template</p>
+<ul>
+<li>Spring框架对JDBC进行了封装，使用JDBC Template可以很方便实现对数据库的操作</li>
+</ul>
+<p>2）准备工作</p>
+<ul>
+<li>
+<p>引入相关的依赖
+druid-1.2.14.jar<br>
+mysql-connector-java-8.0.30.jar<br>
+spring-jdbc-5.3.9.jar<br>
+spring-orm-5.3.9.jar<br>
+spring-tx-5.3.9.jar</p>
+</li>
+<li>
+<p>在Spring配置文件中配置数据库连接池</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span> destroy<span style="color:#f92672">-</span>method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+		
+		<span style="color:#f92672">&lt;!--</span>Loading <span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">`</span><span style="color:#a6e22e">com</span><span style="color:#f92672">.</span><span style="color:#a6e22e">mysql</span><span style="color:#f92672">.</span><span style="color:#a6e22e">jdbc</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Driver</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">.</span> This is deprecated<span style="color:#f92672">.</span> The <span style="color:#66d9ef">new</span> driver <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">is</span> <span style="color:#960050;background-color:#1e0010">`</span>com<span style="color:#f92672">.</span><span style="color:#a6e22e">mysql</span><span style="color:#f92672">.</span><span style="color:#a6e22e">cj</span><span style="color:#f92672">.</span><span style="color:#a6e22e">jdbc</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Driver</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">.</span> 
+		The driver is automatically registered via the SPI and manual loading of the driver <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">is</span> generally unnecessary<span style="color:#f92672">.--&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;&lt;!--</span>此行可注释掉<span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+</code></pre></div><ul>
+<li>配置JDBC Template对象，注入DataSource</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbcTemplate&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.core.JdbcTemplate&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;!--</span>注入DataSource<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+</code></pre></div><ul>
+<li>创建service类，创建dao类，在dao注入jdbcTemplate对象</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Repository</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookDaoImpl</span> <span style="color:#66d9ef">implements</span> BookDao<span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> JdbcTemplate jdbcTemplate<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+
+<span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookService</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">//注入dao
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> BookDao bookDao<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>JDBC Template操作数据库</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//对应数据库表创建实体类
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Book</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String userId<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String username<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String ustatus<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getUserId</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> userId<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUserId</span><span style="color:#f92672">(</span>String userId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">userId</span> <span style="color:#f92672">=</span> userId<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getUsername</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> username<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span>String username<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> username<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getUstatus</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> ustatus<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUstatus</span><span style="color:#f92672">(</span>String ustatus<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">ustatus</span> <span style="color:#f92672">=</span> ustatus<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+<span style="color:#75715e">//编写service和dao，在dao进行数据库添加操作
+</span><span style="color:#75715e">//调用JdbcTemplate对象里面的update方法实现添加操作
+</span><span style="color:#75715e"></span>
+update<span style="color:#f92672">(</span>String sql<span style="color:#f92672">,</span> Object<span style="color:#f92672">...</span> args<span style="color:#f92672">)</span> 
+<span style="color:#75715e">//有两个参数：第一个，sql语句，第二个，可变参数：设置sql语句中的值
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">@Repository</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookDaoImpl</span> <span style="color:#66d9ef">implements</span> BookDao<span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Autowired</span>
+    <span style="color:#66d9ef">private</span> JdbcTemplate jdbcTemplate<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>Book book<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;insert into book values(?, ?, ?)&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span> update <span style="color:#f92672">=</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">update</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> book<span style="color:#f92672">.</span><span style="color:#a6e22e">getUserId</span><span style="color:#f92672">(),</span> book<span style="color:#f92672">.</span><span style="color:#a6e22e">getUsername</span><span style="color:#f92672">(),</span> book<span style="color:#f92672">.</span><span style="color:#a6e22e">getUstatus</span><span style="color:#f92672">());</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>update<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+
+<span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookService</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">//注入dao
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Autowired</span>
+
+    <span style="color:#66d9ef">private</span> BookDao bookDao<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>Book book<span style="color:#f92672">){</span>
+        bookDao<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>book<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+
+	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+        ApplicationContext context <span style="color:#f92672">=</span>
+                <span style="color:#66d9ef">new</span> ClassPathXmlApplicationContext<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bean1.xml&#34;</span><span style="color:#f92672">);</span>
+        BookService bookService <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bookService&#34;</span><span style="color:#f92672">,</span> BookService<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+        Book book <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Book<span style="color:#f92672">();</span>
+        book<span style="color:#f92672">.</span><span style="color:#a6e22e">setUserId</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">);</span>
+        book<span style="color:#f92672">.</span><span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;abc&#34;</span><span style="color:#f92672">);</span>
+        book<span style="color:#f92672">.</span><span style="color:#a6e22e">setUstatus</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;FREE&#34;</span><span style="color:#f92672">);</span>
+        bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>book<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+
+
+
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

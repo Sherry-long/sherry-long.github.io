@@ -6,7 +6,24 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Oct 2022 09:48:19 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Oct 2022 11:10:50 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JDBC Template</title>
+      <link>https://sherry-long.github.io/post/javajdbctemplate/</link>
+      <pubDate>Wed, 26 Oct 2022 11:10:50 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javajdbctemplate/</guid>
+      <description>JDBC Template 1）什么是JDBC Template
+ Spring框架对JDBC进行了封装，使用JDBC Template可以很方便实现对数据库的操作  2）准备工作
+  引入相关的依赖 druid-1.2.14.jar
+mysql-connector-java-8.0.30.jar
+spring-jdbc-5.3.9.jar
+spring-orm-5.3.9.jar
+spring-tx-5.3.9.jar
+  在Spring配置文件中配置数据库连接池
+  &amp;lt;bean id=&amp;#34;dataSource&amp;#34; class=&amp;#34;com.alibaba.druid.pool.DruidDataSource&amp;#34; destroy-method=&amp;#34;close&amp;#34;&amp;gt; &amp;lt;property name=&amp;#34;url&amp;#34; value=&amp;#34;jdbc:mysql:///user_db&amp;#34;/&amp;gt; &amp;lt;property name=&amp;#34;username&amp;#34; value=&amp;#34;root&amp;#34;/&amp;gt; &amp;lt;property name=&amp;#34;password&amp;#34; value=&amp;#34;root&amp;#34;/&amp;gt; &amp;lt;!--Loading class `com.mysql.jdbc.Driver&amp;#39;. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver&amp;#39;. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.--&amp;gt; &amp;lt;property name=&amp;#34;driverClassName&amp;#34; value=&amp;#34;com.mysql.jdbc.Driver&amp;#34;/&amp;gt;&amp;lt;!--此行可注释掉--&amp;gt; &amp;lt;/bean&amp;gt;  配置JDBC Template对象，注入DataSource  &amp;lt;bean id=&amp;#34;jdbcTemplate&amp;#34; class=&amp;#34;org.</description>
+    </item>
+    
     <item>
       <title>AOP</title>
       <link>https://sherry-long.github.io/post/javaaop/</link>

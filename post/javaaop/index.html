@@ -192,39 +192,50 @@ com.springsource.org.*</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">
 <span style="color:#75715e">//在spring配置文件中，开启注解扫描
 </span><span style="color:#75715e"></span>
-<span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
-<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
-       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
-       xmlns<span style="color:#f92672">:</span>aop<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
-       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-</span><span style="color:#e6db74">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-</span><span style="color:#e6db74">                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
+	<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+		   xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+		   xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+		   xmlns<span style="color:#f92672">:</span>aop<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+		   xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">							http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+</span><span style="color:#e6db74">							http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
 
-    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.aopAnno&#34;</span><span style="color:#f92672">&gt;&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+		<span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.aopAnno&#34;</span><span style="color:#f92672">&gt;&lt;/</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan<span style="color:#f92672">&gt;</span>
+	<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
 
 <span style="color:#75715e">//使用注解创建User和UserExtra对象
 </span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">@Component</span>
+	<span style="color:#a6e22e">@Component</span>
 
 <span style="color:#75715e">//在增强类上添加注解@Aspect
 </span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">@Component</span>
-<span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
-<span style="color:#75715e">//前置通知
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
-        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before.......&#34;</span><span style="color:#f92672">);</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
+	<span style="color:#a6e22e">@Component</span>
+	<span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserExtra</span> <span style="color:#f92672">{</span>
+	<span style="color:#75715e">//前置通知
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+			System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before.......&#34;</span><span style="color:#f92672">);</span>
+		<span style="color:#f92672">}</span>
+	<span style="color:#f92672">}</span>
 
 <span style="color:#75715e">//在spring配置文件中开启生成代理对象
 </span><span style="color:#75715e"></span>
     <span style="color:#f92672">&lt;!--</span>开始Aspect生成代理对象<span style="color:#f92672">--&gt;</span>
     <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>aspectj<span style="color:#f92672">-</span>autoproxy<span style="color:#f92672">&gt;&lt;/</span>aop<span style="color:#f92672">:</span>aspectj<span style="color:#f92672">-</span>autoproxy<span style="color:#f92672">&gt;</span>
+	
+	
+<span style="color:#f92672">-----------------------------------------------------------------------</span>
+<span style="color:#75715e">//此部分的配置文件可使用完全注解开发代替
+</span><span style="color:#75715e">//创建Config类
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">@Configuration</span>
+	<span style="color:#a6e22e">@ComponentScan</span><span style="color:#f92672">(</span>basePackages <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;com.sherry.Spring.aopConfig&#34;</span><span style="color:#f92672">})</span><span style="color:#75715e">//开启组件扫描
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">@EnableAspectJAutoProxy</span><span style="color:#f92672">(</span>proxyTargetClass <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">)</span><span style="color:#75715e">//开启生成代理对象
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigAop</span> <span style="color:#f92672">{</span>
+	<span style="color:#f92672">}</span>
 
-</code></pre></div><hr>
+<span style="color:#75715e">//使用AnnotationConfigApplicationContext创建context
+</span></code></pre></div><hr>
 <p>4）配置不同类型的通知</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
 <span style="color:#a6e22e">@Aspect</span> <span style="color:#75715e">//生成代理对象
@@ -322,7 +333,38 @@ after<span style="color:#f92672">.......</span>
 </code></pre></div><hr>
 <hr>
 <h3 id="aop操作aspectj配置文件较少使用了解即可">AOP操作（AspectJ配置文件，较少使用，了解即可）</h3>
+<p>1）创建两个类，一个增强类，一个被增强类，创建方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Book</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">buy</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;buy................&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BookProxy</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">before</span><span style="color:#f92672">(){</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;before buy.............&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><p>2）在Spring配置文件中创建两个类的对象</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;book&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.aopConfig.Book&#34;</span><span style="color:#f92672">&gt;&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookProxy&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring.aopConfig.BookProxy&#34;</span><span style="color:#f92672">&gt;&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+</code></pre></div><p>3）在Spring配置文件中配置切入点</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#f92672">&lt;!--</span>配置aop增强<span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>config<span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;!--</span>配置切入点<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>pointcut id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;p&#34;</span> expression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;execution(* com.sherry.Spring.aopConfig.Book.buy(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+
+        <span style="color:#f92672">&lt;!--</span>配置切面<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>aspect ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bookProxy&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;!--</span>增强作用在具体方法上<span style="color:#f92672">--&gt;</span>
+            <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>before method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;before&#34;</span> pointcut<span style="color:#f92672">-</span>ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;p&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/</span>aop<span style="color:#f92672">:</span>aspect<span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;/</span>aop<span style="color:#f92672">:</span>config<span style="color:#f92672">&gt;</span>
+
+
+</code></pre></div>
     </div>
     <div class="post-footer">
       
