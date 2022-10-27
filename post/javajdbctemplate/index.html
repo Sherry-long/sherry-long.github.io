@@ -221,6 +221,72 @@ update<span style="color:#f92672">(</span>String sql<span style="color:#f92672">
         bookService<span style="color:#f92672">.</span><span style="color:#a6e22e">addBook</span><span style="color:#f92672">(</span>book<span style="color:#f92672">);</span>
     <span style="color:#f92672">}</span>
 
+<span style="color:#75715e">//修改删除操作类似，dao中的实现类重写：
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateBook</span><span style="color:#f92672">(</span>Book book<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;update book set username=?,ustatus=? where user_id=?&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span> update <span style="color:#f92672">=</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">update</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> book<span style="color:#f92672">.</span><span style="color:#a6e22e">getUsername</span><span style="color:#f92672">(),</span> book<span style="color:#f92672">.</span><span style="color:#a6e22e">getUstatus</span><span style="color:#f92672">(),</span> book<span style="color:#f92672">.</span><span style="color:#a6e22e">getUserId</span><span style="color:#f92672">());</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>update<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deleteBook</span><span style="color:#f92672">(</span>String bookId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;delete from book where user_id=?&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span> update <span style="color:#f92672">=</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">update</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> bookId<span style="color:#f92672">);</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>update<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+</code></pre></div><ul>
+<li>查询表里有多少条记录(使用queryForObject方法)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">selectCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select count(*) from book&#34;</span><span style="color:#f92672">;</span>
+
+        Integer integer <span style="color:#f92672">=</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">queryForObject</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> integer<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>查询返回对象</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//需使用此方法实现，三个参数
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Nullable</span> 
+<span style="color:#66d9ef">public</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> T <span style="color:#a6e22e">queryForObject</span><span style="color:#f92672">(</span>String sql<span style="color:#f92672">,</span> <span style="color:#75715e">//sql语句
+</span><span style="color:#75715e"></span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">springframework</span><span style="color:#f92672">.</span><span style="color:#a6e22e">jdbc</span><span style="color:#f92672">.</span><span style="color:#a6e22e">core</span><span style="color:#f92672">.</span><span style="color:#a6e22e">RowMapper</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> rowMapper<span style="color:#f92672">,</span><span style="color:#75715e">//RowMapper是一个接口，返回不同类型的数据，使用这个接口的实现类可以完成数据封装
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">@Nullable</span> Object<span style="color:#f92672">...</span> args <span style="color:#f92672">)</span><span style="color:#75715e">//占位符的值
+</span><span style="color:#75715e"></span>			
+			
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Book <span style="color:#a6e22e">selectBook</span><span style="color:#f92672">(</span>String id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select * from book where user_id=?&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">return</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">queryForObject</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> BeanPropertyRowMapper<span style="color:#f92672">&lt;</span>Book<span style="color:#f92672">&gt;(</span>Book<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">),</span> id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#75715e">//
+</span></code></pre></div><ul>
+<li>查询返回集合</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//查询所有的Book，使用query方法
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>Book<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">findAllBooks</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select * from book&#34;</span><span style="color:#f92672">;</span>
+        List<span style="color:#f92672">&lt;</span>Book<span style="color:#f92672">&gt;</span> bookList <span style="color:#f92672">=</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">query</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> BeanPropertyRowMapper<span style="color:#f92672">&lt;</span>Book<span style="color:#f92672">&gt;(</span>Book<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">));</span>
+
+        <span style="color:#66d9ef">return</span> bookList<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+</code></pre></div><hr>
+<h4 id="jdbctemplate批量操作">JDBCTemplate批量操作</h4>
+<p>1）批量添加(batchUpadate方法)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//batchUpadate(String sql, List&lt;Object[]&gt; batchArgs)
+</span><span style="color:#75715e">//两个参数：第一个sql语句。第二个List集合表示添加的多条记录数据
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">batchAddBooks</span><span style="color:#f92672">(</span>List<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">[]&gt;</span> batchArgs<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;insert into book values(?, ?, ?)&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> ints <span style="color:#f92672">=</span> jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">batchUpdate</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">,</span> batchArgs<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span>ints<span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
 
 
 
