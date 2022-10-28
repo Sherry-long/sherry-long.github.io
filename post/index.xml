@@ -6,7 +6,30 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Oct 2022 11:10:50 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Oct 2022 08:37:19 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring-事务</title>
+      <link>https://sherry-long.github.io/post/javatransactions/</link>
+      <pubDate>Fri, 28 Oct 2022 08:37:19 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javatransactions/</guid>
+      <description>1）事务是数据库操作的基本单元，是逻辑上的一组操作，要么都成功，要么都失败，如果有一个操作失败所有操作都失败
+2）典型场景：银行转账
+事务四大特性（ACID原则） 1）原子性（Atomicity）
+ 一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。  2）一致性（Consistency）
+ 在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。  3）隔离性（Isolation）
+ 数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。  4）持久性（Durability）
+ 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。    事务操作（Spring事务管理介绍） 1）事务添加到JavaEE三层结构里面的Service层（业务逻辑层）
+2）在Spring中进行事务管理操作有两种方式：
+  编程式事务管理（较少使用）
+  声明式事务管理（主流） 分为两种：基于注解； 基于xml配置文件
+  3） 在Spring中进行声明式事务管理，底层使用AOP原理
+4）Spring事务管理API
+//提供了一个接口，代表事务管理器，这个接口根据不同框架提供了不同实现类 |PlatformTransactionManager --|DataSourceTransactionManager //实现类 --|HibernateTransactionManager //实现类    事务操作（注解声明式事务管理） 1）在Spring配置文件中配置事务管理器
+&amp;lt;!--创建事务管理器--&amp;gt; &amp;lt;bean id=&amp;#34;transactionManager&amp;#34; class=&amp;#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&amp;#34;&amp;gt; &amp;lt;property name=&amp;#34;dataSource&amp;#34; ref=&amp;#34;dataSource&amp;#34;/&amp;gt; &amp;lt;/bean&amp;gt; 2）在Spring配置文件中开启事务注解
+&amp;lt;!--在Spring配置文件中引入名称空间tx，开启事务注解--&amp;gt; &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;beans xmlns=&amp;#34;http://www.springframework.org/schema/beans&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xmlns:p=&amp;#34;http://www.springframework.org/schema/p&amp;#34; xmlns:context=&amp;#34;http://www.springframework.org/schema/context&amp;#34; xmlns:tx=&amp;#34;http://www.springframework.org/schema/tx&amp;#34; xsi:schemaLocation=&amp;#34;http://www.</description>
+    </item>
+    
     <item>
       <title>JDBC Template</title>
       <link>https://sherry-long.github.io/post/javajdbctemplate/</link>
