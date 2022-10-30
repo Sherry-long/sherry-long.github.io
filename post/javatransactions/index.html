@@ -89,7 +89,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -202,21 +202,146 @@
 <li>propagation 事务的传播行为</li>
 </ul>
 <p>当一个事务方法被另一个事务方法调用时，这个事务方法如何进行</p>
+<p>传播属性（常用的三种）：REQUIRED，REQUIRED_NEW，SUPPORTS</p>
+<ul>
+<li>isolation 事务隔离级别</li>
+</ul>
+<pre><code>					脏读	不可重复读		幻读
+READ UNCOMMITTED	有			有			有
+READ COMMITTED		无			有			有
+REPEATABLE READ		无			无			有
+SERIALIZABLE		无			无			无
+
+@Transactional(propagation = Propagation.REQUIRED, 
+			isolation = Isolation.REPEATABLE_READ)
+</code></pre><ul>
+<li>timeout 超时时间</li>
+</ul>
+<p>事务需要在一定时间内提交，如果不提交则回滚</p>
+<p>默认是-1（无超时时间限制），设置以s为单位</p>
+<ul>
+<li>readOnly 是否只读</li>
+</ul>
+<p>读：查询操作  写：增删改操作</p>
+<p>false：可以增删改查</p>
+<p>true：只能查，不能增删改</p>
+<ul>
+<li>rollbackFor 回滚</li>
+</ul>
+<p>设置出现哪些异常时进行事务回滚（写法：属性 = 异常类.class）</p>
+<ul>
+<li>noRollbackFor 不回滚</li>
+</ul>
+<p>设置出现哪些异常时不进行事务回滚</p>
+<hr>
+<hr>
+<h3 id="事务操作xml声明式事务管理">事务操作（xml声明式事务管理）</h3>
+<p>1）在配置文件中进行配置</p>
 <ul>
 <li>
-<p>isolation 事务隔离级别</p>
+<p>配置事务管理器</p>
 </li>
 <li>
-<p>timeout 超时时间</p>
+<p>配置通知</p>
 </li>
 <li>
-<p>rollbackFor</p>
-</li>
-<li>
-<p>noRollbackFor</p>
+<p>配置切入点和切面</p>
 </li>
 </ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
+<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       xmlns<span style="color:#f92672">:</span>p<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
+       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       xmlns<span style="color:#f92672">:</span>aop<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       xmlns<span style="color:#f92672">:</span>tx<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
+       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
 
+
+    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span> destroy<span style="color:#f92672">-</span>method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbcTemplate&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.core.JdbcTemplate&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;!--</span>注入DataSource<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;!--</span>创建事务管理器<span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+
+
+    <span style="color:#f92672">&lt;!--</span>配置通知<span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>advice id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tx_advice&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;!--</span>配置事务参数<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>attributes<span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;!--</span>指定哪种规则的方法上面添加事务<span style="color:#f92672">--&gt;</span>
+            <span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>method name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transfer&#34;</span> propagation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span> isolation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;READ_COMMITTED&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;!--</span>为以account开头的方法添加事务<span style="color:#f92672">--&gt;</span>
+            <span style="color:#f92672">&lt;!--&lt;</span>tx<span style="color:#f92672">:</span>method name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;account*&#34;</span><span style="color:#f92672">/&gt;--&gt;</span>
+        <span style="color:#f92672">&lt;/</span>tx<span style="color:#f92672">:</span>attributes<span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;/</span>tx<span style="color:#f92672">:</span>advice<span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;!--</span>配置切入点和切面<span style="color:#f92672">--&gt;</span>
+    <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>config<span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;!--</span>配置切入点<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>pointcut id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span> expression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;execution(* com.sherry.Spring.service.AccountService.*(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+
+        <span style="color:#f92672">&lt;!--</span>配置切面<span style="color:#f92672">--&gt;</span>
+        <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>advisor advice<span style="color:#f92672">-</span>ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tx_advice&#34;</span> pointcut<span style="color:#f92672">-</span>ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/</span>aop<span style="color:#f92672">:</span>config<span style="color:#f92672">&gt;</span>
+
+<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+</code></pre></div><hr>
+<hr>
+<h3 id="事务操作完全注解声明式事务管理">事务操作（完全注解声明式事务管理）</h3>
+<p>创建配置类，使用配置类替代xml配置文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span><span style="color:#75715e">//配置类
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@ComponentScan</span><span style="color:#f92672">(</span>basePackages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">)</span><span style="color:#75715e">//组件扫描
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@EnableTransactionManagement</span><span style="color:#75715e">//开启事务
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TxConfig</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">//创建DataSource对象
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Bean</span>
+    <span style="color:#66d9ef">public</span> DruidDataSource <span style="color:#a6e22e">getDruidDataSource</span><span style="color:#f92672">(){</span>
+        DruidDataSource druidDataSource <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DruidDataSource<span style="color:#f92672">();</span>
+        druidDataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setDriverClassName</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">);</span>
+        druidDataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setUrl</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span><span style="color:#f92672">);</span>
+        druidDataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setUsername</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">);</span>
+        druidDataSource<span style="color:#f92672">.</span><span style="color:#a6e22e">setPassword</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> druidDataSource<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//创建JdbcTemplate对象
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Bean</span>
+    <span style="color:#66d9ef">public</span> JdbcTemplate <span style="color:#a6e22e">getJdbcTemplate</span><span style="color:#f92672">(</span>DataSource dataSource<span style="color:#f92672">){</span>
+        <span style="color:#75715e">//到IoC容器中根据类型找到dataSource
+</span><span style="color:#75715e"></span>        JdbcTemplate jdbcTemplate <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JdbcTemplate<span style="color:#f92672">();</span>
+        <span style="color:#75715e">//注入dataSource
+</span><span style="color:#75715e"></span>        jdbcTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">setDataSource</span><span style="color:#f92672">(</span>dataSource<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> jdbcTemplate<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">//创建事务管理器对象
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Bean</span>
+    <span style="color:#66d9ef">public</span> DataSourceTransactionManager <span style="color:#a6e22e">getDataSourceTransactionManager</span><span style="color:#f92672">(</span>DataSource dataSource<span style="color:#f92672">){</span>
+        DataSourceTransactionManager dataSourceTransactionManager <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DataSourceTransactionManager<span style="color:#f92672">();</span>
+        dataSourceTransactionManager<span style="color:#f92672">.</span><span style="color:#a6e22e">setDataSource</span><span style="color:#f92672">(</span>dataSource<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> dataSourceTransactionManager<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+
+</code></pre></div>
     </div>
     <div class="post-footer">
       
