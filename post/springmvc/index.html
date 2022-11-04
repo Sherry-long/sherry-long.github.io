@@ -335,7 +335,76 @@ SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施�
 
 
 </code></pre></div><h4 id="requestmapping注解的value属性">@RequestMapping注解的value属性</h4>
+<p>@RequestMapping注解的value属性通过请求的请求地址匹配请求映射</p>
+<p>@RequestMapping注解的value属性是一个字符串类型的数组，表示该请求映射能够匹配多个请求地址所对应的请求</p>
+<p>@RequestMapping注解的value属性必须设置，至少通过请求地址匹配请求映射</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testRequestMapping}&#34;</span>&gt;测试@RequestMapping的value属性--&gt;/testRequestMapping&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/test}&#34;</span>&gt;测试@RequestMapping的value属性--&gt;/test&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+12
+@RequestMapping(
+        value = {&#34;/testRequestMapping&#34;, &#34;/test&#34;}
+)
+public String testRequestMapping(){
+    return &#34;success&#34;;
+}
 
+</code></pre></div><h4 id="requestmapping注解的method属性">@RequestMapping注解的method属性</h4>
+<p>@RequestMapping注解的method属性通过请求的请求方式（get或post）匹配请求映射</p>
+<p>@RequestMapping注解的method属性是一个RequestMethod类型的数组，表示该请求映射能够匹配多种请求方式的请求</p>
+<p>若当前请求的请求地址满足请求映射的value属性，但是请求方式不满足method属性，则浏览器报错405：Request method ‘POST’ not supported</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/test}&#34;</span>&gt;测试@RequestMapping的value属性--&gt;/test&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/test}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;
+&lt;/<span style="color:#f92672">form</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+        value <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;/testRequestMapping&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;/test&#34;</span><span style="color:#f92672">},</span>
+        method <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">GET</span><span style="color:#f92672">,</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">POST</span><span style="color:#f92672">}</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRequestMapping</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><pre><code>注：
+
+1、对于处理指定请求方式的控制器方法，SpringMVC中提供了@RequestMapping的派生注解
+
+处理get请求的映射–&gt;@GetMapping
+
+处理post请求的映射–&gt;@PostMapping
+
+处理put请求的映射–&gt;@PutMapping
+
+处理delete请求的映射–&gt;@DeleteMapping
+
+2、常用的请求方式有get，post，put，delete
+
+但是目前浏览器只支持get和post，若在form表单提交时，为method设置了其他请求方式的字符串（put或delete），则按照默认的请求方式get处理
+
+若要发送put和delete请求，则需要通过spring提供的过滤器HiddenHttpMethodFilter，在RESTful部分会讲到
+</code></pre><h4 id="requestmapping注解的params属性">@RequestMapping注解的params属性</h4>
+<p>@RequestMapping注解的params属性通过请求的请求参数匹配请求映射</p>
+<p>@RequestMapping注解的params属性是一个字符串类型的数组，可以通过四种表达式设置请求参数和请求映射的匹配关系</p>
+<p>“param”：要求请求映射所匹配的请求必须携带param请求参数</p>
+<p>“!param”：要求请求映射所匹配的请求必须不能携带param请求参数</p>
+<p>“param=value”：要求请求映射所匹配的请求必须携带param请求参数且param=value</p>
+<p>“param!=value”：要求请求映射所匹配的请求必须携带param请求参数但是param!=value</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/test(username=&#39;admin&#39;,password=123456)&#34;</span>&gt;测试@RequestMapping的params属性--&gt;/test&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+1
+@RequestMapping(
+        value = {&#34;/testRequestMapping&#34;, &#34;/test&#34;}
+        ,method = {RequestMethod.GET, RequestMethod.POST}
+        ,params = {&#34;username&#34;,&#34;password!=123456&#34;}
+)
+public String testRequestMapping(){
+    return &#34;success&#34;;
+}
+
+</code></pre></div><pre><code>注：
+
+若当前请求满足@RequestMapping注解的value和method属性，但是不满足params属性，
+此时页面回报错400：Parameter conditions “username, password!=123456” 
+not met for actual request parameters: username={admin}, password={123456}
+</code></pre>
     </div>
     <div class="post-footer">
       
