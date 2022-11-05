@@ -13,12 +13,12 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SpringMVC"/>
-<meta name="twitter:description" content="原文SpringMVC是Spring的一个后续产品，是Spring的一个子项目
+<meta name="twitter:description" content="SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   创建SpringMVC工程 创建maven工程  pom.xml中引入依赖，打包方式：war  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!-- Spring5和Thymeleaf整合包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt; &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt; &lt;version&gt;3.0.13.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt;   添加web模块：Project Structure-&gt;modules-&gt;current module-&gt;Web-&gt;在src\main\webapp\WEB-INF中创建web."/>
 
     <meta property="og:title" content="SpringMVC" />
-<meta property="og:description" content="原文SpringMVC是Spring的一个后续产品，是Spring的一个子项目
+<meta property="og:description" content="SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   创建SpringMVC工程 创建maven工程  pom.xml中引入依赖，打包方式：war  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!-- Spring5和Thymeleaf整合包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt; &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt; &lt;version&gt;3.0.13.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/project&gt;   添加web模块：Project Structure-&gt;modules-&gt;current module-&gt;Web-&gt;在src\main\webapp\WEB-INF中创建web." />
 <meta property="og:type" content="article" />
@@ -30,7 +30,7 @@ SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施�
   </head>
   <body>
     <header class="app-header">
-      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://sherry-long.github.io"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">
@@ -65,12 +65,12 @@ SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
       </div>
     </header>
     <div class="post-content">
-      <p><!-- raw HTML omitted -->原文<!-- raw HTML omitted --></p>
+      <!-- raw HTML omitted -->
 <p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
 <p>SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)</p>
 <h3 id="springmvc的特点">SpringMVC的特点</h3>
@@ -404,7 +404,81 @@ public String testRequestMapping(){
 若当前请求满足@RequestMapping注解的value和method属性，但是不满足params属性，
 此时页面回报错400：Parameter conditions “username, password!=123456” 
 not met for actual request parameters: username={admin}, password={123456}
-</code></pre>
+</code></pre><h4 id="requestmapping注解的headers属性">@RequestMapping注解的headers属性</h4>
+<p>@RequestMapping注解的headers属性通过请求的请求头信息匹配请求映射</p>
+<p>@RequestMapping注解的headers属性是一个字符串类型的数组，可以通过四种表达式设置请求头信息和请求映射的匹配关系</p>
+<p>“header”：要求请求映射所匹配的请求必须携带header请求头信息</p>
+<p>“!header”：要求请求映射所匹配的请求必须不能携带header请求头信息</p>
+<p>“header=value”：要求请求映射所匹配的请求必须携带header请求头信息且header=value</p>
+<p>“header!=value”：要求请求映射所匹配的请求必须携带header请求头信息且header!=value</p>
+<p>若当前请求满足@RequestMapping注解的value和method属性，但是不满足headers属性，此时页面显示404错误，即资源未找到</p>
+<h4 id="springmvc支持ant风格的路径">SpringMVC支持ant风格的路径</h4>
+<pre><code>？：表示任意的单个字符
+
+*：表示任意的0个或多个字符
+
+**：表示任意的一层或多层目录
+
+注意：在使用时，只能使用//xxx的方式
+</code></pre><h4 id="springmvc支持路径中的占位符">SpringMVC支持路径中的占位符</h4>
+<p>原始方式：/deleteUser?id=1</p>
+<p>rest方式：/deleteUser/1</p>
+<p>SpringMVC路径中的占位符常用于RESTful风格中，当请求路径中将某些数据通过路径的方式传输到服务器中，
+就可以在相应的@RequestMapping注解的value属性中通过占位符{xxx}表示传输的数据，在通过@PathVariable注解，
+将占位符所表示的数据赋值给控制器方法的形参</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testRest/1/admin}&#34;</span>&gt;测试路径中的占位符--&gt;/testRest&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testRest/{id}/{username}&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRest</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> String id<span style="color:#f92672">,</span> <span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username&#34;</span><span style="color:#f92672">)</span> String username<span style="color:#f92672">){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id:&#34;</span><span style="color:#f92672">+</span>id<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;,username:&#34;</span><span style="color:#f92672">+</span>username<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">//最终输出的内容为--&gt;id:1,username:admin
+</span><span style="color:#75715e"></span>
+</code></pre></div><hr>
+<hr>
+<h3 id="springmvc获取请求参数">SpringMVC获取请求参数</h3>
+<h4 id="通过servletapi获取">通过ServletAPI获取</h4>
+<p>将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testParam&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testParam</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">){</span>
+    String username <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span><span style="color:#a6e22e">getParameter</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username&#34;</span><span style="color:#f92672">);</span>
+    String password <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span><span style="color:#a6e22e">getParameter</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;password&#34;</span><span style="color:#f92672">);</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username:&#34;</span><span style="color:#f92672">+</span>username<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;,password:&#34;</span><span style="color:#f92672">+</span>password<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+
+</code></pre></div><h4 id="通过控制器方法的形参获取请求参数">通过控制器方法的形参获取请求参数</h4>
+<p>在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，匹配到请求映射时，在DispatcherServlet中就会将请求参数赋值给相应的形参</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testParam(username=&#39;admin&#39;,password=123456)}&#34;</span>&gt;测试获取请求参数--&gt;/testParam&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testParam&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testParam</span><span style="color:#f92672">(</span>String username<span style="color:#f92672">,</span> String password<span style="color:#f92672">){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username:&#34;</span><span style="color:#f92672">+</span>username<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;,password:&#34;</span><span style="color:#f92672">+</span>password<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><pre><code>注：
+
+若请求所传输的请求参数中有多个同名的请求参数，此时可以在控制器方法的形参中设置字符串数组或者字符串类型的形参接收此请求参数
+
+若使用字符串数组类型的形参，此参数的数组中包含了每一个数据
+
+若使用字符串类型的形参，此参数的值为每个数据中间使用逗号拼接的结果
+</code></pre><h4 id="requestparam">@RequestParam</h4>
+<p>@RequestParam是将请求参数和控制器方法的形参创建映射关系</p>
+<p>@RequestParam注解一共有三个属性：</p>
+<p>value：指定为形参赋值的请求参数的参数名</p>
+<p>required：设置是否必须传输此请求参数，默认值为true</p>
+<p>若设置为true时，则当前请求必须传输value所指定的请求参数，若没有传输该请求参数，且没有设置defaultValue属性，则页面报错400：Required String parameter ‘xxx’ is not present；若设置为false，则当前请求不是必须传输value所指定的请求参数，若没有传输，则注解所标识的形参的值为null</p>
+<p>defaultValue：不管required属性值为true或false，当value所指定的请求参数没有传输或传输的值为&quot;&ldquo;时，则使用默认值为形参赋值</p>
+<h4 id="requestheader">@RequestHeader</h4>
+<p>@RequestHeader是将请求头信息和控制器方法的形参创建映射关系</p>
+<p>@RequestHeader注解一共有三个属性：value、required、defaultValue，用法同@RequestParam</p>
+<h4 id="cookievalue">@CookieValue</h4>
+<p>@CookieValue是将cookie数据和控制器方法的形参创建映射关系</p>
+<p>@CookieValue注解一共有三个属性：value、required、defaultValue，用法同@RequestParam</p>
+
     </div>
     <div class="post-footer">
       
