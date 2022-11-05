@@ -112,54 +112,54 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <ul>
 <li>pom.xml中引入依赖，打包方式：war</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
-<span style="color:#f92672">&lt;</span>project xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
-         xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-         xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;</span>modelVersion<span style="color:#f92672">&gt;</span>4<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">&lt;/</span>modelVersion<span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+&lt;<span style="color:#f92672">project</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+         <span style="color:#a6e22e">xmlns:xsi</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:schemaLocation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span>&gt;
+    &lt;<span style="color:#f92672">modelVersion</span>&gt;4.0.0&lt;/<span style="color:#f92672">modelVersion</span>&gt;
 
-    <span style="color:#f92672">&lt;</span>groupId<span style="color:#f92672">&gt;</span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">sherry</span><span style="color:#f92672">&lt;/</span>groupId<span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;</span>artifactId<span style="color:#f92672">&gt;</span>demo1<span style="color:#f92672">&lt;/</span>artifactId<span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">-</span>SNAPSHOT<span style="color:#f92672">&lt;/</span>version<span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;</span>packaging<span style="color:#f92672">&gt;</span>war<span style="color:#f92672">&lt;/</span>packaging<span style="color:#f92672">&gt;</span>
+    &lt;<span style="color:#f92672">groupId</span>&gt;org.sherry&lt;/<span style="color:#f92672">groupId</span>&gt;
+    &lt;<span style="color:#f92672">artifactId</span>&gt;demo1&lt;/<span style="color:#f92672">artifactId</span>&gt;
+    &lt;<span style="color:#f92672">version</span>&gt;1.0-SNAPSHOT&lt;/<span style="color:#f92672">version</span>&gt;
+    &lt;<span style="color:#f92672">packaging</span>&gt;war&lt;/<span style="color:#f92672">packaging</span>&gt;
 
-    <span style="color:#f92672">&lt;</span>properties<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;</span>maven<span style="color:#f92672">.</span><span style="color:#a6e22e">compiler</span><span style="color:#f92672">.</span><span style="color:#a6e22e">source</span><span style="color:#f92672">&gt;</span>11<span style="color:#f92672">&lt;/</span>maven<span style="color:#f92672">.</span><span style="color:#a6e22e">compiler</span><span style="color:#f92672">.</span><span style="color:#a6e22e">source</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;</span>maven<span style="color:#f92672">.</span><span style="color:#a6e22e">compiler</span><span style="color:#f92672">.</span><span style="color:#a6e22e">target</span><span style="color:#f92672">&gt;</span>11<span style="color:#f92672">&lt;/</span>maven<span style="color:#f92672">.</span><span style="color:#a6e22e">compiler</span><span style="color:#f92672">.</span><span style="color:#a6e22e">target</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;</span>project<span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sourceEncoding</span><span style="color:#f92672">&gt;</span>UTF<span style="color:#f92672">-</span>8<span style="color:#f92672">&lt;/</span>project<span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sourceEncoding</span><span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;/</span>properties<span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;</span>dependencies<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;!--</span> SpringMVC <span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>dependency<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>groupId<span style="color:#f92672">&gt;</span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">springframework</span><span style="color:#f92672">&lt;/</span>groupId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>artifactId<span style="color:#f92672">&gt;</span>spring<span style="color:#f92672">-</span>webmvc<span style="color:#f92672">&lt;/</span>artifactId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>5<span style="color:#f92672">.</span><span style="color:#a6e22e">3</span><span style="color:#f92672">.</span><span style="color:#a6e22e">1</span><span style="color:#f92672">&lt;/</span>version<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;/</span>dependency<span style="color:#f92672">&gt;</span>
+    &lt;<span style="color:#f92672">properties</span>&gt;
+        &lt;<span style="color:#f92672">maven.compiler.source</span>&gt;11&lt;/<span style="color:#f92672">maven.compiler.source</span>&gt;
+        &lt;<span style="color:#f92672">maven.compiler.target</span>&gt;11&lt;/<span style="color:#f92672">maven.compiler.target</span>&gt;
+        &lt;<span style="color:#f92672">project.build.sourceEncoding</span>&gt;UTF-8&lt;/<span style="color:#f92672">project.build.sourceEncoding</span>&gt;
+    &lt;/<span style="color:#f92672">properties</span>&gt;
+    &lt;<span style="color:#f92672">dependencies</span>&gt;
+        <span style="color:#75715e">&lt;!-- SpringMVC --&gt;</span>
+        &lt;<span style="color:#f92672">dependency</span>&gt;
+            &lt;<span style="color:#f92672">groupId</span>&gt;org.springframework&lt;/<span style="color:#f92672">groupId</span>&gt;
+            &lt;<span style="color:#f92672">artifactId</span>&gt;spring-webmvc&lt;/<span style="color:#f92672">artifactId</span>&gt;
+            &lt;<span style="color:#f92672">version</span>&gt;5.3.1&lt;/<span style="color:#f92672">version</span>&gt;
+        &lt;/<span style="color:#f92672">dependency</span>&gt;
 
-        <span style="color:#f92672">&lt;!--</span> 日志 <span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>dependency<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>groupId<span style="color:#f92672">&gt;</span>ch<span style="color:#f92672">.</span><span style="color:#a6e22e">qos</span><span style="color:#f92672">.</span><span style="color:#a6e22e">logback</span><span style="color:#f92672">&lt;/</span>groupId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>artifactId<span style="color:#f92672">&gt;</span>logback<span style="color:#f92672">-</span>classic<span style="color:#f92672">&lt;/</span>artifactId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">2</span><span style="color:#f92672">.</span><span style="color:#a6e22e">9</span><span style="color:#f92672">&lt;/</span>version<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;/</span>dependency<span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!-- 日志 --&gt;</span>
+        &lt;<span style="color:#f92672">dependency</span>&gt;
+            &lt;<span style="color:#f92672">groupId</span>&gt;ch.qos.logback&lt;/<span style="color:#f92672">groupId</span>&gt;
+            &lt;<span style="color:#f92672">artifactId</span>&gt;logback-classic&lt;/<span style="color:#f92672">artifactId</span>&gt;
+            &lt;<span style="color:#f92672">version</span>&gt;1.2.9&lt;/<span style="color:#f92672">version</span>&gt;
+        &lt;/<span style="color:#f92672">dependency</span>&gt;
 
-        <span style="color:#f92672">&lt;!--</span> ServletAPI <span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>dependency<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>groupId<span style="color:#f92672">&gt;</span>javax<span style="color:#f92672">.</span><span style="color:#a6e22e">servlet</span><span style="color:#f92672">&lt;/</span>groupId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>artifactId<span style="color:#f92672">&gt;</span>javax<span style="color:#f92672">.</span><span style="color:#a6e22e">servlet</span><span style="color:#f92672">-</span>api<span style="color:#f92672">&lt;/</span>artifactId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>3<span style="color:#f92672">.</span><span style="color:#a6e22e">1</span><span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">&lt;/</span>version<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>scope<span style="color:#f92672">&gt;</span>provided<span style="color:#f92672">&lt;/</span>scope<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;/</span>dependency<span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!-- ServletAPI --&gt;</span>
+        &lt;<span style="color:#f92672">dependency</span>&gt;
+            &lt;<span style="color:#f92672">groupId</span>&gt;javax.servlet&lt;/<span style="color:#f92672">groupId</span>&gt;
+            &lt;<span style="color:#f92672">artifactId</span>&gt;javax.servlet-api&lt;/<span style="color:#f92672">artifactId</span>&gt;
+            &lt;<span style="color:#f92672">version</span>&gt;3.1.0&lt;/<span style="color:#f92672">version</span>&gt;
+            &lt;<span style="color:#f92672">scope</span>&gt;provided&lt;/<span style="color:#f92672">scope</span>&gt;
+        &lt;/<span style="color:#f92672">dependency</span>&gt;
 
-        <span style="color:#f92672">&lt;!--</span> Spring5和Thymeleaf整合包 <span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>dependency<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>groupId<span style="color:#f92672">&gt;</span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">thymeleaf</span><span style="color:#f92672">&lt;/</span>groupId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>artifactId<span style="color:#f92672">&gt;</span>thymeleaf<span style="color:#f92672">-</span>spring5<span style="color:#f92672">&lt;/</span>artifactId<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;</span>version<span style="color:#f92672">&gt;</span>3<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span><span style="color:#f92672">.</span><span style="color:#a6e22e">13</span><span style="color:#f92672">.</span><span style="color:#a6e22e">RELEASE</span><span style="color:#f92672">&lt;/</span>version<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;/</span>dependency<span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;/</span>dependencies<span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!-- Spring5和Thymeleaf整合包 --&gt;</span>
+        &lt;<span style="color:#f92672">dependency</span>&gt;
+            &lt;<span style="color:#f92672">groupId</span>&gt;org.thymeleaf&lt;/<span style="color:#f92672">groupId</span>&gt;
+            &lt;<span style="color:#f92672">artifactId</span>&gt;thymeleaf-spring5&lt;/<span style="color:#f92672">artifactId</span>&gt;
+            &lt;<span style="color:#f92672">version</span>&gt;3.0.13.RELEASE&lt;/<span style="color:#f92672">version</span>&gt;
+        &lt;/<span style="color:#f92672">dependency</span>&gt;
+    &lt;/<span style="color:#f92672">dependencies</span>&gt;
 
-<span style="color:#f92672">&lt;/</span>project<span style="color:#f92672">&gt;</span>
+&lt;/<span style="color:#f92672">project</span>&gt;
 </code></pre></div><ul>
 <li>
 <p>添加web模块：Project Structure-&gt;modules-&gt;current module-&gt;Web-&gt;在src\main\webapp\WEB-INF中创建web.xml</p>
@@ -170,61 +170,61 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 </ul>
 <p>注册SpringMVC的前端控制器DispatcherServlet</p>
 <p>默认配置方式：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">此配置作用下<span style="color:#960050;background-color:#1e0010">，</span>SpringMVC的配置文件默认位于WEB<span style="color:#f92672">-</span>INF下<span style="color:#960050;background-color:#1e0010">，</span>默认名称为<span style="color:#f92672">-</span>servlet<span style="color:#f92672">.</span><span style="color:#a6e22e">xml</span><span style="color:#960050;background-color:#1e0010">，</span>
-例如<span style="color:#960050;background-color:#1e0010">，</span>以下配置所对应SpringMVC的配置文件位于WEB<span style="color:#f92672">-</span>INF下<span style="color:#960050;background-color:#1e0010">，</span>文件名为springMVC<span style="color:#f92672">-</span>servlet<span style="color:#f92672">.</span><span style="color:#a6e22e">xml</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">此配置作用下，SpringMVC的配置文件默认位于WEB-INF下，默认名称为-servlet.xml，
+例如，以下配置所对应SpringMVC的配置文件位于WEB-INF下，文件名为springMVC-servlet.xml
 
 
-<span style="color:#f92672">&lt;!--</span> 配置SpringMVC的前端控制器<span style="color:#960050;background-color:#1e0010">，</span>对浏览器发送的请求统一进行处理 <span style="color:#f92672">--&gt;</span>
-	<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>springMVC<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>class<span style="color:#f92672">&gt;</span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">springframework</span><span style="color:#f92672">.</span><span style="color:#a6e22e">web</span><span style="color:#f92672">.</span><span style="color:#a6e22e">servlet</span><span style="color:#f92672">.</span><span style="color:#a6e22e">DispatcherServlet</span><span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>class<span style="color:#f92672">&gt;</span>
-	<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">&gt;</span>
-	<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>mapping<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>springMVC<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span>
-	设置springMVC的核心控制器所能处理的请求的请求路径
-	<span style="color:#f92672">/</span>所匹配的请求可以是<span style="color:#f92672">/</span>login或<span style="color:#f92672">.</span><span style="color:#a6e22e">html或</span><span style="color:#f92672">.</span><span style="color:#a6e22e">js或</span><span style="color:#f92672">.</span><span style="color:#a6e22e">css方式的请求路径</span>
-	但是<span style="color:#f92672">/</span>不能匹配<span style="color:#f92672">.</span><span style="color:#a6e22e">jsp请求路径的请求</span>
-	因为jsp本质上是servlet<span style="color:#960050;background-color:#1e0010">，</span>需要被对应的servlet处理<span style="color:#960050;background-color:#1e0010">，</span>不能被dispatcherservlet捕获
-<span style="color:#f92672">--&gt;</span>
-		<span style="color:#f92672">&lt;</span>url<span style="color:#f92672">-</span>pattern<span style="color:#f92672">&gt;/&lt;/</span>url<span style="color:#f92672">-</span>pattern<span style="color:#f92672">&gt;</span>
-	<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>mapping<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">&lt;!-- 配置SpringMVC的前端控制器，对浏览器发送的请求统一进行处理 --&gt;</span>
+	&lt;<span style="color:#f92672">servlet</span>&gt;
+		&lt;<span style="color:#f92672">servlet-name</span>&gt;springMVC&lt;/<span style="color:#f92672">servlet-name</span>&gt;
+		&lt;<span style="color:#f92672">servlet-class</span>&gt;org.springframework.web.servlet.DispatcherServlet&lt;/<span style="color:#f92672">servlet-class</span>&gt;
+	&lt;/<span style="color:#f92672">servlet</span>&gt;
+	&lt;<span style="color:#f92672">servlet-mapping</span>&gt;
+		&lt;<span style="color:#f92672">servlet-name</span>&gt;springMVC&lt;/<span style="color:#f92672">servlet-name</span>&gt;
+<span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">	设置springMVC的核心控制器所能处理的请求的请求路径
+</span><span style="color:#75715e">	/所匹配的请求可以是/login或.html或.js或.css方式的请求路径
+</span><span style="color:#75715e">	但是/不能匹配.jsp请求路径的请求
+</span><span style="color:#75715e">	因为jsp本质上是servlet，需要被对应的servlet处理，不能被dispatcherservlet捕获
+</span><span style="color:#75715e">--&gt;</span>
+		&lt;<span style="color:#f92672">url-pattern</span>&gt;/&lt;/<span style="color:#f92672">url-pattern</span>&gt;
+	&lt;/<span style="color:#f92672">servlet-mapping</span>&gt;
 
 
 </code></pre></div><p>扩展配置方式</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">可通过init<span style="color:#f92672">-</span>param标签设置SpringMVC配置文件的位置和名称<span style="color:#960050;background-color:#1e0010">，</span>通过load<span style="color:#f92672">-</span>on<span style="color:#f92672">-</span>startup标签
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签
 设置SpringMVC前端控制器DispatcherServlet的初始化时间
 
 
-<span style="color:#75715e">//可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签设置SpringMVC前端控制器DispatcherServlet的初始化时间
-</span><span style="color:#75715e"></span>
-<span style="color:#f92672">&lt;!--</span> 配置SpringMVC的前端控制器<span style="color:#960050;background-color:#1e0010">，</span>对浏览器发送的请求统一进行处理 <span style="color:#f92672">--&gt;</span>
-	<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>springMVC<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>class<span style="color:#f92672">&gt;</span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">springframework</span><span style="color:#f92672">.</span><span style="color:#a6e22e">web</span><span style="color:#f92672">.</span><span style="color:#a6e22e">servlet</span><span style="color:#f92672">.</span><span style="color:#a6e22e">DispatcherServlet</span><span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>class<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span> 通过初始化参数指定SpringMVC配置文件的位置和名称 <span style="color:#f92672">--&gt;</span>
-		<span style="color:#f92672">&lt;</span>init<span style="color:#f92672">-</span>param<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span> contextConfigLocation为固定值 <span style="color:#f92672">--&gt;</span>
-			<span style="color:#f92672">&lt;</span>param<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>contextConfigLocation<span style="color:#f92672">&lt;/</span>param<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span> 使用classpath<span style="color:#f92672">:</span>表示从类路径查找配置文件<span style="color:#960050;background-color:#1e0010">，</span>例如maven工程中的src<span style="color:#f92672">/</span>main<span style="color:#f92672">/</span>resources <span style="color:#f92672">--&gt;</span>
-			<span style="color:#f92672">&lt;</span>param<span style="color:#f92672">-</span>value<span style="color:#f92672">&gt;</span>classpath<span style="color:#f92672">:</span>springMVC<span style="color:#f92672">.</span><span style="color:#a6e22e">xml</span><span style="color:#f92672">&lt;/</span>param<span style="color:#f92672">-</span>value<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;/</span>init<span style="color:#f92672">-</span>param<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span> 
-	 作为框架的核心组件<span style="color:#960050;background-color:#1e0010">，</span>在启动过程中有大量的初始化操作要做
-	而这些操作放在第一次请求时才执行会严重影响访问速度
-	因此需要通过此标签将启动控制DispatcherServlet的初始化时间提前到服务器启动时
-<span style="color:#f92672">--&gt;</span>
-		<span style="color:#f92672">&lt;</span>load<span style="color:#f92672">-</span>on<span style="color:#f92672">-</span>startup<span style="color:#f92672">&gt;</span>1<span style="color:#f92672">&lt;/</span>load<span style="color:#f92672">-</span>on<span style="color:#f92672">-</span>startup<span style="color:#f92672">&gt;</span>
-	<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">&gt;</span>
-	<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>mapping<span style="color:#f92672">&gt;</span>
-		<span style="color:#f92672">&lt;</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>springMVC<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>name<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span>
-	设置springMVC的核心控制器所能处理的请求的请求路径
-	<span style="color:#f92672">/</span>所匹配的请求可以是<span style="color:#f92672">/</span>login或<span style="color:#f92672">.</span><span style="color:#a6e22e">html或</span><span style="color:#f92672">.</span><span style="color:#a6e22e">js或</span><span style="color:#f92672">.</span><span style="color:#a6e22e">css方式的请求路径</span>
-	但是<span style="color:#f92672">/</span>不能匹配<span style="color:#f92672">.</span><span style="color:#a6e22e">jsp请求路径的请求</span>
-<span style="color:#f92672">--&gt;</span>
-		<span style="color:#f92672">&lt;</span>url<span style="color:#f92672">-</span>pattern<span style="color:#f92672">&gt;/&lt;/</span>url<span style="color:#f92672">-</span>pattern<span style="color:#f92672">&gt;</span>
-	<span style="color:#f92672">&lt;/</span>servlet<span style="color:#f92672">-</span>mapping<span style="color:#f92672">&gt;</span>
+//可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签设置SpringMVC前端控制器DispatcherServlet的初始化时间
+
+<span style="color:#75715e">&lt;!-- 配置SpringMVC的前端控制器，对浏览器发送的请求统一进行处理 --&gt;</span>
+	&lt;<span style="color:#f92672">servlet</span>&gt;
+		&lt;<span style="color:#f92672">servlet-name</span>&gt;springMVC&lt;/<span style="color:#f92672">servlet-name</span>&gt;
+		&lt;<span style="color:#f92672">servlet-class</span>&gt;org.springframework.web.servlet.DispatcherServlet&lt;/<span style="color:#f92672">servlet-class</span>&gt;
+<span style="color:#75715e">&lt;!-- 通过初始化参数指定SpringMVC配置文件的位置和名称 --&gt;</span>
+		&lt;<span style="color:#f92672">init-param</span>&gt;
+<span style="color:#75715e">&lt;!-- contextConfigLocation为固定值 --&gt;</span>
+			&lt;<span style="color:#f92672">param-name</span>&gt;contextConfigLocation&lt;/<span style="color:#f92672">param-name</span>&gt;
+<span style="color:#75715e">&lt;!-- 使用classpath:表示从类路径查找配置文件，例如maven工程中的src/main/resources --&gt;</span>
+			&lt;<span style="color:#f92672">param-value</span>&gt;classpath:springMVC.xml&lt;/<span style="color:#f92672">param-value</span>&gt;
+		&lt;/<span style="color:#f92672">init-param</span>&gt;
+<span style="color:#75715e">&lt;!-- 
+</span><span style="color:#75715e">	 作为框架的核心组件，在启动过程中有大量的初始化操作要做
+</span><span style="color:#75715e">	而这些操作放在第一次请求时才执行会严重影响访问速度
+</span><span style="color:#75715e">	因此需要通过此标签将启动控制DispatcherServlet的初始化时间提前到服务器启动时
+</span><span style="color:#75715e">--&gt;</span>
+		&lt;<span style="color:#f92672">load-on-startup</span>&gt;1&lt;/<span style="color:#f92672">load-on-startup</span>&gt;
+	&lt;/<span style="color:#f92672">servlet</span>&gt;
+	&lt;<span style="color:#f92672">servlet-mapping</span>&gt;
+		&lt;<span style="color:#f92672">servlet-name</span>&gt;springMVC&lt;/<span style="color:#f92672">servlet-name</span>&gt;
+<span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">	设置springMVC的核心控制器所能处理的请求的请求路径
+</span><span style="color:#75715e">	/所匹配的请求可以是/login或.html或.js或.css方式的请求路径
+</span><span style="color:#75715e">	但是/不能匹配.jsp请求路径的请求
+</span><span style="color:#75715e">--&gt;</span>
+		&lt;<span style="color:#f92672">url-pattern</span>&gt;/&lt;/<span style="color:#f92672">url-pattern</span>&gt;
+	&lt;/<span style="color:#f92672">servlet-mapping</span>&gt;
 
 
 </code></pre></div><ul>

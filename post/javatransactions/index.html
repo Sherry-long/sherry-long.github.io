@@ -15,36 +15,54 @@
 <meta name="twitter:title" content="Spring-事务"/>
 <meta name="twitter:description" content="1）事务是数据库操作的基本单元，是逻辑上的一组操作，要么都成功，要么都失败，如果有一个操作失败所有操作都失败
 2）典型场景：银行转账
-事务四大特性（ACID原则） 1）原子性（Atomicity）
+目录
+ACID
+Spring事务管理介绍
+注解声明式事务管理(Annotation)
+声明式事务管理中部分参数配置(Parameters)
+xml声明式事务管理
+完全注解声明式事务管理(CompleteAnnotation)
+事务四大特性（ACID原则） #
+1）原子性（Atomicity）
  一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。  2）一致性（Consistency）
  在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。  3）隔离性（Isolation）
  数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。  4）持久性（Durability）
- 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。    事务操作（Spring事务管理介绍） 1）事务添加到JavaEE三层结构里面的Service层（业务逻辑层）
+ 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。    事务操作（Spring事务管理介绍） #
+1）事务添加到JavaEE三层结构里面的Service层（业务逻辑层）
 2）在Spring中进行事务管理操作有两种方式：
   编程式事务管理（较少使用）
   声明式事务管理（主流） 分为两种：基于注解； 基于xml配置文件
   3） 在Spring中进行声明式事务管理，底层使用AOP原理
 4）Spring事务管理API
-//提供了一个接口，代表事务管理器，这个接口根据不同框架提供了不同实现类 |PlatformTransactionManager --|DataSourceTransactionManager //实现类 --|HibernateTransactionManager //实现类    事务操作（注解声明式事务管理） 1）在Spring配置文件中配置事务管理器
-&lt;!--创建事务管理器--&gt; &lt;bean id=&#34;transactionManager&#34; class=&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;&gt; &lt;property name=&#34;dataSource&#34; ref=&#34;dataSource&#34;/&gt; &lt;/bean&gt; 2）在Spring配置文件中开启事务注解
-&lt;!--在Spring配置文件中引入名称空间tx，开启事务注解--&gt; &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:p=&#34;http://www.springframework.org/schema/p&#34; xmlns:context=&#34;http://www.springframework.org/schema/context&#34; xmlns:tx=&#34;http://www.springframework.org/schema/tx&#34; xsi:schemaLocation=&#34;http://www."/>
+//提供了一个接口，代表事务管理器，这个接口根据不同框架提供了不同实现类 |PlatformTransactionManager --|DataSourceTransactionManager //实现类 --|HibernateTransactionManager //实现类    事务操作（注解声明式事务管理） #
+1）在Spring配置文件中配置事务管理器
+&lt;!--创建事务管理器--&gt; &lt;bean id=&#34;transactionManager&#34; class=&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;&gt; &lt;property name=&#34;dataSource&#34; ref=&#34;dataSource&#34;/&gt; &lt;/bean&gt; 2）在Spring配置文件中开启事务注解"/>
 
     <meta property="og:title" content="Spring-事务" />
 <meta property="og:description" content="1）事务是数据库操作的基本单元，是逻辑上的一组操作，要么都成功，要么都失败，如果有一个操作失败所有操作都失败
 2）典型场景：银行转账
-事务四大特性（ACID原则） 1）原子性（Atomicity）
+目录
+ACID
+Spring事务管理介绍
+注解声明式事务管理(Annotation)
+声明式事务管理中部分参数配置(Parameters)
+xml声明式事务管理
+完全注解声明式事务管理(CompleteAnnotation)
+事务四大特性（ACID原则） #
+1）原子性（Atomicity）
  一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。  2）一致性（Consistency）
  在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。  3）隔离性（Isolation）
  数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。  4）持久性（Durability）
- 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。    事务操作（Spring事务管理介绍） 1）事务添加到JavaEE三层结构里面的Service层（业务逻辑层）
+ 事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。    事务操作（Spring事务管理介绍） #
+1）事务添加到JavaEE三层结构里面的Service层（业务逻辑层）
 2）在Spring中进行事务管理操作有两种方式：
   编程式事务管理（较少使用）
   声明式事务管理（主流） 分为两种：基于注解； 基于xml配置文件
   3） 在Spring中进行声明式事务管理，底层使用AOP原理
 4）Spring事务管理API
-//提供了一个接口，代表事务管理器，这个接口根据不同框架提供了不同实现类 |PlatformTransactionManager --|DataSourceTransactionManager //实现类 --|HibernateTransactionManager //实现类    事务操作（注解声明式事务管理） 1）在Spring配置文件中配置事务管理器
-&lt;!--创建事务管理器--&gt; &lt;bean id=&#34;transactionManager&#34; class=&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;&gt; &lt;property name=&#34;dataSource&#34; ref=&#34;dataSource&#34;/&gt; &lt;/bean&gt; 2）在Spring配置文件中开启事务注解
-&lt;!--在Spring配置文件中引入名称空间tx，开启事务注解--&gt; &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:p=&#34;http://www.springframework.org/schema/p&#34; xmlns:context=&#34;http://www.springframework.org/schema/context&#34; xmlns:tx=&#34;http://www.springframework.org/schema/tx&#34; xsi:schemaLocation=&#34;http://www." />
+//提供了一个接口，代表事务管理器，这个接口根据不同框架提供了不同实现类 |PlatformTransactionManager --|DataSourceTransactionManager //实现类 --|HibernateTransactionManager //实现类    事务操作（注解声明式事务管理） #
+1）在Spring配置文件中配置事务管理器
+&lt;!--创建事务管理器--&gt; &lt;bean id=&#34;transactionManager&#34; class=&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;&gt; &lt;property name=&#34;dataSource&#34; ref=&#34;dataSource&#34;/&gt; &lt;/bean&gt; 2）在Spring配置文件中开启事务注解" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javatransactions/" />
 <meta property="article:published_time" content="2022-10-28T08:37:19+08:00" />
@@ -96,7 +114,15 @@
     <div class="post-content">
       <p>1）事务是数据库操作的基本单元，是逻辑上的一组操作，要么都成功，要么都失败，如果有一个操作失败所有操作都失败</p>
 <p>2）典型场景：银行转账</p>
+<p><strong>目录</strong></p>
+<p><a href="#ACID">ACID</a></p>
+<p><a href="#Trans-intro">Spring事务管理介绍</a></p>
+<p><a href="#Trans-op-Anno">注解声明式事务管理(Annotation)</a></p>
+<p><a href="#Trans-op-Param">声明式事务管理中部分参数配置(Parameters)</a></p>
+<p><a href="#Trans-op-xml">xml声明式事务管理</a></p>
+<p><a href="#Trans-op-CompleteAnno">完全注解声明式事务管理(CompleteAnnotation)</a></p>
 <h3 id="事务四大特性acid原则">事务四大特性（ACID原则）</h3>
+<p><a id="ACID">#</a></p>
 <p>1）原子性（Atomicity）</p>
 <ul>
 <li>一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被恢复（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
@@ -116,6 +142,7 @@
 <hr>
 <hr>
 <h3 id="事务操作spring事务管理介绍">事务操作（Spring事务管理介绍）</h3>
+<p><a id="Trans-intro">#</a></p>
 <p>1）事务添加到JavaEE三层结构里面的Service层（业务逻辑层）</p>
 <p>2）在Spring中进行事务管理操作有两种方式：</p>
 <ul>
@@ -136,45 +163,46 @@
 </code></pre></div><hr>
 <hr>
 <h3 id="事务操作注解声明式事务管理">事务操作（注解声明式事务管理）</h3>
+<p><a id="Trans-op-Anno">#</a></p>
 <p>1）在Spring配置文件中配置事务管理器</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#f92672">&lt;!--</span>创建事务管理器<span style="color:#f92672">--&gt;</span>
-    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">    <span style="color:#75715e">&lt;!--创建事务管理器--&gt;</span>
+    &lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span>&gt;
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span>/&gt;
+    &lt;/<span style="color:#f92672">bean</span>&gt;
 </code></pre></div><p>2）在Spring配置文件中开启事务注解</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;!--</span>在Spring配置文件中引入名称空间tx<span style="color:#960050;background-color:#1e0010">，</span>开启事务注解<span style="color:#f92672">--&gt;</span>
-	<span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
-	<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
-		   xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-		   xmlns<span style="color:#f92672">:</span>p<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
-		   xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
-		   xmlns<span style="color:#f92672">:</span>tx<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
-		   xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--在Spring配置文件中引入名称空间tx，开启事务注解--&gt;</span>
+	<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+	&lt;<span style="color:#f92672">beans</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+		   <span style="color:#a6e22e">xmlns:xsi</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+		   <span style="color:#a6e22e">xmlns:p</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
+		   <span style="color:#a6e22e">xmlns:context</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+		   <span style="color:#a6e22e">xmlns:tx</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
+		   <span style="color:#a6e22e">xsi:schemaLocation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 </span><span style="color:#e6db74">							http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-</span><span style="color:#e6db74">							http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span><span style="color:#e6db74">							http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd&#34;</span>&gt;
 
 
-		<span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">/&gt;</span>
-		<span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span> destroy<span style="color:#f92672">-</span>method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span><span style="color:#f92672">&gt;</span>
-			<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span><span style="color:#f92672">/&gt;</span>
-			<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
-			<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
-			<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
-		<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+		&lt;<span style="color:#f92672">context:component-scan</span> <span style="color:#a6e22e">base-package</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span>/&gt;
+		&lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span> <span style="color:#a6e22e">destroy-method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span>&gt;
+			&lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span>/&gt;
+			&lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span>/&gt;
+			&lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span>/&gt;
+			&lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span>/&gt;
+		&lt;/<span style="color:#f92672">bean</span>&gt;
 
-		<span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbcTemplate&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.core.JdbcTemplate&#34;</span><span style="color:#f92672">&gt;</span>
-			<span style="color:#f92672">&lt;!--</span>注入DataSource<span style="color:#f92672">--&gt;</span>
-			<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
-		<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
-<span style="color:#f92672">&lt;!--</span>创建事务管理器<span style="color:#f92672">--&gt;</span>
-		<span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span><span style="color:#f92672">&gt;</span>
-			<span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
-		<span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+		&lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbcTemplate&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.core.JdbcTemplate&#34;</span>&gt;
+			<span style="color:#75715e">&lt;!--注入DataSource--&gt;</span>
+			&lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span>/&gt;
+		&lt;/<span style="color:#f92672">bean</span>&gt;
+<span style="color:#75715e">&lt;!--创建事务管理器--&gt;</span>
+		&lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span>&gt;
+			&lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span>/&gt;
+		&lt;/<span style="color:#f92672">bean</span>&gt;
 		
-<span style="color:#f92672">&lt;!--</span>开启事务注解<span style="color:#f92672">--&gt;</span>
-		<span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>annotation<span style="color:#f92672">-</span>driven transaction<span style="color:#f92672">-</span>manager<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span><span style="color:#f92672">/&gt;</span>
+<span style="color:#75715e">&lt;!--开启事务注解--&gt;</span>
+		&lt;<span style="color:#f92672">tx:annotation-driven</span> <span style="color:#a6e22e">transaction-manager</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span>/&gt;
 		
-	<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+	&lt;/<span style="color:#f92672">beans</span>&gt;
 
 </code></pre></div><p>3）在Service类上边，或者类里边的方法上面添加事务注解</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//@Transactional注解
@@ -198,6 +226,7 @@
 </code></pre></div><hr>
 <hr>
 <h3 id="事务操作声明式事务管理中部分参数配置">事务操作（声明式事务管理中部分参数配置）</h3>
+<p><a id="Trans-op-Params">#</a></p>
 <ul>
 <li>propagation 事务的传播行为</li>
 </ul>
@@ -206,7 +235,7 @@
 <ul>
 <li>isolation 事务隔离级别</li>
 </ul>
-<pre><code>					脏读	不可重复读		幻读
+<pre><code>					脏读	  	不可重复读		幻读
 READ UNCOMMITTED	有			有			有
 READ COMMITTED		无			有			有
 REPEATABLE READ		无			无			有
@@ -236,6 +265,7 @@ SERIALIZABLE		无			无			无
 <hr>
 <hr>
 <h3 id="事务操作xml声明式事务管理">事务操作（xml声明式事务管理）</h3>
+<p><a id="Trans-op-xml">#</a></p>
 <p>1）在配置文件中进行配置</p>
 <ul>
 <li>
@@ -248,62 +278,63 @@ SERIALIZABLE		无			无			无
 <p>配置切入点和切面</p>
 </li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;?</span>xml version<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.0&#34;</span> encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">?&gt;</span>
-<span style="color:#f92672">&lt;</span>beans xmlns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
-       xmlns<span style="color:#f92672">:</span>xsi<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-       xmlns<span style="color:#f92672">:</span>p<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
-       xmlns<span style="color:#f92672">:</span>context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
-       xmlns<span style="color:#f92672">:</span>aop<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
-       xmlns<span style="color:#f92672">:</span>tx<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
-       xsi<span style="color:#f92672">:</span>schemaLocation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+&lt;<span style="color:#f92672">beans</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+       <span style="color:#a6e22e">xmlns:xsi</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+       <span style="color:#a6e22e">xmlns:p</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/p&#34;</span>
+       <span style="color:#a6e22e">xmlns:context</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/context&#34;</span>
+       <span style="color:#a6e22e">xmlns:aop</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/aop&#34;</span>
+       <span style="color:#a6e22e">xmlns:tx</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/tx&#34;</span>
+       <span style="color:#a6e22e">xsi:schemaLocation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 </span><span style="color:#e6db74">                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 </span><span style="color:#e6db74">                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-</span><span style="color:#e6db74">                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span><span style="color:#e6db74">                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span>&gt;
 
 
-    <span style="color:#f92672">&lt;</span>context<span style="color:#f92672">:</span>component<span style="color:#f92672">-</span>scan base<span style="color:#f92672">-</span>package<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span> destroy<span style="color:#f92672">-</span>method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span><span style="color:#f92672">/&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> value<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+    &lt;<span style="color:#f92672">context:component-scan</span> <span style="color:#a6e22e">base-package</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span>/&gt;
+    &lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.alibaba.druid.pool.DruidDataSource&#34;</span> <span style="color:#a6e22e">destroy-method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span>&gt;
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbc:mysql:///user_db&#34;</span>/&gt;
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span>/&gt;
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;root&#34;</span>/&gt;
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;driverClassName&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span>/&gt;
+    &lt;/<span style="color:#f92672">bean</span>&gt;
 
-    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbcTemplate&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.core.JdbcTemplate&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;!--</span>注入DataSource<span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+    &lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;jdbcTemplate&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.core.JdbcTemplate&#34;</span>&gt;
+        <span style="color:#75715e">&lt;!--注入DataSource--&gt;</span>
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span>/&gt;
+    &lt;/<span style="color:#f92672">bean</span>&gt;
 
-    <span style="color:#f92672">&lt;!--</span>创建事务管理器<span style="color:#f92672">--&gt;</span>
-    <span style="color:#f92672">&lt;</span>bean id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;</span>property name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/</span>bean<span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--创建事务管理器--&gt;</span>
+    &lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transactionManager&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.jdbc.datasource.DataSourceTransactionManager&#34;</span>&gt;
+        &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataSource&#34;</span>/&gt;
+    &lt;/<span style="color:#f92672">bean</span>&gt;
 
 
-    <span style="color:#f92672">&lt;!--</span>配置通知<span style="color:#f92672">--&gt;</span>
-    <span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>advice id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tx_advice&#34;</span><span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;!--</span>配置事务参数<span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>attributes<span style="color:#f92672">&gt;</span>
-            <span style="color:#f92672">&lt;!--</span>指定哪种规则的方法上面添加事务<span style="color:#f92672">--&gt;</span>
-            <span style="color:#f92672">&lt;</span>tx<span style="color:#f92672">:</span>method name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transfer&#34;</span> propagation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span> isolation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;READ_COMMITTED&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;!--</span>为以account开头的方法添加事务<span style="color:#f92672">--&gt;</span>
-            <span style="color:#f92672">&lt;!--&lt;</span>tx<span style="color:#f92672">:</span>method name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;account*&#34;</span><span style="color:#f92672">/&gt;--&gt;</span>
-        <span style="color:#f92672">&lt;/</span>tx<span style="color:#f92672">:</span>attributes<span style="color:#f92672">&gt;</span>
-    <span style="color:#f92672">&lt;/</span>tx<span style="color:#f92672">:</span>advice<span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--配置通知--&gt;</span>
+    &lt;<span style="color:#f92672">tx:advice</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tx_advice&#34;</span>&gt;
+        <span style="color:#75715e">&lt;!--配置事务参数--&gt;</span>
+        &lt;<span style="color:#f92672">tx:attributes</span>&gt;
+            <span style="color:#75715e">&lt;!--指定哪种规则的方法上面添加事务--&gt;</span>
+            &lt;<span style="color:#f92672">tx:method</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transfer&#34;</span> <span style="color:#a6e22e">propagation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;REQUIRED&#34;</span> <span style="color:#a6e22e">isolation</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;READ_COMMITTED&#34;</span>/&gt;
+            <span style="color:#75715e">&lt;!--为以account开头的方法添加事务--&gt;</span>
+            <span style="color:#75715e">&lt;!--&lt;tx:method name=&#34;account*&#34;/&gt;--&gt;</span>
+        &lt;/<span style="color:#f92672">tx:attributes</span>&gt;
+    &lt;/<span style="color:#f92672">tx:advice</span>&gt;
 
-    <span style="color:#f92672">&lt;!--</span>配置切入点和切面<span style="color:#f92672">--&gt;</span>
-    <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>config<span style="color:#f92672">&gt;</span>
-        <span style="color:#f92672">&lt;!--</span>配置切入点<span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>pointcut id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span> expression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;execution(* com.sherry.Spring.service.AccountService.*(..))&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#75715e">&lt;!--配置切入点和切面--&gt;</span>
+    &lt;<span style="color:#f92672">aop:config</span>&gt;
+        <span style="color:#75715e">&lt;!--配置切入点--&gt;</span>
+        &lt;<span style="color:#f92672">aop:pointcut</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span> <span style="color:#a6e22e">expression</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;execution(* com.sherry.Spring.service.AccountService.*(..))&#34;</span>/&gt;
 
-        <span style="color:#f92672">&lt;!--</span>配置切面<span style="color:#f92672">--&gt;</span>
-        <span style="color:#f92672">&lt;</span>aop<span style="color:#f92672">:</span>advisor advice<span style="color:#f92672">-</span>ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tx_advice&#34;</span> pointcut<span style="color:#f92672">-</span>ref<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span><span style="color:#f92672">/&gt;</span>
-    <span style="color:#f92672">&lt;/</span>aop<span style="color:#f92672">:</span>config<span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!--配置切面--&gt;</span>
+        &lt;<span style="color:#f92672">aop:advisor</span> <span style="color:#a6e22e">advice-ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tx_advice&#34;</span> <span style="color:#a6e22e">pointcut-ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>/&gt;
+    &lt;/<span style="color:#f92672">aop:config</span>&gt;
 
-<span style="color:#f92672">&lt;/</span>beans<span style="color:#f92672">&gt;</span>
+&lt;/<span style="color:#f92672">beans</span>&gt;
 </code></pre></div><hr>
 <hr>
 <h3 id="事务操作完全注解声明式事务管理">事务操作（完全注解声明式事务管理）</h3>
+<p><a id="Trans-op-CompleteAnno">#</a></p>
 <p>创建配置类，使用配置类替代xml配置文件</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span><span style="color:#75715e">//配置类
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">@ComponentScan</span><span style="color:#f92672">(</span>basePackages <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;com.sherry.Spring&#34;</span><span style="color:#f92672">)</span><span style="color:#75715e">//组件扫描
