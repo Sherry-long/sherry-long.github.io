@@ -13,19 +13,25 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="二叉排序树 &amp; C语言实现"/>
-<meta name="twitter:description" content="二叉排序树，又称为二叉查找树，具有以下性质： (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。插入:
+<meta name="twitter:description" content="二叉排序树，又称为二叉查找树，具有以下性质：
+ (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。
+插入:
 1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;
 2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;
 查找:
-按以下逻辑进行递归查找while(该节点不为空 &amp;&amp; 该节点值 != 插入值){ if(该节点值 &lt; 插入值) 查找他的右子树 else if(节点值 &gt; 插入值) 查找他的左子树 } 实现:
+按以下逻辑进行递归查找
+while(该节点不为空 &amp;&amp; 该节点值 != 插入值){ if(该节点值 &lt; 插入值) 查找他的右子树 else if(节点值 &gt; 插入值) 查找他的左子树 } 实现:
 typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*BiTree; //定义数据结构  void InOrder(BiTNode *p) //中序遍历 { if(p != NULL) { InOrder(p-&gt;l_child); printf(&#34; %d &#34;,p-&gt;data); InOrder(p-&gt;r_child); } } BiTNode *createNode(int key) //建立新结点并返回 { BiTNode *temp = (BiTNode *)malloc(sizeof(BiTNode)); temp-&gt;data = key; temp-&gt;l_child = temp-&gt;r_child = NULL; return temp; } bool BST_search(BiTNode *bst, int key, BiTNode *before, BiTree *p) //查找 { if (!"/>
 
     <meta property="og:title" content="二叉排序树 &amp; C语言实现" />
-<meta property="og:description" content="二叉排序树，又称为二叉查找树，具有以下性质： (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。插入:
+<meta property="og:description" content="二叉排序树，又称为二叉查找树，具有以下性质：
+ (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。
+插入:
 1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;
 2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;
 查找:
-按以下逻辑进行递归查找while(该节点不为空 &amp;&amp; 该节点值 != 插入值){ if(该节点值 &lt; 插入值) 查找他的右子树 else if(节点值 &gt; 插入值) 查找他的左子树 } 实现:
+按以下逻辑进行递归查找
+while(该节点不为空 &amp;&amp; 该节点值 != 插入值){ if(该节点值 &lt; 插入值) 查找他的右子树 else if(节点值 &gt; 插入值) 查找他的左子树 } 实现:
 typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*BiTree; //定义数据结构  void InOrder(BiTNode *p) //中序遍历 { if(p != NULL) { InOrder(p-&gt;l_child); printf(&#34; %d &#34;,p-&gt;data); InOrder(p-&gt;r_child); } } BiTNode *createNode(int key) //建立新结点并返回 { BiTNode *temp = (BiTNode *)malloc(sizeof(BiTNode)); temp-&gt;data = key; temp-&gt;l_child = temp-&gt;r_child = NULL; return temp; } bool BST_search(BiTNode *bst, int key, BiTNode *before, BiTree *p) //查找 { if (!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/bstree/" />
@@ -76,19 +82,19 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
       </div>
     </header>
     <div class="post-content">
-      <p>二叉排序树，又称为二叉查找树，具有以下性质：<!-- raw HTML omitted --></p>
+      <p>二叉排序树，又称为二叉查找树，具有以下性质：<br></p>
 <pre><code>    (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值；
 	
     (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值；
 	
     (3)它的左、右子树也分别为二叉排序树。
 </code></pre>
-<p>根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。<!-- raw HTML omitted --></p>
+<p>根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。<br></p>
 <p><strong>插入:</strong></p>
 <p>1.插入过程比较简单，首先判断当前要插入的值是否已经存在二叉排序树中，如果已经存在，则直接返回；如果不存在，则转2;</p>
 <p>2.当前要插入的值不存在，则应找到适当的位置，将其插入。注意插入的新节点一定是叶子节点;</p>
 <p><strong>查找:</strong></p>
-<p>按以下逻辑进行递归查找<!-- raw HTML omitted --></p>
+<p>按以下逻辑进行递归查找<br></p>
 <pre><code>while(该节点不为空 &amp;&amp; 该节点值 != 插入值){
 	if(该节点值 &lt; 插入值)
 		查找他的右子树
@@ -179,7 +185,7 @@ BiTNode <span style="color:#f92672">*</span><span style="color:#a6e22e">createNo
     InOrder(root);
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-</code></pre></div><p><strong>结果:</strong><!-- raw HTML omitted --></p>
+</code></pre></div><p><strong>结果:</strong><br></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">insert success
 insert success
 insert success

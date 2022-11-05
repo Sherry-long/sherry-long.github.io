@@ -130,13 +130,13 @@
 </ul>
 <h4 id="java内置四大核心函数式接口">Java内置四大核心函数式接口</h4>
 <ul>
-<li>Consumer<!-- raw HTML omitted --> 消费性接口</li>
+<li>Consumer<T> 消费性接口</li>
 </ul>
 <pre><code>参数类型：T
 返回类型：void
 用途：对类型为T的对象应用操作，包含方法：void accept(T t)
 </code></pre><ul>
-<li>Supplier<!-- raw HTML omitted --> 供给型接口</li>
+<li>Supplier<T> 供给型接口</li>
 </ul>
 <pre><code>参数类型：无
 返回类型：T
@@ -148,7 +148,7 @@
 返回类型：R
 用途：对类型为T的对象应用操作，并返回结果(类型R)。包含方法：R apply(T t)
 </code></pre><ul>
-<li>Predicate<!-- raw HTML omitted --> 断定型接口</li>
+<li>Predicate<T> 断定型接口</li>
 </ul>
 <pre><code>参数类型：T
 返回类型：boolean
@@ -161,13 +161,13 @@
 返回值类型：R
 用途：对类型T，U参数应用操作，返回R类型结果 R apply(T t, U u)
 </code></pre><ul>
-<li>UnaryOperator<!-- raw HTML omitted --></li>
+<li>UnaryOperator<T></li>
 </ul>
 <pre><code>参数类型：T
 返回值类型：T
 用途：对类型为T的对象进行一元运算，并返回T类型的结果 T apply(T t)
 </code></pre><ul>
-<li>BinaryOperator<!-- raw HTML omitted --></li>
+<li>BinaryOperator<T></li>
 </ul>
 <pre><code>参数类型：T，T
 返回值类型：T
@@ -185,13 +185,13 @@
 返回值类型：boolean
 用途：boolean test(T t, U u)
 </code></pre><ul>
-<li>ToInt(Long, Double)Function<!-- raw HTML omitted --></li>
+<li>ToInt(Long, Double)Function<T></li>
 </ul>
 <pre><code>参数类型：T
 返回值类型：int(long, double)
 用途：分别计算int、long、double值的函数
 </code></pre><ul>
-<li>Int(Long, Double)Function<!-- raw HTML omitted --></li>
+<li>Int(Long, Double)Function<R></li>
 </ul>
 <pre><code>参数类型：int(long, double)
 返回值类型：R
