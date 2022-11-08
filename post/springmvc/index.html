@@ -18,11 +18,12 @@
 ​	三、@RequestMapping注解
 ​	四、SpringMVC获取请求参数
 ​	五、域对象共享数据
+六、SpringMVC的视图
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
-一、SpringMVC的特点 #
-1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   二、创建SpringMVC工程 #
-创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!"/>
+#
+一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!"/>
 
     <meta property="og:title" content="SpringMVC" />
 <meta property="og:description" content="​	一、SpringMVC特点
@@ -30,11 +31,12 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 ​	三、@RequestMapping注解
 ​	四、SpringMVC获取请求参数
 ​	五、域对象共享数据
+六、SpringMVC的视图
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
-一、SpringMVC的特点 #
-1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   二、创建SpringMVC工程 #
-创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!" />
+#
+一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/springmvc/" />
 <meta property="article:published_time" content="2022-10-11T11:02:42+08:00" />
@@ -79,7 +81,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          3 min read
+          4 min read
         </div>
       </div>
     </header>
@@ -89,10 +91,11 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <p>​	<a href="#RequestMapping">三、@RequestMapping注解</a></p>
 <p>​	<a href="#GetParam">四、SpringMVC获取请求参数</a></p>
 <p>​	<a href="#FieldObj">五、域对象共享数据</a></p>
+<p><a href="#MVC-View">六、SpringMVC的视图</a></p>
 <p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
 <p>SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)</p>
-<h3 id="一springmvc的特点">一、SpringMVC的特点</h3>
 <p><a id="feature">#</a></p>
+<h3 id="一springmvc的特点">一、SpringMVC的特点</h3>
 <pre><code>1）Spring 家族原生产品，与IoC容器等基础设施无缝对接
 
 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理
@@ -106,8 +109,8 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 6）性能卓著，尤其适合现代大型、超大型互联网项目要求
 </code></pre><hr>
 <hr>
-<h3 id="二创建springmvc工程">二、创建SpringMVC工程</h3>
 <p><a id="CreateProject">#</a></p>
+<h3 id="二创建springmvc工程">二、创建SpringMVC工程</h3>
 <h4 id="创建maven工程">创建maven工程</h4>
 <h5 id="1pomxml中引入依赖打包方式war">1.pom.xml中引入依赖，打包方式：war</h5>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
@@ -311,8 +314,8 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 该视图名称会被视图解析器解析，加上前缀和后缀组成视图的路径，通过Thymeleaf对视图进行渲染，最终转发到视图所对应页面</p>
 <hr>
 <hr>
-<h3 id="三requestmapping注解">三、@RequestMapping注解</h3>
 <p><a id="RequestMapping">#</a></p>
+<h3 id="三requestmapping注解">三、@RequestMapping注解</h3>
 <h4 id="requestmapping注解的功能">@RequestMapping注解的功能</h4>
 <p>从注解名称上我们可以看到，@RequestMapping注解的作用就是将请求和处理请求的控制器方法关联起来，建立映射关系。</p>
 <p>SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的控制器方法来处理这个请求</p>
@@ -513,8 +516,8 @@ not met for actual request parameters: username={admin}, password={123456}
 </code></pre></div><p><strong>SpringMVC中处理编码的过滤器一定要配置到其他过滤器之前，否则无效</strong></p>
 <hr>
 <hr>
-<h3 id="五域对象共享数据">五、域对象共享数据</h3>
 <p><a id="FieldObj">#</a></p>
+<h3 id="五域对象共享数据">五、域对象共享数据</h3>
 <h4 id="1使用servletapi向request域对象共享数据">1.使用ServletAPI向request域对象共享数据</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testServletAPI&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testServletAPI</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">){</span>
@@ -542,7 +545,42 @@ not met for actual request parameters: username={admin}, password={123456}
     model<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testScope&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;hello,Model&#34;</span><span style="color:#f92672">);</span>
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
-</code></pre></div>
+</code></pre></div><h4 id="4使用map向request域对象共享数据">4.使用map向request域对象共享数据</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testMap&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testMap</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> map<span style="color:#f92672">){</span>
+    map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testScope&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;hello,Map&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="5使用modelmap向request域对象共享数据">5.使用ModelMap向request域对象共享数据</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testModelMap&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testModelMap</span><span style="color:#f92672">(</span>ModelMap modelMap<span style="color:#f92672">){</span>
+    modelMap<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testScope&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;hello,ModelMap&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="6modelmodelmapmap的关系">6.Model、ModelMap、Map的关系</h4>
+<p>Model、ModelMap、Map类型的参数其实本质上都是 BindingAwareModelMap 类型的</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Model</span><span style="color:#f92672">{}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ModelMap</span> <span style="color:#66d9ef">extends</span> LinkedHashMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendedModelMap</span> <span style="color:#66d9ef">extends</span> ModelMap <span style="color:#66d9ef">implements</span> Model <span style="color:#f92672">{}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BindingAwareModelMap</span> <span style="color:#66d9ef">extends</span> ExtendedModelMap <span style="color:#f92672">{}</span>
+</code></pre></div><h4 id="7向session域共享数据">7.向session域共享数据</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testSession&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testSession</span><span style="color:#f92672">(</span>HttpSession session<span style="color:#f92672">){</span>
+    session<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testSessionScope&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;hello,session&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="8向application域共享数据">8.向application域共享数据</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testApplication&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testApplication</span><span style="color:#f92672">(</span>HttpSession session<span style="color:#f92672">){</span>
+    ServletContext application <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span><span style="color:#a6e22e">getServletContext</span><span style="color:#f92672">();</span>
+    application<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;testApplicationScope&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;hello,application&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<hr>
+<p><a id="MVC-View">#</a></p>
+<h3 id="六springmvc-视图">六、SpringMVC 视图</h3>
+
     </div>
     <div class="post-footer">
       
