@@ -639,6 +639,14 @@ not met for actual request parameters: username={admin}, password={123456}
 当SpringMVC中设置任何一个view-controller时，其他控制器中的请求映射将全部失效，此时需要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签：
 
 &lt;mvc:annotation-driven /&gt;
+</code></pre><h4 id="5internalresourceviewresolver">5.InternalResourceViewResolver</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--springMVC.xml 中配置如下bean--&gt;</span>
+&lt;<span style="color:#f92672">bean</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;org.springframework.web.servlet.view.InternalResourceViewResolver&#34;</span>&gt;
+    &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;prefix&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/WEB-INF/templates/&#34;</span>/&gt;
+    &lt;<span style="color:#f92672">property</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;suffix&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.jsp&#34;</span>/&gt;
+&lt;/<span style="color:#f92672">bean</span>&gt;
+</code></pre></div><pre><code class="language-jsp" data-lang="jsp">&lt;a href=&quot;${pageContext.request.contextPath}/success&quot;&gt;success.jsp&lt;/a&gt;
+&lt;!--jsp通过 ${pageContext.request.contextPath} 的方式来获取上下文路径--&gt;
 </code></pre><hr>
 <hr>
 
