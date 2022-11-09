@@ -592,11 +592,11 @@ not met for actual request parameters: username={admin}, password={123456}
 <p>若使用的视图技术为Thymeleaf，在SpringMVC的配置文件中配置了Thymeleaf的视图解析器，由此视图解析器解析之后所得到的是ThymeleafView</p>
 <h4 id="1-thymeleafview">1. ThymeleafView</h4>
 <p>当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，视图名称拼接视图前缀和视图后缀所得到的最终路径，会通过转发的方式实现跳转</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testHello&#34;</span><span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testHello</span><span style="color:#f92672">(){</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;hello&#34;</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testThymeleafView&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testThymeleafView</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p><img src="/imgs/pic.png" alt="源码"></p>
+</code></pre></div><p><img src="/imgs/ThymeleafView.png" alt="源码"></p>
 <h4 id="2-转发视图">2. 转发视图</h4>
 <p>SpringMVC中默认的转发视图是InternalResourceView</p>
 <p>SpringMVC中创建转发视图的情况：</p>
@@ -604,21 +604,29 @@ not met for actual request parameters: username={admin}, password={123456}
 <p>例如&quot;forward:/&quot;，“forward:/employee”</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testForward&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testForward</span><span style="color:#f92672">(){</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;forward:/testHello&#34;</span><span style="color:#f92672">;</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p><img src="" alt=""></p>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;forward:/testThymeleafView&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#75715e">//浏览器地址栏显示 http://localhost:8080/springMVC/testForward
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><p><img src="/imgs/InternalResourceView.png" alt=""></p>
 <h4 id="3-重定向视图">3. 重定向视图</h4>
 <p>SpringMVC中默认的重定向视图是RedirectView</p>
 <p>当控制器方法中所设置的视图名称以&quot;redirect:&ldquo;为前缀时，创建RedirectView视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀&quot;redirect:&ldquo;去掉，剩余部分作为最终路径通过重定向的方式实现跳转</p>
 <p>例如&quot;redirect:/&quot;，“redirect:/employee”</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testRedirect&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRedirect</span><span style="color:#f92672">(){</span>
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/testHello&#34;</span><span style="color:#f92672">;</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><p><img src="" alt=""></p>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/testThymeleafView&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#75715e">//浏览器地址栏显示 http://localhost:8080/springMVC/testThymeleafView
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><p><img src="/imgs/RedirectView.png" alt=""></p>
 <pre><code>注：
 
 重定向视图在解析时，会先将redirect:前缀去掉，然后会判断剩余部分是否以/开头，若是则会自动拼接上下文路径
+</code></pre><pre><code>重定向与转发的区别：
+重定向是浏览器行为，转发是服务器行为
+转发浏览器发送了一次请求，重定向浏览器发送了两次请求，第一次访问servlet，第二次访问重定向的地址
+转发可以获取请求域中的数据，重定向不可以，因为两次请求两个request
+转发可以访问WEB-INF中的资源，重定向不可以。WEB-INF中的资源具有安全性，只能通过服务器访问，不能通过浏览器访问
+转发不可以跨域，重定向可以。转发是服务器内部行为，只能访问服务器内的资源，重定向可以访问外部资源
 </code></pre><h4 id="4-视图控制器-view-controller">4. 视图控制器 view-controller</h4>
 <p>当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--
