@@ -85,7 +85,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          5 min read
+          6 min read
         </div>
       </div>
     </header>
@@ -749,6 +749,135 @@ not met for actual request parameters: username={admin}, password={123456}
 <hr>
 <p><a id="RESTful-demo">#</a></p>
 <h3 id="八restful案例">八、RESTful案例</h3>
+<h4 id="功能清单">功能清单</h4>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>URL 地址</th>
+<th>请求方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>访问首页√</td>
+<td>/</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>查询全部数据√</td>
+<td>/employee</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>删除√</td>
+<td>/employee/2</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>跳转到添加数据页面√</td>
+<td>/toAdd</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行保存√</td>
+<td>/employee</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>跳转到更新数据页面√</td>
+<td>/employee/2</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行更新√</td>
+<td>/employee</td>
+<td>PUT</td>
+</tr>
+</tbody>
+</table>
+<h4 id="访问首页">访问首页</h4>
+<h5 id="配置view-controller">配置view-controller</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">mvc:view-controller</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">view-name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;index&#34;</span>/&gt;
+</code></pre></div><h4 id="查询所有员工数据">查询所有员工数据</h4>
+<h5 id="employee_listhtml">employee_list.html</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span> <span style="color:#a6e22e">xmlns:th</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.thymeleaf.org&#34;</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;员工信息&lt;/<span style="color:#f92672">title</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+
+    &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataTable&#34;</span> <span style="color:#a6e22e">border</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-align: center;border-spacing: 0; border-collapse: collapse&#34;</span>&gt;
+        &lt;<span style="color:#f92672">tr</span>&gt;
+            &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">colspan</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5&#34;</span>&gt;员工信息&lt;/<span style="color:#f92672">th</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+        &lt;<span style="color:#f92672">tr</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;id&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;lastName&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;email&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;gender&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;options&lt;/<span style="color:#f92672">th</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+        <span style="color:#75715e">&lt;!--使用增强循环遍历共享集合中的数据--&gt;</span>
+        &lt;<span style="color:#f92672">tr</span> <span style="color:#a6e22e">th:each</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;employee : ${employee_list}&#34;</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.id}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.lastName}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.email}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.gender}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span>&gt;
+                <span style="color:#75715e">&lt;!--设置超链接点击事件，通过js将点击事件设置为表单提交，并阻止超链接默认点击跳转功能--&gt;</span>
+                &lt;<span style="color:#f92672">a</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;deleteEmployee&#34;</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{&#39;/employee/&#39;+${employee.id}}&#34;</span>&gt;delete&lt;/<span style="color:#f92672">a</span>&gt;
+                <span style="color:#75715e">&lt;!--此为写法一，还可写为 th:href=&#34;@{/employee}+${employee.id}&#34;--&gt;</span>
+                &lt;<span style="color:#f92672">a</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;updateEmployee&#34;</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;update&lt;/<span style="color:#f92672">a</span>&gt;<span style="color:#75715e">&lt;!--略--&gt;</span>
+            &lt;/<span style="color:#f92672">td</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+    &lt;/<span style="color:#f92672">table</span>&gt;
+
+    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;delete_form&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_method&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;delete&#34;</span>&gt;
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    
+ <span style="color:#75715e">&lt;!--通过js将点击事件设置为表单提交，并阻止超链接默认点击跳转功能--&gt;</span>
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span> <span style="color:#a6e22e">th:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/static/js/vue.js}&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    <span style="color:#75715e">&lt;!--如果工程打包项目中没有static/js/vue.js，使用maven-&gt;Lifecycle-&gt;package重新打包--&gt;</span>
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span>&gt;
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vue</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+            <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;#dataTable&#34;</span>,
+            <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+                <span style="color:#75715e">//event表示当前事件
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">deleteEmployee</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+                    <span style="color:#75715e">//通过id获取表单标签
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">delete_form</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;delete_form&#34;</span>);
+                    <span style="color:#75715e">//将触发事件的超链接的href属性为表单的action属性赋值
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">delete_form</span>.<span style="color:#a6e22e">action</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">href</span>;
+                    <span style="color:#75715e">//提交表单
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">delete_form</span>.<span style="color:#a6e22e">submit</span>();
+                    <span style="color:#75715e">//阻止超链接的默认跳转行为
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>();
+                }
+            }
+        });
+    &lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h5 id="控制器方法">控制器方法</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/employee/{id}&#34;</span><span style="color:#f92672">,</span>
+    method <span style="color:#f92672">=</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">DELETE</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">deleteEmployee</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">){</span>
+    empDao<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+	<span style="color:#75715e">//删除操作，参数id执行完操作后就不再需要了，使用重定向至/employee请求
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/employee&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="以上内容完成之后由于在script标签-thsrcstaticjsvuejs-属性中对vuejs静态资源的访问会被前端控制器捕获非jsp结尾所以要额外在springmvcxml配置文件中开启默认控制器defaultservlet">以上内容完成之后，由于在script标签 th:src=&quot;@{/static/js/vue.js}&rdquo; 属性中，对vue.js静态资源的访问会被前端控制器捕获(非.jsp结尾)，所以要额外在springMVC.xml配置文件中开启默认控制器defaultServlet</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;mvc:default-servlet-handler/&gt;</span>
+<span style="color:#75715e">&lt;!--开启对静态资源的访问--&gt;</span>
+</code></pre></div><h5 id="默认控制器是如何发挥作用的">默认控制器是如何发挥作用的</h5>
+<p>当我们通过@{/static/js/vue.js}访问静态资源时，请求会先被前端控制器处理，当前端控制器找不到对应的资源时，会交给默认控制器defaultServlet来处理，如果默认控制器还是找不到资源，404(此404不同于前端控制器的404，不是由前端控制器抛出的，是由默认控制器抛出的)</p>
 
     </div>
     <div class="post-footer">
