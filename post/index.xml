@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 31 Oct 2022 10:28:16 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 13 Nov 2022 10:58:03 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RESTful-员工信息管理</title>
+      <link>https://sherry-long.github.io/post/restfuldemo/</link>
+      <pubDate>Sun, 13 Nov 2022 10:58:03 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/restfuldemo/</guid>
+      <description>RESTful案例 功能清单    功能 URL 地址 请求方式     访问首页√ / GET   查询全部数据√ /employee GET   删除√ /employee/2 DELETE   跳转到添加数据页面√ /toAdd GET   执行保存√ /employee POST   跳转到更新数据页面√ /employee/2 GET   执行更新√ /employee PUT    访问首页 配置view-controller &amp;lt;mvc:view-controller path=&amp;#34;/&amp;#34; view-name=&amp;#34;index&amp;#34;/&amp;gt; 查询与删除 employee_list.html &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34; xmlns:th=&amp;#34;http://www.thymeleaf.org&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;title&amp;gt;员工信息&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;table id=&amp;#34;dataTable&amp;#34; border=&amp;#34;1&amp;#34; style=&amp;#34;text-align: center;border-spacing: 0; border-collapse: collapse&amp;#34;&amp;gt; &amp;lt;tr&amp;gt; &amp;lt;th colspan=&amp;#34;5&amp;#34;&amp;gt;员工信息&amp;lt;/th&amp;gt; &amp;lt;/tr&amp;gt; &amp;lt;tr&amp;gt; &amp;lt;th&amp;gt;id&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;lastName&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;email&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;gender&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;options&amp;lt;/th&amp;gt; &amp;lt;/tr&amp;gt; &amp;lt;!</description>
+    </item>
+    
     <item>
       <title>Spring5新特性</title>
       <link>https://sherry-long.github.io/post/javaspringnewfeature/</link>
@@ -161,7 +170,7 @@ ApplicationContext接口有两个实现类，ClassPathXmlApplicationContext 以�
 ​	五、域对象共享数据
 ​	六、SpringMVC的视图
 ​	七、RESTful
-​	八、RESTful案例
+​	八、HttpMessageConverter
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>RESTful-员工信息管理 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RESTful-员工信息管理"/>
+<meta name="twitter:description" content="RESTful案例 功能清单    功能 URL 地址 请求方式     访问首页√ / GET   查询全部数据√ /employee GET   删除√ /employee/2 DELETE   跳转到添加数据页面√ /toAdd GET   执行保存√ /employee POST   跳转到更新数据页面√ /employee/2 GET   执行更新√ /employee PUT    访问首页 配置view-controller &lt;mvc:view-controller path=&#34;/&#34; view-name=&#34;index&#34;/&gt; 查询与删除 employee_list.html &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34; xmlns:th=&#34;http://www.thymeleaf.org&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;title&gt;员工信息&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;table id=&#34;dataTable&#34; border=&#34;1&#34; style=&#34;text-align: center;border-spacing: 0; border-collapse: collapse&#34;&gt; &lt;tr&gt; &lt;th colspan=&#34;5&#34;&gt;员工信息&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;th&gt;id&lt;/th&gt; &lt;th&gt;lastName&lt;/th&gt; &lt;th&gt;email&lt;/th&gt; &lt;th&gt;gender&lt;/th&gt; &lt;th&gt;options&lt;/th&gt; &lt;/tr&gt; &lt;!"/>
+
+    <meta property="og:title" content="RESTful-员工信息管理" />
+<meta property="og:description" content="RESTful案例 功能清单    功能 URL 地址 请求方式     访问首页√ / GET   查询全部数据√ /employee GET   删除√ /employee/2 DELETE   跳转到添加数据页面√ /toAdd GET   执行保存√ /employee POST   跳转到更新数据页面√ /employee/2 GET   执行更新√ /employee PUT    访问首页 配置view-controller &lt;mvc:view-controller path=&#34;/&#34; view-name=&#34;index&#34;/&gt; 查询与删除 employee_list.html &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34; xmlns:th=&#34;http://www.thymeleaf.org&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;title&gt;员工信息&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;table id=&#34;dataTable&#34; border=&#34;1&#34; style=&#34;text-align: center;border-spacing: 0; border-collapse: collapse&#34;&gt; &lt;tr&gt; &lt;th colspan=&#34;5&#34;&gt;员工信息&lt;/th&gt; &lt;/tr&gt; &lt;tr&gt; &lt;th&gt;id&lt;/th&gt; &lt;th&gt;lastName&lt;/th&gt; &lt;th&gt;email&lt;/th&gt; &lt;th&gt;gender&lt;/th&gt; &lt;th&gt;options&lt;/th&gt; &lt;/tr&gt; &lt;!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/restfuldemo/" />
+<meta property="article:published_time" content="2022-11-13T10:58:03+08:00" />
+<meta property="article:modified_time" content="2022-11-13T10:58:03+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">RESTful-员工信息管理</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 13, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h3 id="restful案例">RESTful案例</h3>
+<h4 id="功能清单">功能清单</h4>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>URL 地址</th>
+<th>请求方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>访问首页√</td>
+<td>/</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>查询全部数据√</td>
+<td>/employee</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>删除√</td>
+<td>/employee/2</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>跳转到添加数据页面√</td>
+<td>/toAdd</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行保存√</td>
+<td>/employee</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>跳转到更新数据页面√</td>
+<td>/employee/2</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行更新√</td>
+<td>/employee</td>
+<td>PUT</td>
+</tr>
+</tbody>
+</table>
+<h4 id="访问首页">访问首页</h4>
+<h5 id="配置view-controller">配置view-controller</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">mvc:view-controller</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">view-name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;index&#34;</span>/&gt;
+</code></pre></div><h4 id="查询与删除">查询与删除</h4>
+<h5 id="employee_listhtml">employee_list.html</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span> <span style="color:#a6e22e">xmlns:th</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.thymeleaf.org&#34;</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;员工信息&lt;/<span style="color:#f92672">title</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+
+    &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataTable&#34;</span> <span style="color:#a6e22e">border</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-align: center;border-spacing: 0; border-collapse: collapse&#34;</span>&gt;
+        &lt;<span style="color:#f92672">tr</span>&gt;
+            &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">colspan</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5&#34;</span>&gt;员工信息&lt;/<span style="color:#f92672">th</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+        &lt;<span style="color:#f92672">tr</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;id&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;lastName&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;email&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;gender&lt;/<span style="color:#f92672">th</span>&gt;
+            &lt;<span style="color:#f92672">th</span>&gt;options&lt;/<span style="color:#f92672">th</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+        <span style="color:#75715e">&lt;!--使用增强循环遍历共享集合中的数据--&gt;</span>
+        &lt;<span style="color:#f92672">tr</span> <span style="color:#a6e22e">th:each</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;employee : ${employee_list}&#34;</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.id}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.lastName}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.email}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.gender}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+            &lt;<span style="color:#f92672">td</span>&gt;
+                <span style="color:#75715e">&lt;!--设置超链接点击事件，通过js将点击事件设置为表单提交，并阻止超链接默认点击跳转功能--&gt;</span>
+                &lt;<span style="color:#f92672">a</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;deleteEmployee&#34;</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{&#39;/employee/&#39;+${employee.id}}&#34;</span>&gt;delete&lt;/<span style="color:#f92672">a</span>&gt;
+                <span style="color:#75715e">&lt;!--此为写法一，还可写为 th:href=&#34;@{/employee}+${employee.id}&#34;--&gt;</span>
+                &lt;<span style="color:#f92672">a</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;updateEmployee&#34;</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;update&lt;/<span style="color:#f92672">a</span>&gt;<span style="color:#75715e">&lt;!--见下方更新数据内容--&gt;</span>
+            &lt;/<span style="color:#f92672">td</span>&gt;
+        &lt;/<span style="color:#f92672">tr</span>&gt;
+    &lt;/<span style="color:#f92672">table</span>&gt;
+
+    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;delete_form&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_method&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;delete&#34;</span>&gt;
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    
+ <span style="color:#75715e">&lt;!--通过js将点击事件设置为表单提交，并阻止超链接默认点击跳转功能--&gt;</span>
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span> <span style="color:#a6e22e">th:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/static/js/vue.js}&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    <span style="color:#75715e">&lt;!--如果工程打包项目中没有static/js/vue.js，使用maven-&gt;Lifecycle-&gt;package重新打包--&gt;</span>
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span>&gt;
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vue</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+            <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;#dataTable&#34;</span>,
+            <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+                <span style="color:#75715e">//event表示当前事件
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">deleteEmployee</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+                    <span style="color:#75715e">//通过id获取表单标签
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">delete_form</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;delete_form&#34;</span>);
+                    <span style="color:#75715e">//将触发事件的超链接的href属性为表单的action属性赋值
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">delete_form</span>.<span style="color:#a6e22e">action</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">href</span>;
+                    <span style="color:#75715e">//提交表单
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">delete_form</span>.<span style="color:#a6e22e">submit</span>();
+                    <span style="color:#75715e">//阻止超链接的默认跳转行为
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>();
+                }
+            }
+        });
+    &lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h5 id="控制器方法">控制器方法</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/employee/{id}&#34;</span><span style="color:#f92672">,</span>
+    method <span style="color:#f92672">=</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">DELETE</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">deleteEmployee</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">){</span>
+    empDao<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+	<span style="color:#75715e">//删除操作，参数id执行完操作后就不再需要了，使用重定向至/employee请求
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/employee&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="以上内容完成之后由于在script标签-thsrcstaticjsvuejs-属性中对vuejs静态资源的访问会被前端控制器捕获非jsp结尾所以要额外在springmvcxml配置文件中开启默认控制器defaultservlet">以上内容完成之后，由于在script标签 th:src=&quot;@{/static/js/vue.js}&quot; 属性中，对vue.js静态资源的访问会被前端控制器捕获(非.jsp结尾)，所以要额外在springMVC.xml配置文件中开启默认控制器defaultServlet</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;mvc:default-servlet-handler/&gt;</span>
+<span style="color:#75715e">&lt;!--开启对静态资源的访问，必须同时开启annotation driven注解--&gt;</span>
+<span style="color:#f92672">&lt;mvc:annotation-driven/&gt;</span>
+</code></pre></div><h5 id="默认控制器是如何发挥作用的">默认控制器是如何发挥作用的</h5>
+<p>当我们通过@{/static/js/vue.js}访问静态资源时，请求会先被前端控制器处理，当前端控制器找不到对应的资源时，会交给默认控制器defaultServlet来处理，如果默认控制器还是找不到资源，404(此404不同于前端控制器的404，不是由前端控制器抛出的，是由默认控制器抛出的)</p>
+<h4 id="更新数据">更新数据</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--employee_list.html--&gt;</span>
+&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{&#39;/employee/&#39;+${employee.id}}&#34;</span>&gt;修改&lt;/<span style="color:#f92672">a</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/employee/{id}&#34;</span><span style="color:#f92672">,</span>
+    method <span style="color:#f92672">=</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">GET</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toUpdate</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">,</span> Model model<span style="color:#f92672">){</span>
+	model<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;employee&#34;</span><span style="color:#f92672">,</span> empDao<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>id<span style="color:#f92672">));</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;updateEmployee&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#75715e">//根据id获取对应员工对象，并共享到域对象中，转发到修改页面 updateEmployee.html
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--updateEmployee.html 回显数据并修改提交--&gt;</span>
+&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/employee}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_method&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;PUT&#34;</span>&gt;
+    id:&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;number&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">${employee.id}</span> <span style="color:#a6e22e">readonly</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+    <span style="color:#75715e">&lt;!--设置id属性回显并只读--&gt;</span>
+    lastName:&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lastName&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.lastName}&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+    email:&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.email}&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+    gender:&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">radio</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gender&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">th:field</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.gender}&#34;</span>&gt;男
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gender&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#a6e22e">th:field</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.gender}&#34;</span>&gt;女
+    <span style="color:#75715e">&lt;!--使用th:field=&#34;${employee.gender}&#34;，如果该值和value一致，会自动添加 checked=&#34;checked&#34; 属性--&gt;</span>
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;提交修改&#34;</span>&gt;
+&lt;/<span style="color:#f92672">form</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/employee&#34;</span><span style="color:#f92672">,</span>
+    method <span style="color:#f92672">=</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">PUT</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">executeUpdate</span><span style="color:#f92672">(</span>Employee employee<span style="color:#f92672">){</span>
+	empDao<span style="color:#f92672">.</span><span style="color:#a6e22e">save</span><span style="color:#f92672">(</span>employee<span style="color:#f92672">);</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/employee&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">//重定向至查询页面
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

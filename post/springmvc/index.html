@@ -20,7 +20,7 @@
 ​	五、域对象共享数据
 ​	六、SpringMVC的视图
 ​	七、RESTful
-​	八、RESTful案例
+​	八、HttpMessageConverter
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
@@ -35,7 +35,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 ​	五、域对象共享数据
 ​	六、SpringMVC的视图
 ​	七、RESTful
-​	八、RESTful案例
+​	八、HttpMessageConverter
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
@@ -85,7 +85,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          6 min read
+          5 min read
         </div>
       </div>
     </header>
@@ -97,7 +97,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <p>​	<a href="#FieldObj">五、域对象共享数据</a></p>
 <p>​	<a href="#MVC-View">六、SpringMVC的视图</a></p>
 <p>​	<a href="#RESTful">七、RESTful</a></p>
-<p>​	<a href="#RESTful-demo">八、RESTful案例</a></p>
+<p>​	<a href="#HttpMessageConverter">八、HttpMessageConverter</a></p>
 <p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
 <p>SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)</p>
 <p><a id="feature">#</a></p>
@@ -313,7 +313,9 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">Target</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;target&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><h5 id="总结">总结</h5>
+</code></pre></div><pre><code>将项目部署到本地tomcat服务器上
+Tomcat -&gt; Edit Configuration -&gt; Deployment -&gt; + -&gt; Artifact -&gt; ProjectName:war exploded -&gt; 修改Application context(可不修改) -&gt; 修改server设置 -&gt; apply
+</code></pre><h5 id="总结">总结</h5>
 <p>浏览器发送请求，若请求地址符合前端控制器的url-pattern，该请求就会被前端控制器DispatcherServlet处理。
 前端控制器会读取SpringMVC的核心配置文件，通过扫描组件找到控制器，将请求地址和控制器中@RequestMapping注解的value属性值进行匹配，
 若匹配成功，该注解所标识的控制器方法就是处理请求的方法。处理请求的方法需要返回一个字符串类型的视图名称，
@@ -747,137 +749,60 @@ not met for actual request parameters: username={admin}, password={123456}
 		String paramValue = request.getParameter(this.methodParam);
 </code></pre><hr>
 <hr>
-<p><a id="RESTful-demo">#</a></p>
-<h3 id="八restful案例">八、RESTful案例</h3>
-<h4 id="功能清单">功能清单</h4>
-<table>
-<thead>
-<tr>
-<th>功能</th>
-<th>URL 地址</th>
-<th>请求方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>访问首页√</td>
-<td>/</td>
-<td>GET</td>
-</tr>
-<tr>
-<td>查询全部数据√</td>
-<td>/employee</td>
-<td>GET</td>
-</tr>
-<tr>
-<td>删除√</td>
-<td>/employee/2</td>
-<td>DELETE</td>
-</tr>
-<tr>
-<td>跳转到添加数据页面√</td>
-<td>/toAdd</td>
-<td>GET</td>
-</tr>
-<tr>
-<td>执行保存√</td>
-<td>/employee</td>
-<td>POST</td>
-</tr>
-<tr>
-<td>跳转到更新数据页面√</td>
-<td>/employee/2</td>
-<td>GET</td>
-</tr>
-<tr>
-<td>执行更新√</td>
-<td>/employee</td>
-<td>PUT</td>
-</tr>
-</tbody>
-</table>
-<h4 id="访问首页">访问首页</h4>
-<h5 id="配置view-controller">配置view-controller</h5>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">mvc:view-controller</span> <span style="color:#a6e22e">path</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">view-name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;index&#34;</span>/&gt;
-</code></pre></div><h4 id="查询所有员工数据">查询所有员工数据</h4>
-<h5 id="employee_listhtml">employee_list.html</h5>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span> <span style="color:#a6e22e">xmlns:th</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.thymeleaf.org&#34;</span>&gt;
-&lt;<span style="color:#f92672">head</span>&gt;
-    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
-    &lt;<span style="color:#f92672">title</span>&gt;员工信息&lt;/<span style="color:#f92672">title</span>&gt;
-&lt;/<span style="color:#f92672">head</span>&gt;
-&lt;<span style="color:#f92672">body</span>&gt;
-
-    &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dataTable&#34;</span> <span style="color:#a6e22e">border</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-align: center;border-spacing: 0; border-collapse: collapse&#34;</span>&gt;
-        &lt;<span style="color:#f92672">tr</span>&gt;
-            &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">colspan</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5&#34;</span>&gt;员工信息&lt;/<span style="color:#f92672">th</span>&gt;
-        &lt;/<span style="color:#f92672">tr</span>&gt;
-        &lt;<span style="color:#f92672">tr</span>&gt;
-            &lt;<span style="color:#f92672">th</span>&gt;id&lt;/<span style="color:#f92672">th</span>&gt;
-            &lt;<span style="color:#f92672">th</span>&gt;lastName&lt;/<span style="color:#f92672">th</span>&gt;
-            &lt;<span style="color:#f92672">th</span>&gt;email&lt;/<span style="color:#f92672">th</span>&gt;
-            &lt;<span style="color:#f92672">th</span>&gt;gender&lt;/<span style="color:#f92672">th</span>&gt;
-            &lt;<span style="color:#f92672">th</span>&gt;options&lt;/<span style="color:#f92672">th</span>&gt;
-        &lt;/<span style="color:#f92672">tr</span>&gt;
-        <span style="color:#75715e">&lt;!--使用增强循环遍历共享集合中的数据--&gt;</span>
-        &lt;<span style="color:#f92672">tr</span> <span style="color:#a6e22e">th:each</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;employee : ${employee_list}&#34;</span>&gt;
-            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.id}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
-            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.lastName}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
-            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.email}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
-            &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${employee.gender}&#34;</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
-            &lt;<span style="color:#f92672">td</span>&gt;
-                <span style="color:#75715e">&lt;!--设置超链接点击事件，通过js将点击事件设置为表单提交，并阻止超链接默认点击跳转功能--&gt;</span>
-                &lt;<span style="color:#f92672">a</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;deleteEmployee&#34;</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{&#39;/employee/&#39;+${employee.id}}&#34;</span>&gt;delete&lt;/<span style="color:#f92672">a</span>&gt;
-                <span style="color:#75715e">&lt;!--此为写法一，还可写为 th:href=&#34;@{/employee}+${employee.id}&#34;--&gt;</span>
-                &lt;<span style="color:#f92672">a</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;updateEmployee&#34;</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;update&lt;/<span style="color:#f92672">a</span>&gt;<span style="color:#75715e">&lt;!--略--&gt;</span>
-            &lt;/<span style="color:#f92672">td</span>&gt;
-        &lt;/<span style="color:#f92672">tr</span>&gt;
-    &lt;/<span style="color:#f92672">table</span>&gt;
-
-    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;delete_form&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
-        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;_method&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;delete&#34;</span>&gt;
-    &lt;/<span style="color:#f92672">form</span>&gt;
-    
- <span style="color:#75715e">&lt;!--通过js将点击事件设置为表单提交，并阻止超链接默认点击跳转功能--&gt;</span>
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span> <span style="color:#a6e22e">th:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/static/js/vue.js}&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-    <span style="color:#75715e">&lt;!--如果工程打包项目中没有static/js/vue.js，使用maven-&gt;Lifecycle-&gt;package重新打包--&gt;</span>
-    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span>&gt;
-        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vue</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-            <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;#dataTable&#34;</span>,
-            <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
-                <span style="color:#75715e">//event表示当前事件
-</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">deleteEmployee</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
-                    <span style="color:#75715e">//通过id获取表单标签
-</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">delete_form</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;delete_form&#34;</span>);
-                    <span style="color:#75715e">//将触发事件的超链接的href属性为表单的action属性赋值
-</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">delete_form</span>.<span style="color:#a6e22e">action</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">href</span>;
-                    <span style="color:#75715e">//提交表单
-</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">delete_form</span>.<span style="color:#a6e22e">submit</span>();
-                    <span style="color:#75715e">//阻止超链接的默认跳转行为
-</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>();
-                }
-            }
-        });
-    &lt;/<span style="color:#f92672">script</span>&gt;
-
-&lt;/<span style="color:#f92672">body</span>&gt;
-&lt;/<span style="color:#f92672">html</span>&gt;
-</code></pre></div><h5 id="控制器方法">控制器方法</h5>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
-    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/employee/{id}&#34;</span><span style="color:#f92672">,</span>
-    method <span style="color:#f92672">=</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">DELETE</span>
-<span style="color:#f92672">)</span>
-<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">deleteEmployee</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">){</span>
-    empDao<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
-	<span style="color:#75715e">//删除操作，参数id执行完操作后就不再需要了，使用重定向至/employee请求
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;redirect:/employee&#34;</span><span style="color:#f92672">;</span>
+<p><a id="HttpMessageConverter">#</a></p>
+<h3 id="八httpmessageconverter">八、HttpMessageConverter</h3>
+<p>HttpMessageConverter，报文信息转换器，将请求报文转换为Java对象，或将Java对象转换为响应报文</p>
+<p>HttpMessageConverter提供了两个注解和两个类型：@RequestBody，@ResponseBody，RequestEntity，ResponseEntity</p>
+<h4 id="1-requestbody">1. @RequestBody</h4>
+<p>@RequestBody可以获取请求体，需要在控制器方法设置一个形参，使用@RequestBody进行标识，当前请求的请求体就会为当前注解所标识的形参赋值</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testRequestBody}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+    用户名：&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+    密码：&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span>&gt;
+&lt;/<span style="color:#f92672">form</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testRequestBody&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRequestBody</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@RequestBody</span> String requestBody<span style="color:#f92672">){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;requestBody:&#34;</span><span style="color:#f92672">+</span>requestBody<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><h5 id="以上内容完成之后由于在script标签-thsrcstaticjsvuejs-属性中对vuejs静态资源的访问会被前端控制器捕获非jsp结尾所以要额外在springmvcxml配置文件中开启默认控制器defaultservlet">以上内容完成之后，由于在script标签 th:src=&quot;@{/static/js/vue.js}&rdquo; 属性中，对vue.js静态资源的访问会被前端控制器捕获(非.jsp结尾)，所以要额外在springMVC.xml配置文件中开启默认控制器defaultServlet</h5>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;mvc:default-servlet-handler/&gt;</span>
-<span style="color:#75715e">&lt;!--开启对静态资源的访问--&gt;</span>
-</code></pre></div><h5 id="默认控制器是如何发挥作用的">默认控制器是如何发挥作用的</h5>
-<p>当我们通过@{/static/js/vue.js}访问静态资源时，请求会先被前端控制器处理，当前端控制器找不到对应的资源时，会交给默认控制器defaultServlet来处理，如果默认控制器还是找不到资源，404(此404不同于前端控制器的404，不是由前端控制器抛出的，是由默认控制器抛出的)</p>
+</code></pre></div><p>输出结果：</p>
+<p>requestBody:username=admin&amp;password=123456</p>
+<h4 id="2-requestentity">2. RequestEntity</h4>
+<p>RequestEntity封装请求报文的一种类型，需要在控制器方法的形参中设置该类型的形参，当前请求的请求报文就会赋值给该形参，可以通过getHeaders()获取请求头信息，通过getBody()获取请求体信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testRequestEntity&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRequestEntity</span><span style="color:#f92672">(</span>RequestEntity<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> requestEntity<span style="color:#f92672">){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;requestHeader:&#34;</span><span style="color:#f92672">+</span>requestEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">getHeaders</span><span style="color:#f92672">());</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;requestBody:&#34;</span><span style="color:#f92672">+</span>requestEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">getBody</span><span style="color:#f92672">());</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>输出结果： requestHeader:[host:“localhost:8080”, connection:“keep-alive”, content-length:“27”, cache-control:“max-age=0”, sec-ch-ua:&rdquo;&rdquo; Not A;Brand&rdquo;;v=“99”, “Chromium”;v=“90”, “Google Chrome”;v=“90&rdquo;”, sec-ch-ua-mobile:&quot;?0&rdquo;, upgrade-insecure-requests:“1”, origin:“<a href="http://localhost:8080%E2%80%9D/">http://localhost:8080”</a>, user-agent:“Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36”] requestBody:username=admin&amp;password=123</p>
+<h4 id="3-responsebody">3. @ResponseBody</h4>
+<p>@ResponseBody用于标识一个控制器方法，可以将该方法的返回值直接作为响应报文的响应体响应到浏览器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testResponseBody&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ResponseBody</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testResponseBody</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>结果：浏览器页面显示success</p>
+<h4 id="4-springmvc处理json">4. SpringMVC处理json</h4>
+<p>@ResponseBody处理json的步骤：</p>
+<p><strong>1.导入jackson的依赖</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>com.fasterxml.jackson.core<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>jackson-databind<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>2.12.1<span style="color:#f92672">&lt;/version&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p><strong>2.在SpringMVC的核心配置文件中开启mvc的注解驱动，此时在HandlerAdaptor中会自动装配一个消息转换器：MappingJackson2HttpMessageConverter，可以将响应到浏览器的Java对象转换为Json格式的字符串</strong></p>
+<p><strong>3.在处理器方法上使用@ResponseBody注解进行标识</strong></p>
+<p><strong>4.将Java对象直接作为控制器方法的返回值返回，就会自动转换为Json格式的字符串</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testResponseUser&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ResponseBody</span>
+<span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">testResponseUser</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> User<span style="color:#f92672">(</span>1001<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;admin&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;123456&#34;</span><span style="color:#f92672">,</span>23<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;男&#34;</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>浏览器的页面中展示的结果：</p>
+<p>{“id”:1001,“username”:“admin”,“password”:“123456”,“age”:23,“sex”:“男”}</p>
+<h4 id="5-springmvc处理ajax">5. SpringMVC处理ajax</h4>
 
     </div>
     <div class="post-footer">
