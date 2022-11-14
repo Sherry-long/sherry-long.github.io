@@ -21,11 +21,12 @@
 ​	六、SpringMVC的视图
 ​	七、RESTful
 ​	八、HttpMessageConverter
+​	九、文件上传和下载
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
 一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
-二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax."/>
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!"/>
 
     <meta property="og:title" content="SpringMVC" />
 <meta property="og:description" content="​	一、SpringMVC特点
@@ -36,11 +37,12 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 ​	六、SpringMVC的视图
 ​	七、RESTful
 ​	八、HttpMessageConverter
+​	九、文件上传和下载
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
 一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
-二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax." />
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/springmvc/" />
 <meta property="article:published_time" content="2022-10-11T11:02:42+08:00" />
@@ -85,7 +87,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          5 min read
+          6 min read
         </div>
       </div>
     </header>
@@ -98,6 +100,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <p>​	<a href="#MVC-View">六、SpringMVC的视图</a></p>
 <p>​	<a href="#RESTful">七、RESTful</a></p>
 <p>​	<a href="#HttpMessageConverter">八、HttpMessageConverter</a></p>
+<p>​	<a href="#Files">九、文件上传和下载</a></p>
 <p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
 <p>SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)</p>
 <p><a id="feature">#</a></p>
@@ -775,7 +778,8 @@ not met for actual request parameters: username={admin}, password={123456}
     System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;requestBody:&#34;</span><span style="color:#f92672">+</span>requestEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">getBody</span><span style="color:#f92672">());</span>
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p>输出结果： requestHeader:[host:“localhost:8080”, connection:“keep-alive”, content-length:“27”, cache-control:“max-age=0”, sec-ch-ua:&rdquo;&rdquo; Not A;Brand&rdquo;;v=“99”, “Chromium”;v=“90”, “Google Chrome”;v=“90&rdquo;”, sec-ch-ua-mobile:&quot;?0&rdquo;, upgrade-insecure-requests:“1”, origin:“<a href="http://localhost:8080%E2%80%9D/">http://localhost:8080”</a>, user-agent:“Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36”] requestBody:username=admin&amp;password=123</p>
+</code></pre></div><p>输出结果： requestHeaders:[host:&ldquo;localhost:8080&rdquo;, connection:&ldquo;keep-alive&rdquo;, content-length:&ldquo;22&rdquo;, cache-control:&ldquo;max-age=0&rdquo;, sec-ch-ua:&ldquo;&ldquo;Microsoft Edge&rdquo;;v=&ldquo;107&rdquo;, &ldquo;Chromium&rdquo;;v=&ldquo;107&rdquo;, &ldquo;Not=A?Brand&rdquo;;v=&ldquo;24&quot;&rdquo;, sec-ch-ua-mobile:&quot;?0&rdquo;, sec-ch-ua-platform:&ldquo;&ldquo;Windows&rdquo;&rdquo;, upgrade-insecure-requests:&ldquo;1&rdquo;, origin:&ldquo;http://localhost:8080&rdquo;, user-agent:&ldquo;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.42&rdquo;, accept:&ldquo;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,<em>/</em>;q=0.8,application/signed-exchange;v=b3;q=0.9&rdquo;, sec-fetch-site:&ldquo;same-origin&rdquo;, sec-fetch-mode:&ldquo;navigate&rdquo;, sec-fetch-user:&quot;?1&rdquo;, sec-fetch-dest:&ldquo;document&rdquo;, referer:&ldquo;http://localhost:8080/springMVC/&rdquo;, accept-encoding:&ldquo;gzip, deflate, br&rdquo;, accept-language:&ldquo;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&rdquo;, cookie:&ldquo;JSESSIONID=CA7B35129A92ACEB35F415B0C177FBE2&rdquo;, Content-Type:&ldquo;application/x-www-form-urlencoded;charset=UTF-8&rdquo;]
+requestBody:name=Jame&amp;password=123</p>
 <h4 id="3-responsebody">3. @ResponseBody</h4>
 <p>@ResponseBody用于标识一个控制器方法，可以将该方法的返回值直接作为响应报文的响应体响应到浏览器</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testResponseBody&#34;</span><span style="color:#f92672">)</span>
@@ -783,8 +787,20 @@ not met for actual request parameters: username={admin}, password={123456}
 <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testResponseBody</span><span style="color:#f92672">(){</span>
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p>结果：浏览器页面显示success</p>
-<h4 id="4-springmvc处理json">4. SpringMVC处理json</h4>
+
+<span style="color:#75715e">//在原生servlet中可以使用 response.getWriter().print(&#34;    &#34;) 的方法
+</span><span style="color:#75715e">//将print()中的参数作为响应体相应给浏览器
+</span></code></pre></div><p>结果：浏览器页面显示success</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//@ResponseBody 返回中文时会乱码，在@RequestMapping()中配置属性produces
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+    value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/testResponseBody&#34;</span><span style="color:#f92672">,</span>
+    produces <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;application/json;charset=utf-8&#34;</span>
+<span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ResponseBody</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testResponseBody</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;成功&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="4-springmvc处理json">4. SpringMVC处理json</h4>
 <p>@ResponseBody处理json的步骤：</p>
 <p><strong>1.导入jackson的依赖</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
@@ -794,7 +810,7 @@ not met for actual request parameters: username={admin}, password={123456}
 <span style="color:#f92672">&lt;/dependency&gt;</span>
 </code></pre></div><p><strong>2.在SpringMVC的核心配置文件中开启mvc的注解驱动，此时在HandlerAdaptor中会自动装配一个消息转换器：MappingJackson2HttpMessageConverter，可以将响应到浏览器的Java对象转换为Json格式的字符串</strong></p>
 <p><strong>3.在处理器方法上使用@ResponseBody注解进行标识</strong></p>
-<p><strong>4.将Java对象直接作为控制器方法的返回值返回，就会自动转换为Json格式的字符串</strong></p>
+<p><strong>4.将Java对象直接作为控制器方法的返回值返回，就会自动转换为Json格式的字符串(不是json对象，是json格式的字符串，因为浏览器只能接受服务器发送的字符串)</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testResponseUser&#34;</span><span style="color:#f92672">)</span>
 <span style="color:#a6e22e">@ResponseBody</span>
 <span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">testResponseUser</span><span style="color:#f92672">(){</span>
@@ -803,6 +819,49 @@ not met for actual request parameters: username={admin}, password={123456}
 </code></pre></div><p>浏览器的页面中展示的结果：</p>
 <p>{“id”:1001,“username”:“admin”,“password”:“123456”,“age”:23,“sex”:“男”}</p>
 <h4 id="5-springmvc处理ajax">5. SpringMVC处理ajax</h4>
+<pre><code>ajax是一种用于创建更好更快以及交互性更强的Web应用程序的技术，能够快速将增量更新呈现在用户页面上，不需要重载整个页面，所以使用ajax，控制器不能使用转发和重定向来响应浏览器，而应使用@ResponseBody直接向浏览器相应数据
+</code></pre><p>a&gt;请求超链接：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testAjax}&#34;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;testAjax&#34;</span>&gt;testAjax&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>b&gt;通过vue和axios处理点击事件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span> <span style="color:#a6e22e">th:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/static/js/vue.js}&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span> <span style="color:#a6e22e">th:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/static/js/axios.min.js}&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span>&gt;
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">vue</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+        <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;#app&#34;</span>,
+        <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+            <span style="color:#a6e22e">testAjax</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+                <span style="color:#a6e22e">axios</span>({
+                    <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;post&#34;</span>,
+                    <span style="color:#a6e22e">url</span><span style="color:#f92672">:</span><span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">href</span>,
+                    <span style="color:#a6e22e">params</span><span style="color:#f92672">:</span>{
+                        <span style="color:#a6e22e">username</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;admin&#34;</span>,
+                        <span style="color:#a6e22e">password</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;123456&#34;</span>
+                    }
+                }).<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">response</span>) {
+                    <span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">data</span>);
+                });
+                <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>();
+            }
+        }
+    });
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>c&gt;控制器方法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testAjax&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@ResponseBody</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testAjax</span><span style="color:#f92672">(</span>String username<span style="color:#f92672">,</span> String password<span style="color:#f92672">){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;username:&#34;</span><span style="color:#f92672">+</span>username<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;,password:&#34;</span><span style="color:#f92672">+</span>password<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;hello,ajax&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="6-restcontroller注解">6. @RestController注解</h4>
+<p>@RestController注解是springMVC提供的一个复合注解，标识在控制器的类上，就相当于为类添加了@Controller注解，并且为其中的每个方法添加了@ResponseBody注解</p>
+<h4 id="7-responseentity">7. ResponseEntity</h4>
+<p>ResponseEntity用于控制器方法的返回值类型，该控制器方法的返回值就是响应到浏览器的响应报文</p>
+<hr>
+<hr>
+<p><a id="Files">#</a></p>
+<h3 id="九文件上传和下载">九、文件上传和下载</h3>
 
     </div>
     <div class="post-footer">
