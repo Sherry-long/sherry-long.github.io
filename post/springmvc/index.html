@@ -87,7 +87,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          6 min read
+          7 min read
         </div>
       </div>
     </header>
@@ -801,7 +801,7 @@ requestBody:name=Jame&amp;password=123</p>
     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;成功&#34;</span><span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><h4 id="4-springmvc处理json">4. SpringMVC处理json</h4>
-<p>@ResponseBody处理json的步骤：</p>
+<p>SpringMVC处理json的步骤：</p>
 <p><strong>1.导入jackson的依赖</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependency&gt;</span>
     <span style="color:#f92672">&lt;groupId&gt;</span>com.fasterxml.jackson.core<span style="color:#f92672">&lt;/groupId&gt;</span>
@@ -819,7 +819,7 @@ requestBody:name=Jame&amp;password=123</p>
 </code></pre></div><p>浏览器的页面中展示的结果：</p>
 <p>{“id”:1001,“username”:“admin”,“password”:“123456”,“age”:23,“sex”:“男”}</p>
 <h4 id="5-springmvc处理ajax">5. SpringMVC处理ajax</h4>
-<pre><code>ajax是一种用于创建更好更快以及交互性更强的Web应用程序的技术，能够快速将增量更新呈现在用户页面上，不需要重载整个页面，所以使用ajax，控制器不能使用转发和重定向来响应浏览器，而应使用@ResponseBody直接向浏览器相应数据
+<pre><code>ajax是一种用于创建更好更快以及交互性更强的Web应用程序的技术，能够快速将增量更新呈现在用户页面上，不需要重载整个页面(页面不刷新与服务器进行交互)，所以使用ajax，控制器不能使用转发和重定向来响应浏览器，而应使用@ResponseBody直接向浏览器相应数据
 </code></pre><p>a&gt;请求超链接：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
     &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testAjax}&#34;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;testAjax&#34;</span>&gt;testAjax&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
@@ -862,7 +862,72 @@ requestBody:name=Jame&amp;password=123</p>
 <hr>
 <p><a id="Files">#</a></p>
 <h3 id="九文件上传和下载">九、文件上传和下载</h3>
-
+<h4 id="1-文件下载">1. 文件下载</h4>
+<p>使用ResponseEntity实现下载文件的功能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testDown&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">byte</span><span style="color:#f92672">[]&gt;</span> <span style="color:#a6e22e">testResponseEntity</span><span style="color:#f92672">(</span>HttpSession session<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//获取ServletContext对象
+</span><span style="color:#75715e"></span>    ServletContext servletContext <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span><span style="color:#a6e22e">getServletContext</span><span style="color:#f92672">();</span>
+    <span style="color:#75715e">//获取服务器中文件的真实路径
+</span><span style="color:#75715e"></span>    String realPath <span style="color:#f92672">=</span> servletContext<span style="color:#f92672">.</span><span style="color:#a6e22e">getRealPath</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/static/img/1.jpg&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#75715e">//创建输入流
+</span><span style="color:#75715e"></span>    InputStream is <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>realPath<span style="color:#f92672">);</span>
+    <span style="color:#75715e">//创建字节数组
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> bytes <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>is<span style="color:#f92672">.</span><span style="color:#a6e22e">available</span><span style="color:#f92672">()];</span>
+    <span style="color:#75715e">//将流读到字节数组中
+</span><span style="color:#75715e"></span>    is<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>bytes<span style="color:#f92672">);</span>
+    <span style="color:#75715e">//创建HttpHeaders对象设置响应头信息
+</span><span style="color:#75715e"></span>    MultiValueMap<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> headers <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HttpHeaders<span style="color:#f92672">();</span>
+    <span style="color:#75715e">//设置要下载方式以及下载文件的名字
+</span><span style="color:#75715e"></span>    headers<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Content-Disposition&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;attachment;filename=1.jpg&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#75715e">//设置响应状态码
+</span><span style="color:#75715e"></span>    HttpStatus statusCode <span style="color:#f92672">=</span> HttpStatus<span style="color:#f92672">.</span><span style="color:#a6e22e">OK</span><span style="color:#f92672">;</span>
+    <span style="color:#75715e">//创建ResponseEntity对象
+</span><span style="color:#75715e"></span>    ResponseEntity<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">byte</span><span style="color:#f92672">[]&gt;</span> responseEntity <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ResponseEntity<span style="color:#f92672">&lt;&gt;(</span>bytes<span style="color:#f92672">,</span> headers<span style="color:#f92672">,</span> statusCode<span style="color:#f92672">);</span>
+    <span style="color:#75715e">//关闭输入流
+</span><span style="color:#75715e"></span>    is<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">return</span> responseEntity<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="2-文件上传">2. 文件上传</h4>
+<p>文件上传要求form表单的请求方式必须为post，并且添加属性enctype=“multipart/form-data”</p>
+<p>SpringMVC中将上传的文件封装到MultipartFile对象中，通过此对象可以获取文件相关信息</p>
+<p>上传步骤：</p>
+<p>a&gt;添加依赖：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload --&gt;</span>
+<span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>commons-fileupload<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>commons-fileupload<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.3.1<span style="color:#f92672">&lt;/version&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p>b&gt;在SpringMVC的配置文件中添加配置：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--必须通过文件解析器的解析才能将文件转换为MultipartFile对象，必须配置id属性，否则Spring找不到解析器--&gt;</span>
+<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;multipartResolver&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.web.multipart.commons.CommonsMultipartResolver&#34;</span><span style="color:#f92672">&gt;&lt;/bean&gt;</span>
+</code></pre></div><p>c&gt;html form表单</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testUp}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span> <span style="color:#a6e22e">enctype</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;multipart/form-data&#34;</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;photo&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;上传&#34;</span>&gt;
+&lt;/<span style="color:#f92672">form</span>&gt;
+</code></pre></div><p>d&gt;控制器方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/testUp&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testUp</span><span style="color:#f92672">(</span>MultipartFile photo<span style="color:#f92672">,</span> HttpSession session<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//获取上传的文件的文件名
+</span><span style="color:#75715e"></span>    String fileName <span style="color:#f92672">=</span> photo<span style="color:#f92672">.</span><span style="color:#a6e22e">getOriginalFilename</span><span style="color:#f92672">();</span>
+    <span style="color:#75715e">//处理文件重名问题
+</span><span style="color:#75715e"></span>    String hzName <span style="color:#f92672">=</span> fileName<span style="color:#f92672">.</span><span style="color:#a6e22e">substring</span><span style="color:#f92672">(</span>fileName<span style="color:#f92672">.</span><span style="color:#a6e22e">lastIndexOf</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">));</span>
+    fileName <span style="color:#f92672">=</span> UUID<span style="color:#f92672">.</span><span style="color:#a6e22e">randomUUID</span><span style="color:#f92672">().</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> hzName<span style="color:#f92672">;</span>
+    <span style="color:#75715e">//获取服务器中photo目录的路径
+</span><span style="color:#75715e"></span>    ServletContext servletContext <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span><span style="color:#a6e22e">getServletContext</span><span style="color:#f92672">();</span>
+    String photoPath <span style="color:#f92672">=</span> servletContext<span style="color:#f92672">.</span><span style="color:#a6e22e">getRealPath</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;photo&#34;</span><span style="color:#f92672">);</span>
+    File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>photoPath<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">if</span><span style="color:#f92672">(!</span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">exists</span><span style="color:#f92672">()){</span>
+        file<span style="color:#f92672">.</span><span style="color:#a6e22e">mkdir</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    String finalPath <span style="color:#f92672">=</span> photoPath <span style="color:#f92672">+</span> File<span style="color:#f92672">.</span><span style="color:#a6e22e">separator</span> <span style="color:#f92672">+</span> fileName<span style="color:#f92672">;</span>
+    <span style="color:#75715e">//实现上传功能
+</span><span style="color:#75715e"></span>    photo<span style="color:#f92672">.</span><span style="color:#a6e22e">transferTo</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span>finalPath<span style="color:#f92672">));</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       
