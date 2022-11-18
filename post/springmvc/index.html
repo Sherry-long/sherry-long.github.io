@@ -23,11 +23,12 @@
 ​	八、HttpMessageConverter
 ​	九、文件上传和下载
 ​	十、拦截器
+​	十一、异常处理器
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
 一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
-二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1."/>
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch."/>
 
     <meta property="og:title" content="SpringMVC" />
 <meta property="og:description" content="​	一、SpringMVC特点
@@ -40,11 +41,12 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 ​	八、HttpMessageConverter
 ​	九、文件上传和下载
 ​	十、拦截器
+​	十一、异常处理器
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
 一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
-二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1." />
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/springmvc/" />
 <meta property="article:published_time" content="2022-10-11T11:02:42+08:00" />
@@ -89,7 +91,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          7 min read
+          8 min read
         </div>
       </div>
     </header>
@@ -104,6 +106,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <p>​	<a href="#HttpMessageConverter">八、HttpMessageConverter</a></p>
 <p>​	<a href="#Files">九、文件上传和下载</a></p>
 <p>​	<a href="#Interceptor">十、拦截器</a></p>
+<p>​	<a href="#ExceptionXeqtr">十一、异常处理器</a></p>
 <p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
 <p>SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)</p>
 <p><a id="feature">#</a></p>
@@ -940,11 +943,20 @@ requestBody:name=Jame&amp;password=123</p>
 <p><strong>SpringMVC中的拦截器用于拦截控制器方法的执行</strong></p>
 <p>SpringMVC中的拦截器需要实现HandlerInterceptor</p>
 <p>SpringMVC的拦截器必须在SpringMVC的配置文件中进行配置：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;com.atguigu.interceptor.FirstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/bean&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- 方法一，使用bean标签，此方法会拦截所有控制器方法--&gt;</span>
+<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;com.atguigu.interceptor.FirstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/bean&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 方法二，使用ref引用IoC容器中的bean，因此要将拦截器类设置为@Component普通组件，并ccs扫描该组件。此方法也会拦截所有控制器方法--&gt;</span>
 <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;firstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/ref&gt;</span>
 <span style="color:#75715e">&lt;!-- 以上两种配置方式都是对DispatcherServlet所处理的所有的请求进行拦截 --&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 方法三，--&gt;</span>
 <span style="color:#f92672">&lt;mvc:interceptor&gt;</span>
     <span style="color:#f92672">&lt;mvc:mapping</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;/**&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#75715e">&lt;!-- 
+</span><span style="color:#75715e">		此处使用/*只表示上下文路径中的一层路径，不能表示所有请求
+</span><span style="color:#75715e">		要表示所有请求，使用/**
+</span><span style="color:#75715e">	--&gt;</span>
     <span style="color:#f92672">&lt;mvc:exclude-mapping</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;/testRequestEntity&#34;</span><span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;firstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/ref&gt;</span>
 <span style="color:#f92672">&lt;/mvc:interceptor&gt;</span>
@@ -956,16 +968,86 @@ requestBody:name=Jame&amp;password=123</p>
 <p>preHandle：控制器方法执行之前执行preHandle()，其boolean类型的返回值表示是否拦截或放行，返回true为放行，即调用控制器方法；返回false表示拦截，即不调用控制器方法</p>
 <p>postHandle：控制器方法执行之后执行postHandle()</p>
 <p>afterCompletion：处理完视图和模型数据，渲染视图完毕之后执行afterCompletion()</p>
-<p><img src="/imgs/RequestProcess.png" alt="filter和interceptor对请求的处理"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FirstInterceptor</span> <span style="color:#66d9ef">implements</span> HandlerInterceptor <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//我们只能在pre对控制器方法进行拦截，所以只有preHandle方法返回值是bool
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">preHandle</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">,</span> Object handler<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;FirstInterceptor -&gt; preHandle()...&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> HandlerInterceptor<span style="color:#f92672">.</span><span style="color:#a6e22e">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">preHandle</span><span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> handler<span style="color:#f92672">);</span>
+    	<span style="color:#75715e">//此处返回false，表示对控制器方法进行拦截，控制器方法将不再执行。
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//返回true表示不拦截
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">postHandle</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">,</span> Object handler<span style="color:#f92672">,</span> ModelAndView modelAndView<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;FirstInterceptor -&gt; postHandle()...&#34;</span><span style="color:#f92672">);</span>
+
+        HandlerInterceptor<span style="color:#f92672">.</span><span style="color:#a6e22e">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">postHandle</span><span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> handler<span style="color:#f92672">,</span> modelAndView<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">afterCompletion</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">,</span> Object handler<span style="color:#f92672">,</span> Exception ex<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;FirstInterceptor -&gt; afterCompletion()...&#34;</span><span style="color:#f92672">);</span>
+
+        HandlerInterceptor<span style="color:#f92672">.</span><span style="color:#a6e22e">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">afterCompletion</span><span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> handler<span style="color:#f92672">,</span> ex<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><img src="/imgs/RequestProcess.png" alt="filter和interceptor对请求的处理"></p>
 <h4 id="3-多个拦截器的执行顺序">3. 多个拦截器的执行顺序</h4>
-<p>a&gt;若每个拦截器的preHandle()都返回true</p>
+<p><strong>a&gt;若每个拦截器的preHandle()都返回true</strong></p>
 <p>此时多个拦截器的执行顺序和拦截器在SpringMVC的配置文件的配置顺序有关：</p>
 <p>preHandle()会按照配置的顺序执行，而postHandle()和afterComplation()会按照配置的反序执行</p>
-<p>b&gt;若某个拦截器的preHandle()返回了false</p>
-<p>preHandle()返回false和它之前的拦截器的preHandle()都会执行，postHandle()都不执行，返回false的拦截器之前的拦截器的afterComplation()会执行</p>
+<p><strong>b&gt;若某个拦截器的preHandle()返回了false</strong></p>
+<ul>
+<li>
+<p>返回false的preHandle()和它之前的拦截器的preHandle()都会执行；</p>
+</li>
+<li>
+<p>所有的postHandle()都不执行；</p>
+</li>
+<li>
+<p>返回false的拦截器之前的拦截器的afterComplation()会执行</p>
+</li>
+</ul>
 <hr>
 <hr>
+<p><a id="ExceptionXeqtr">#</a></p>
+<h3 id="十一异常处理器">十一、异常处理器</h3>
+<h4 id="1-基于配置的异常处理">1. 基于配置的异常处理</h4>
+<p>SpringMVC提供了一个处理控制器方法执行过程中所出现的异常的接口：HandlerExceptionResolver</p>
+<p>HandlerExceptionResolver接口的实现类有：DefaultHandlerExceptionResolver和SimpleMappingExceptionResolver</p>
+<p>SpringMVC提供了自定义的异常处理器SimpleMappingExceptionResolver，使用方式：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;exceptionMappings&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;props&gt;</span>
+            <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">                properties的键表示处理器方法执行过程中出现的异常
+</span><span style="color:#75715e">                properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面
+</span><span style="color:#75715e">            --&gt;</span>
+            <span style="color:#f92672">&lt;prop</span> <span style="color:#a6e22e">key=</span><span style="color:#e6db74">&#34;java.lang.ArithmeticException&#34;</span><span style="color:#f92672">&gt;</span>error<span style="color:#f92672">&lt;/prop&gt;</span>
+        <span style="color:#f92672">&lt;/props&gt;</span>
+    <span style="color:#f92672">&lt;/property&gt;</span>
+    <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">        exceptionAttribute属性设置一个属性名，将出现的异常信息在请求域中进行共享
+</span><span style="color:#75715e">		value属性作为键值对的键，异常信息作为键值对的值
+</span><span style="color:#75715e">    --&gt;</span>
+    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;exceptionAttribute&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;ex&#34;</span><span style="color:#f92672">&gt;&lt;/property&gt;</span>
+<span style="color:#f92672">&lt;/bean&gt;</span>
+</code></pre></div><h4 id="2-基于注解的异常处理">2. 基于注解的异常处理</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//@ControllerAdvice将当前类标识为异常处理的组件
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@ControllerAdvice</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExceptionController</span> <span style="color:#f92672">{</span>
 
+    <span style="color:#75715e">//@ExceptionHandler用于设置所标识方法处理的异常
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@ExceptionHandler</span><span style="color:#f92672">(</span>ArithmeticException<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+    <span style="color:#75715e">//ex表示当前请求处理中出现的异常对象
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">handleArithmeticException</span><span style="color:#f92672">(</span>Exception ex<span style="color:#f92672">,</span> Model model<span style="color:#f92672">){</span>
+        model<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ex&#34;</span><span style="color:#f92672">,</span> ex<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;error&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       
