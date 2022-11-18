@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Spring常用配置 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Spring常用配置"/>
+<meta name="twitter:description" content="pom.xml &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!-- Spring5和Thymeleaf整合包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt; &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt; &lt;version&gt;3.0.13.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 文件上传模块 --&gt; &lt;dependency&gt; &lt;groupId&gt;commons-fileupload&lt;/groupId&gt; &lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt; &lt;version&gt;1.4&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 德鲁伊数据库连接池 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid&lt;/artifactId&gt; &lt;version&gt;1.2.15&lt;/version&gt; &lt;/dependency&gt; &lt;!-- jackson依赖，SpringMVC处理json需要 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt; &lt;version&gt;2.14.0&lt;/version&gt; &lt;type&gt;bundle&lt;/type&gt; &lt;/dependency&gt; &lt;/dependencies&gt; web.xml &lt;!-- 编码过滤器，用于解决服务器接收浏览器请求乱码问题 --&gt; &lt;filter&gt; &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt; &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt; &lt;init-param&gt; &lt;param-name&gt;encoding&lt;/param-name&gt; &lt;param-value&gt;UTF-8&lt;/param-value&gt; &lt;/init-param&gt; &lt;init-param&gt; &lt;param-name&gt;forceResponseEncoding&lt;/param-name&gt; &lt;param-value&gt;true&lt;/param-value&gt; &lt;/init-param&gt; &lt;/filter&gt; &lt;filter-mapping&gt; &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt; &lt;url-pattern&gt;/*&lt;/url-pattern&gt; &lt;/filter-mapping&gt; &lt;!"/>
+
+    <meta property="og:title" content="Spring常用配置" />
+<meta property="og:description" content="pom.xml &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!-- Spring5和Thymeleaf整合包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt; &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt; &lt;version&gt;3.0.13.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 文件上传模块 --&gt; &lt;dependency&gt; &lt;groupId&gt;commons-fileupload&lt;/groupId&gt; &lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt; &lt;version&gt;1.4&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 德鲁伊数据库连接池 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid&lt;/artifactId&gt; &lt;version&gt;1.2.15&lt;/version&gt; &lt;/dependency&gt; &lt;!-- jackson依赖，SpringMVC处理json需要 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt; &lt;version&gt;2.14.0&lt;/version&gt; &lt;type&gt;bundle&lt;/type&gt; &lt;/dependency&gt; &lt;/dependencies&gt; web.xml &lt;!-- 编码过滤器，用于解决服务器接收浏览器请求乱码问题 --&gt; &lt;filter&gt; &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt; &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt; &lt;init-param&gt; &lt;param-name&gt;encoding&lt;/param-name&gt; &lt;param-value&gt;UTF-8&lt;/param-value&gt; &lt;/init-param&gt; &lt;init-param&gt; &lt;param-name&gt;forceResponseEncoding&lt;/param-name&gt; &lt;param-value&gt;true&lt;/param-value&gt; &lt;/init-param&gt; &lt;/filter&gt; &lt;filter-mapping&gt; &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt; &lt;url-pattern&gt;/*&lt;/url-pattern&gt; &lt;/filter-mapping&gt; &lt;!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/springconfig/" />
+<meta property="article:published_time" content="2022-11-18T17:13:57+08:00" />
+<meta property="article:modified_time" content="2022-11-18T17:13:57+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Spring常用配置</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 18, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h4 id="pomxml">pom.xml</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;dependencies&gt;</span>
+<span style="color:#75715e">&lt;!-- SpringMVC --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-webmvc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>5.3.1<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 日志 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>ch.qos.logback<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>logback-classic<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.2.9<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+<span style="color:#75715e">&lt;!-- ServletAPI --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>javax.servlet<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>javax.servlet-api<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>3.1.0<span style="color:#f92672">&lt;/version&gt;</span>
+            <span style="color:#f92672">&lt;scope&gt;</span>provided<span style="color:#f92672">&lt;/scope&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+<span style="color:#75715e">&lt;!-- Spring5和Thymeleaf整合包 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.thymeleaf<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>thymeleaf-spring5<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>3.0.13.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 文件上传模块 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>commons-fileupload<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>commons-fileupload<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.4<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        
+<span style="color:#75715e">&lt;!-- 德鲁伊数据库连接池 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>com.alibaba<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>druid<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.2.15<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+        
+<span style="color:#75715e">&lt;!-- jackson依赖，SpringMVC处理json需要 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>com.fasterxml.jackson.core<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>jackson-databind<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>2.14.0<span style="color:#f92672">&lt;/version&gt;</span>
+            <span style="color:#f92672">&lt;type&gt;</span>bundle<span style="color:#f92672">&lt;/type&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+<span style="color:#f92672">&lt;/dependencies&gt;</span>
+</code></pre></div><h4 id="webxml">web.xml</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- 编码过滤器，用于解决服务器接收浏览器请求乱码问题 --&gt;</span>
+	<span style="color:#f92672">&lt;filter&gt;</span>
+        <span style="color:#f92672">&lt;filter-name&gt;</span>CharacterEncodingFilter<span style="color:#f92672">&lt;/filter-name&gt;</span>
+        <span style="color:#f92672">&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span style="color:#f92672">&lt;/filter-class&gt;</span>
+        <span style="color:#f92672">&lt;init-param&gt;</span>
+            <span style="color:#f92672">&lt;param-name&gt;</span>encoding<span style="color:#f92672">&lt;/param-name&gt;</span>
+            <span style="color:#f92672">&lt;param-value&gt;</span>UTF-8<span style="color:#f92672">&lt;/param-value&gt;</span>
+        <span style="color:#f92672">&lt;/init-param&gt;</span>
+        <span style="color:#f92672">&lt;init-param&gt;</span>
+            <span style="color:#f92672">&lt;param-name&gt;</span>forceResponseEncoding<span style="color:#f92672">&lt;/param-name&gt;</span>
+            <span style="color:#f92672">&lt;param-value&gt;</span>true<span style="color:#f92672">&lt;/param-value&gt;</span>
+        <span style="color:#f92672">&lt;/init-param&gt;</span>
+    <span style="color:#f92672">&lt;/filter&gt;</span>
+    <span style="color:#f92672">&lt;filter-mapping&gt;</span>
+        <span style="color:#f92672">&lt;filter-name&gt;</span>CharacterEncodingFilter<span style="color:#f92672">&lt;/filter-name&gt;</span>
+        <span style="color:#f92672">&lt;url-pattern&gt;</span>/*<span style="color:#f92672">&lt;/url-pattern&gt;</span>
+    <span style="color:#f92672">&lt;/filter-mapping&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 隐藏http方法过滤器，用于将post请求转换为put和delete请求 --&gt;</span>
+    <span style="color:#f92672">&lt;filter&gt;</span>
+        <span style="color:#f92672">&lt;filter-name&gt;</span>HiddenHttpMethodFilter<span style="color:#f92672">&lt;/filter-name&gt;</span>
+        <span style="color:#f92672">&lt;filter-class&gt;</span>org.springframework.web.filter.HiddenHttpMethodFilter<span style="color:#f92672">&lt;/filter-class&gt;</span>
+    <span style="color:#f92672">&lt;/filter&gt;</span>
+    <span style="color:#f92672">&lt;filter-mapping&gt;</span>
+        <span style="color:#f92672">&lt;filter-name&gt;</span>HiddenHttpMethodFilter<span style="color:#f92672">&lt;/filter-name&gt;</span>
+        <span style="color:#f92672">&lt;url-pattern&gt;</span>/*<span style="color:#f92672">&lt;/url-pattern&gt;</span>
+    <span style="color:#f92672">&lt;/filter-mapping&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 前端控制器 --&gt;</span>
+    <span style="color:#f92672">&lt;servlet&gt;</span>
+        <span style="color:#f92672">&lt;servlet-name&gt;</span>DispatcherServlet<span style="color:#f92672">&lt;/servlet-name&gt;</span>
+        <span style="color:#f92672">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span style="color:#f92672">&lt;/servlet-class&gt;</span>
+        <span style="color:#f92672">&lt;init-param&gt;</span>
+            <span style="color:#f92672">&lt;param-name&gt;</span>contextConfigLocation<span style="color:#f92672">&lt;/param-name&gt;</span>
+            <span style="color:#f92672">&lt;param-value&gt;</span>classpath:springMVC.xml<span style="color:#f92672">&lt;/param-value&gt;</span>
+        <span style="color:#f92672">&lt;/init-param&gt;</span>
+        <span style="color:#f92672">&lt;load-on-startup&gt;</span>1<span style="color:#f92672">&lt;/load-on-startup&gt;</span>
+    <span style="color:#f92672">&lt;/servlet&gt;</span>
+    <span style="color:#f92672">&lt;servlet-mapping&gt;</span>
+        <span style="color:#f92672">&lt;servlet-name&gt;</span>DispatcherServlet<span style="color:#f92672">&lt;/servlet-name&gt;</span>
+        <span style="color:#f92672">&lt;url-pattern&gt;</span>/<span style="color:#f92672">&lt;/url-pattern&gt;</span>
+    <span style="color:#f92672">&lt;/servlet-mapping&gt;</span>
+
+</code></pre></div><h4 id="springmvcxml">springMVC.xml</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- 自动扫描包 --&gt;</span>
+    <span style="color:#f92672">&lt;context:component-scan</span> <span style="color:#a6e22e">base-package=</span><span style="color:#e6db74">&#34;com.sherry.springMVC&#34;</span><span style="color:#f92672">/&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 配置Thymeleaf视图解析器 --&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;viewResolver&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.thymeleaf.spring5.view.ThymeleafViewResolver&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;order&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;characterEncoding&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;templateEngine&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.thymeleaf.spring5.SpringTemplateEngine&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;templateResolver&#34;</span><span style="color:#f92672">&gt;</span>
+                    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver&#34;</span><span style="color:#f92672">&gt;</span>
+
+                        <span style="color:#75715e">&lt;!-- 视图前缀 --&gt;</span>
+                        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;prefix&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;/WEB-INF/templates/&#34;</span><span style="color:#f92672">/&gt;</span>
+
+                        <span style="color:#75715e">&lt;!-- 视图后缀 --&gt;</span>
+                        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;suffix&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;.html&#34;</span><span style="color:#f92672">/&gt;</span>
+                        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;templateMode&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;HTML5&#34;</span><span style="color:#f92672">/&gt;</span>
+                        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;characterEncoding&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span> <span style="color:#f92672">/&gt;</span>
+                    <span style="color:#f92672">&lt;/bean&gt;</span>
+                <span style="color:#f92672">&lt;/property&gt;</span>
+            <span style="color:#f92672">&lt;/bean&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+
+<span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">       处理静态资源，例如html、js、css、jpg
+</span><span style="color:#75715e">      若只设置该标签，则只能访问静态资源，其他请求则无法访问
+</span><span style="color:#75715e">      此时必须设置&lt;mvc:annotation-driven/&gt;解决问题
+</span><span style="color:#75715e">--&gt;</span>
+    <span style="color:#f92672">&lt;mvc:default-servlet-handler/&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 开启mvc注解驱动 --&gt;</span>
+    <span style="color:#f92672">&lt;mvc:annotation-driven&gt;</span>
+        <span style="color:#f92672">&lt;mvc:message-converters&gt;</span>
+            <span style="color:#75715e">&lt;!-- 处理响应中文内容乱码 --&gt;</span>
+            <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.http.converter.StringHttpMessageConverter&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;defaultCharset&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span> <span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;supportedMediaTypes&#34;</span><span style="color:#f92672">&gt;</span>
+                    <span style="color:#f92672">&lt;list&gt;</span>
+                        <span style="color:#f92672">&lt;value&gt;</span>text/html<span style="color:#f92672">&lt;/value&gt;</span>
+                        <span style="color:#f92672">&lt;value&gt;</span>application/json<span style="color:#f92672">&lt;/value&gt;</span>
+                    <span style="color:#f92672">&lt;/list&gt;</span>
+                <span style="color:#f92672">&lt;/property&gt;</span>
+            <span style="color:#f92672">&lt;/bean&gt;</span>
+        <span style="color:#f92672">&lt;/mvc:message-converters&gt;</span>
+    <span style="color:#f92672">&lt;/mvc:annotation-driven&gt;</span>
+
+
+<span style="color:#75715e">&lt;!-- 文件上传使用 --&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;multipartResolver&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.web.multipart.commons.CommonsMultipartResolver&#34;</span><span style="color:#f92672">/&gt;</span>
+
+
+<span style="color:#75715e">&lt;!-- 拦截器 --&gt;</span>
+    <span style="color:#f92672">&lt;mvc:interceptors&gt;</span>
+        <span style="color:#75715e">&lt;!-- 方法一，使用bean标签，此方法会拦截所有控制器方法--&gt;</span>
+        <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;com.atguigu.interceptor.FirstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/bean&gt;</span>
+
+        <span style="color:#75715e">&lt;!-- 方法二，使用ref引用IoC容器中的bean，因此要将拦截器类设置为@Component普通组件，并ccs扫描该组件。此方法也会拦截所有控制器方法--&gt;</span>
+        <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;firstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/ref&gt;</span>
+        <span style="color:#75715e">&lt;!-- 以上两种配置方式都是对DispatcherServlet所处理的所有的请求进行拦截 --&gt;</span>
+
+        <span style="color:#75715e">&lt;!-- 方法三，--&gt;</span>
+        <span style="color:#f92672">&lt;mvc:interceptor&gt;</span>
+            <span style="color:#f92672">&lt;mvc:mapping</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;/**&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#75715e">&lt;!-- 
+</span><span style="color:#75715e">                此处使用/*只表示上下文路径中的一层路径，不能表示所有请求
+</span><span style="color:#75715e">                要表示所有请求，使用/**
+</span><span style="color:#75715e">            --&gt;</span>
+            <span style="color:#f92672">&lt;mvc:exclude-mapping</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;/testRequestEntity&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;firstInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/ref&gt;</span>
+        <span style="color:#f92672">&lt;/mvc:interceptor&gt;</span>
+        <span style="color:#75715e">&lt;!-- 
+</span><span style="color:#75715e">            以上配置方式可以通过ref或bean标签设置拦截器，通过mvc:mapping设置需要拦截的请求，通过mvc:exclude-mapping设置需要排除的请求，即不需要拦截的请求
+</span><span style="color:#75715e">        --&gt;</span>
+
+
+    <span style="color:#f92672">&lt;/mvc:interceptors&gt;</span>
+
+
+<span style="color:#75715e">&lt;!-- 异常处理器 --&gt;</span>
+    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;exceptionMappings&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;props&gt;</span>
+                <span style="color:#f92672">&lt;prop</span> <span style="color:#a6e22e">key=</span><span style="color:#e6db74">&#34;java.lang.ArithmeticException&#34;</span><span style="color:#f92672">&gt;</span>error<span style="color:#f92672">&lt;/prop&gt;</span>
+            <span style="color:#f92672">&lt;/props&gt;</span>
+        <span style="color:#f92672">&lt;/property&gt;</span>
+        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;exceptionAttribute&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;ecp&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/bean&gt;</span>
+
+
+<span style="color:#75715e">&lt;!-- 视图控制器，实现单纯的请求页面跳转 --&gt;</span>
+    <span style="color:#f92672">&lt;mvc:view-controller</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">view-name=</span><span style="color:#e6db74">&#34;index&#34;</span><span style="color:#f92672">/&gt;</span>
+
+
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
