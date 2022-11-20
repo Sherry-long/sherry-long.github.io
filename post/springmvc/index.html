@@ -25,11 +25,12 @@
 ​	十、拦截器
 ​	十一、异常处理器
 ​	十二、注解配置SpringMVC
+​	十三、SpringMVC执行流程
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
 一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
-二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch."/>
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!"/>
 
     <meta property="og:title" content="SpringMVC" />
 <meta property="og:description" content="​	一、SpringMVC特点
@@ -44,11 +45,12 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 ​	十、拦截器
 ​	十一、异常处理器
 ​	十二、注解配置SpringMVC
+​	十三、SpringMVC执行流程
 SpringMVC是Spring的一个后续产品，是Spring的一个子项目
 SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)
 #
 一、SpringMVC的特点 1）Spring 家族原生产品，与IoC容器等基础设施无缝对接 2）基于原生的Servlet，通过功能强大的前端控制器DispatcherServlet，对请求和响应进行统一处理 3）表述层各细分领域需要解决的问题全方位覆盖，提供全面解决方案 4）代码清新简洁，大幅度提升开发效率 5）内部组件化程度高，可插拔式组件即插即用，想要什么功能配置相应组件即可 6）性能卓著，尤其适合现代大型、超大型互联网项目要求   #
-二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch." />
+二、创建SpringMVC工程 创建maven工程 1.pom.xml中引入依赖，打包方式：war &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;project xmlns=&#34;http://maven.apache.org/POM/4.0.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&#34;&gt; &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; &lt;groupId&gt;org.sherry&lt;/groupId&gt; &lt;artifactId&gt;demo1&lt;/artifactId&gt; &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt; &lt;packaging&gt;war&lt;/packaging&gt; &lt;properties&gt; &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/springmvc/" />
 <meta property="article:published_time" content="2022-10-11T11:02:42+08:00" />
@@ -93,7 +95,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          9 min read
+          14 min read
         </div>
       </div>
     </header>
@@ -110,6 +112,7 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
 <p>​	<a href="#Interceptor">十、拦截器</a></p>
 <p>​	<a href="#ExceptionXeqtr">十一、异常处理器</a></p>
 <p>​	<a href="#mvcAnno">十二、注解配置SpringMVC</a></p>
+<p>​	<a href="#mvcSource">十三、SpringMVC执行流程</a></p>
 <p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
 <p>SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三层架构分别为表述层(表示层)、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet)</p>
 <p><a id="feature">#</a></p>
@@ -1209,7 +1212,399 @@ requestBody:name=Jame&amp;password=123</p>
     <span style="color:#f92672">}</span>
 
 <span style="color:#f92672">}</span>
-</code></pre></div>
+</code></pre></div><hr>
+<hr>
+<p><a id="mvcSource">#</a></p>
+<h3 id="十三springmvc执行流程">十三、SpringMVC执行流程</h3>
+<h4 id="1-springmvc常用组件">1. SpringMVC常用组件</h4>
+<ul>
+<li>DispatcherServlet：<strong>前端控制器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：统一处理请求和响应，整个流程控制的中心，由它调用其它组件处理用户的请求</p>
+<ul>
+<li>HandlerMapping：<strong>处理器映射器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：根据请求的url、method等信息查找Handler，即控制器方法</p>
+<ul>
+<li>Handler：<strong>处理器</strong>，需要工程师开发</li>
+</ul>
+<p>作用：在DispatcherServlet的控制下Handler对具体的用户请求进行处理</p>
+<ul>
+<li>HandlerAdapter：<strong>处理器适配器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：通过HandlerAdapter对处理器（控制器方法）进行执行</p>
+<ul>
+<li>ViewResolver：<strong>视图解析器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：进行视图解析，得到相应的视图，例如：ThymeleafView、InternalResourceView、RedirectView</p>
+<ul>
+<li>View：<strong>视图</strong></li>
+</ul>
+<p>作用：将模型数据通过页面展示给用户</p>
+<h4 id="2-dispatcherservlet初始化过程">2. DispatcherServlet初始化过程</h4>
+<p>DispatcherServlet 本质上是一个 Servlet，所以天然的遵循 Servlet 的生命周期。所以宏观上是 Servlet 生命周期来进行调度。</p>
+<p>[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-kphToPhs-1627992919015)(img/img005.png)]</p>
+<h5 id="a初始化webapplicationcontext">a&gt;初始化WebApplicationContext</h5>
+<p>所在类：org.springframework.web.servlet.FrameworkServlet</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">protected</span> WebApplicationContext <span style="color:#a6e22e">initWebApplicationContext</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    WebApplicationContext rootContext <span style="color:#f92672">=</span>
+        WebApplicationContextUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getWebApplicationContext</span><span style="color:#f92672">(</span>getServletContext<span style="color:#f92672">());</span>
+    WebApplicationContext wac <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">webApplicationContext</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// A context instance was injected at construction time -&gt; use it
+</span><span style="color:#75715e"></span>        wac <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">webApplicationContext</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>wac <span style="color:#66d9ef">instanceof</span> ConfigurableWebApplicationContext<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            ConfigurableWebApplicationContext cwac <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>ConfigurableWebApplicationContext<span style="color:#f92672">)</span> wac<span style="color:#f92672">;</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>cwac<span style="color:#f92672">.</span><span style="color:#a6e22e">isActive</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// The context has not yet been refreshed -&gt; provide services such as
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// setting the parent context, setting the application context id, etc
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>cwac<span style="color:#f92672">.</span><span style="color:#a6e22e">getParent</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#75715e">// The context instance was injected without an explicit parent -&gt; set
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">// the root application context (if any; may be null) as the parent
+</span><span style="color:#75715e"></span>                    cwac<span style="color:#f92672">.</span><span style="color:#a6e22e">setParent</span><span style="color:#f92672">(</span>rootContext<span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+                configureAndRefreshWebApplicationContext<span style="color:#f92672">(</span>cwac<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>wac <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// No context instance was injected at construction time -&gt; see if one
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// has been registered in the servlet context. If one exists, it is assumed
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// that the parent context (if any) has already been set and that the
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// user has performed any initialization such as setting the context id
+</span><span style="color:#75715e"></span>        wac <span style="color:#f92672">=</span> findWebApplicationContext<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>wac <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// No context instance is defined for this servlet -&gt; create a local one
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 创建WebApplicationContext
+</span><span style="color:#75715e"></span>        wac <span style="color:#f92672">=</span> createWebApplicationContext<span style="color:#f92672">(</span>rootContext<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">refreshEventReceived</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// Either the context is not a ConfigurableApplicationContext with refresh
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// support or the context injected at construction time had already been
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// refreshed -&gt; trigger initial onRefresh manually here.
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">onRefreshMonitor</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 刷新WebApplicationContext
+</span><span style="color:#75715e"></span>            onRefresh<span style="color:#f92672">(</span>wac<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">publishContext</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// Publish the context as a servlet context attribute.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 将IOC容器在应用域共享
+</span><span style="color:#75715e"></span>        String attrName <span style="color:#f92672">=</span> getServletContextAttributeName<span style="color:#f92672">();</span>
+        getServletContext<span style="color:#f92672">().</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>attrName<span style="color:#f92672">,</span> wac<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">return</span> wac<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="创建webapplicationcontext">创建WebApplicationContext</h5>
+<p>所在类：org.springframework.web.servlet.FrameworkServlet</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">protected</span> WebApplicationContext <span style="color:#a6e22e">createWebApplicationContext</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Nullable</span> ApplicationContext parent<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    Class<span style="color:#f92672">&lt;?&gt;</span> contextClass <span style="color:#f92672">=</span> getContextClass<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>ConfigurableWebApplicationContext<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">isAssignableFrom</span><span style="color:#f92672">(</span>contextClass<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ApplicationContextException<span style="color:#f92672">(</span>
+            <span style="color:#e6db74">&#34;Fatal initialization error in servlet with name &#39;&#34;</span> <span style="color:#f92672">+</span> getServletName<span style="color:#f92672">()</span> <span style="color:#f92672">+</span>
+            <span style="color:#e6db74">&#34;&#39;: custom WebApplicationContext class [&#34;</span> <span style="color:#f92672">+</span> contextClass<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span>
+            <span style="color:#e6db74">&#34;] is not of type ConfigurableWebApplicationContext&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 通过反射创建 IOC 容器对象
+</span><span style="color:#75715e"></span>    ConfigurableWebApplicationContext wac <span style="color:#f92672">=</span>
+        <span style="color:#f92672">(</span>ConfigurableWebApplicationContext<span style="color:#f92672">)</span> BeanUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">instantiateClass</span><span style="color:#f92672">(</span>contextClass<span style="color:#f92672">);</span>
+
+    wac<span style="color:#f92672">.</span><span style="color:#a6e22e">setEnvironment</span><span style="color:#f92672">(</span>getEnvironment<span style="color:#f92672">());</span>
+    <span style="color:#75715e">// 设置父容器
+</span><span style="color:#75715e"></span>    wac<span style="color:#f92672">.</span><span style="color:#a6e22e">setParent</span><span style="color:#f92672">(</span>parent<span style="color:#f92672">);</span>
+    String configLocation <span style="color:#f92672">=</span> getContextConfigLocation<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>configLocation <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        wac<span style="color:#f92672">.</span><span style="color:#a6e22e">setConfigLocation</span><span style="color:#f92672">(</span>configLocation<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    configureAndRefreshWebApplicationContext<span style="color:#f92672">(</span>wac<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">return</span> wac<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="cdispatcherservlet初始化策略">c&gt;DispatcherServlet初始化策略</h5>
+<p>FrameworkServlet创建WebApplicationContext后，刷新容器，调用onRefresh(wac)，此方法在DispatcherServlet中进行了重写，调用了initStrategies(context)方法，初始化策略，即初始化DispatcherServlet的各个组件</p>
+<p>所在类：org.springframework.web.servlet.DispatcherServlet</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">initStrategies</span><span style="color:#f92672">(</span>ApplicationContext context<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+   initMultipartResolver<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initLocaleResolver<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initThemeResolver<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initHandlerMappings<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initHandlerAdapters<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initHandlerExceptionResolvers<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initRequestToViewNameTranslator<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initViewResolvers<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+   initFlashMapManager<span style="color:#f92672">(</span>context<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="3-dispatcherservlet调用组件处理请求">3. DispatcherServlet调用组件处理请求</h4>
+<h5 id="aprocessrequest">a&gt;processRequest()</h5>
+<p>FrameworkServlet重写HttpServlet中的service()和doXxx()，这些方法中调用了processRequest(request, response)</p>
+<p>所在类：org.springframework.web.servlet.FrameworkServlet</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">processRequest</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">throws</span> ServletException<span style="color:#f92672">,</span> IOException <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">long</span> startTime <span style="color:#f92672">=</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">currentTimeMillis</span><span style="color:#f92672">();</span>
+    Throwable failureCause <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+    LocaleContext previousLocaleContext <span style="color:#f92672">=</span> LocaleContextHolder<span style="color:#f92672">.</span><span style="color:#a6e22e">getLocaleContext</span><span style="color:#f92672">();</span>
+    LocaleContext localeContext <span style="color:#f92672">=</span> buildLocaleContext<span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+
+    RequestAttributes previousAttributes <span style="color:#f92672">=</span> RequestContextHolder<span style="color:#f92672">.</span><span style="color:#a6e22e">getRequestAttributes</span><span style="color:#f92672">();</span>
+    ServletRequestAttributes requestAttributes <span style="color:#f92672">=</span> buildRequestAttributes<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> previousAttributes<span style="color:#f92672">);</span>
+
+    WebAsyncManager asyncManager <span style="color:#f92672">=</span> WebAsyncUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getAsyncManager</span><span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+    asyncManager<span style="color:#f92672">.</span><span style="color:#a6e22e">registerCallableInterceptor</span><span style="color:#f92672">(</span>FrameworkServlet<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">(),</span> <span style="color:#66d9ef">new</span> RequestBindingInterceptor<span style="color:#f92672">());</span>
+
+    initContextHolders<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> localeContext<span style="color:#f92672">,</span> requestAttributes<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 执行服务，doService()是一个抽象方法，在DispatcherServlet中进行了重写
+</span><span style="color:#75715e"></span>        doService<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>ServletException <span style="color:#f92672">|</span> IOException ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        failureCause <span style="color:#f92672">=</span> ex<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">throw</span> ex<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Throwable ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        failureCause <span style="color:#f92672">=</span> ex<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NestedServletException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Request processing failed&#34;</span><span style="color:#f92672">,</span> ex<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        resetContextHolders<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> previousLocaleContext<span style="color:#f92672">,</span> previousAttributes<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>requestAttributes <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            requestAttributes<span style="color:#f92672">.</span><span style="color:#a6e22e">requestCompleted</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        logResult<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> failureCause<span style="color:#f92672">,</span> asyncManager<span style="color:#f92672">);</span>
+        publishRequestHandledEvent<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> startTime<span style="color:#f92672">,</span> failureCause<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="bdoservice">b&gt;doService()</h5>
+<p>所在类：org.springframework.web.servlet.DispatcherServlet</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Override</span>
+<span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doService</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+    logRequest<span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+
+    <span style="color:#75715e">// Keep a snapshot of the request attributes in case of an include,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// to be able to restore the original attributes after the include.
+</span><span style="color:#75715e"></span>    Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> attributesSnapshot <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>WebUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">isIncludeRequest</span><span style="color:#f92672">(</span>request<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        attributesSnapshot <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+        Enumeration<span style="color:#f92672">&lt;?&gt;</span> attrNames <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span><span style="color:#a6e22e">getAttributeNames</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>attrNames<span style="color:#f92672">.</span><span style="color:#a6e22e">hasMoreElements</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            String attrName <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>String<span style="color:#f92672">)</span> attrNames<span style="color:#f92672">.</span><span style="color:#a6e22e">nextElement</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">cleanupAfterInclude</span> <span style="color:#f92672">||</span> attrName<span style="color:#f92672">.</span><span style="color:#a6e22e">startsWith</span><span style="color:#f92672">(</span>DEFAULT_STRATEGIES_PREFIX<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+                attributesSnapshot<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>attrName<span style="color:#f92672">,</span> request<span style="color:#f92672">.</span><span style="color:#a6e22e">getAttribute</span><span style="color:#f92672">(</span>attrName<span style="color:#f92672">));</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// Make framework objects available to handlers and view objects.
+</span><span style="color:#75715e"></span>    request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>WEB_APPLICATION_CONTEXT_ATTRIBUTE<span style="color:#f92672">,</span> getWebApplicationContext<span style="color:#f92672">());</span>
+    request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>LOCALE_RESOLVER_ATTRIBUTE<span style="color:#f92672">,</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">localeResolver</span><span style="color:#f92672">);</span>
+    request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>THEME_RESOLVER_ATTRIBUTE<span style="color:#f92672">,</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">themeResolver</span><span style="color:#f92672">);</span>
+    request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>THEME_SOURCE_ATTRIBUTE<span style="color:#f92672">,</span> getThemeSource<span style="color:#f92672">());</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">flashMapManager</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        FlashMap inputFlashMap <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">flashMapManager</span><span style="color:#f92672">.</span><span style="color:#a6e22e">retrieveAndUpdate</span><span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>inputFlashMap <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>INPUT_FLASH_MAP_ATTRIBUTE<span style="color:#f92672">,</span> Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">unmodifiableMap</span><span style="color:#f92672">(</span>inputFlashMap<span style="color:#f92672">));</span>
+        <span style="color:#f92672">}</span>
+        request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>OUTPUT_FLASH_MAP_ATTRIBUTE<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> FlashMap<span style="color:#f92672">());</span>
+        request<span style="color:#f92672">.</span><span style="color:#a6e22e">setAttribute</span><span style="color:#f92672">(</span>FLASH_MAP_MANAGER_ATTRIBUTE<span style="color:#f92672">,</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">flashMapManager</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    RequestPath requestPath <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">parseRequestPath</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>ServletRequestPathUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">hasParsedRequestPath</span><span style="color:#f92672">(</span>request<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        requestPath <span style="color:#f92672">=</span> ServletRequestPathUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">parseAndCache</span><span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 处理请求和响应
+</span><span style="color:#75715e"></span>        doDispatch<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>WebAsyncUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getAsyncManager</span><span style="color:#f92672">(</span>request<span style="color:#f92672">).</span><span style="color:#a6e22e">isConcurrentHandlingStarted</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// Restore the original attribute snapshot, in case of an include.
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>attributesSnapshot <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                restoreAttributesAfterInclude<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> attributesSnapshot<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>requestPath <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            ServletRequestPathUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">clearParsedRequestPath</span><span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="cdodispatch">c&gt;doDispatch()</h5>
+<p>所在类：org.springframework.web.servlet.DispatcherServlet</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doDispatch</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+    HttpServletRequest processedRequest <span style="color:#f92672">=</span> request<span style="color:#f92672">;</span>
+    HandlerExecutionChain mappedHandler <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">boolean</span> multipartRequestParsed <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+
+    WebAsyncManager asyncManager <span style="color:#f92672">=</span> WebAsyncUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getAsyncManager</span><span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        ModelAndView mv <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        Exception dispatchException <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            processedRequest <span style="color:#f92672">=</span> checkMultipart<span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+            multipartRequestParsed <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>processedRequest <span style="color:#f92672">!=</span> request<span style="color:#f92672">);</span>
+
+            <span style="color:#75715e">// Determine handler for the current request.
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">/*
+</span><span style="color:#75715e">                mappedHandler：调用链
+</span><span style="color:#75715e">                包含handler、interceptorList、interceptorIndex
+</span><span style="color:#75715e">                handler：浏览器发送的请求所匹配的控制器方法
+</span><span style="color:#75715e">                interceptorList：处理控制器方法的所有拦截器集合
+</span><span style="color:#75715e">                interceptorIndex：拦截器索引，控制拦截器afterCompletion()的执行
+</span><span style="color:#75715e">            */</span>
+            mappedHandler <span style="color:#f92672">=</span> getHandler<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>mappedHandler <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                noHandlerFound<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+
+            <span style="color:#75715e">// Determine handler adapter for the current request.
+</span><span style="color:#75715e"></span>               <span style="color:#75715e">// 通过控制器方法创建相应的处理器适配器，调用所对应的控制器方法
+</span><span style="color:#75715e"></span>            HandlerAdapter ha <span style="color:#f92672">=</span> getHandlerAdapter<span style="color:#f92672">(</span>mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">getHandler</span><span style="color:#f92672">());</span>
+
+            <span style="color:#75715e">// Process last-modified header, if supported by the handler.
+</span><span style="color:#75715e"></span>            String method <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span><span style="color:#a6e22e">getMethod</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">boolean</span> isGet <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;GET&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>method<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>isGet <span style="color:#f92672">||</span> <span style="color:#e6db74">&#34;HEAD&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>method<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">long</span> lastModified <span style="color:#f92672">=</span> ha<span style="color:#f92672">.</span><span style="color:#a6e22e">getLastModified</span><span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">getHandler</span><span style="color:#f92672">());</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> ServletWebRequest<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">).</span><span style="color:#a6e22e">checkNotModified</span><span style="color:#f92672">(</span>lastModified<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> isGet<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+            
+            <span style="color:#75715e">// 调用拦截器的preHandle()
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">applyPreHandle</span><span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+
+            <span style="color:#75715e">// Actually invoke the handler.
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// 由处理器适配器调用具体的控制器方法，最终获得ModelAndView对象
+</span><span style="color:#75715e"></span>            mv <span style="color:#f92672">=</span> ha<span style="color:#f92672">.</span><span style="color:#a6e22e">handle</span><span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">getHandler</span><span style="color:#f92672">());</span>
+
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>asyncManager<span style="color:#f92672">.</span><span style="color:#a6e22e">isConcurrentHandlingStarted</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+
+            applyDefaultViewName<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> mv<span style="color:#f92672">);</span>
+            <span style="color:#75715e">// 调用拦截器的postHandle()
+</span><span style="color:#75715e"></span>            mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">applyPostHandle</span><span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> mv<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            dispatchException <span style="color:#f92672">=</span> ex<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Throwable err<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// As of 4.3, we&#39;re processing Errors thrown from handler methods as well,
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// making them available for @ExceptionHandler methods and other scenarios.
+</span><span style="color:#75715e"></span>            dispatchException <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NestedServletException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Handler dispatch failed&#34;</span><span style="color:#f92672">,</span> err<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 后续处理：处理模型数据和渲染视图
+</span><span style="color:#75715e"></span>        processDispatchResult<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> mappedHandler<span style="color:#f92672">,</span> mv<span style="color:#f92672">,</span> dispatchException<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        triggerAfterCompletion<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> mappedHandler<span style="color:#f92672">,</span> ex<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Throwable err<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        triggerAfterCompletion<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> mappedHandler<span style="color:#f92672">,</span>
+                               <span style="color:#66d9ef">new</span> NestedServletException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Handler processing failed&#34;</span><span style="color:#f92672">,</span> err<span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>asyncManager<span style="color:#f92672">.</span><span style="color:#a6e22e">isConcurrentHandlingStarted</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// Instead of postHandle and afterCompletion
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>mappedHandler <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">applyAfterConcurrentHandlingStarted</span><span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">,</span> response<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// Clean up any resources used by a multipart request.
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>multipartRequestParsed<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                cleanupMultipart<span style="color:#f92672">(</span>processedRequest<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h5 id="dprocessdispatchresult">d&gt;processDispatchResult()</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">processDispatchResult</span><span style="color:#f92672">(</span>HttpServletRequest request<span style="color:#f92672">,</span> HttpServletResponse response<span style="color:#f92672">,</span>
+                                   <span style="color:#a6e22e">@Nullable</span> HandlerExecutionChain mappedHandler<span style="color:#f92672">,</span> <span style="color:#a6e22e">@Nullable</span> ModelAndView mv<span style="color:#f92672">,</span>
+                                   <span style="color:#a6e22e">@Nullable</span> Exception exception<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">boolean</span> errorView <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>exception <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>exception <span style="color:#66d9ef">instanceof</span> ModelAndViewDefiningException<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            logger<span style="color:#f92672">.</span><span style="color:#a6e22e">debug</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ModelAndViewDefiningException encountered&#34;</span><span style="color:#f92672">,</span> exception<span style="color:#f92672">);</span>
+            mv <span style="color:#f92672">=</span> <span style="color:#f92672">((</span>ModelAndViewDefiningException<span style="color:#f92672">)</span> exception<span style="color:#f92672">).</span><span style="color:#a6e22e">getModelAndView</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+            Object handler <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>mappedHandler <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">getHandler</span><span style="color:#f92672">()</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+            mv <span style="color:#f92672">=</span> processHandlerException<span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> handler<span style="color:#f92672">,</span> exception<span style="color:#f92672">);</span>
+            errorView <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>mv <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// Did the handler return a view to render?
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>mv <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>mv<span style="color:#f92672">.</span><span style="color:#a6e22e">wasCleared</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 处理模型数据和渲染视图
+</span><span style="color:#75715e"></span>        render<span style="color:#f92672">(</span>mv<span style="color:#f92672">,</span> request<span style="color:#f92672">,</span> response<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>errorView<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            WebUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">clearErrorRequestAttributes</span><span style="color:#f92672">(</span>request<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>logger<span style="color:#f92672">.</span><span style="color:#a6e22e">isTraceEnabled</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            logger<span style="color:#f92672">.</span><span style="color:#a6e22e">trace</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;No view rendering, null ModelAndView returned.&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>WebAsyncUtils<span style="color:#f92672">.</span><span style="color:#a6e22e">getAsyncManager</span><span style="color:#f92672">(</span>request<span style="color:#f92672">).</span><span style="color:#a6e22e">isConcurrentHandlingStarted</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// Concurrent handling started during a forward
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>mappedHandler <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// Exception (if any) is already handled..
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 调用拦截器的afterCompletion()
+</span><span style="color:#75715e"></span>        mappedHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">triggerAfterCompletion</span><span style="color:#f92672">(</span>request<span style="color:#f92672">,</span> response<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="4-springmvc的执行流程">4. SpringMVC的执行流程</h4>
+<ol>
+<li>用户向服务器发送请求，请求被SpringMVC 前端控制器 DispatcherServlet捕获。</li>
+<li>DispatcherServlet对请求URL进行解析，得到请求资源标识符（URI），判断请求URI对应的映射：</li>
+</ol>
+<p>a) 不存在</p>
+<p>i. 再判断是否配置了mvc:default-servlet-handler</p>
+<p>ii. 如果没配置，则控制台报映射查找不到，客户端展示404错误</p>
+<p>iii. 如果有配置，则访问目标资源（一般为静态资源，如：JS,CSS,HTML），找不到客户端也会展示404错误</p>
+<p>b) 存在则执行下面的流程</p>
+<ol>
+<li>根据该URI，调用HandlerMapping获得该Handler配置的所有相关的对象（包括Handler对象以及Handler对象对应的拦截器），最后以HandlerExecutionChain执行链对象的形式返回。</li>
+<li>DispatcherServlet 根据获得的Handler，选择一个合适的HandlerAdapter。</li>
+<li>如果成功获得HandlerAdapter，此时将开始执行拦截器的preHandler(…)方法【正向】</li>
+<li>提取Request中的模型数据，填充Handler入参，开始执行Handler（Controller)方法，处理请求。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：</li>
+</ol>
+<p>a) HttpMessageConveter： 将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息</p>
+<p>b) 数据转换：对请求消息进行数据转换。如String转换成Integer、Double等</p>
+<p>c) 数据格式化：对请求消息进行数据格式化。 如将字符串转换成格式化数字或格式化日期等</p>
+<p>d) 数据验证： 验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中</p>
+<ol>
+<li>Handler执行完成后，向DispatcherServlet 返回一个ModelAndView对象。</li>
+<li>此时将开始执行拦截器的postHandle(…)方法【逆向】。</li>
+<li>根据返回的ModelAndView（此时会判断是否存在异常：如果存在异常，则执行HandlerExceptionResolver进行异常处理）选择一个适合的ViewResolver进行视图解析，根据Model和View，来渲染视图。</li>
+<li>渲染视图完毕执行拦截器的afterCompletion(…)方法【逆向】。</li>
+<li>将渲染结果返回给客户端。</li>
+</ol>
+
     </div>
     <div class="post-footer">
       
