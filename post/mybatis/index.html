@@ -15,34 +15,30 @@
 <meta name="twitter:title" content="MyBatis"/>
 <meta name="twitter:description" content="​	一、MyBatis简介
 ​	二、搭建MyBatis
+​	三、核心配置文件详解
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
   MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
-二、搭建MyBatis 打包方式：jar
-引入依赖
-&lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件
-习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
+二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
 存放位置 src/main/resources 目录下
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis."/>
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!"/>
 
     <meta property="og:title" content="MyBatis" />
 <meta property="og:description" content="​	一、MyBatis简介
 ​	二、搭建MyBatis
+​	三、核心配置文件详解
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
   MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
-二、搭建MyBatis 打包方式：jar
-引入依赖
-&lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件
-习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
+二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
 存放位置 src/main/resources 目录下
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!DOCTYPE configuration PUBLIC &#34;-//mybatis." />
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt; &lt;!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/mybatis/" />
 <meta property="article:published_time" content="2022-11-21T15:22:53+08:00" />
@@ -87,13 +83,14 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          3 min read
         </div>
       </div>
     </header>
     <div class="post-content">
       <p>​	<a href="#Intro">一、MyBatis简介</a></p>
 <p>​	<a href="#Build">二、搭建MyBatis</a></p>
+<p>​	<a href="#config">三、核心配置文件详解</a></p>
 <p><a id="Intro">#</a></p>
 <h3 id="一mybatis简介">一、MyBatis简介</h3>
 <h4 id="1-mybatis特性">1. MyBatis特性</h4>
@@ -115,8 +112,8 @@
 <hr>
 <p><a id="Build">#</a></p>
 <h3 id="二搭建mybatis">二、搭建MyBatis</h3>
-<p><strong>打包方式：jar</strong></p>
-<p><strong>引入依赖</strong></p>
+<h4 id="打包方式jar">打包方式：jar</h4>
+<h4 id="引入依赖">引入依赖</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
         <span style="color:#f92672">&lt;dependency&gt;</span>
             <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
@@ -137,7 +134,7 @@
             <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
             <span style="color:#f92672">&lt;version&gt;</span>4.13.2<span style="color:#f92672">&lt;/version&gt;</span>
         <span style="color:#f92672">&lt;/dependency&gt;</span>
-</code></pre></div><p><strong>创建MyBatis核心配置文件</strong></p>
+</code></pre></div><h4 id="创建mybatis核心配置文件">创建MyBatis核心配置文件</h4>
 <p>习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息</p>
 <p>存放位置 src/main/resources 目录下</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
@@ -151,11 +148,11 @@
         <span style="color:#f92672">&lt;environment</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
             <span style="color:#f92672">&lt;transactionManager</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;JDBC&#34;</span><span style="color:#f92672">/&gt;</span>
             <span style="color:#f92672">&lt;dataSource</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;POOLED&#34;</span><span style="color:#f92672">&gt;</span>
-                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driver&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driver&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;com.mysql.cj.jdbc.Driver&#34;</span><span style="color:#f92672">/&gt;</span>
                 <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span>
-                          <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/MyBatis&#34;</span><span style="color:#f92672">/&gt;</span>
+                          <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mybatis&#34;</span><span style="color:#f92672">/&gt;</span>
                 <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
-                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;123456&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">/&gt;</span>
             <span style="color:#f92672">&lt;/dataSource&gt;</span>
         <span style="color:#f92672">&lt;/environment&gt;</span>
     <span style="color:#f92672">&lt;/environments&gt;</span>
@@ -164,16 +161,284 @@
         <span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;mappers/UserMapper.xml&#34;</span><span style="color:#f92672">/&gt;</span>
     <span style="color:#f92672">&lt;/mappers&gt;</span>
 <span style="color:#f92672">&lt;/configuration&gt;</span>
-</code></pre></div><p><strong>创建mapper接口</strong></p>
+</code></pre></div><h4 id="创建mapper接口">创建mapper接口</h4>
 <p>MyBatis中的mapper接口相当于以前的dao。但是区别在于，mapper仅仅是接口，我们不需要提供实现类。</p>
+<p>MyBatis支持面向接口编程，当我们通过接口调用方法时，MyBatis就会自动去匹配对应的SQL语句</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#f92672">{</span>
     <span style="color:#75715e">/**
 </span><span style="color:#75715e">     * 添加用户信息
 </span><span style="color:#75715e">     */</span>
     <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">insertUser</span><span style="color:#f92672">();</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p><strong>创建MyBatis映射文件</strong></p>
+</code></pre></div><h4 id="创建mybatis映射文件">创建MyBatis映射文件</h4>
+<p><strong>ORM</strong>(<strong>O</strong>bject <strong>R</strong>elationship <strong>M</strong>apping)对象关系映射</p>
+<ul>
+<li>对象：Java实体类对象</li>
+<li>关系：关系型数据库</li>
+<li>映射：二者之间的对应关系</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Java概念</th>
+<th>数据库概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类</td>
+<td>表</td>
+</tr>
+<tr>
+<td>属性</td>
+<td>字段/列</td>
+</tr>
+<tr>
+<td>对象</td>
+<td>记录/行</td>
+</tr>
+</tbody>
+</table>
+<p>1、映射文件的命名规则：</p>
+<p>表所对应的实体类的类名+Mapper.xml</p>
+<p>例如表t_user，映射的实体类为User，所对应的映射文件为UserMapper.xml</p>
+<p>因此一个映射文件对应一个实体类，对应一张表的操作</p>
+<p>MyBatis映射文件用于编写SQL，访问以及操作表中的数据</p>
+<p>MyBatis映射文件存放的位置是src/main/resources/mappers目录下</p>
+<p>2、MyBatis中可以面向接口操作数据，要保证<strong>两个一致</strong>：</p>
+<p>a&gt; mapper接口的全类名和映射文件的命名空间（namespace）保持一致</p>
+<p>b&gt; mapper接口中方法的方法名和映射文件中编写SQL的标签的id属性保持一致</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE mapper
+</span><span style="color:#75715e">    PUBLIC &#34;-//mybatis.org//DTD Mapper 3.0//EN&#34;
+</span><span style="color:#75715e">    &#34;http://mybatis.org/dtd/mybatis-3-mapper.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;mapper</span> <span style="color:#a6e22e">namespace=</span><span style="color:#e6db74">&#34;com.sherry.MyBatis.mapper.UserMapper&#34;</span><span style="color:#f92672">&gt;</span>
 
+    <span style="color:#75715e">&lt;!--int insertUser();--&gt;</span>
+    <span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;insertUser&#34;</span><span style="color:#f92672">&gt;</span>
+        insert into t_user values(null, &#39;admin&#39;, &#39;123456&#39;, 23, &#39;男&#39;, &#39;1234@123.com&#39;)
+    <span style="color:#f92672">&lt;/insert&gt;</span>
+<span style="color:#f92672">&lt;/mapper&gt;</span>
+</code></pre></div><h4 id="junit测试功能">Junit测试功能</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//读取MyBatis的核心配置文件
+</span><span style="color:#75715e"></span>InputStream is <span style="color:#f92672">=</span> Resources<span style="color:#f92672">.</span><span style="color:#a6e22e">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mybatis_config.xml&#34;</span><span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//创建SqlSessionFactoryBuilder对象
+</span><span style="color:#75715e"></span>SqlSessionFactoryBuilder sqlSessionFactoryBuilder <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span>
+SqlSessionFactoryBuilder<span style="color:#f92672">();</span>
+
+<span style="color:#75715e">//通过核心配置文件所对应的字节输入流创建工厂类SqlSessionFactory，生产SqlSession对象
+</span><span style="color:#75715e"></span>SqlSessionFactory sqlSessionFactory <span style="color:#f92672">=</span> sqlSessionFactoryBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">(</span>is<span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//创建SqlSession对象，此时通过SqlSession对象所操作的sql都必须手动提交或回滚事务
+</span><span style="color:#75715e">//SqlSession sqlSession = sqlSessionFactory.openSession();
+</span><span style="color:#75715e">//创建SqlSession对象，此时通过SqlSession对象所操作的sql都会自动提交
+</span><span style="color:#75715e">//sqlSession默认不自动提交事务，设置参数为true自动提交事务
+</span><span style="color:#75715e"></span>SqlSession sqlSession <span style="color:#f92672">=</span> sqlSessionFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">openSession</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//通过代理模式创建UserMapper接口的代理实现类对象
+</span><span style="color:#75715e"></span>UserMapper userMapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+
+<span style="color:#75715e">//调用UserMapper接口中的方法，就可以根据UserMapper的全类名匹配元素文件，通过调用的方法名匹配
+</span><span style="color:#75715e">//映射文件中的SQL标签，并执行标签中的SQL语句
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> result <span style="color:#f92672">=</span> userMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">insertUser</span><span style="color:#f92672">();</span>
+
+<span style="color:#75715e">//sqlSession参数不设置为true，则需要手动提交事务
+</span><span style="color:#75715e">//sqlSession.commit();
+</span><span style="color:#75715e"></span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;result:&#34;</span> <span style="color:#f92672">+</span> result<span style="color:#f92672">);</span>
+</code></pre></div><ul>
+<li>SqlSession：代表Java程序和数据库之间的会话</li>
+<li>SqlSessionFactory：生产 SqlSession 的工厂</li>
+<li>工厂模式：如果创建某一个对象，使用的过程基本固定，那么我们就可以把创建这个对象的相关代码封装到一个“工厂类”中，以后都使用这个工厂类来“生产”我们需要的对象。</li>
+</ul>
+<h4 id="加入log4j日志功能">加入log4j日志功能</h4>
+<p><strong>a&gt;加入依赖</strong></p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;log4j&lt;/groupId&gt;
+    &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+    &lt;version&gt;1.2.17&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><p><strong>b&gt;加入log4j的配置文件</strong></p>
+<p>log4j的配置文件名为log4j.xml，存放的位置是src/main/resources目录下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE log4j:configuration SYSTEM &#34;log4j.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;log4j:configuration</span> <span style="color:#a6e22e">xmlns:log4j=</span><span style="color:#e6db74">&#34;http://jakarta.apache.org/log4j/&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.apache.log4j.ConsoleAppender&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;Encoding&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;layout</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.apache.log4j.PatternLayout&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;param</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ConversionPattern&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;%-5p %d{MM-dd HH:mm:ss,SSS} %m (%F:%L) \n&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/layout&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;java.sql&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;level</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;debug&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;org.apache.ibatis&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;level</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;info&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/logger&gt;</span>
+    <span style="color:#f92672">&lt;root&gt;</span>
+        <span style="color:#f92672">&lt;level</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;debug&#34;</span> <span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/root&gt;</span>
+<span style="color:#f92672">&lt;/log4j:configuration&gt;</span>
+</code></pre></div><p><strong>日志的级别</strong></p>
+<p>FATAL(致命) &gt; ERROR(错误) &gt; WARN(警告) &gt; INFO(信息) &gt; DEBUG(调试)</p>
+<p>从左到右打印内容越来越详细</p>
+<h4 id="修改和删除功能">修改和删除功能</h4>
+<p>使用MyBatis框架时，当我们需要新增功能时，现在对应的mapper接口中声明方法，再在对应的映射文件中编写对应的标签以及sql语句</p>
+<p><strong>修改</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">insertUser</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateUser</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--void updateUser();--&gt;</span>
+<span style="color:#f92672">&lt;update</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;updateUser&#34;</span><span style="color:#f92672">&gt;</span>
+    update t_user set username=&#39;somebody&#39;,email=&#39;sb@123.com&#39; where id=6
+<span style="color:#f92672">&lt;/update&gt;</span>
+</code></pre></div><p><strong>删除</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">insertUser</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateUser</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--void deleteUser();--&gt;</span>
+<span style="color:#f92672">&lt;delete</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;deleteUser&#34;</span><span style="color:#f92672">&gt;</span>
+    delete from t_user where username=&#39;小美&#39;
+<span style="color:#f92672">&lt;/delete&gt;</span>
+</code></pre></div><p><strong>查找一个实体类对象</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserMapper</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">insertUser</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateUser</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">();</span>
+
+    User <span style="color:#a6e22e">getUserById</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--User getUserById();--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserById&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;com.sherry.MyBatis.pojo.User&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_user where id = 4
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><p><strong>查找集合</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;User&gt; getAllUsers();--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getAllUsers&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;com.sherry.MyBatis.pojo.User&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_user
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">InputStream is <span style="color:#f92672">=</span> Resources<span style="color:#f92672">.</span><span style="color:#a6e22e">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mybatis_config.xml&#34;</span><span style="color:#f92672">);</span>
+SqlSessionFactory sqlSessionFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SqlSessionFactoryBuilder<span style="color:#f92672">().</span><span style="color:#a6e22e">build</span><span style="color:#f92672">(</span>is<span style="color:#f92672">);</span>
+SqlSession sqlSession <span style="color:#f92672">=</span> sqlSessionFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">openSession</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+UserMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>UserMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>User user <span style="color:#f92672">:</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">getAllUsers</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">/*输出：
+</span><span style="color:#75715e">DEBUG 11-22 16:28:35,708 ==&gt;  Preparing: select * from t_user (BaseJdbcLogger.java:137) 
+</span><span style="color:#75715e">DEBUG 11-22 16:28:35,747 ==&gt; Parameters:  (BaseJdbcLogger.java:137) 
+</span><span style="color:#75715e">DEBUG 11-22 16:28:35,778 &lt;==      Total: 3 (BaseJdbcLogger.java:137) 
+</span><span style="color:#75715e">User{id=4, username=&#39;Jamyoung&#39;, password=&#39;qwert&#39;, age=23, gender=&#39;男&#39;, email=&#39;JY@123.com&#39;}
+</span><span style="color:#75715e">User{id=6, username=&#39;somebody&#39;, password=&#39;1457345&#39;, age=23, gender=&#39;男&#39;, email=&#39;sb@123.com&#39;}
+</span><span style="color:#75715e">User{id=7, username=&#39;admin&#39;, password=&#39;1457345&#39;, age=23, gender=&#39;男&#39;, email=&#39;admin@123.com&#39;}
+</span><span style="color:#75715e"> */</span>
+</code></pre></div><p><strong>注意：</strong></p>
+<ol>
+<li>查询标签select<strong>必须设置属性resultType或resultMap</strong>，用于设置实体类和数据库表的映射关系</li>
+</ol>
+<p>resultType：自动映射，用于属性名和表中字段名一致的情况</p>
+<p>resultMap：自定义映射，用于一对多或多对一或字段名和属性名不一致的情况</p>
+<ol start="2">
+<li>当查询的数据为多条时，使用集合作为返回类型，若只有一条，实体类和集合<strong>都可以</strong>作为返回类型</li>
+</ol>
+<hr>
+<hr>
+<p><a id="config">#</a></p>
+<h3 id="三核心配置文件详解">三、核心配置文件详解</h3>
+<p>核心配置文件中的标签必须按照固定的顺序：</p>
+<p><strong>properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorF actory?,plugins?,environments?,databaseIdProvider?,mappers?</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE configuration
+</span><span style="color:#75715e">PUBLIC &#34;-//MyBatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">&#34;http://MyBatis.org/dtd/MyBatis-3-config.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;configuration&gt;</span>
+    <span style="color:#75715e">&lt;!--引入properties文件，此时就可以${属性名}的方式访问属性值--&gt;</span>
+    <span style="color:#f92672">&lt;properties</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;jdbc.properties&#34;</span><span style="color:#f92672">&gt;&lt;/properties&gt;</span>
+    
+    <span style="color:#f92672">&lt;settings&gt;</span>
+        <span style="color:#75715e">&lt;!--将表中字段的下划线自动转换为驼峰--&gt;</span>
+        <span style="color:#f92672">&lt;setting</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;mapUnderscoreToCamelCase&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#75715e">&lt;!--开启延迟加载--&gt;</span>
+        <span style="color:#f92672">&lt;setting</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;lazyLoadingEnabled&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/settings&gt;</span>
+    
+    <span style="color:#f92672">&lt;typeAliases&gt;</span>
+        <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">            typeAlias：设置某个具体的类型的别名
+</span><span style="color:#75715e">            属性：
+</span><span style="color:#75715e">            type：需要设置别名的类型的全类名
+</span><span style="color:#75715e">            alias：设置此类型的别名，如果不设置属性alias，默认使用类名作为别名，且不区分大小写
+</span><span style="color:#75715e">            	若设置此属性，此时该类型的别名只能使用alias所设置的值
+</span><span style="color:#75715e">        --&gt;</span>
+        <span style="color:#f92672">&lt;typeAlias</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;com.sherry.MyBatis.pojo.User&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#75715e">&lt;!--以包为单位，设置该包下所有的类型都拥有默认的别名，即类名且不区分大小写--&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;com.sherry.MyBatis.pojo&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/typeAliases&gt;</span>
+    
+    <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">        environments：设置多个连接数据库的环境
+</span><span style="color:#75715e">        属性：
+</span><span style="color:#75715e">        default：设置默认使用的环境的id
+</span><span style="color:#75715e">    --&gt;</span>
+    <span style="color:#f92672">&lt;environments</span> <span style="color:#a6e22e">default=</span><span style="color:#e6db74">&#34;mysql_test&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">            environment：设置具体的连接数据库的环境信息
+</span><span style="color:#75715e">            属性：
+</span><span style="color:#75715e">            id：设置环境的唯一标识，可通过environments标签中的default设置某一个环境的id，表示默认使用的环境
+</span><span style="color:#75715e">        --&gt;</span>
+        <span style="color:#f92672">&lt;environment</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;mysql_test&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">                transactionManager：设置事务管理方式
+</span><span style="color:#75715e">                属性：
+</span><span style="color:#75715e">                type：设置事务管理方式，type=&#34;JDBC|MANAGED&#34;
+</span><span style="color:#75715e">                type=&#34;JDBC&#34;：设置当前环境的事务管理都必须手动处理
+</span><span style="color:#75715e">                type=&#34;MANAGED&#34;：设置事务被管理，例如spring中的AOP
+</span><span style="color:#75715e">            --&gt;</span>
+            <span style="color:#f92672">&lt;transactionManager</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;JDBC&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">                dataSource：设置数据源
+</span><span style="color:#75715e">                属性：
+</span><span style="color:#75715e">                type：设置数据源的类型，type=&#34;POOLED|UNPOOLED|JNDI&#34;
+</span><span style="color:#75715e">                type=&#34;POOLED&#34;：使用数据库连接池，即会将创建的连接进行缓存，下次使用可以从缓存中直接获取，不需要重新创建
+</span><span style="color:#75715e">                type=&#34;UNPOOLED&#34;：不使用数据库连接池，即每次使用连接都需要重新创建
+</span><span style="color:#75715e">                type=&#34;JNDI&#34;：调用上下文中的数据源
+</span><span style="color:#75715e">            --&gt;</span>
+            <span style="color:#f92672">&lt;dataSource</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;POOLED&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#75715e">&lt;!--设置驱动类的全类名--&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driver&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.driver}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#75715e">&lt;!--设置连接数据库的连接地址--&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.url}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#75715e">&lt;!--设置连接数据库的用户名--&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.username}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#75715e">&lt;!--设置连接数据库的密码--&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.password}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/dataSource&gt;</span>
+        <span style="color:#f92672">&lt;/environment&gt;</span>
+    <span style="color:#f92672">&lt;/environments&gt;</span>
+    
+    <span style="color:#75715e">&lt;!--引入映射文件--&gt;</span>
+    <span style="color:#f92672">&lt;mappers&gt;</span>
+<span style="color:#75715e">&lt;!--        &lt;mapper resource=&#34;mappers/UserMapper.xml&#34;/&gt;--&gt;</span>
+        <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">            以包为单位，将包下所有的映射文件引入核心配置文件
+</span><span style="color:#75715e">			在resources下创建包应使用 \ 进行目录分割
+</span><span style="color:#75715e">            注意：此方式必须保证mapper接口和mapper映射文件包名一致
+</span><span style="color:#75715e">                且接口与映射文件名一致
+</span><span style="color:#75715e">        --&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;com.sherry.MyBatis.mapper&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/mappers&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       

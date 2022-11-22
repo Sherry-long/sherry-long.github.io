@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>Spring常用配置 // Sp(act)rum</title>
+    <title>SSM常用配置 // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,10 +12,10 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Spring常用配置"/>
+<meta name="twitter:title" content="SSM常用配置"/>
 <meta name="twitter:description" content="pom.xml &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!-- Spring5和Thymeleaf整合包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt; &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt; &lt;version&gt;3.0.13.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 文件上传模块 --&gt; &lt;dependency&gt; &lt;groupId&gt;commons-fileupload&lt;/groupId&gt; &lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt; &lt;version&gt;1.4&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 德鲁伊数据库连接池 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid&lt;/artifactId&gt; &lt;version&gt;1.2.15&lt;/version&gt; &lt;/dependency&gt; &lt;!-- jackson依赖，SpringMVC处理json需要 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt; &lt;version&gt;2.14.0&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org."/>
 
-    <meta property="og:title" content="Spring常用配置" />
+    <meta property="og:title" content="SSM常用配置" />
 <meta property="og:description" content="pom.xml &lt;dependencies&gt; &lt;!-- SpringMVC --&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt; &lt;version&gt;5.3.1&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 日志 --&gt; &lt;dependency&gt; &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; &lt;version&gt;1.2.9&lt;/version&gt; &lt;/dependency&gt; &lt;!-- ServletAPI --&gt; &lt;dependency&gt; &lt;groupId&gt;javax.servlet&lt;/groupId&gt; &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt; &lt;version&gt;3.1.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; &lt;!-- Spring5和Thymeleaf整合包 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt; &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt; &lt;version&gt;3.0.13.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 文件上传模块 --&gt; &lt;dependency&gt; &lt;groupId&gt;commons-fileupload&lt;/groupId&gt; &lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt; &lt;version&gt;1.4&lt;/version&gt; &lt;/dependency&gt; &lt;!-- 德鲁伊数据库连接池 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid&lt;/artifactId&gt; &lt;version&gt;1.2.15&lt;/version&gt; &lt;/dependency&gt; &lt;!-- jackson依赖，SpringMVC处理json需要 --&gt; &lt;dependency&gt; &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt; &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt; &lt;version&gt;2.14.0&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/springconfig/" />
@@ -47,7 +47,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">Spring常用配置</h1>
+      <h1 class ="post-title">SSM常用配置</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -137,6 +137,13 @@
             <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
             <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
             <span style="color:#f92672">&lt;version&gt;</span>4.13.2<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    
+<span style="color:#75715e">&lt;!-- log4j日志 --&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>log4j<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>log4j<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.2.17<span style="color:#f92672">&lt;/version&gt;</span>
         <span style="color:#f92672">&lt;/dependency&gt;</span>
     
 <span style="color:#f92672">&lt;/dependencies&gt;</span>
@@ -280,7 +287,56 @@
     <span style="color:#f92672">&lt;mvc:view-controller</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">view-name=</span><span style="color:#e6db74">&#34;index&#34;</span><span style="color:#f92672">/&gt;</span>
 
 
-</code></pre></div>
+</code></pre></div><h4 id="mybatis-configxml">mybatis-config.xml</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; ?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE configuration
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD Config 3.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-3-config.dtd&#34;&gt;</span>
+
+<span style="color:#f92672">&lt;configuration&gt;</span>
+
+    <span style="color:#75715e">&lt;!--加载properties文件--&gt;</span>
+    <span style="color:#f92672">&lt;properties</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;jdbc.properties&#34;</span><span style="color:#f92672">/&gt;</span>
+
+    <span style="color:#75715e">&lt;!--给类设置别名，在映射文件中可以直接使用别名代替全类名，别名不区分大小写
+</span><span style="color:#75715e">        如果不设置属性alias，默认使用类名作为别名，且不区分大小写
+</span><span style="color:#75715e">    --&gt;</span>
+    <span style="color:#f92672">&lt;typeAliases&gt;</span>
+<span style="color:#75715e">&lt;!--        &lt;typeAlias type=&#34;com.sherry.MyBatis.pojo.User&#34;/&gt;--&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34; packageName &#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/typeAliases&gt;</span>
+
+    <span style="color:#75715e">&lt;!--设置连接数据库的环境--&gt;</span>
+    <span style="color:#f92672">&lt;environments</span> <span style="color:#a6e22e">default=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;environment</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;transactionManager</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;JDBC&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;dataSource</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;POOLED&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;driver&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.Driver}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;url&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.url}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.username}&#34;</span><span style="color:#f92672">/&gt;</span>
+                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${jdbc.password}&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/dataSource&gt;</span>
+        <span style="color:#f92672">&lt;/environment&gt;</span>
+    <span style="color:#f92672">&lt;/environments&gt;</span>
+
+    <span style="color:#75715e">&lt;!--引入映射文件--&gt;</span>
+    <span style="color:#f92672">&lt;mappers&gt;</span>
+<span style="color:#75715e">&lt;!--        &lt;mapper resource=&#34;mappers/UserMapper.xml&#34;/&gt;--&gt;</span>
+        <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">            以包为单位，将包下所有的映射文件引入核心配置文件
+</span><span style="color:#75715e">			在resources下创建包应使用 \ 进行目录分割
+</span><span style="color:#75715e">            注意：此方式必须保证mapper接口和mapper映射文件包名一致
+</span><span style="color:#75715e">                且接口与映射文件名一致
+</span><span style="color:#75715e">        --&gt;</span>
+        <span style="color:#f92672">&lt;package</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34; packageName &#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/mappers&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><h4 id="jdbcproperties">jdbc.properties</h4>
+<pre><code class="language-properties" data-lang="properties">jdbc.Driver=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/MyBatis
+jdbc.username=root
+jdbc.password=root
+</code></pre>
     </div>
     <div class="post-footer">
       
