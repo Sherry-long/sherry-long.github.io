@@ -16,6 +16,8 @@
       <description>​	一、MyBatis简介
 ​	二、搭建MyBatis
 ​	三、核心配置文件详解
+​	四、MyBatis获取参数值的两种方式
+​	五、MyBatis的各种查询功能
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
@@ -23,8 +25,7 @@
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
 二、搭建MyBatis 打包方式：jar 引入依赖 &amp;lt;!-- MySQL驱动 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;mysql&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mysql-connector-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;8.0.31&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- MyBatis核心 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mybatis&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mybatis&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.5.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- Junit --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;4.13.2&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
-存放位置 src/main/resources 目录下
-&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34; ?&amp;gt; &amp;lt;!</description>
+存放位置 src/main/resources 目录下</description>
     </item>
     
     <item>
