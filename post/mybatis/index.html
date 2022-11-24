@@ -18,14 +18,15 @@
 ​	三、核心配置文件详解
 ​	四、MyBatis获取参数值的两种方式
 ​	五、MyBatis的各种查询功能
+​	六、特殊SQL的执行
+​	七、自定义映射resultMap
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
   MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
-二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
-存放位置 src/main/resources 目录下"/>
+二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config."/>
 
     <meta property="og:title" content="MyBatis" />
 <meta property="og:description" content="​	一、MyBatis简介
@@ -33,14 +34,15 @@
 ​	三、核心配置文件详解
 ​	四、MyBatis获取参数值的两种方式
 ​	五、MyBatis的各种查询功能
+​	六、特殊SQL的执行
+​	七、自定义映射resultMap
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
   MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
-二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config.xml。主要用于配置连接数据库的环境以及MyBatis的全局配置信息
-存放位置 src/main/resources 目录下" />
+二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/mybatis/" />
 <meta property="article:published_time" content="2022-11-21T15:22:53+08:00" />
@@ -85,7 +87,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          5 min read
+          6 min read
         </div>
       </div>
     </header>
@@ -95,6 +97,8 @@
 <p>​	<a href="#config">三、核心配置文件详解</a></p>
 <p>​	<a href="#getParam">四、MyBatis获取参数值的两种方式</a></p>
 <p>​	<a href="#MyBatisQuery">五、MyBatis的各种查询功能</a></p>
+<p>​	<a href="#SpecialSQL">六、特殊SQL的执行</a></p>
+<p>​	<a href="#resultMap">七、自定义映射resultMap</a></p>
 <p><a id="Intro">#</a></p>
 <h3 id="一mybatis简介">一、MyBatis简介</h3>
 <h4 id="1-mybatis特性">1. MyBatis特性</h4>
@@ -526,6 +530,7 @@ List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;<
 </span><span style="color:#75715e">* 例如：java.lang.Integer--&gt;int|integer
 </span><span style="color:#75715e">* 例如：int--&gt;_int|_integer
 </span><span style="color:#75715e">* 例如：Map--&gt;map,List--&gt;list
+</span><span style="color:#75715e">* 例如：String--&gt;string
 </span><span style="color:#75715e">*/</span>
 <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getCount</span><span style="color:#f92672">();</span>
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--int getCount();--&gt;</span>
@@ -539,7 +544,8 @@ List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;<
 </span><span style="color:#75715e">* @return
 </span><span style="color:#75715e">*/</span>
 Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getUserToMap</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Param</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">int</span> id<span style="color:#f92672">);</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--Map&lt;String, Object&gt; getUserToMap(@Param(&#34;id&#34;) int id);--&gt;</span>
+<span style="color:#75715e">//键值对 对应 属性=属性值
+</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--Map&lt;String, Object&gt; getUserToMap(@Param(&#34;id&#34;) int id);--&gt;</span>
 <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserToMap&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;map&#34;</span><span style="color:#f92672">&gt;</span>
     select * from t_user where id = #{id}
 <span style="color:#f92672">&lt;/select&gt;</span>
@@ -549,15 +555,114 @@ Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</s
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/**
 </span><span style="color:#75715e">* 查询所有用户信息为map集合
 </span><span style="color:#75715e">* @return
-</span><span style="color:#75715e">* 将表中的数据以map集合的方式查询，一条数据对应一个map；若有多条数据，就会产生多个map集合，此
-</span><span style="color:#75715e">时可以将这些map放在一个list集合中获取
+</span><span style="color:#75715e">* 将表中的数据以map集合的方式查询，一条数据对应一个map；若有多条数据，就会产生多个map集合，		此时可以将这些map放在一个list集合中获取
 </span><span style="color:#75715e">*/</span>
 List<span style="color:#f92672">&lt;</span>Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">getAllUserToMap</span><span style="color:#f92672">();</span>
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--Map&lt;String, Object&gt; getAllUserToMap();--&gt;</span>
 <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getAllUserToMap&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;map&#34;</span><span style="color:#f92672">&gt;</span>
     select * from t_user
 <span style="color:#f92672">&lt;/select&gt;</span>
-</code></pre></div>
+</code></pre></div><p><strong>方式二：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/**
+</span><span style="color:#75715e">* 查询所有用户信息为map集合
+</span><span style="color:#75715e">* @return
+</span><span style="color:#75715e">* 将表中的数据以map集合的方式查询，一条数据对应一个map；若有多条数据，就会产生多个map集合，并且最终要以一个map的方式返回数据，此时需要通过@MapKey注解设置map集合的键，值是每条数据所对应的map集合
+</span><span style="color:#75715e">*/</span>
+<span style="color:#a6e22e">@MapKey</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span>
+Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span> Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getAllUserToMap</span><span style="color:#f92672">();</span>
+<span style="color:#75715e">//查询出来的每一条数据会保存在Object中，并且其中的id属性会作为键存储
+</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--Map&lt;String, Object&gt; getAllUserToMap();--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getAllUserToMap&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;map&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_user
+<span style="color:#f92672">&lt;/select&gt;</span>
+结果：
+<span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">4={password=qwert, gender=男, id=4, age=23, email=JY@123.com, username=Jamyoung}
+</span><span style="color:#75715e">6={password=1457345, gender=男, id=6, age=23, email=sb@123.com, username=somebody}
+</span><span style="color:#75715e">7={password=1457345, gender=男, id=7, age=23, email=admin@123.com, username=admin}
+</span><span style="color:#75715e">8={password=JameTime, gender=男, id=8, age=24, email=jt@123.com, username=Jame}
+</span><span style="color:#75715e">9={password=12345, gender=男, id=9, age=24, email=sp@123.com, username=Simple}
+</span><span style="color:#75715e">10={password=SomeDieYoung, gender=男, id=10, age=24, email=sdy@123.com, username=sdy}
+</span><span style="color:#75715e">11={password=FuckTheWorld, gender=男, id=11, age=24, email=rt@123.com, username=日天}
+</span><span style="color:#75715e">12={password=Zhejiushi18, gender=女, id=12, age=24, email=zxc@123.com, username=&gt;_&lt;}
+</span><span style="color:#75715e">13={password=tgwerfsdrf, gender=女, id=13, age=24, email=wer@123.com, username=what}
+</span><span style="color:#75715e">--&gt;</span>
+
+</code></pre></div><hr>
+<hr>
+<p><a id="SpecialSQL">#</a></p>
+<h3 id="六特殊sql的执行">六、特殊SQL的执行</h3>
+<h4 id="1-模糊查询">1. 模糊查询</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;User&gt; getUserByLike(@Param(&#34;pattern&#34;) String pattern);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getUserByLike&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--select * from t_user where username like &#39;%${pattern}%&#39;--&gt;</span>
+    <span style="color:#75715e">&lt;!--select * from t_user where username like concat(&#39;%&#39;,#{pattern},&#39;%&#39;)--&gt;</span>
+    select * from t_user where username like &#34;%&#34;#{pattern}&#34;%&#34;
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><h4 id="2-批量删除">2. 批量删除</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--int deleteMore(@Param(&#34;ids&#34;) String ids);--&gt;</span>
+<span style="color:#f92672">&lt;delete</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;deleteMore&#34;</span><span style="color:#f92672">&gt;</span>
+    delete from t_user where id in (${ids})
+    <span style="color:#75715e">&lt;!--因为#{}会自动添加&#39;&#39;，所以此处只能使用${}--&gt;</span>
+<span style="color:#f92672">&lt;/delete&gt;</span>
+</code></pre></div><h4 id="3-动态设置表名">3. 动态设置表名</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;User&gt; getAllUser(@Param(&#34;tableName&#34;) String tableName);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getAllUser&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from ${tableName}
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><h4 id="4-添加功能获取自增的主键">4. 添加功能获取自增的主键</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/**
+</span><span style="color:#75715e">* 添加用户信息
+</span><span style="color:#75715e">* @param user
+</span><span style="color:#75715e">* @return
+</span><span style="color:#75715e">* useGeneratedKeys：设置使用自增的主键
+</span><span style="color:#75715e">* keyProperty：因为增删改有统一的返回值是受影响的行数，因此只能将获取的自增的主键放在传输的参数user对象的某个属性中
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">insertUser</span><span style="color:#f92672">(</span>User user<span style="color:#f92672">);</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--int insertUser(User user);--&gt;</span>
+<span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;insertUser&#34;</span> <span style="color:#a6e22e">useGeneratedKeys=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">keyProperty=</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">&gt;</span>
+    insert into t_user values(null,#{username},#{password},#{age},#{sex})
+<span style="color:#f92672">&lt;/insert&gt;</span>
+</code></pre></div><hr>
+<hr>
+<p><a id="resultMap">#</a></p>
+<h3 id="七自定义映射resultmap">七、自定义映射resultMap</h3>
+<h4 id="1-resultmap处理字段和属性的映射关系">1. resultMap处理字段和属性的映射关系</h4>
+<p>若字段名和实体类中的属性名不一致，则可以通过resultMap设置自定义映射</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">    resultMap：设置自定义映射
+</span><span style="color:#75715e">    属性：
+</span><span style="color:#75715e">        id：表示自定义映射的唯一标识
+</span><span style="color:#75715e">        type：查询的数据要映射的实体类的类型
+</span><span style="color:#75715e">    子标签：
+</span><span style="color:#75715e">        id：设置主键的映射关系
+</span><span style="color:#75715e">        result：设置普通字段的映射关系
+</span><span style="color:#75715e">        association：设置多对一的映射关系
+</span><span style="color:#75715e">        collection：设置一对多的映射关系
+</span><span style="color:#75715e">        属性：
+</span><span style="color:#75715e">            property：设置映射关系中实体类中的属性名
+</span><span style="color:#75715e">            column：设置映射关系中表中的字段名
+</span><span style="color:#75715e">--&gt;</span>
+<span style="color:#f92672">&lt;resultMap</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;userMap&#34;</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;User&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;id</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">&gt;&lt;/id&gt;</span>
+    <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;userName&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;user_name&#34;</span><span style="color:#f92672">&gt;&lt;/result&gt;</span>
+    <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;password&#34;</span><span style="color:#f92672">&gt;&lt;/result&gt;</span>
+    <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;age&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;age&#34;</span><span style="color:#f92672">&gt;&lt;/result&gt;</span>
+    <span style="color:#f92672">&lt;result</span> <span style="color:#a6e22e">property=</span><span style="color:#e6db74">&#34;gender&#34;</span> <span style="color:#a6e22e">column=</span><span style="color:#e6db74">&#34;gender&#34;</span><span style="color:#f92672">&gt;&lt;/result&gt;</span>
+<span style="color:#f92672">&lt;/resultMap&gt;</span>
+
+<span style="color:#75715e">&lt;!--List&lt;User&gt; testMohu(@Param(&#34;mohu&#34;) String mohu);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;testMohu&#34;</span> <span style="color:#a6e22e">resultMap=</span><span style="color:#e6db74">&#34;userMap&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--select * from t_user where username like &#39;%${mohu}%&#39;--&gt;</span>
+    select id,user_name,password,age,gender from t_user where user_name like
+    concat(&#39;%&#39;,#{mohu},&#39;%&#39;)
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><p>若字段名和实体类中的属性名不一致，但是字段名符合数据库的规则（使用_），实体类中的属性名符合Java的规则（使用驼峰）</p>
+<p>此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系</p>
+<p>**a&gt;**可以通过为字段起别名的方式，保证和实体类中的属性名保持一致</p>
+<p>**b&gt;**可以在MyBatis的核心配置文件中设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰</p>
+<p>**例如：**字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为 userName</p>
+
     </div>
     <div class="post-footer">
       
