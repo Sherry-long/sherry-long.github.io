@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://shery-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -24,7 +24,7 @@ Spring5自带了通用的日志封装
  Spring5移除了Log4jConfigListener，官方建议使用Log4j2  Spring5中如何整合Log4j2 //引入依赖 log4j-api-2.19.0.jar log4j-core-2.19.0.jar log4j-slf4j-impl-2.19.0.jar slf4j-api-2.0.3.jar //编写配置文件，内容较为固定  &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;!--日志级别以及优先级排序(越右越高)：OFF &lt; FATAL &lt; ERROR &lt; WARN &lt; INFO &lt; DEBUG &lt; TRACE &lt; ALL--&gt; &lt;!--Configuration后面的status用于设置log4j2自身内部的信息输出，可以不设置，当设置成TRACE时，可以看到log4j2内部各种详细输出--&gt; &lt;Configuration xmlns=&#34;http://logging.apache.org/log4j/2.0/config&#34; status=&#34;INFO&#34;&gt; &lt;!--先定义所有的appender--&gt; &lt;Appenders&gt; &lt;!--输出日志信息到控制台--&gt; &lt;Console name=&#34;Console&#34; target=&#34;SYSTEM_OUT &#34;&gt; &lt;!--控制日志的输出格式--&gt; &lt;PatternLayout pattern=&#34;%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n&#34;/&gt; &lt;/Console&gt; &lt;/Appenders&gt; &lt;!--然后定义logger，只有定义了logger并引入appender，appender才会生效--&gt; &lt;!--root：用于指定项目的根日志，如果没有单独指定logger，则会使用root作为默认的日志输出--&gt; &lt;Loggers&gt; &lt;Root level=&#34;info&#34;&gt; &lt;AppenderRef ref=&#34;Console&#34;/&gt; &lt;/Root&gt; &lt;/Loggers&gt; &lt;/Configuration&gt;   @Nullable注解和函数式注册对象   @Nullable注解可以使用在方法、属性、参数上面，表示：方法返回可以为空，属性值可以为空，参数值可以为空
   手动new的方式创建的对象不会被Spring识别，可以通过函数式风格创建对象，交给Spring管理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sherry-long.github.io/post/javaspringnewfeature/" />
+<meta property="og:url" content="https://shery-long.github.io/post/javaspringnewfeature/" />
 <meta property="article:published_time" content="2022-10-31T10:28:16+08:00" />
 <meta property="article:modified_time" content="2022-10-31T10:28:16+08:00" />
 
@@ -32,7 +32,7 @@ Spring5自带了通用的日志封装
   </head>
   <body>
     <header class="app-header">
-      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://shery-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://shery-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -44,7 +44,7 @@ AVL插入：
 C语言实现：
 #include &lt;stdio.h&gt;#include &lt;stdbool.h&gt;#include &lt;malloc.h&gt; typedef struct AVLNode{ int data; struct AVLNode *r_child, *l_child; int height; }AVLNode, *AVLTree; //AVL树节点  int MAX(int a, int b){ //取ab最大值  return a &gt; b ? a : b; } int Height(AVLTree t){ //求树高，若树为空返回-1  if(t == NULL) return -1; else return t-&gt;height; } AVLNode *AVL_leftRotate(AVLNode *p){ //AVL树左旋(以p为根节点的子树)  AVLNode *s = p-&gt;r_child; //s指向p的右孩子  p-&gt;r_child = s-&gt;l_child; //将s的左孩子接到p的右孩子位置  s-&gt;l_child = p; //p成为s的左孩子  p-&gt;height = MAX(Height(p-&gt;r_child), Height(p-&gt;l_child)) &#43; 1; s-&gt;height = MAX(Height(s-&gt;r_child), Height(s-&gt;l_child)) &#43; 1; //重新计算树高  return s; //返回调整后的根节点 } AVLNode *AVL_rightRotate(AVLNode *p){ //AVL树右旋  AVLNode *s = p-&gt;l_child; p-&gt;l_child = s-&gt;r_child; s-&gt;r_child = p; p-&gt;height = MAX(Height(p-&gt;r_child), Height(p-&gt;l_child)) &#43; 1; s-&gt;height = MAX(Height(s-&gt;r_child), Height(s-&gt;l_child)) &#43; 1; return s; } AVLTree AVL_insert(AVLTree t, int data){ //AVL树插入  if(t == NULL) //如果AVL树是空的，新建一个节点，并置树高为0  { t = (AVLNode *)malloc(sizeof (AVLNode)); t-&gt;data = data; t-&gt;l_child = t-&gt;r_child = NULL; t-&gt;height = 0; } else if (data &lt; t-&gt;data){ //如果data小于t节点的data，插入到它的左子树  t-&gt;l_child = AVL_insert(t-&gt;l_child, data); if(Height(t-&gt;l_child) - Height(t-&gt;r_child) == 2){ //插入完成后，检查结构是否失衡(当向左子树插入data时，只有可能会出现这种情况)  if(data &lt; t-&gt;l_child-&gt;data) //如果是插入到左子树的左子树 (左左情况)  t = AVL_rightRotate(t); //对t进行一次右旋  else if(data &gt; t-&gt;l_child-&gt;data) //左右情况  { t-&gt;l_child = AVL_leftRotate(t-&gt;l_child); //先对t的左子树进行一次左旋  t = AVL_rightRotate(t); //再对t进行一次右旋  } } } else if (data &gt; t-&gt;data){ //参考上方  t-&gt;r_child = AVL_insert(t-&gt;r_child, data); if(Height(t-&gt;r_child) - Height(t-&gt;l_child) == 2){ if(data &gt; t-&gt;r_child-&gt;data) //右右情况  t = AVL_leftRotate(t); else if(data &lt; t-&gt;r_child-&gt;data){ //右左情况  t-&gt;r_child = AVL_rightRotate(t-&gt;r_child); t = AVL_leftRotate(t); } } } t-&gt;height = MAX(Height(t-&gt;l_child), Height(t-&gt;r_child)) &#43; 1; //重新计算树高  return t; //返回t节点 } void AVL_inorder(AVLNode *t){ //中序遍历打印AVL树  if(t !" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sherry-long.github.io/post/avltree/" />
+<meta property="og:url" content="https://shery-long.github.io/post/avltree/" />
 <meta property="article:published_time" content="2021-02-03T09:32:24+08:00" />
 <meta property="article:modified_time" content="2021-02-03T09:32:24+08:00" />
 
@@ -52,7 +52,7 @@ C语言实现：
   </head>
   <body>
     <header class="app-header">
-      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://shery-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Sp(act)rum</title>
-    <link>https://sherry-long.github.io/post/</link>
+    <link>https://shery-long.github.io/post/</link>
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Nov 2022 15:22:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Nov 2022 15:22:53 +0800</lastBuildDate><atom:link href="https://shery-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MyBatis</title>
-      <link>https://sherry-long.github.io/post/mybatis/</link>
+      <link>https://shery-long.github.io/post/mybatis/</link>
       <pubDate>Mon, 21 Nov 2022 15:22:53 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/mybatis/</guid>
+      <guid>https://shery-long.github.io/post/mybatis/</guid>
       <description>​	一、MyBatis简介
 ​	二、搭建MyBatis
 ​	三、核心配置文件详解
@@ -20,6 +20,7 @@
 ​	五、MyBatis的各种查询功能
 ​	六、特殊SQL的执行
 ​	七、自定义映射resultMap
+​	八、动态SQL
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
@@ -31,28 +32,28 @@
     
     <item>
       <title>SSM常用配置</title>
-      <link>https://sherry-long.github.io/post/springconfig/</link>
+      <link>https://shery-long.github.io/post/springconfig/</link>
       <pubDate>Fri, 18 Nov 2022 17:13:57 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/springconfig/</guid>
+      <guid>https://shery-long.github.io/post/springconfig/</guid>
       <description>pom.xml &amp;lt;dependencies&amp;gt; &amp;lt;!-- SpringMVC --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-webmvc&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;5.3.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- 日志 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;ch.qos.logback&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;logback-classic&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2.9&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- ServletAPI --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;javax.servlet&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;javax.servlet-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.1.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- Spring5和Thymeleaf整合包 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.thymeleaf&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;thymeleaf-spring5&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.0.13.RELEASE&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- 文件上传模块 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;commons-fileupload&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;commons-fileupload&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.4&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- 德鲁伊数据库连接池 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.alibaba&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;druid&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2.15&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- jackson依赖，SpringMVC处理json需要 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;com.fasterxml.jackson.core&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;jackson-databind&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;2.14.0&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- MySQL驱动 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;mysql&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mysql-connector-java&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;8.0.31&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- MyBatis核心 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.</description>
     </item>
     
     <item>
       <title>RESTful-员工信息管理</title>
-      <link>https://sherry-long.github.io/post/restfuldemo/</link>
+      <link>https://shery-long.github.io/post/restfuldemo/</link>
       <pubDate>Sun, 13 Nov 2022 10:58:03 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/restfuldemo/</guid>
+      <guid>https://shery-long.github.io/post/restfuldemo/</guid>
       <description>RESTful案例 功能清单    功能 URL 地址 请求方式     访问首页√ / GET   查询全部数据√ /employee GET   删除√ /employee/2 DELETE   跳转到添加数据页面√ /toAdd GET   执行保存√ /employee POST   跳转到更新数据页面√ /employee/2 GET   执行更新√ /employee PUT    访问首页 配置view-controller &amp;lt;mvc:view-controller path=&amp;#34;/&amp;#34; view-name=&amp;#34;index&amp;#34;/&amp;gt; 查询与删除 employee_list.html &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34; xmlns:th=&amp;#34;http://www.thymeleaf.org&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;title&amp;gt;员工信息&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;table id=&amp;#34;dataTable&amp;#34; border=&amp;#34;1&amp;#34; style=&amp;#34;text-align: center;border-spacing: 0; border-collapse: collapse&amp;#34;&amp;gt; &amp;lt;tr&amp;gt; &amp;lt;th colspan=&amp;#34;5&amp;#34;&amp;gt;员工信息&amp;lt;/th&amp;gt; &amp;lt;/tr&amp;gt; &amp;lt;tr&amp;gt; &amp;lt;th&amp;gt;id&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;lastName&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;email&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;gender&amp;lt;/th&amp;gt; &amp;lt;th&amp;gt;options&amp;lt;/th&amp;gt; &amp;lt;/tr&amp;gt; &amp;lt;!</description>
     </item>
     
     <item>
       <title>Spring5新特性</title>
-      <link>https://sherry-long.github.io/post/javaspringnewfeature/</link>
+      <link>https://shery-long.github.io/post/javaspringnewfeature/</link>
       <pubDate>Mon, 31 Oct 2022 10:28:16 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaspringnewfeature/</guid>
+      <guid>https://shery-long.github.io/post/javaspringnewfeature/</guid>
       <description>整个Spring5框架的代码基于Java8，运行时兼容JDK9，许多不建议使用的类和方法在代码库中删除
 Spring5自带了通用的日志封装
  Spring5移除了Log4jConfigListener，官方建议使用Log4j2  Spring5中如何整合Log4j2 //引入依赖 log4j-api-2.19.0.jar log4j-core-2.19.0.jar log4j-slf4j-impl-2.19.0.jar slf4j-api-2.0.3.jar //编写配置文件，内容较为固定  &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;!--日志级别以及优先级排序(越右越高)：OFF &amp;lt; FATAL &amp;lt; ERROR &amp;lt; WARN &amp;lt; INFO &amp;lt; DEBUG &amp;lt; TRACE &amp;lt; ALL--&amp;gt; &amp;lt;!--Configuration后面的status用于设置log4j2自身内部的信息输出，可以不设置，当设置成TRACE时，可以看到log4j2内部各种详细输出--&amp;gt; &amp;lt;Configuration xmlns=&amp;#34;http://logging.apache.org/log4j/2.0/config&amp;#34; status=&amp;#34;INFO&amp;#34;&amp;gt; &amp;lt;!--先定义所有的appender--&amp;gt; &amp;lt;Appenders&amp;gt; &amp;lt;!--输出日志信息到控制台--&amp;gt; &amp;lt;Console name=&amp;#34;Console&amp;#34; target=&amp;#34;SYSTEM_OUT &amp;#34;&amp;gt; &amp;lt;!--控制日志的输出格式--&amp;gt; &amp;lt;PatternLayout pattern=&amp;#34;%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n&amp;#34;/&amp;gt; &amp;lt;/Console&amp;gt; &amp;lt;/Appenders&amp;gt; &amp;lt;!--然后定义logger，只有定义了logger并引入appender，appender才会生效--&amp;gt; &amp;lt;!--root：用于指定项目的根日志，如果没有单独指定logger，则会使用root作为默认的日志输出--&amp;gt; &amp;lt;Loggers&amp;gt; &amp;lt;Root level=&amp;#34;info&amp;#34;&amp;gt; &amp;lt;AppenderRef ref=&amp;#34;Console&amp;#34;/&amp;gt; &amp;lt;/Root&amp;gt; &amp;lt;/Loggers&amp;gt; &amp;lt;/Configuration&amp;gt;   @Nullable注解和函数式注册对象   @Nullable注解可以使用在方法、属性、参数上面，表示：方法返回可以为空，属性值可以为空，参数值可以为空
@@ -61,10 +62,10 @@ Spring5自带了通用的日志封装
     
     <item>
       <title>Spring-事务</title>
-      <link>https://sherry-long.github.io/post/javatransactions/</link>
+      <link>https://shery-long.github.io/post/javatransactions/</link>
       <pubDate>Fri, 28 Oct 2022 08:37:19 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javatransactions/</guid>
+      <guid>https://shery-long.github.io/post/javatransactions/</guid>
       <description>1）事务是数据库操作的基本单元，是逻辑上的一组操作，要么都成功，要么都失败，如果有一个操作失败所有操作都失败
 2）典型场景：银行转账
 目录
@@ -93,10 +94,10 @@ xml声明式事务管理
     
     <item>
       <title>JDBC Template</title>
-      <link>https://sherry-long.github.io/post/javajdbctemplate/</link>
+      <link>https://shery-long.github.io/post/javajdbctemplate/</link>
       <pubDate>Wed, 26 Oct 2022 11:10:50 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javajdbctemplate/</guid>
+      <guid>https://shery-long.github.io/post/javajdbctemplate/</guid>
       <description>JDBC Template 1）什么是JDBC Template
  Spring框架对JDBC进行了封装，使用JDBC Template可以很方便实现对数据库的操作  2）准备工作
   引入相关的依赖 druid-1.2.14.jar
@@ -110,10 +111,10 @@ spring-tx-5.3.9.jar
     
     <item>
       <title>AOP</title>
-      <link>https://sherry-long.github.io/post/javaaop/</link>
+      <link>https://shery-long.github.io/post/javaaop/</link>
       <pubDate>Mon, 24 Oct 2022 09:48:19 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaaop/</guid>
+      <guid>https://shery-long.github.io/post/javaaop/</guid>
       <description>不通过修改源代码，在主干功能里添加新功能
 目录
 AOP底层原理
@@ -144,10 +145,10 @@ AspectJ不是Spring组成部分，是一个独立AOP框架，一般把AspectJ和
     
     <item>
       <title>Spring-IoC操作 Bean管理(基于注解)</title>
-      <link>https://sherry-long.github.io/post/javaspring2/</link>
+      <link>https://shery-long.github.io/post/javaspring2/</link>
       <pubDate>Fri, 21 Oct 2022 15:05:02 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaspring2/</guid>
+      <guid>https://shery-long.github.io/post/javaspring2/</guid>
       <description>IoC操作 Bean管理(基于注解) 使用注解的目的：简化xml配置
 Spring针对Bean管理中 创建对象提供的注解 1）@Component
 2）@Service（用在业务层）
@@ -162,20 +163,20 @@ Spring针对Bean管理中 创建对象提供的注解 1）@Component
     
     <item>
       <title>Spring-IoC操作 Bean管理(基于xml配置文件)</title>
-      <link>https://sherry-long.github.io/post/javaspring1/</link>
+      <link>https://shery-long.github.io/post/javaspring1/</link>
       <pubDate>Fri, 21 Oct 2022 15:03:31 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaspring1/</guid>
+      <guid>https://shery-long.github.io/post/javaspring1/</guid>
       <description>IoC操作 Bean管理(基于xml配置文件)  什么是Bean管理： Bean管理指的是两个操作：1，创建对象 2，注入属性  基于xml方式创建对象 &amp;lt;bean id=&amp;#34;user&amp;#34; class=&amp;#34;com.sherry.Spring.User&amp;#34;&amp;gt;&amp;lt;/bean&amp;gt; 在spring配置文件中，使用bean标签，标签里面添加对应属性，就可以实现对象创建 在bean标签中有很多属性，常用属性： id：唯一标识 class：类全路径（包类路径） 创建对象的时候，默认执行无参构造方法，实体类内部要么无构造方法，要么显式定义无参构造方法，否则会报错  基于xml方式注入属性 第一种注入方式：在实体类内部编写set方法，通过方法进行注入 （可以使用p名称空间进行简化）
 //实体类 public class User { private String userName; private int userAge; public void setUserName(String userName) { this.userName = userName; } public void setUserAge(int userAge) { this.userAge = userAge; } public void add(){ System.out.println(&amp;#34;add .................&amp;#34;); } public void show(){ System.out.println(userName + &amp;#34;: &amp;#34; + userAge); } } //配置文件 &amp;lt;beans ...&amp;gt; &amp;lt;bean id=&amp;#34;user&amp;#34; class=&amp;#34;com.</description>
     </item>
     
     <item>
       <title>Spring5</title>
-      <link>https://sherry-long.github.io/post/javaspring/</link>
+      <link>https://shery-long.github.io/post/javaspring/</link>
       <pubDate>Wed, 12 Oct 2022 11:41:55 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaspring/</guid>
+      <guid>https://shery-long.github.io/post/javaspring/</guid>
       <description>Spring框架概述 Spring框架是一个开源的J2EE应用程序框架，针对bean生命周期进行管理的轻量级容器。
 Spring有两个核心部分：IoC(控制反转) 和 AOP(面向切面编程)
 Spring框架主要由七部分组成：Spring Core, Spring AOP, Spring ORM, Spring DAO, Spring Context, Spring Web, Spring Web MVC
@@ -190,10 +191,10 @@ ApplicationContext接口有两个实现类，ClassPathXmlApplicationContext 以�
     
     <item>
       <title>SpringMVC</title>
-      <link>https://sherry-long.github.io/post/springmvc/</link>
+      <link>https://shery-long.github.io/post/springmvc/</link>
       <pubDate>Tue, 11 Oct 2022 11:02:42 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/springmvc/</guid>
+      <guid>https://shery-long.github.io/post/springmvc/</guid>
       <description>​	一、SpringMVC特点
 ​	二、创建SpringMVC工程
 ​	三、@RequestMapping注解
@@ -216,10 +217,10 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
     
     <item>
       <title>Java8新特性</title>
-      <link>https://sherry-long.github.io/post/java8news/</link>
+      <link>https://shery-long.github.io/post/java8news/</link>
       <pubDate>Sat, 08 Oct 2022 19:36:49 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java8news/</guid>
+      <guid>https://shery-long.github.io/post/java8news/</guid>
       <description>Lambda表达式 Lambda是一个匿名函数，我们可以把Lambda表达式理解为是一段可以传递的代码(将代码像数据一样进行传递)。 使用它可以写出更简洁、更灵活的代码。作为一种更紧凑的代码风格，使Java的语言表达能力得到了提升。
   作用：简化匿名内部类的代码写法
   本质：作为接口(内部只能有一个抽象方法 a.k.a 函数式接口)的实例
@@ -228,10 +229,10 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
     
     <item>
       <title>Java反射</title>
-      <link>https://sherry-long.github.io/post/javareflection/</link>
+      <link>https://shery-long.github.io/post/javareflection/</link>
       <pubDate>Sun, 02 Oct 2022 15:57:12 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javareflection/</guid>
+      <guid>https://shery-long.github.io/post/javareflection/</guid>
       <description>反射机制概述 反射被视为动态语言的关键，反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法  加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象)，这个对象就包含了完整的类的结构信息。我们可以通过这个对象看到类的结构。  动态语言 在运行时可以改变其结构的语言：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。
  在运行时代码可以根据某些条件改变自身结构 *  如Object-C、C#、JavaScript、PHP、Python、Erlang
 静态语言 与动态语言相对应的，运行时结构不可变的语言就是静态语言。如Java、C、C++
@@ -241,19 +242,19 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
     
     <item>
       <title>Java网络编程-UDP、URL</title>
-      <link>https://sherry-long.github.io/post/javanetprogram1/</link>
+      <link>https://shery-long.github.io/post/javanetprogram1/</link>
       <pubDate>Fri, 30 Sep 2022 16:08:51 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javanetprogram1/</guid>
+      <guid>https://shery-long.github.io/post/javanetprogram1/</guid>
       <description>UDP网络编程 UDP协议 数据传输 public class UDPTest { //发送端  @Test public void send() throws IOException { //TCP使用Socket，UDP使用DatagramSocket  DatagramSocket ds = new DatagramSocket(); byte[] data = &amp;#34;this is a sentence&amp;#34;.getBytes(); //将要传输的数据封装在DatagramPacket中  DatagramPacket packet = new DatagramPacket(data, 0, data.length, InetAddress.getLocalHost(), 8989); //使用DatagramSocket对象传输packet  ds.send(packet); ds.close(); } //接收端  @Test public void receive() throws IOException { //指定DatagramSocket端口  DatagramSocket ds = new DatagramSocket(8989); byte[] data = new byte[100]; //使用DatagramPacket对象接收数据  DatagramPacket packet = new DatagramPacket(data, 0, data.</description>
     </item>
     
     <item>
       <title>Java网络编程-TCP</title>
-      <link>https://sherry-long.github.io/post/javanetprogram/</link>
+      <link>https://shery-long.github.io/post/javanetprogram/</link>
       <pubDate>Tue, 27 Sep 2022 11:28:54 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javanetprogram/</guid>
+      <guid>https://shery-long.github.io/post/javanetprogram/</guid>
       <description>概述 Java从语言级上提供了对网络应用程序的支持。Java提供的网络类库，可以实现无痛的网络连接，联网的底层细节被隐藏在Java的本机安装系统里，由JVM进行控制。 并且Java实现了一个跨平台的网络库，程序员面对的是一个统一的网络编程环境。
  InetAddress类 代表IP地址，此类用于获取IP地址，可通过域名解析方式获取
 端口号 + IP地址 &amp;mdash;包装&amp;mdash;&amp;gt; 网络套接字(Socket) 端口号标识正在计算机上运行的程序(进程)
@@ -265,10 +266,10 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
     
     <item>
       <title>JavaIO流 2</title>
-      <link>https://sherry-long.github.io/post/javaio1/</link>
+      <link>https://shery-long.github.io/post/javaio1/</link>
       <pubDate>Fri, 23 Sep 2022 09:14:51 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaio1/</guid>
+      <guid>https://shery-long.github.io/post/javaio1/</guid>
       <description>转换流(处理流的一种，属于字符流) (utf-8.txt) ==字节流==&amp;gt; InputStreamReader(utf-8) ==字符流==&amp;gt; [程序]
 [程序] ==字符流==&amp;gt; OutputStreamWriter(gbk) ==字节流==&amp;gt; (gbk.txt)
  1.转换流： InputStreamReader：将一个字节的输入流转换为字符输入流 OutputStreamWriter：将一个字符输出流转换为字节输出流 2.作用：提供字节流与字符流之间的转换 3.解码：字节、字节数组 ---&amp;gt; 字符数组、字符串 编码：字符数组、字符串 ---&amp;gt; 字节、字节数组 4.字符集 略  了解  标准输入输出流 System.in和System.out分别代表了系统标准的输入和输出设备 默认输入设备是：键盘，输出设备是：显示器 System.in的类型是InputStream System.out的类型是PrintStream，是OutputStream的子类FilterOutputStream的子类 重定向：通过System类的setIn，setOut方法对默认设备进行改变 public static void setIn(InputStream in) public static void setOut(PrintStream out)  使用标准输入流自定义接受键盘输入  public static void main(String[] args) { BufferedReader br = null; try { InputStreamReader isr = new InputStreamReader(System.in); br = new BufferedReader(isr); String str = br.</description>
@@ -276,19 +277,19 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
     
     <item>
       <title>JavaIO流 1</title>
-      <link>https://sherry-long.github.io/post/javaio/</link>
+      <link>https://shery-long.github.io/post/javaio/</link>
       <pubDate>Mon, 19 Sep 2022 11:02:18 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaio/</guid>
+      <guid>https://shery-long.github.io/post/javaio/</guid>
       <description>File类的使用 @Test public void test() { //绝对路径打开文件  File file1 = new File(&amp;#34;c:&amp;#34; + File.separator + &amp;#34;Users&amp;#34; + File.separator + &amp;#34;10706&amp;#34; + File.separator + &amp;#34;IdeaProjects&amp;#34; + File.separator + &amp;#34;IDEApro4&amp;#34; + File.separator + &amp;#34;src&amp;#34; + File.separator + &amp;#34;JavaIO&amp;#34; + File.separator + &amp;#34;others.txt&amp;#34;); //相对路径打开文件，相对于当前工程  File file2 = new File(&amp;#34;article.txt&amp;#34;); /** * article.txt: this is an article * others.txt: this is a sentence */ System.out.println(file1.isFile());//t  System.out.println(file1.canRead());//t  System.out.println(file1.canWrite());//t  System.out.println(file1.canExecute());//t  System.</description>
     </item>
     
     <item>
       <title>Java泛型</title>
-      <link>https://sherry-long.github.io/post/javat/</link>
+      <link>https://shery-long.github.io/post/javat/</link>
       <pubDate>Sat, 17 Sep 2022 08:32:14 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javat/</guid>
+      <guid>https://shery-long.github.io/post/javat/</guid>
       <description>为什么要有泛型 所谓泛型，就是允许在定义类、接口时通过一个标识表示类中某个属性的类型或者是某个方法的返回值及参数类型。
 这个类型参数将在使用时(例如，继承或实现这个接口，用这个类型声明变量、创建对象时)确定(即传入实际的类型参数，也称为类型实参)
  在集合中使用泛型   集合接口或集合类在jdk5.0时都修改为带泛型的结构
@@ -302,10 +303,10 @@ SpringMVC是Spring为表述层开发提供的一套完备的解决方案。(三�
     
     <item>
       <title>Java集合2</title>
-      <link>https://sherry-long.github.io/post/javacollection2/</link>
+      <link>https://shery-long.github.io/post/javacollection2/</link>
       <pubDate>Wed, 14 Sep 2022 15:37:29 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javacollection2/</guid>
+      <guid>https://shery-long.github.io/post/javacollection2/</guid>
       <description>Map Map接口：双列数据，保存具有映射关系&amp;quot;key-value对&amp;quot;的集合 &amp;gt;HashMap：Map的主要实现类； 线程不安全，效率高； 可以存储null的key和value，健壮性高 &amp;gt;LinkedHashMap：在HashMap基础之上加了一对指针，可以按照添加的顺序遍历 对于频繁的遍历操作，此类效率高于HashMap &amp;gt;TreeMap：保证按照添加的key-value对进行排序，实现排序遍历 (按key进行排序) &amp;gt;HashTable：Map的古老实现类； 线程安全，效率低； 不能存储null的key和value(任何一个是null都不行)健壮性差 &amp;gt;Properties：常用来处理配置文件，key和value都是String类型 Map的 key-value对 的理解(以HashMap为例) key：无序不可重复，使用Set存储所有的key &amp;mdash;&amp;gt; key所在的类要重写equals()方法和hashCode()方法
 value：无序可重复，使用Collection存储所有的value &amp;mdash;&amp;gt; value所在的类要重写equals()方法
 一个键值对：key-value构成一个entry对象
@@ -315,30 +316,30 @@ Map中的常用方法(HashMap为例) @Test public void test1(){ Map map = new Ha
     
     <item>
       <title>Java集合1</title>
-      <link>https://sherry-long.github.io/post/javacollection/</link>
+      <link>https://shery-long.github.io/post/javacollection/</link>
       <pubDate>Thu, 08 Sep 2022 12:35:51 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javacollection/</guid>
+      <guid>https://shery-long.github.io/post/javacollection/</guid>
       <description>概述 使用Array存储对象方面具有一些弊端，而Java集合就像一种容器，可以动态的把多个对象的引用放入容器中
  数组在内存存储方面的特点：  数组初始化以后，长度就确定了 数组声明的类型，就决定了进行元素初始化时的类型  数组在存储数据方面的弊端  数组初始化以后，长度就不可变了，不便于扩展 数组中提供的属性和方法少，不便于进行添加、删除、插入等操作，且效率不高 无法直接获取存储元素的个数 数组存储的数据是有序的、可以重复的，存储数据特点单一 Java集合类可以用于存储数量不等的多个对象，还可用于保存具有映射关系的关联数组 Java集合可分为 Collection 和 Map 两种体系 Collection接口：单列数据，定义了存取一组对象的方法的集合 &amp;gt;List：元素有序，可重复的集合(动态数组) ArrayList, LinkedList, Vector &amp;gt;Set：元素无序，不可重复的集合 HashSet, LinkedHashSet, TreeSet Map接口：双列数据，保存具有映射关系&amp;quot;key-value对&amp;quot;的集合 &amp;gt;HashMap LinkedHashMap &amp;gt;TreeMap &amp;gt;HashTable &amp;gt;Properties   Collection  Collection接口中的常用方法 @Test public void test1(){ Collection coll = new ArrayList(); //add(obj) 将元素obj添加到集合中  coll.add(&amp;#34;this is a sentence&amp;#34;); coll.add(1); coll.add(1.5); coll.add(1234L); System.out.println(coll.size()); //addAll(Collection coll) 将集合coll中的所有元素添加到coll1中  Collection coll1 = new ArrayList(); coll1.addAll(coll); coll1.</description>
     </item>
     
     <item>
       <title>Java枚举类与注解</title>
-      <link>https://sherry-long.github.io/post/javaenum/</link>
+      <link>https://shery-long.github.io/post/javaenum/</link>
       <pubDate>Tue, 06 Sep 2022 09:18:27 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaenum/</guid>
+      <guid>https://shery-long.github.io/post/javaenum/</guid>
       <description>枚举类 什么是枚举类 类的对象只有确定的有限个 星期：周一二三 性别：男女 季节：春夏秋冬 支付方式：扫码现金 就职状态：Busy，Free，Vacation，Dismissed 订单状态：。。。 线程状态：创建，就绪，运行，阻塞，死亡
 当需要定义一组常量时，建议使用枚举类  如何自定义枚举类(JDK5之前) class Weekday{ //声明对象属性， private final 修饰  private final String DayName; private final int DayNum; //私有化构造方法  private Weekday(String dayName, int dayNum){ this.DayNum = dayNum; this.DayName = dayName; } //创建多个对象，public static final 修饰  public static final Weekday Monday = new Weekday(&amp;#34;Monday&amp;#34;, 1); public static final Weekday Tuesday = new Weekday(&amp;#34;Tuesday&amp;#34;, 2); public static final Weekday Wednesday = new Weekday(&amp;#34;Wednesday&amp;#34;, 3); public static final Weekday Thursday = new Weekday(&amp;#34;Thursday&amp;#34;, 4); public static final Weekday Friday = new Weekday(&amp;#34;Friday&amp;#34;, 5); public static final Weekday Saturday = new Weekday(&amp;#34;Saturday&amp;#34;, 6); public static final Weekday Sunday = new Weekday(&amp;#34;Sunday&amp;#34;, 7); //Getters、toString方法  public String getDayName() { return DayName; } public int getDayNum() { return DayNum; } @Override public String toString() { return &amp;#34;Weekday{&amp;#34; + &amp;#34;DayName=&amp;#39;&amp;#34; + DayName + &amp;#39;\&amp;#39;&amp;#39; + &amp;#34;, DayNum=&amp;#34; + DayNum + &amp;#39;}&amp;#39;; } }  如何使用关键字enum定义枚举类(JDK5新特性) enum Weekday{//enum类继承于java.</description>
     </item>
     
     <item>
       <title>Java常用类2</title>
-      <link>https://sherry-long.github.io/post/javacommonclass1/</link>
+      <link>https://shery-long.github.io/post/javacommonclass1/</link>
       <pubDate>Thu, 01 Sep 2022 17:26:46 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javacommonclass1/</guid>
+      <guid>https://shery-long.github.io/post/javacommonclass1/</guid>
       <description>Java比较器 Java中的对象，正常情况下，只能进行比较 == 或 !=，不能使用 &amp;gt; 或 &amp;lt;
 但有时，我们需要对多个对象进行排序，需要比较对象的大小
 通过使用 Comparable 或 Comparator 接口来实现
@@ -348,10 +349,10 @@ Map中的常用方法(HashMap为例) @Test public void test1(){ Map map = new Ha
     
     <item>
       <title>Java常用类1</title>
-      <link>https://sherry-long.github.io/post/javacommonclass/</link>
+      <link>https://shery-long.github.io/post/javacommonclass/</link>
       <pubDate>Thu, 01 Sep 2022 17:11:14 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javacommonclass/</guid>
+      <guid>https://shery-long.github.io/post/javacommonclass/</guid>
       <description>String相关  String String是一个final类，无法被继承，支持序列化
 String不可变字符序列，String内部并没有修改内容相应方法，每次修改String的方法其实质是创建一个新对象并将原引用指向它
 String str1 = &amp;#34;abc&amp;#34;; // 字面量，区别于new String str2 = &amp;#34;abc&amp;#34;; //此时str1和str2指向的是常量池中的同一地址 //字符串常量池中不会存储两个相同的字符串 str1 == str2.sout //结果为true   String不可变性体现：
@@ -360,10 +361,10 @@ String str1 = &amp;#34;abc&amp;#34;; // 字面量，区别于new String str2 = &
     
     <item>
       <title>Java线程</title>
-      <link>https://sherry-long.github.io/post/javathread/</link>
+      <link>https://shery-long.github.io/post/javathread/</link>
       <pubDate>Mon, 29 Aug 2022 09:22:08 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javathread/</guid>
+      <guid>https://shery-long.github.io/post/javathread/</guid>
       <description>进程与线程 进程是资源分配的单位，线程是调度和执行的单位 线程是进程的一个执行单元，一个线程就是进程中一个单一的控制流
 进程是线程的容器，一个进程至少有一个线程，一个进程中也可以有多个线程
 并发与并行 并行是指两个或者多个事件在同一时刻发生，而并发是指两个或多个事件在同一时间间隔发生。
@@ -380,19 +381,19 @@ String str1 = &amp;#34;abc&amp;#34;; // 字面量，区别于new String str2 = &
     
     <item>
       <title>杂项</title>
-      <link>https://sherry-long.github.io/post/javaothers/</link>
+      <link>https://shery-long.github.io/post/javaothers/</link>
       <pubDate>Thu, 25 Aug 2022 11:33:59 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javaothers/</guid>
+      <guid>https://shery-long.github.io/post/javaothers/</guid>
       <description>其他  String s = new String(&amp;quot;asdf&amp;quot;); 声明一个对象引用s，new：给我一个新对象 Java对象创建在堆上，对象引用在堆栈上 对象为什么不在堆上：创建程序时，Java系统必须知道存储在堆栈内的所有项的确切生命周期，以便上下移动堆栈指针（分配新内存以及回收内存） 在堆中存储时，编译器不需要知道存储的数据在堆中存活多久，更有灵活性，但是在堆中进行内存分配和清理比堆栈花时间更多 对于基本类型，将他们存储在堆栈上不是很高效，new时，创建一个并非是引用的“自动“变量，这个变量直接存储值，并存储在堆栈上，更加高效。 （基本类型，变量直接储存值） 当创建一个数组对象时，对象会被自动初始化 Array.copyOfRange(int[] source, int from, int to):返回一个数组，复制 source 数组从 from 位到 to 位的内容，不包括to位，长度为 to - from 。 在Java中，负数自动以补码形式保存， &amp;gt;&amp;gt; 为带符号右移，正数高位补 0 ，负数高位补 1 ，&amp;gt;&amp;gt;&amp;gt; 为无符号右移，正数负数高位都补 0 。 比较两个浮点数，不能直接使用 == 方法一：指定一个误差范围，两个浮点数的差值在此范围之内，则认为两数相等  float diff = 1e-6f; if (Math.abs(float1 - float2) &amp;lt; diff) return true;  方法二：使用BigDecimal来定义值，再进行浮点数的操作运算  BigDecimal a = new BigDecimal(&amp;#34;1.0&amp;#34;); BigDecimal b = new BigDecimal(&amp;#34;0.9&amp;#34;); BigDecimal c = new BigDecimal(&amp;#34;0.</description>
     </item>
     
     <item>
       <title>Java关键字</title>
-      <link>https://sherry-long.github.io/post/javakeywords/</link>
+      <link>https://shery-long.github.io/post/javakeywords/</link>
       <pubDate>Thu, 25 Aug 2022 11:33:41 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javakeywords/</guid>
+      <guid>https://shery-long.github.io/post/javakeywords/</guid>
       <description>关键字 this关键字 创建一个对象时分以下四部： 1.分配对象空间，将对象成员变量初始化为0或空 2.执行显示值的属性初始化 3.执行构造方法 this(**) 4.返回对象的地址给相关变量
 this 指的是**“创建好的对象的地址”**，在调用构造方法时，对象已被创建，在构造方法中使用this，代表“当前对象”
 this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用重载的构造方法，避免初始化代码重复。 只能在构造方法中使用，只能引用一个，必须位于构造方法的第一句 （在构造器中，如果为this添加了参数列表，那么就有不同的含义。这将产生对符合此参数列表的某个构造器的明确调用） 3. this 不能用于static方法中（因为静态方法不依赖对象来进行访问，没有对象就谈不上this） 4. this 将当前对象本身作为参数传递给其他方法 5. return this; this 将当前对象作为参数返回，这样可以对一个对象进行多次操作
@@ -405,10 +406,10 @@ this 用法 1. this.name = name; 避免程序二义 2. 使用this关键字调用
     
     <item>
       <title>旋转打印 1 ~ n方(Java)</title>
-      <link>https://sherry-long.github.io/post/generatematrix/</link>
+      <link>https://shery-long.github.io/post/generatematrix/</link>
       <pubDate>Tue, 23 Aug 2022 15:05:36 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/generatematrix/</guid>
+      <guid>https://shery-long.github.io/post/generatematrix/</guid>
       <description>输入 3  输出 int[][]res = 1 2 3 8 9 4 7 6 5  思路 确定循环不变量，确保填充数据时不会重复填充、缺省填充
 将每一圈的数据填充过程分为四条边，每条边填充第一个至倒数第二个数据，即[0,n),左闭右开
 坚持这个原则，严格控制每一条边的填充长度，即可。
@@ -417,10 +418,10 @@ Java实现 public static int[][] generateMatrix(int n) { int[][] res = new int[n
     
     <item>
       <title>设计模式(Java)</title>
-      <link>https://sherry-long.github.io/post/designpatterns/</link>
+      <link>https://shery-long.github.io/post/designpatterns/</link>
       <pubDate>Tue, 23 Aug 2022 11:52:56 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/designpatterns/</guid>
+      <guid>https://shery-long.github.io/post/designpatterns/</guid>
       <description>单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
 class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
@@ -429,10 +430,10 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
     
     <item>
       <title>JavaSE</title>
-      <link>https://sherry-long.github.io/post/javase/</link>
+      <link>https://shery-long.github.io/post/javase/</link>
       <pubDate>Mon, 22 Aug 2022 11:28:43 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/javase/</guid>
+      <guid>https://shery-long.github.io/post/javase/</guid>
       <description>Java基础 序列化和反序列化 序列化：将对象写入到IO流中 反序列化：从IO流中恢复对象 序列化机制允许将实现序列化的Java对象转换为字节序列，这些字节序列可以保存在磁盘上， 或通过网络传输，以达到以后恢复成原来的对象。序列化机制使得对象可以脱离程序运行而独立存在
 所有可在网络上传输的对象都必须是可序列化的，所有需要保存到磁盘上的对象都必须是可序列化的
 反序列化不会调用构造方法，对象是由JVM自己生成的
@@ -448,10 +449,10 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
     
     <item>
       <title>BST的后序遍历序列 Java</title>
-      <link>https://sherry-long.github.io/post/java13/</link>
+      <link>https://shery-long.github.io/post/java13/</link>
       <pubDate>Mon, 08 Mar 2021 12:58:48 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java13/</guid>
+      <guid>https://shery-long.github.io/post/java13/</guid>
       <description>题目：
 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则返回true,否则返回false。假设输入的数组的任意两个数字都互不相同。
 示例：
@@ -466,10 +467,10 @@ import java.util.*; public class Solution { public boolean VerifySquenceOfBST(in
     
     <item>
       <title>从上到下层次遍历二叉树 Java</title>
-      <link>https://sherry-long.github.io/post/java12/</link>
+      <link>https://shery-long.github.io/post/java12/</link>
       <pubDate>Sun, 07 Mar 2021 19:48:35 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java12/</guid>
+      <guid>https://shery-long.github.io/post/java12/</guid>
       <description>题目：
 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
 示例：
@@ -483,10 +484,10 @@ import java.util.*; /** public class TreeNode { int val = 0; TreeNode left = nul
     
     <item>
       <title>树的子结构 Java</title>
-      <link>https://sherry-long.github.io/post/java11/</link>
+      <link>https://shery-long.github.io/post/java11/</link>
       <pubDate>Sun, 28 Feb 2021 10:51:26 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java11/</guid>
+      <guid>https://shery-long.github.io/post/java11/</guid>
       <description>题目：
 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
 示例：
@@ -500,10 +501,10 @@ java实现：
     
     <item>
       <title>链表中倒数第k个节点 Java</title>
-      <link>https://sherry-long.github.io/post/java10/</link>
+      <link>https://shery-long.github.io/post/java10/</link>
       <pubDate>Wed, 24 Feb 2021 09:45:21 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java10/</guid>
+      <guid>https://shery-long.github.io/post/java10/</guid>
       <description>题目：
 输入一个链表，输出该链表中倒数第k个结点。
 示例：
@@ -516,10 +517,10 @@ java实现：
     
     <item>
       <title>调整数组顺序使奇数位于偶数前面 Java</title>
-      <link>https://sherry-long.github.io/post/java9/</link>
+      <link>https://shery-long.github.io/post/java9/</link>
       <pubDate>Tue, 16 Feb 2021 19:35:44 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java9/</guid>
+      <guid>https://shery-long.github.io/post/java9/</guid>
       <description>题目：
 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
 示例：
@@ -531,10 +532,10 @@ import java.util.*; public class Solution { public void reOrderArray(int [] arra
     
     <item>
       <title>二进制中 1 的个数 Java</title>
-      <link>https://sherry-long.github.io/post/java8/</link>
+      <link>https://shery-long.github.io/post/java8/</link>
       <pubDate>Tue, 16 Feb 2021 11:48:07 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java8/</guid>
+      <guid>https://shery-long.github.io/post/java8/</guid>
       <description>题目：
 输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
 示例：
@@ -548,10 +549,10 @@ public class Solution { public int NumberOf1(int n) { int count = 0; //计数器
     
     <item>
       <title>斐波那契数列 Java</title>
-      <link>https://sherry-long.github.io/post/java7/</link>
+      <link>https://shery-long.github.io/post/java7/</link>
       <pubDate>Fri, 12 Feb 2021 10:42:17 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java7/</guid>
+      <guid>https://shery-long.github.io/post/java7/</guid>
       <description>题目：
 java实现斐波那契数列
 思路：
@@ -562,10 +563,10 @@ public class Solution { static int result[] = new int[40]; // 静态result作备
     
     <item>
       <title>寻找旋转数组最小值 Java</title>
-      <link>https://sherry-long.github.io/post/java6/</link>
+      <link>https://shery-long.github.io/post/java6/</link>
       <pubDate>Thu, 11 Feb 2021 20:12:34 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java6/</guid>
+      <guid>https://shery-long.github.io/post/java6/</guid>
       <description>题目：
 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
@@ -579,10 +580,10 @@ import java.util.*; public class Solution { public int minNumberInRotateArray(in
     
     <item>
       <title>用两个栈实现队列 Java</title>
-      <link>https://sherry-long.github.io/post/java5/</link>
+      <link>https://shery-long.github.io/post/java5/</link>
       <pubDate>Thu, 11 Feb 2021 18:13:51 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java5/</guid>
+      <guid>https://shery-long.github.io/post/java5/</guid>
       <description>题目：
 用两个栈来实现一个队列，完成队列的Push和Pop操作。
 队列中的元素为int类型。
@@ -595,10 +596,10 @@ import java.util.Stack; public class Solution { Stack&amp;lt;Integer&amp;gt; sta
     
     <item>
       <title>反向打印链表 Java</title>
-      <link>https://sherry-long.github.io/post/java4/</link>
+      <link>https://shery-long.github.io/post/java4/</link>
       <pubDate>Thu, 11 Feb 2021 17:22:52 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java4/</guid>
+      <guid>https://shery-long.github.io/post/java4/</guid>
       <description>题目：
 输入一个链表，按链表从尾到头的顺序返回一个ArrayList
 示例：
@@ -610,10 +611,10 @@ Java实现：
     
     <item>
       <title>根据前序中序遍历序列重构二叉树 Java</title>
-      <link>https://sherry-long.github.io/post/java3/</link>
+      <link>https://shery-long.github.io/post/java3/</link>
       <pubDate>Tue, 09 Feb 2021 13:07:23 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java3/</guid>
+      <guid>https://shery-long.github.io/post/java3/</guid>
       <description>题目：
 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
@@ -632,10 +633,10 @@ Java实现：
     
     <item>
       <title>替换字符串空格 Java</title>
-      <link>https://sherry-long.github.io/post/java2/</link>
+      <link>https://shery-long.github.io/post/java2/</link>
       <pubDate>Tue, 09 Feb 2021 11:04:38 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java2/</guid>
+      <guid>https://shery-long.github.io/post/java2/</guid>
       <description>题目：
 请实现一个函数，将一个字符串中的每个空格替换成“%20”。
 例如，当字符串为
@@ -648,10 +649,10 @@ public class Solution { public String replaceSpace(StringBuffer str) { char[] te
     
     <item>
       <title>在二维数组中查找指定元素 Java</title>
-      <link>https://sherry-long.github.io/post/java1/</link>
+      <link>https://shery-long.github.io/post/java1/</link>
       <pubDate>Mon, 08 Feb 2021 12:39:40 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java1/</guid>
+      <guid>https://shery-long.github.io/post/java1/</guid>
       <description>题目：
 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 示例： [1, 2, 8, 9] [2, 4, 9, 12] [4, 7, 10, 13] [6, 8, 11, 15] 思路：
@@ -664,10 +665,10 @@ public class Solution { public boolean Find(int target, int [][] array) { int i 
     
     <item>
       <title>设计一个加法满足100位数相加 Java</title>
-      <link>https://sherry-long.github.io/post/java/</link>
+      <link>https://shery-long.github.io/post/java/</link>
       <pubDate>Sun, 07 Feb 2021 12:00:38 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/java/</guid>
+      <guid>https://shery-long.github.io/post/java/</guid>
       <description>设计一个加法，满足100位数字的相加
 思路：将两个加数以字符串形式保存，倒序每位进行加法，进行进位判断，结束之后再按倒序输出
 实现：
@@ -676,10 +677,10 @@ package test; public class Adder { public static void BigNumSum(String num1, Str
     
     <item>
       <title>AVL树 &amp; C语言实现</title>
-      <link>https://sherry-long.github.io/post/avltree/</link>
+      <link>https://shery-long.github.io/post/avltree/</link>
       <pubDate>Wed, 03 Feb 2021 09:32:24 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/avltree/</guid>
+      <guid>https://shery-long.github.io/post/avltree/</guid>
       <description>AVL树(平衡二叉树)，是一棵空树，或者是一棵二叉排序树。要介绍AVL树，首先要了解一下二叉排序树的缺点。
 当我们向二叉排序树中插入一个有序序列时，它会退化成链表。这样一来我们采用树形结构就没有意义了。为了防止这种情况出现，在插入数据后我们对二叉排序树进行一些结构上的调整，虽然增加了操作复杂度，却减少了检索时间。
 AVL性质：
@@ -698,10 +699,10 @@ C语言实现：
     
     <item>
       <title>红黑树 &amp; C语言实现插入</title>
-      <link>https://sherry-long.github.io/post/rbtree/</link>
+      <link>https://shery-long.github.io/post/rbtree/</link>
       <pubDate>Sun, 31 Jan 2021 09:48:38 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/rbtree/</guid>
+      <guid>https://shery-long.github.io/post/rbtree/</guid>
       <description>红黑树是树型结构中难度比较高的一种，面试当中也频频出现相关问题，从JDK的Hashmap到手撕红黑树，所以深入了解红黑树还是有必要的。
 红黑树是一种自平衡的二叉排序树，每当它的结构发生改变时(插入或删除)，如果破坏了红黑树的性质，它就会通过变色、旋转操作来调整结构重新达到平衡。
 红黑树的性质：
@@ -714,10 +715,10 @@ void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&amp;gt;r_child
     
     <item>
       <title>二叉排序树 &amp; C语言实现</title>
-      <link>https://sherry-long.github.io/post/bstree/</link>
+      <link>https://shery-long.github.io/post/bstree/</link>
       <pubDate>Fri, 29 Jan 2021 11:12:54 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/bstree/</guid>
+      <guid>https://shery-long.github.io/post/bstree/</guid>
       <description>二叉排序树，又称为二叉查找树，具有以下性质：
  (1)若它的左子树不为空，则左子树上所有节点的值均小于它的根节点的值； (2)若它的右子树不为空，则右子树上所有节点的值均大于它的根节点的值； (3)它的左、右子树也分别为二叉排序树。  根据这些性质我们可以知道，一棵二叉排序树的中序遍历序列一定是有序且升序的。
 插入:
@@ -731,10 +732,10 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
     
     <item>
       <title>动态规划-最长公共子序列</title>
-      <link>https://sherry-long.github.io/post/lcs/</link>
+      <link>https://shery-long.github.io/post/lcs/</link>
       <pubDate>Thu, 28 Jan 2021 12:47:54 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/lcs/</guid>
+      <guid>https://shery-long.github.io/post/lcs/</guid>
       <description>动态规划的主要思想是，将待解问题分解成很多规模更小的具有相同结构的子问题，即最优子结构，然后通过分别对这些子问题求解来解决最终问题。
 它与分治法的主要不同点在于，动态规划分解得到子问题往往不是互相独立的。我们会保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。
 我们可以用一个表来记录所有已解的子问题的答案，不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。
@@ -748,10 +749,10 @@ typedef struct BiTNode{ int data; struct BiTNode *l_child,*r_child; }BiTNode,*Bi
     
     <item>
       <title>字典树 &amp; Java实现</title>
-      <link>https://sherry-long.github.io/post/trietree/</link>
+      <link>https://shery-long.github.io/post/trietree/</link>
       <pubDate>Thu, 28 Jan 2021 10:19:57 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/trietree/</guid>
+      <guid>https://shery-long.github.io/post/trietree/</guid>
       <description>字典树：
 又称单词查找树，Trie树，是一种树形结构，是一种哈希树的变种。
 它有3个基本性质：
@@ -766,10 +767,10 @@ Java实现：
     
     <item>
       <title>计算机网络-TCP三次握手四次挥手</title>
-      <link>https://sherry-long.github.io/post/net/</link>
+      <link>https://shery-long.github.io/post/net/</link>
       <pubDate>Wed, 27 Jan 2021 10:11:23 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/net/</guid>
+      <guid>https://shery-long.github.io/post/net/</guid>
       <description>TCP是面向连接的可靠通信协议，在两端主机进行通信前，会先建立逻辑连接，而在结束通信时会断开连接，也就是我们所说的“三次握手”，“四次挥手”
 那么为什么要握手三次呢？
 比较官方的回答自然是，防止确认帧丢失，导致一方误以为确认帧送达而耗费资源
@@ -787,10 +788,10 @@ Java实现：
     
     <item>
       <title>单链表 C实现</title>
-      <link>https://sherry-long.github.io/post/linkedlist/</link>
+      <link>https://shery-long.github.io/post/linkedlist/</link>
       <pubDate>Tue, 26 Jan 2021 21:23:25 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/linkedlist/</guid>
+      <guid>https://shery-long.github.io/post/linkedlist/</guid>
       <description>单链表
 数据结构
 typedef struct LinkNode{ int data; struct LinkNode *next; }LinkNode,*LinkList; 函数：
@@ -802,10 +803,10 @@ void List_create(LinkNode *p,int n) { for(int i = 1;i &amp;lt;= n;++i) List_Tins
     
     <item>
       <title>堆排序原理 &amp; C语言实现</title>
-      <link>https://sherry-long.github.io/post/heapsort/</link>
+      <link>https://shery-long.github.io/post/heapsort/</link>
       <pubDate>Tue, 26 Jan 2021 21:20:38 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/heapsort/</guid>
+      <guid>https://shery-long.github.io/post/heapsort/</guid>
       <description>堆排序
 首先说一下堆，它可以被视为完全二叉树，大（小）根堆即任意非根结点的值都小（大）于等于其双亲结点的值。
 基本原理：建立大（小）根堆，依次将堆顶元素与堆底元素进行交换，每次交换完成后堆大小减一，重复此过程，直到数组中只剩下一个元素为止。
@@ -819,19 +820,19 @@ void HeapAdjust(int *A,int i,int n) { A[0] = A[i];	//将待调整节点值存放
     
     <item>
       <title>第二次测试</title>
-      <link>https://sherry-long.github.io/post/blog2/</link>
+      <link>https://shery-long.github.io/post/blog2/</link>
       <pubDate>Tue, 26 Jan 2021 13:52:24 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/blog2/</guid>
+      <guid>https://shery-long.github.io/post/blog2/</guid>
       <description>this is another test</description>
     </item>
     
     <item>
       <title>测试</title>
-      <link>https://sherry-long.github.io/post/blog1/</link>
+      <link>https://shery-long.github.io/post/blog1/</link>
       <pubDate>Tue, 26 Jan 2021 13:20:28 +0800</pubDate>
       
-      <guid>https://sherry-long.github.io/post/blog1/</guid>
+      <guid>https://shery-long.github.io/post/blog1/</guid>
       <description>this is a test</description>
     </item>
     

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://shery-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -20,6 +20,7 @@
 ​	五、MyBatis的各种查询功能
 ​	六、特殊SQL的执行
 ​	七、自定义映射resultMap
+​	八、动态SQL
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
@@ -36,6 +37,7 @@
 ​	五、MyBatis的各种查询功能
 ​	六、特殊SQL的执行
 ​	七、自定义映射resultMap
+​	八、动态SQL
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
@@ -44,7 +46,7 @@
     #
 二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sherry-long.github.io/post/mybatis/" />
+<meta property="og:url" content="https://shery-long.github.io/post/mybatis/" />
 <meta property="article:published_time" content="2022-11-21T15:22:53+08:00" />
 <meta property="article:modified_time" content="2022-11-21T15:22:53+08:00" />
 
@@ -52,7 +54,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://shery-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">
@@ -87,7 +89,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          7 min read
+          9 min read
         </div>
       </div>
     </header>
@@ -99,6 +101,7 @@
 <p>​	<a href="#MyBatisQuery">五、MyBatis的各种查询功能</a></p>
 <p>​	<a href="#SpecialSQL">六、特殊SQL的执行</a></p>
 <p>​	<a href="#resultMap">七、自定义映射resultMap</a></p>
+<p>​	<a href="#DynamicSQL">八、动态SQL</a></p>
 <p><a id="Intro">#</a></p>
 <h3 id="一mybatis简介">一、MyBatis简介</h3>
 <h4 id="1-mybatis特性">1. MyBatis特性</h4>
@@ -746,8 +749,8 @@ Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</s
 <span style="color:#f92672">&lt;/resultMap&gt;</span>
 </code></pre></div><p><strong>b&gt;分步查询</strong></p>
 <p>1）查询部门信息</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--Dept getEmps(@Param(&#34;did&#34;) Integer did);--&gt;</span>
-<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getEmps&#34;</span> <span style="color:#a6e22e">resultMap=</span><span style="color:#e6db74">&#34;deptEmpRM&#34;</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--Dept getDept(@Param(&#34;did&#34;) Integer did);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getDept&#34;</span> <span style="color:#a6e22e">resultMap=</span><span style="color:#e6db74">&#34;deptEmpRM&#34;</span><span style="color:#f92672">&gt;</span>
     select * from t_dept where did = #{did}
 <span style="color:#f92672">&lt;/select&gt;</span>
 
@@ -766,6 +769,141 @@ Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</s
 <span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getEmpsByDid&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Emp&#34;</span><span style="color:#f92672">&gt;</span>
     select * from t_emp where did = #{did}
 <span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><p>分布查询的优点：可以实现延迟加载，但是必须在核心配置文件中设置全局配置信息(settings)或者在标签中设置属性fetchType为lazy</p>
+<p><strong>settings:</strong></p>
+<p>azyLoadingEnabled(默认false)：延迟加载的全局开关。当开启时，所有关联对象都会延迟加载</p>
+<p>aggressiveLazyLoading(默认false)：当开启时，任何方法的调用都会加载该对象的所有属性。 否则，每个属性会按需加载</p>
+<p>此时就可以实现按需加载，获取的数据是什么，就只会执行相应的sql。此时可通过association和 collection中的fetchType属性设置当前的分步查询是否使用延迟加载，fetchType=&ldquo;lazy(延迟加载)|eager(立即加载)&rdquo;</p>
+<hr>
+<hr>
+<p><a id="DynamicSQL">#</a></p>
+<h3 id="八动态sql">八、动态SQL</h3>
+<p>Mybatis框架的动态SQL技术是一种根据特定条件动态拼装SQL语句的功能，它存在的意义是为了解决拼接SQL语句字符串时的痛点问题。</p>
+<h4 id="1-if">1. if</h4>
+<p>if标签可通过test属性的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；反之标签中的内容不会执行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;Emp&gt; getEmpByCondition(Emp emp);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getEmpByCondition&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Emp&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_emp where 1=1
+    <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;empName != null and empName != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+        and emp_name = #{empName}
+    <span style="color:#f92672">&lt;/if&gt;</span>
+    <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;age != null and age != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+        and age = #{age}
+    <span style="color:#f92672">&lt;/if&gt;</span>
+    <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;gender != null and gender != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+        and gender = #{gender}
+    <span style="color:#f92672">&lt;/if&gt;</span>
+    <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;email != null and email != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+        and email = #{email}
+    <span style="color:#f92672">&lt;/if&gt;</span>
+
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><h4 id="2-where">2. where</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;Emp&gt; getEmpByCondition(Emp emp);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getEmpByCondition&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Emp&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_emp
+    <span style="color:#f92672">&lt;where&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;empName != null and empName != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            and emp_name = #{empName}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;age != null and age != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            and age = #{age}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;gender != null and gender != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            and gender = #{gender}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;email != null and email != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            and email = #{email}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+    <span style="color:#f92672">&lt;/where&gt;</span>
+
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><p>where和if一般结合使用：</p>
+<p><strong>a&gt;若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字</strong></p>
+<p><strong>b&gt;若where标签中的if条件满足，则where标签会自动添加where关键字，并将条件前方多余的and或or去掉</strong></p>
+<p><strong>注意：where标签不能去掉条件后多余的and</strong></p>
+<h4 id="3-trim">3. trim</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;Emp&gt; getEmpByCondition(Emp emp);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getEmpByCondition&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Emp&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_emp
+    
+    <span style="color:#f92672">&lt;trim</span> <span style="color:#a6e22e">prefix=</span><span style="color:#e6db74">&#34;where&#34;</span> <span style="color:#a6e22e">suffixOverrides=</span><span style="color:#e6db74">&#34;and|or&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;empName != null and empName != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            emp_name = #{empName} and
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;age != null and age != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            age = #{age} or
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;gender != null and gender != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            gender = #{gender} and
+        <span style="color:#f92672">&lt;/if&gt;</span>
+        <span style="color:#f92672">&lt;if</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;email != null and email != &#39;&#39;&#34;</span><span style="color:#f92672">&gt;</span>
+            email = #{email}
+        <span style="color:#f92672">&lt;/if&gt;</span>
+    <span style="color:#f92672">&lt;/trim&gt;</span>
+    
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><p>trim用于去掉或添加标签中的内容</p>
+<p>常用属性：</p>
+<p>prefix：在trim标签中的内容的前面添加某些内容</p>
+<p>prefixOverrides：去掉trim标签中内容的前面的某些内容</p>
+<p>suffix：在trim标签中的内容的后面添加某些内容</p>
+<p>suffixOverrides：去掉trim标签中内容的后面的某些内容</p>
+<h4 id="4-choosewhenotherwise">4. choose、when、otherwise</h4>
+<p>choose、when、otherwise相当于if&hellip;else if..else</p>
+<p>只会执行第一个满足条件的when标签中的sql</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--List&lt;Emp&gt; getEmpListByChoose(Emp emp);--&gt;</span>
+<span style="color:#f92672">&lt;select</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;getEmpListByChoose&#34;</span> <span style="color:#a6e22e">resultType=</span><span style="color:#e6db74">&#34;Emp&#34;</span><span style="color:#f92672">&gt;</span>
+    select * from t_emp
+    <span style="color:#f92672">&lt;where&gt;</span>
+        <span style="color:#f92672">&lt;choose&gt;</span>
+            <span style="color:#f92672">&lt;when</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;empName != &#39;&#39; and empName != null&#34;</span><span style="color:#f92672">&gt;</span>
+                emp_name = #{empName}
+            <span style="color:#f92672">&lt;/when&gt;</span>
+            <span style="color:#f92672">&lt;when</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;age != &#39;&#39; and age != null&#34;</span><span style="color:#f92672">&gt;</span>
+                age = #{age}
+            <span style="color:#f92672">&lt;/when&gt;</span>
+            <span style="color:#f92672">&lt;when</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;gender != &#39;&#39; and gender != null&#34;</span><span style="color:#f92672">&gt;</span>
+                gender = #{gender}
+            <span style="color:#f92672">&lt;/when&gt;</span>
+            <span style="color:#f92672">&lt;when</span> <span style="color:#a6e22e">test=</span><span style="color:#e6db74">&#34;email != &#39;&#39; and email != null&#34;</span><span style="color:#f92672">&gt;</span>
+                email = #{email}
+            <span style="color:#f92672">&lt;/when&gt;</span>
+            <span style="color:#f92672">&lt;otherwise&gt;</span>
+                did = 1
+            <span style="color:#f92672">&lt;/otherwise&gt;</span>
+        <span style="color:#f92672">&lt;/choose&gt;</span>
+    <span style="color:#f92672">&lt;/where&gt;</span>
+<span style="color:#f92672">&lt;/select&gt;</span>
+</code></pre></div><h4 id="5-foreach">5. foreach</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--int deleteMultiEmps(@Param(&#34;eids&#34;) Integer[] eids);--&gt;</span>
+<span style="color:#f92672">&lt;delete</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;deleteMultiEmps&#34;</span><span style="color:#f92672">&gt;</span>
+    delete from t_emp where eid in
+    <span style="color:#f92672">&lt;foreach</span> <span style="color:#a6e22e">collection=</span><span style="color:#e6db74">&#34;eids&#34;</span> <span style="color:#a6e22e">item=</span><span style="color:#e6db74">&#34;eid&#34;</span> <span style="color:#a6e22e">separator=</span><span style="color:#e6db74">&#34;,&#34;</span> <span style="color:#a6e22e">open=</span><span style="color:#e6db74">&#34;(&#34;</span> <span style="color:#a6e22e">close=</span><span style="color:#e6db74">&#34;)&#34;</span><span style="color:#f92672">&gt;</span>
+        #{eid}
+    <span style="color:#f92672">&lt;/foreach&gt;</span>
+<span style="color:#f92672">&lt;/delete&gt;</span>
+
+<span style="color:#75715e">&lt;!--int addMultiEmps(@Param(&#34;emps&#34;) List&lt;Emp&gt; emps);--&gt;</span>
+<span style="color:#f92672">&lt;insert</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;addMultiEmps&#34;</span><span style="color:#f92672">&gt;</span>
+    insert into t_emp values
+    <span style="color:#f92672">&lt;foreach</span> <span style="color:#a6e22e">collection=</span><span style="color:#e6db74">&#34;emps&#34;</span> <span style="color:#a6e22e">item=</span><span style="color:#e6db74">&#34;emp&#34;</span> <span style="color:#a6e22e">separator=</span><span style="color:#e6db74">&#34;,&#34;</span><span style="color:#f92672">&gt;</span>
+        (null, #{emp.empName}, #{emp.age}, #{emp.gender}, #{emp.email}, null)
+    <span style="color:#f92672">&lt;/foreach&gt;</span>
+<span style="color:#f92672">&lt;/insert&gt;</span>
+</code></pre></div><p><strong>属性：</strong></p>
+<p><strong>collection：设置要循环的数组或集合</strong></p>
+<p><strong>item：表示集合或数组中的每一个数据</strong></p>
+<p><strong>separator：设置循环体之间的分隔符</strong></p>
+<p><strong>open：设置foreach标签中的内容的开始符</strong></p>
+<p><strong>close：设置foreach标签中的内容的结束符</strong></p>
+<h4 id="6-sql片段">6. SQL片段</h4>
+<p>sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;sql</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;empColumns&#34;</span><span style="color:#f92672">&gt;</span>
+    eid,ename,age,sex,did
+<span style="color:#f92672">&lt;/sql&gt;</span>
+
+select <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">refid=</span><span style="color:#e6db74">&#34;empColumns&#34;</span><span style="color:#f92672">&gt;&lt;/include&gt;</span> from t_emp
 </code></pre></div>
     </div>
     <div class="post-footer">
