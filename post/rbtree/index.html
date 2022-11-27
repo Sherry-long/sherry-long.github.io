@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="冯雪洋" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://shery-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -32,7 +32,7 @@ void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&gt;r_child; //
 代码实现：
 void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&gt;r_child; //将s指向待调整节点的右孩子  p-&gt;r_child = s-&gt;l_child; //s的左孩子成为p的右孩子  if(s-&gt;l_child != t-&gt;NIL) s-&gt;l_child-&gt;parent = p; //如果s的左孩子不是NIL节点(s的左孩子存在)，遂改该节点的父节点为p  s-&gt;parent = p-&gt;parent; // 接下来调整s取代p的位置  if(p-&gt;parent == t-&gt;NIL) t-&gt;root = s; //如果p为根节点，s成为根节点  else if(p == p-&gt;parent-&gt;l_child) p-&gt;parent-&gt;l_child = s; //如果p为其父节点的左孩子，s取代其位置  else p-&gt;parent-&gt;r_child = s; //如果p为其父节点的右孩子，s取代其位置  s-&gt;l_child = p; //p成为s的左孩子  p-&gt;parent = s; //s成为p的父节点 } void rightRotate(RBtree *t, Node *p){ //右旋函数，过程与左旋类似，方向相反  Node *s = p-&gt;l_child; p-&gt;l_child = s-&gt;r_child; if(s-&gt;r_child !" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://shery-long.github.io/post/rbtree/" />
+<meta property="og:url" content="https://sherry-long.github.io/post/rbtree/" />
 <meta property="article:published_time" content="2021-01-31T09:48:38+08:00" />
 <meta property="article:modified_time" content="2021-01-31T09:48:38+08:00" />
 
@@ -40,7 +40,7 @@ void leftRotate(RBtree *t, Node *p){ //左旋函数  Node *s = p-&gt;r_child; //
   </head>
   <body>
     <header class="app-header">
-      <a href="https://shery-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
       <h1>Sp(act)rum</h1>
       <p>这个人很懒，什么介绍都没留下</p>
       <div class="app-header-social">
