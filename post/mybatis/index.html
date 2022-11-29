@@ -21,13 +21,15 @@
 ​	六、特殊SQL的执行
 ​	七、自定义映射resultMap
 ​	八、动态SQL
+​	九、MyBatis缓存
+​	十、MyBatis逆向工程
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
   MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
-二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config."/>
+二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4."/>
 
     <meta property="og:title" content="MyBatis" />
 <meta property="og:description" content="​	一、MyBatis简介
@@ -38,13 +40,15 @@
 ​	六、特殊SQL的执行
 ​	七、自定义映射resultMap
 ​	八、动态SQL
+​	九、MyBatis缓存
+​	十、MyBatis逆向工程
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
   MyBatis可以使用简单的XML或注解用于配置和原始映射，将接口和Java的POJO（Plain Old Java Objects，普通的Java对象）映射成数据库中的记录
   MyBatis 是一个半自动的ORM（Object Relation Mapping）框架
     #
-二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4.13.2&lt;/version&gt; &lt;/dependency&gt; 创建MyBatis核心配置文件 习惯上命名为mybatis-config." />
+二、搭建MyBatis 打包方式：jar 引入依赖 &lt;!-- MySQL驱动 --&gt; &lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;8.0.31&lt;/version&gt; &lt;/dependency&gt; &lt;!-- MyBatis核心 --&gt; &lt;dependency&gt; &lt;groupId&gt;org.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mybatis&lt;/artifactId&gt; &lt;version&gt;3.5.11&lt;/version&gt; &lt;/dependency&gt; &lt;!-- Junit --&gt; &lt;dependency&gt; &lt;groupId&gt;junit&lt;/groupId&gt; &lt;artifactId&gt;junit&lt;/artifactId&gt; &lt;version&gt;4." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/mybatis/" />
 <meta property="article:published_time" content="2022-11-21T15:22:53+08:00" />
@@ -89,7 +93,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          9 min read
+          10 min read
         </div>
       </div>
     </header>
@@ -102,6 +106,8 @@
 <p>​	<a href="#SpecialSQL">六、特殊SQL的执行</a></p>
 <p>​	<a href="#resultMap">七、自定义映射resultMap</a></p>
 <p>​	<a href="#DynamicSQL">八、动态SQL</a></p>
+<p>​	<a href="#cache">九、MyBatis缓存</a></p>
+<p>​	<a href="#MBG">十、MyBatis逆向工程</a></p>
 <p><a id="Intro">#</a></p>
 <h3 id="一mybatis简介">一、MyBatis简介</h3>
 <h4 id="1-mybatis特性">1. MyBatis特性</h4>
@@ -904,7 +910,241 @@ Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</s
 <span style="color:#f92672">&lt;/sql&gt;</span>
 
 select <span style="color:#f92672">&lt;include</span> <span style="color:#a6e22e">refid=</span><span style="color:#e6db74">&#34;empColumns&#34;</span><span style="color:#f92672">&gt;&lt;/include&gt;</span> from t_emp
-</code></pre></div>
+</code></pre></div><hr>
+<hr>
+<p><a id="cache">#</a></p>
+<h3 id="九mybatis的缓存">九、MyBatis的缓存</h3>
+<h4 id="1-mybatis的一级缓存">1. MyBatis的一级缓存</h4>
+<p>一级缓存是SqlSession级别的，通过同一个SqlSession查询的数据会被缓存，下次查询相同的数据，就会从缓存中直接获取，不会从数据库重新访问</p>
+<p>使一级缓存失效的四种情况：</p>
+<p>1）不同的SqlSession对应不同的一级缓存</p>
+<p>2）同一个SqlSession但是查询条件不同</p>
+<p>3）同一个SqlSession两次查询期间执行了任何一次增删改操作</p>
+<p>4）同一个SqlSession两次查询期间手动清空了缓存</p>
+<h4 id="2-mybatis的二级缓存">2. MyBatis的二级缓存</h4>
+<p>二级缓存是SqlSessionFactory级别，通过同一个SqlSessionFactory创建的SqlSession查询的结果会被 缓存；此后若再次执行相同的查询语句，结果就会从缓存中获取</p>
+<p>二级缓存开启的条件：</p>
+<p>a&gt;在核心配置文件中，设置全局配置属性cacheEnabled=&ldquo;true&rdquo;，默认为true，不需要设置</p>
+<p>b&gt;在映射文件中设置标签</p>
+<p>c&gt;二级缓存必须在SqlSession关闭或提交之后有效</p>
+<p>d&gt;查询的数据所转换的实体类类型必须实现序列化的接口</p>
+<p>使二级缓存失效的情况：</p>
+<p>两次查询之间执行了任意的增删改，会使一级和二级缓存同时失效</p>
+<h4 id="3-二级缓存的相关配置">3. 二级缓存的相关配置</h4>
+<p>在mapper配置文件中添加的cache标签可以设置一些属性：</p>
+<ul>
+<li>eviction属性：缓存回收策略
+LRU（Least Recently Used）
+FIFO（First in First out）
+SOFT – 软引用：移除基于垃圾回收器状态和软引用规则的对象
+WEAK – 弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象
+默认是LRU</li>
+<li>flushInterval属性：刷新间隔，单位毫秒
+默认情况是不设置，也就是没有刷新间隔，缓存仅仅调用语句时刷新</li>
+<li>size属性：引用数目，正整数
+代表缓存最多可以存储多少个对象，太大容易导致内存溢出</li>
+<li>readOnly属性：只读，true/false
+true：只读缓存；会给所有调用者返回缓存对象的相同实例。因此这些对象不能被修改。这提供了很重要的性能优势
+false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这会慢一些，但是安全，因此默认是false</li>
+</ul>
+<h4 id="4-mybatis缓存查询的顺序">4. MyBatis缓存查询的顺序</h4>
+<ul>
+<li>先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用</li>
+<li>如果二级缓存没有命中，再查询一级缓存</li>
+<li>如果一级缓存也没有命中，则查询数据库</li>
+<li>SqlSession关闭之后，一级缓存中的数据会写入二级缓存</li>
+</ul>
+<h4 id="5-整合第三方缓存ehcache">5. 整合第三方缓存EHCache</h4>
+<p><strong>a&gt;添加依赖</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- Mybatis EHCache整合包 --&gt;</span>
+<span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.caches<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-ehcache<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.2.1<span style="color:#f92672">&lt;/version&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+<span style="color:#75715e">&lt;!-- slf4j日志门面的一个具体实现 --&gt;</span>
+<span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>ch.qos.logback<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>logback-classic<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>1.2.3<span style="color:#f92672">&lt;/version&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p><strong>b&gt;各jar包功能</strong></p>
+<table>
+<thead>
+<tr>
+<th>jar包名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mybatis-ehcache</td>
+<td>Mybatis和EHCache的整合包</td>
+</tr>
+<tr>
+<td>ehcache</td>
+<td>EHCache核心包</td>
+</tr>
+<tr>
+<td>slf4j-api</td>
+<td>SLF4J日志门面包</td>
+</tr>
+<tr>
+<td>logback-classic</td>
+<td>支持SLF4J门面接口的一个具体实现</td>
+</tr>
+</tbody>
+</table>
+<p><strong>c&gt;创建EHCache的配置文件ehcache.xml</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34; ?&gt;</span>
+<span style="color:#f92672">&lt;ehcache</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+         <span style="color:#a6e22e">xsi:noNamespaceSchemaLocation=</span><span style="color:#e6db74">&#34;../config/ehcache.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!-- 磁盘保存路径 --&gt;</span>
+    <span style="color:#f92672">&lt;diskStore</span> <span style="color:#a6e22e">path=</span><span style="color:#e6db74">&#34;D:\MyBatisCache\ehcache&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;defaultCache</span>
+                  <span style="color:#a6e22e">maxElementsInMemory=</span><span style="color:#e6db74">&#34;1000&#34;</span>
+                  <span style="color:#a6e22e">maxElementsOnDisk=</span><span style="color:#e6db74">&#34;10000000&#34;</span>
+                  <span style="color:#a6e22e">eternal=</span><span style="color:#e6db74">&#34;false&#34;</span>
+                  <span style="color:#a6e22e">overflowToDisk=</span><span style="color:#e6db74">&#34;true&#34;</span>
+                  <span style="color:#a6e22e">timeToIdleSeconds=</span><span style="color:#e6db74">&#34;120&#34;</span>
+                  <span style="color:#a6e22e">timeToLiveSeconds=</span><span style="color:#e6db74">&#34;120&#34;</span>
+                  <span style="color:#a6e22e">diskExpiryThreadIntervalSeconds=</span><span style="color:#e6db74">&#34;120&#34;</span>
+                  <span style="color:#a6e22e">memoryStoreEvictionPolicy=</span><span style="color:#e6db74">&#34;LRU&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#f92672">&lt;/defaultCache&gt;</span>
+<span style="color:#f92672">&lt;/ehcache&gt;</span>
+</code></pre></div><p><strong>d&gt;设置二级缓存的类型</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;cache</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;org.mybatis.caches.ehcache.EhcacheCache&#34;</span><span style="color:#f92672">/&gt;</span>
+</code></pre></div><p><strong>e&gt;加入logback日志</strong></p>
+<p>存在SLF4J时，作为简易日志的log4j将失效，此时我们需要借助SLF4J的具体实现logback来打印日志。创建logback的配置文件logback.xml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;configuration</span> <span style="color:#a6e22e">debug=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!-- 指定日志输出的位置 --&gt;</span>
+    <span style="color:#f92672">&lt;appender</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span>
+              <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;encoder&gt;</span>
+            <span style="color:#75715e">&lt;!-- 日志输出的格式 --&gt;</span>
+            <span style="color:#75715e">&lt;!-- 按照顺序分别是：时间、日志级别、线程名称、打印日志的类、日志主体内容、换行 -
+</span><span style="color:#75715e">-&gt;
+</span><span style="color:#75715e">&lt;pattern&gt;[%d{HH:mm:ss.SSS}] [%-5level] [%thread] [%logger]
+</span><span style="color:#75715e">[%msg]%n&lt;/pattern&gt;
+</span><span style="color:#75715e">&lt;/encoder&gt;
+</span><span style="color:#75715e">&lt;/appender&gt;
+</span><span style="color:#75715e">&lt;!-- 设置全局日志级别。日志级别按顺序分别是：DEBUG、INFO、WARN、ERROR --&gt;</span>
+            <span style="color:#75715e">&lt;!-- 指定任何一个日志级别都只打印当前级别和后面级别的日志。 --&gt;</span>
+            <span style="color:#f92672">&lt;root</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#75715e">&lt;!-- 指定打印日志的appender，这里通过“STDOUT”引用了前面配置的appender --&gt;</span>
+                <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/root&gt;</span>
+            <span style="color:#75715e">&lt;!-- 根据特殊需求指定局部日志级别 --&gt;</span>
+            <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;com.atguigu.crowd.mapper&#34;</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;/configuration&gt;</span>
+</code></pre></div><p><strong>f&gt;EHCache配置文件说明</strong></p>
+<p><img src="/imgs/EHCacheConfig.png" alt=""></p>
+<hr>
+<hr>
+<p><a id="MBG">#</a></p>
+<h3 id="十mybatis逆向工程">十、MyBatis逆向工程</h3>
+<ul>
+<li>正向工程：先创建Java实体类，由框架负责根据实体类生成数据库表。Hibernate是支持正向工程的</li>
+<li>逆向工程：先创建数据库表，由框架负责根据数据库表，反向生成如下资源：
+<ul>
+<li>Java实体类</li>
+<li>Mapper接口</li>
+<li>Mapper映射文件</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-创建逆向工程的步骤">1. 创建逆向工程的步骤</h4>
+<p><strong>a&gt;添加依赖和插件</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- MyBatis逆向工程依赖 --&gt;</span>
+<span style="color:#75715e">&lt;!-- 依赖MyBatis核心包 --&gt;</span>
+    <span style="color:#f92672">&lt;dependencies&gt;</span>
+        <span style="color:#f92672">&lt;dependency&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>3.5.11<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;/dependencies&gt;</span>
+    <span style="color:#75715e">&lt;!-- 控制Maven在构建过程中相关配置 --&gt;</span>
+    <span style="color:#f92672">&lt;build&gt;</span>
+        <span style="color:#75715e">&lt;!-- 构建过程中用到的插件 --&gt;</span>
+        <span style="color:#f92672">&lt;plugins&gt;</span>
+            <span style="color:#75715e">&lt;!-- 具体插件，逆向工程的操作是以构建过程中插件形式出现的 --&gt;</span>
+            <span style="color:#f92672">&lt;plugin&gt;</span>
+                <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+                <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                <span style="color:#f92672">&lt;version&gt;</span>1.3.0<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#75715e">&lt;!-- 插件的依赖 --&gt;</span>
+                <span style="color:#f92672">&lt;dependencies&gt;</span>
+                    <span style="color:#75715e">&lt;!-- 逆向工程的核心依赖 --&gt;</span>
+                    <span style="color:#f92672">&lt;dependency&gt;</span>
+                        <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+                        <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-core<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                        <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+                    <span style="color:#f92672">&lt;/dependency&gt;</span>
+                    <span style="color:#75715e">&lt;!-- 数据库连接池 --&gt;</span>
+                    <span style="color:#f92672">&lt;dependency&gt;</span>
+                        <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
+                        <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                        <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
+                    <span style="color:#f92672">&lt;/dependency&gt;</span>
+                    <span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
+                    <span style="color:#f92672">&lt;dependency&gt;</span>
+                        <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+                        <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                        <span style="color:#f92672">&lt;version&gt;</span>8.0.31<span style="color:#f92672">&lt;/version&gt;</span>
+                    <span style="color:#f92672">&lt;/dependency&gt;</span>
+                <span style="color:#f92672">&lt;/dependencies&gt;</span>
+            <span style="color:#f92672">&lt;/plugin&gt;</span>
+        <span style="color:#f92672">&lt;/plugins&gt;</span>
+    <span style="color:#f92672">&lt;/build&gt;</span>
+</code></pre></div><p><strong>b&gt;创建MyBatis的核心配置文件</strong></p>
+<p><strong>c&gt;创建逆向工程的配置文件</strong></p>
+<pre><code>文件名必须是：generatorConfig.xml
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE generatorConfiguration
+</span><span style="color:#75715e">        PUBLIC &#34;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&#34;
+</span><span style="color:#75715e">        &#34;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&#34;&gt;</span>
+<span style="color:#f92672">&lt;generatorConfiguration&gt;</span>
+    <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">targetRuntime: 执行生成的逆向工程的版本
+</span><span style="color:#75715e">MyBatis3Simple: 生成基本的CRUD
+</span><span style="color:#75715e">MyBatis3: 生成带条件的CRUD
+</span><span style="color:#75715e">--&gt;</span>
+    <span style="color:#f92672">&lt;context</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;DB2Tables&#34;</span> <span style="color:#a6e22e">targetRuntime=</span><span style="color:#e6db74">&#34;MyBatis3&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!-- 数据库的连接信息 --&gt;</span>
+        <span style="color:#f92672">&lt;jdbcConnection</span> <span style="color:#a6e22e">driverClass=</span><span style="color:#e6db74">&#34;com.mysql.jdbc.Driver&#34;</span>
+                        <span style="color:#a6e22e">connectionURL=</span><span style="color:#e6db74">&#34;jdbc:mysql://localhost:3306/mybatis&#34;</span>
+                        <span style="color:#a6e22e">userId=</span><span style="color:#e6db74">&#34;root&#34;</span>
+                        <span style="color:#a6e22e">password=</span><span style="color:#e6db74">&#34;root&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;/jdbcConnection&gt;</span>
+        <span style="color:#75715e">&lt;!-- javaBean的生成策略--&gt;</span>
+        <span style="color:#f92672">&lt;javaModelGenerator</span> <span style="color:#a6e22e">targetPackage=</span><span style="color:#e6db74">&#34;com.sherry.mybatis.pojo&#34;</span>
+                            <span style="color:#a6e22e">targetProject=</span><span style="color:#e6db74">&#34;.\src\main\java&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;enableSubPackages&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;trimStrings&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/javaModelGenerator&gt;</span>
+        <span style="color:#75715e">&lt;!-- SQL映射文件的生成策略 --&gt;</span>
+        <span style="color:#f92672">&lt;sqlMapGenerator</span> <span style="color:#a6e22e">targetPackage=</span><span style="color:#e6db74">&#34;com.sherry.mybatis.mapper&#34;</span>
+                         <span style="color:#a6e22e">targetProject=</span><span style="color:#e6db74">&#34;.\src\main\resources&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;enableSubPackages&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/sqlMapGenerator&gt;</span>
+        <span style="color:#75715e">&lt;!-- Mapper接口的生成策略 --&gt;</span>
+        <span style="color:#f92672">&lt;javaClientGenerator</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#34;XMLMAPPER&#34;</span>
+                             <span style="color:#a6e22e">targetPackage=</span><span style="color:#e6db74">&#34;com.sherry.mybatis.mapper&#34;</span> <span style="color:#a6e22e">targetProject=</span><span style="color:#e6db74">&#34;.\src\main\java&#34;</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;enableSubPackages&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;/javaClientGenerator&gt;</span>
+        <span style="color:#75715e">&lt;!-- 逆向分析的表 --&gt;</span>
+        <span style="color:#75715e">&lt;!-- tableName设置为*号，可以对应所有表，此时不写domainObjectName --&gt;</span>
+        <span style="color:#75715e">&lt;!-- domainObjectName属性指定生成出来的实体类的类名 --&gt;</span>
+        <span style="color:#f92672">&lt;table</span> <span style="color:#a6e22e">tableName=</span><span style="color:#e6db74">&#34;t_emp&#34;</span> <span style="color:#a6e22e">domainObjectName=</span><span style="color:#e6db74">&#34;Emp&#34;</span><span style="color:#f92672">/&gt;</span>
+        <span style="color:#f92672">&lt;table</span> <span style="color:#a6e22e">tableName=</span><span style="color:#e6db74">&#34;t_dept&#34;</span> <span style="color:#a6e22e">domainObjectName=</span><span style="color:#e6db74">&#34;Dept&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/context&gt;</span>
+<span style="color:#f92672">&lt;/generatorConfiguration&gt;</span>
+</code></pre></div><p><strong>d&gt;执行MBG插件的generate目标</strong></p>
+<p><img src="/imgs/MBGgenerate.png" alt=""></p>
+<h4 id="2-qbc查询">2. QBC查询</h4>
+
     </div>
     <div class="post-footer">
       
