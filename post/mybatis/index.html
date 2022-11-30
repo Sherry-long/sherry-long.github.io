@@ -23,6 +23,7 @@
 ​	八、动态SQL
 ​	九、MyBatis缓存
 ​	十、MyBatis逆向工程
+​	十一、分页插件
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
@@ -42,6 +43,7 @@
 ​	八、动态SQL
 ​	九、MyBatis缓存
 ​	十、MyBatis逆向工程
+​	十一、分页插件
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
@@ -93,7 +95,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          10 min read
+          11 min read
         </div>
       </div>
     </header>
@@ -108,6 +110,7 @@
 <p>​	<a href="#DynamicSQL">八、动态SQL</a></p>
 <p>​	<a href="#cache">九、MyBatis缓存</a></p>
 <p>​	<a href="#MBG">十、MyBatis逆向工程</a></p>
+<p>​	<a href="#pagehelper">十一、分页插件</a></p>
 <p><a id="Intro">#</a></p>
 <h3 id="一mybatis简介">一、MyBatis简介</h3>
 <h4 id="1-mybatis特性">1. MyBatis特性</h4>
@@ -1023,21 +1026,21 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
               <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;ch.qos.logback.core.ConsoleAppender&#34;</span><span style="color:#f92672">&gt;</span>
         <span style="color:#f92672">&lt;encoder&gt;</span>
             <span style="color:#75715e">&lt;!-- 日志输出的格式 --&gt;</span>
-            <span style="color:#75715e">&lt;!-- 按照顺序分别是：时间、日志级别、线程名称、打印日志的类、日志主体内容、换行 -
-</span><span style="color:#75715e">-&gt;
-</span><span style="color:#75715e">&lt;pattern&gt;[%d{HH:mm:ss.SSS}] [%-5level] [%thread] [%logger]
-</span><span style="color:#75715e">[%msg]%n&lt;/pattern&gt;
-</span><span style="color:#75715e">&lt;/encoder&gt;
-</span><span style="color:#75715e">&lt;/appender&gt;
-</span><span style="color:#75715e">&lt;!-- 设置全局日志级别。日志级别按顺序分别是：DEBUG、INFO、WARN、ERROR --&gt;</span>
-            <span style="color:#75715e">&lt;!-- 指定任何一个日志级别都只打印当前级别和后面级别的日志。 --&gt;</span>
-            <span style="color:#f92672">&lt;root</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">&gt;</span>
-                <span style="color:#75715e">&lt;!-- 指定打印日志的appender，这里通过“STDOUT”引用了前面配置的appender --&gt;</span>
-                <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span> <span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;/root&gt;</span>
-            <span style="color:#75715e">&lt;!-- 根据特殊需求指定局部日志级别 --&gt;</span>
-            <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;com.atguigu.crowd.mapper&#34;</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">/&gt;</span>
-            <span style="color:#f92672">&lt;/configuration&gt;</span>
+            <span style="color:#75715e">&lt;!-- 按照顺序分别是：时间、日志级别、线程名称、打印日志的类、日志主体内容、换行 --&gt;</span>
+            <span style="color:#f92672">&lt;pattern&gt;</span>[%d{HH:mm:ss.SSS}] [%-5level] [%thread] [%logger]
+                [%msg]%n
+            <span style="color:#f92672">&lt;/pattern&gt;</span>
+        <span style="color:#f92672">&lt;/encoder&gt;</span>
+    <span style="color:#f92672">&lt;/appender&gt;</span>
+    <span style="color:#75715e">&lt;!-- 设置全局日志级别。日志级别按顺序分别是：DEBUG、INFO、WARN、ERROR --&gt;</span>
+    <span style="color:#75715e">&lt;!-- 指定任何一个日志级别都只打印当前级别和后面级别的日志。 --&gt;</span>
+    <span style="color:#f92672">&lt;root</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#75715e">&lt;!-- 指定打印日志的appender，这里通过“STDOUT”引用了前面配置的appender --&gt;</span>
+        <span style="color:#f92672">&lt;appender-ref</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;STDOUT&#34;</span><span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/root&gt;</span>
+    <span style="color:#75715e">&lt;!-- 根据特殊需求指定局部日志级别 --&gt;</span>
+    <span style="color:#f92672">&lt;logger</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">level=</span><span style="color:#e6db74">&#34;DEBUG&#34;</span><span style="color:#f92672">/&gt;</span>
+<span style="color:#f92672">&lt;/configuration&gt;</span>
 </code></pre></div><p><strong>f&gt;EHCache配置文件说明</strong></p>
 <p><img src="/imgs/EHCacheConfig.png" alt=""></p>
 <hr>
@@ -1058,46 +1061,51 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
 <p><strong>a&gt;添加依赖和插件</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- MyBatis逆向工程依赖 --&gt;</span>
 <span style="color:#75715e">&lt;!-- 依赖MyBatis核心包 --&gt;</span>
-    <span style="color:#f92672">&lt;dependencies&gt;</span>
-        <span style="color:#f92672">&lt;dependency&gt;</span>
-            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
-            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
-            <span style="color:#f92672">&lt;version&gt;</span>3.5.11<span style="color:#f92672">&lt;/version&gt;</span>
-        <span style="color:#f92672">&lt;/dependency&gt;</span>
-    <span style="color:#f92672">&lt;/dependencies&gt;</span>
-    <span style="color:#75715e">&lt;!-- 控制Maven在构建过程中相关配置 --&gt;</span>
-    <span style="color:#f92672">&lt;build&gt;</span>
-        <span style="color:#75715e">&lt;!-- 构建过程中用到的插件 --&gt;</span>
-        <span style="color:#f92672">&lt;plugins&gt;</span>
-            <span style="color:#75715e">&lt;!-- 具体插件，逆向工程的操作是以构建过程中插件形式出现的 --&gt;</span>
-            <span style="color:#f92672">&lt;plugin&gt;</span>
-                <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
-                <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
-                <span style="color:#f92672">&lt;version&gt;</span>1.3.0<span style="color:#f92672">&lt;/version&gt;</span>
-                <span style="color:#75715e">&lt;!-- 插件的依赖 --&gt;</span>
-                <span style="color:#f92672">&lt;dependencies&gt;</span>
-                    <span style="color:#75715e">&lt;!-- 逆向工程的核心依赖 --&gt;</span>
-                    <span style="color:#f92672">&lt;dependency&gt;</span>
-                        <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
-                        <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-core<span style="color:#f92672">&lt;/artifactId&gt;</span>
-                        <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
-                    <span style="color:#f92672">&lt;/dependency&gt;</span>
-                    <span style="color:#75715e">&lt;!-- 数据库连接池 --&gt;</span>
-                    <span style="color:#f92672">&lt;dependency&gt;</span>
-                        <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
-                        <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
-                        <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
-                    <span style="color:#f92672">&lt;/dependency&gt;</span>
-                    <span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
-                    <span style="color:#f92672">&lt;dependency&gt;</span>
-                        <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
-                        <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
-                        <span style="color:#f92672">&lt;version&gt;</span>8.0.31<span style="color:#f92672">&lt;/version&gt;</span>
-                    <span style="color:#f92672">&lt;/dependency&gt;</span>
-                <span style="color:#f92672">&lt;/dependencies&gt;</span>
-            <span style="color:#f92672">&lt;/plugin&gt;</span>
-        <span style="color:#f92672">&lt;/plugins&gt;</span>
-    <span style="color:#f92672">&lt;/build&gt;</span>
+<span style="color:#f92672">&lt;dependencies&gt;</span>
+    <span style="color:#f92672">&lt;dependency&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>3.5.11<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#f92672">&lt;dependency&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>4.13.2<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span>
+    
+<span style="color:#75715e">&lt;!-- 插件的依赖 --&gt;</span>
+    <span style="color:#75715e">&lt;!-- 逆向工程的核心依赖 --&gt;</span>
+    <span style="color:#f92672">&lt;dependency&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-core<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#75715e">&lt;!-- 数据库连接池 --&gt;</span>
+    <span style="color:#f92672">&lt;dependency&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span>
+    <span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
+    <span style="color:#f92672">&lt;dependency&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>8.0.31<span style="color:#f92672">&lt;/version&gt;</span>
+    <span style="color:#f92672">&lt;/dependency&gt;</span>
+<span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+<span style="color:#75715e">&lt;!-- 控制Maven在构建过程中相关配置 --&gt;</span>
+<span style="color:#f92672">&lt;build&gt;</span>
+    <span style="color:#75715e">&lt;!-- 构建过程中用到的插件 --&gt;</span>
+    <span style="color:#f92672">&lt;plugins&gt;</span>
+        <span style="color:#75715e">&lt;!-- 具体插件，逆向工程的操作是以构建过程中插件形式出现的 --&gt;</span>
+        <span style="color:#f92672">&lt;plugin&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.3.0<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;/plugin&gt;</span>
+    <span style="color:#f92672">&lt;/plugins&gt;</span>
+<span style="color:#f92672">&lt;/build&gt;</span>
 </code></pre></div><p><strong>b&gt;创建MyBatis的核心配置文件</strong></p>
 <p><strong>c&gt;创建逆向工程的配置文件</strong></p>
 <pre><code>文件名必须是：generatorConfig.xml
@@ -1144,6 +1152,69 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
 </code></pre></div><p><strong>d&gt;执行MBG插件的generate目标</strong></p>
 <p><img src="/imgs/MBGgenerate.png" alt=""></p>
 <h4 id="2-qbc查询">2. QBC查询</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+    InputStream is <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        is <span style="color:#f92672">=</span> Resources<span style="color:#f92672">.</span><span style="color:#a6e22e">getResourceAsStream</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mybatis-config.xml&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IOException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    SqlSessionFactory sqlSessionFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SqlSessionFactoryBuilder<span style="color:#f92672">().</span><span style="color:#a6e22e">build</span><span style="color:#f92672">(</span>is<span style="color:#f92672">);</span>
+    SqlSession sqlSession <span style="color:#f92672">=</span> sqlSessionFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">openSession</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">);</span>
+    EmpMapper mapper <span style="color:#f92672">=</span> sqlSession<span style="color:#f92672">.</span><span style="color:#a6e22e">getMapper</span><span style="color:#f92672">(</span>EmpMapper<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    EmpExample empExample <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> EmpExample<span style="color:#f92672">();</span>
+    empExample<span style="color:#f92672">.</span><span style="color:#a6e22e">createCriteria</span><span style="color:#f92672">().</span><span style="color:#a6e22e">andAgeBetween</span><span style="color:#f92672">(</span>20<span style="color:#f92672">,</span> 25<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Emp emp <span style="color:#f92672">:</span> mapper<span style="color:#f92672">.</span><span style="color:#a6e22e">selectByExample</span><span style="color:#f92672">(</span>empExample<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>emp<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<hr>
+<p><a id="pagehelper">#</a></p>
+<h3 id="十一分页插件">十一、分页插件</h3>
+<h4 id="1-分页插件使用步骤">1. 分页插件使用步骤</h4>
+<p><strong>a&gt;添加依赖</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- MyBatis分页插件 --&gt;</span>
+<span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.pagehelper<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>pagehelper<span style="color:#f92672">&lt;/artifactId&gt;</span>
+    <span style="color:#f92672">&lt;version&gt;</span>5.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><p><strong>b&gt;配置分页插件</strong></p>
+<p>在 mybatis-config.xml 中配置插件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;plugins&gt;</span>
+    <span style="color:#75715e">&lt;!--设置分页插件--&gt;</span>
+    <span style="color:#f92672">&lt;plugin</span> <span style="color:#a6e22e">interceptor=</span><span style="color:#e6db74">&#34;com.github.pagehelper.PageInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/plugin&gt;</span>
+<span style="color:#f92672">&lt;/plugins&gt;</span>
+</code></pre></div><h4 id="2-分页插件的使用">2. 分页插件的使用</h4>
+<p><strong>a&gt;在查询功能之前使用PageHelper.startPage(int pageNum, int pageSize)开启分页功能</strong></p>
+<ul>
+<li>pageNum：当前页的页码</li>
+<li>pageSize：每页显示的条数</li>
+</ul>
+<p><strong>b&gt;在查询获取list集合之后，使用PageInfo pageInfo = new PageInfo&lt;&gt;(List list, int navigatePages)获取分页相关数据</strong></p>
+<ul>
+<li>list：分页之后的数据</li>
+<li>navigatePages：导航分页的页码数</li>
+</ul>
+<p><strong>c&gt;分页相关数据</strong></p>
+<pre><code></code></pre><hr>
+<p>常用数据：</p>
+<ul>
+<li>pageNum：当前页的页码</li>
+<li>pageSize：每页显示的条数</li>
+<li>size：当前页显示的真实条数</li>
+<li>total：总记录数</li>
+<li>pages：总页数</li>
+<li>prePage：上一页的页码</li>
+<li>nextPage：下一页的页码</li>
+<li>isFirstPage/isLastPage：是否为第一页/最后一页</li>
+<li>hasPreviousPage/hasNextPage：是否存在上一页/下一页</li>
+<li>navigatePages：导航分页的页码数</li>
+<li>navigatepageNums：导航分页的页码，[1,2,3,4,5]</li>
+</ul>
 
     </div>
     <div class="post-footer">

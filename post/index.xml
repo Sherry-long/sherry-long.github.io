@@ -23,6 +23,7 @@
 ​	八、动态SQL
 ​	九、MyBatis缓存
 ​	十、MyBatis逆向工程
+​	十一、分页插件
 #
 一、MyBatis简介 1. MyBatis特性   MyBatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架
   MyBatis避免了几乎所有的 JDBC代码和手动设置参数以及获取结果集
