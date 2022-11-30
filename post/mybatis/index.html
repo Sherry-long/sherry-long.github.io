@@ -1060,7 +1060,6 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
 <h4 id="1-创建逆向工程的步骤">1. 创建逆向工程的步骤</h4>
 <p><strong>a&gt;添加依赖和插件</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- MyBatis逆向工程依赖 --&gt;</span>
-<span style="color:#75715e">&lt;!-- 依赖MyBatis核心包 --&gt;</span>
 <span style="color:#f92672">&lt;dependencies&gt;</span>
     <span style="color:#f92672">&lt;dependency&gt;</span>
         <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis<span style="color:#f92672">&lt;/groupId&gt;</span>
@@ -1068,23 +1067,10 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
         <span style="color:#f92672">&lt;version&gt;</span>3.5.11<span style="color:#f92672">&lt;/version&gt;</span>
     <span style="color:#f92672">&lt;/dependency&gt;</span>
     <span style="color:#f92672">&lt;dependency&gt;</span>
-        <span style="color:#f92672">&lt;groupId&gt;</span>junit<span style="color:#f92672">&lt;/groupId&gt;</span>
-        <span style="color:#f92672">&lt;artifactId&gt;</span>junit<span style="color:#f92672">&lt;/artifactId&gt;</span>
-        <span style="color:#f92672">&lt;version&gt;</span>4.13.2<span style="color:#f92672">&lt;/version&gt;</span>
-    <span style="color:#f92672">&lt;/dependency&gt;</span>
-    
-<span style="color:#75715e">&lt;!-- 插件的依赖 --&gt;</span>
-    <span style="color:#75715e">&lt;!-- 逆向工程的核心依赖 --&gt;</span>
-    <span style="color:#f92672">&lt;dependency&gt;</span>
-        <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
-        <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-core<span style="color:#f92672">&lt;/artifactId&gt;</span>
-        <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
-    <span style="color:#f92672">&lt;/dependency&gt;</span>
-    <span style="color:#75715e">&lt;!-- 数据库连接池 --&gt;</span>
-    <span style="color:#f92672">&lt;dependency&gt;</span>
-        <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
-        <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
-        <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;groupId&gt;</span>org.testng<span style="color:#f92672">&lt;/groupId&gt;</span>
+        <span style="color:#f92672">&lt;artifactId&gt;</span>testng<span style="color:#f92672">&lt;/artifactId&gt;</span>
+        <span style="color:#f92672">&lt;version&gt;</span>[6.11]<span style="color:#f92672">&lt;/version&gt;</span>
+        <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
     <span style="color:#f92672">&lt;/dependency&gt;</span>
     <span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
     <span style="color:#f92672">&lt;dependency&gt;</span>
@@ -1092,6 +1078,8 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
         <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
         <span style="color:#f92672">&lt;version&gt;</span>8.0.31<span style="color:#f92672">&lt;/version&gt;</span>
     <span style="color:#f92672">&lt;/dependency&gt;</span>
+
+
 <span style="color:#f92672">&lt;/dependencies&gt;</span>
 
 <span style="color:#75715e">&lt;!-- 控制Maven在构建过程中相关配置 --&gt;</span>
@@ -1103,6 +1091,28 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
             <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
             <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
             <span style="color:#f92672">&lt;version&gt;</span>1.3.0<span style="color:#f92672">&lt;/version&gt;</span>
+
+            <span style="color:#f92672">&lt;dependencies&gt;</span>
+                <span style="color:#75715e">&lt;!-- 插件的依赖 --&gt;</span>
+                <span style="color:#75715e">&lt;!-- 逆向工程的核心依赖 --&gt;</span>
+                <span style="color:#f92672">&lt;dependency&gt;</span>
+                    <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+                    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-core<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                    <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;/dependency&gt;</span>
+                <span style="color:#75715e">&lt;!-- 数据库连接池 --&gt;</span>
+                <span style="color:#f92672">&lt;dependency&gt;</span>
+                    <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
+                    <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                    <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;/dependency&gt;</span>
+                <span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
+                <span style="color:#f92672">&lt;dependency&gt;</span>
+                    <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+                    <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                    <span style="color:#f92672">&lt;version&gt;</span>8.0.31<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;/dependency&gt;</span>
+            <span style="color:#f92672">&lt;/dependencies&gt;</span>
         <span style="color:#f92672">&lt;/plugin&gt;</span>
     <span style="color:#f92672">&lt;/plugins&gt;</span>
 <span style="color:#f92672">&lt;/build&gt;</span>
@@ -1183,8 +1193,9 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
     <span style="color:#f92672">&lt;version&gt;</span>5.3.2<span style="color:#f92672">&lt;/version&gt;</span>
 <span style="color:#f92672">&lt;/dependency&gt;</span>
 </code></pre></div><p><strong>b&gt;配置分页插件</strong></p>
-<p>在 mybatis-config.xml 中配置插件</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;plugins&gt;</span>
+<p><strong>在 mybatis-config.xml 中配置插件</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- 在mybatis-config.xml中配置插件 --&gt;</span>
+<span style="color:#f92672">&lt;plugins&gt;</span>
     <span style="color:#75715e">&lt;!--设置分页插件--&gt;</span>
     <span style="color:#f92672">&lt;plugin</span> <span style="color:#a6e22e">interceptor=</span><span style="color:#e6db74">&#34;com.github.pagehelper.PageInterceptor&#34;</span><span style="color:#f92672">&gt;&lt;/plugin&gt;</span>
 <span style="color:#f92672">&lt;/plugins&gt;</span>
@@ -1197,10 +1208,18 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
 <p><strong>b&gt;在查询获取list集合之后，使用PageInfo pageInfo = new PageInfo&lt;&gt;(List list, int navigatePages)获取分页相关数据</strong></p>
 <ul>
 <li>list：分页之后的数据</li>
-<li>navigatePages：导航分页的页码数</li>
+<li>navigatePages：导航分页的页码数量(3代表导航栏展示三个页码，前一页后一页；5代表导航栏展示五个页码，前两页后两页)</li>
 </ul>
 <p><strong>c&gt;分页相关数据</strong></p>
-<pre><code></code></pre><hr>
+<pre><code>PageInfo
+{pageNum=6, pageSize=3, size=3, startRow=16, endRow=18, total=31, pages=11, 
+list=Page{count=true, pageNum=6, pageSize=3, startRow=15, endRow=18, total=31, pages=11, reasonable=false, pageSizeZero=false}
+[Emp{eid=19, empName='yrte', age=null, gender='null', email='null', did=null},
+Emp{eid=20, empName='ye', age=null, gender='null', email='null', did=null}, 
+Emp{eid=21, empName='wqer', age=null, gender='null', email='null', did=null}], 
+prePage=5, nextPage=7, isFirstPage=false, isLastPage=false, hasPreviousPage=true, hasNextPage=true, navigatePages=3, navigateFirstPage=5, navigateLastPage=7, navigatepageNums=[5, 6, 7]}
+
+</code></pre><hr>
 <p>常用数据：</p>
 <ul>
 <li>pageNum：当前页的页码</li>
@@ -1213,7 +1232,7 @@ false：读写缓存；会返回缓存对象的拷贝（通过序列化）。这
 <li>isFirstPage/isLastPage：是否为第一页/最后一页</li>
 <li>hasPreviousPage/hasNextPage：是否存在上一页/下一页</li>
 <li>navigatePages：导航分页的页码数</li>
-<li>navigatepageNums：导航分页的页码，[1,2,3,4,5]</li>
+<li>navigatepageNums：导航分页的页码，[5, 6, 7]</li>
 </ul>
 
     </div>
