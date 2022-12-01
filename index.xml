@@ -6,7 +6,19 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Nov 2022 15:22:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Dec 2022 11:30:17 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSM整合</title>
+      <link>https://sherry-long.github.io/post/ssm/</link>
+      <pubDate>Thu, 01 Dec 2022 11:30:17 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/ssm/</guid>
+      <description>SSM整合 4.1、ContextLoaderListener Spring提供了监听器ContextLoaderListener，实现ServletContextListener接口，可监听
+ServletContext的状态，在web服务器的启动，读取Spring的配置文件，创建Spring的IOC容器。web
+应用中必须在web.xml中配置
+&amp;lt;listener&amp;gt; &amp;lt;!-- 配置Spring的监听器，在服务器启动时加载Spring的配置文件 Spring配置文件默认位置和名称：/WEB-INF/applicationContext.xml 可通过上下文参数自定义Spring配置文件的位置和名称 --&amp;gt; &amp;lt;listener-class&amp;gt;org.springframework.web.context.ContextLoaderListener&amp;lt;/listener-class&amp;gt; &amp;lt;/listener&amp;gt; &amp;lt;!--自定义Spring配置文件的位置和名称--&amp;gt; &amp;lt;context-param&amp;gt; &amp;lt;param-name&amp;gt;contextConfigLocation&amp;lt;/param-name&amp;gt; &amp;lt;param-value&amp;gt;classpath:spring.xml&amp;lt;/param-value&amp;gt; &amp;lt;/context-param&amp;gt; 4.2、准备工作 ①创建Maven Module ②导入依赖 &amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt; &amp;lt;properties&amp;gt; &amp;lt;spring.version&amp;gt;5.3.1&amp;lt;/spring.version&amp;gt; &amp;lt;/properties&amp;gt; &amp;lt;dependencies&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-context&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-beans&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!--springmvc--&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-web&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-webmvc&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-jdbc&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-aspects&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-test&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;${spring.version}&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!-- Mybatis核心 --&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.mybatis&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;mybatis&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.5.11&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;!</description>
+    </item>
+    
     <item>
       <title>MyBatis</title>
       <link>https://sherry-long.github.io/post/mybatis/</link>
