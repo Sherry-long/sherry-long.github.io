@@ -354,21 +354,21 @@ Tomcat -&gt; Edit Configuration -&gt; Deployment -&gt; + -&gt; Artifact -&gt; Pr
     <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRequestMapping</span><span style="color:#f92672">(){</span>
         <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
-
 <span style="color:#f92672">}</span>
 </code></pre></div><h4 id="requestmapping注解的value属性">@RequestMapping注解的value属性</h4>
 <p>@RequestMapping注解的value属性通过请求的请求地址匹配请求映射</p>
 <p>@RequestMapping注解的value属性是一个字符串类型的数组，表示该请求映射能够匹配多个请求地址所对应的请求</p>
 <p>@RequestMapping注解的value属性必须设置，至少通过请求地址匹配请求映射</p>
+<p><strong>诸如RequestMapping、PostMapping、GetMapping注解，value中的uri前方的&quot;/&ldquo;可加可不加</strong></p>
+<p><strong>如果没有斜线，web容器启动时会自动在uri前方添加斜线</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/testRequestMapping}&#34;</span>&gt;测试@RequestMapping的value属性--&gt;/testRequestMapping&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
 &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/test}&#34;</span>&gt;测试@RequestMapping的value属性--&gt;/test&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
-12
-@RequestMapping(
-        value = {&#34;/testRequestMapping&#34;, &#34;/test&#34;}
-)
-public String testRequestMapping(){
-    return &#34;success&#34;;
-}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+        value <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;/testRequestMapping&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;/test&#34;</span><span style="color:#f92672">}</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRequestMapping</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><h4 id="requestmapping注解的method属性">@RequestMapping注解的method属性</h4>
 <p>@RequestMapping注解的method属性通过请求的请求方式（get或post）匹配请求映射</p>
 <p>@RequestMapping注解的method属性是一个RequestMethod类型的数组，表示该请求映射能够匹配多种请求方式的请求</p>
@@ -409,15 +409,14 @@ public String testRequestMapping(){
 <p>“param=value”：要求请求映射所匹配的请求必须携带param请求参数且param=value</p>
 <p>“param!=value”：要求请求映射所匹配的请求必须携带param请求参数但是param!=value</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">th:href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/test(username=&#39;admin&#39;,password=123456)&#34;</span>&gt;测试@RequestMapping的params属性--&gt;/test&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
-1
-@RequestMapping(
-        value = {&#34;/testRequestMapping&#34;, &#34;/test&#34;}
-        ,method = {RequestMethod.GET, RequestMethod.POST}
-        ,params = {&#34;username&#34;,&#34;password!=123456&#34;}
-)
-public String testRequestMapping(){
-    return &#34;success&#34;;
-}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>
+        value <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;/testRequestMapping&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;/test&#34;</span><span style="color:#f92672">}</span>
+        <span style="color:#f92672">,</span>method <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">GET</span><span style="color:#f92672">,</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">POST</span><span style="color:#f92672">}</span>
+        <span style="color:#f92672">,</span>params <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;username&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;password!=123456&#34;</span><span style="color:#f92672">}</span>
+<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">testRequestMapping</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;success&#34;</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
 </code></pre></div><pre><code>注：
 
 若当前请求满足@RequestMapping注解的value和method属性，但是不满足params属性，

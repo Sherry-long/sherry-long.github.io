@@ -6,7 +6,19 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Dec 2022 11:30:17 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Dec 2022 17:13:26 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis基础</title>
+      <link>https://sherry-long.github.io/post/redis/</link>
+      <pubDate>Sun, 04 Dec 2022 17:13:26 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/redis/</guid>
+      <description>一、Redis入门 1.认识NoSQL 1.1	什么是NoSQL   NoSQL最常见的解释是&amp;quot;non-relational&amp;quot;， 很多人也说它是&amp;quot;Not Only SQL&amp;quot; NoSQL仅仅是一个概念，泛指非关系型的数据库 区别于关系数据库，它们不保证关系数据的ACID特性 NoSQL是一项全新的数据库革命性运动，提倡运用非关系型的数据存储，相对于铺天盖地的关系型数据库运用，这一概念无疑是一种全新的思维的注入 常见的NoSQL数据库有：Redis、MemCache、MongoDB等  1.2	NoSQL与SQL的差异      SQL NoSQL     数据结构 结构化 非结构化   数据关联 关联的 无关联的   查询方式 SQL查询 非SQL   事务特性 ACID BASE   存储方式 磁盘 内存   扩展性 垂直 水平   使用场景 1）数据结构固定
+2）相关业务对数据安全性、一致性要求较高 1）数据结构不固定
+2）对一致性、安全性要求不高
+3）对性能要求    2.认识Redis  Redis诞生于2009年全称是Remote Dictionary Server，远程词典服务器，是一个基于内存的键值型NoSQL数据库。</description>
+    </item>
+    
     <item>
       <title>SSM整合</title>
       <link>https://sherry-long.github.io/post/ssm/</link>

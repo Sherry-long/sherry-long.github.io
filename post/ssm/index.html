@@ -67,7 +67,7 @@ ServletContext的状态，在web服务器的启动，读取Spring的配置文件
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          4 min read
+          5 min read
         </div>
       </div>
     </header>
@@ -208,6 +208,41 @@ ServletContext的状态，在web服务器的启动，读取Spring的配置文件
         <span style="color:#f92672">&lt;version&gt;</span>3.0.12.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
     <span style="color:#f92672">&lt;/dependency&gt;</span>
 <span style="color:#f92672">&lt;/dependencies&gt;</span>
+
+<span style="color:#75715e">&lt;!-- MBG逆向工程 --&gt;</span>
+<span style="color:#f92672">&lt;build&gt;</span>
+    <span style="color:#75715e">&lt;!-- 构建过程中用到的插件 --&gt;</span>
+    <span style="color:#f92672">&lt;plugins&gt;</span>
+        <span style="color:#75715e">&lt;!-- 具体插件，逆向工程的操作是以构建过程中插件形式出现的 --&gt;</span>
+        <span style="color:#f92672">&lt;plugin&gt;</span>
+            <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+            <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+            <span style="color:#f92672">&lt;version&gt;</span>1.3.0<span style="color:#f92672">&lt;/version&gt;</span>
+
+            <span style="color:#f92672">&lt;dependencies&gt;</span>
+                <span style="color:#75715e">&lt;!-- 插件的依赖 --&gt;</span>
+                <span style="color:#75715e">&lt;!-- 逆向工程的核心依赖 --&gt;</span>
+                <span style="color:#f92672">&lt;dependency&gt;</span>
+                    <span style="color:#f92672">&lt;groupId&gt;</span>org.mybatis.generator<span style="color:#f92672">&lt;/groupId&gt;</span>
+                    <span style="color:#f92672">&lt;artifactId&gt;</span>mybatis-generator-core<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                    <span style="color:#f92672">&lt;version&gt;</span>1.3.2<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;/dependency&gt;</span>
+                <span style="color:#75715e">&lt;!-- 数据库连接池 --&gt;</span>
+                <span style="color:#f92672">&lt;dependency&gt;</span>
+                    <span style="color:#f92672">&lt;groupId&gt;</span>com.mchange<span style="color:#f92672">&lt;/groupId&gt;</span>
+                    <span style="color:#f92672">&lt;artifactId&gt;</span>c3p0<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                    <span style="color:#f92672">&lt;version&gt;</span>0.9.5.5<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;/dependency&gt;</span>
+                <span style="color:#75715e">&lt;!-- MySQL驱动 --&gt;</span>
+                <span style="color:#f92672">&lt;dependency&gt;</span>
+                    <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+                    <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+                    <span style="color:#f92672">&lt;version&gt;</span>8.0.31<span style="color:#f92672">&lt;/version&gt;</span>
+                <span style="color:#f92672">&lt;/dependency&gt;</span>
+            <span style="color:#f92672">&lt;/dependencies&gt;</span>
+        <span style="color:#f92672">&lt;/plugin&gt;</span>
+    <span style="color:#f92672">&lt;/plugins&gt;</span>
+<span style="color:#f92672">&lt;/build&gt;</span>
 </code></pre></div><h3 id="创建表">③创建表</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>t_emp<span style="color:#f92672">`</span> (
     <span style="color:#f92672">`</span>emp_id<span style="color:#f92672">`</span> <span style="color:#66d9ef">int</span>(<span style="color:#ae81ff">11</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">AUTO_INCREMENT</span>,
