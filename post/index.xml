@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Dec 2022 17:13:26 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Dec 2022 10:53:23 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis进阶</title>
+      <link>https://sherry-long.github.io/post/redispremier/</link>
+      <pubDate>Tue, 27 Dec 2022 10:53:23 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/redispremier/</guid>
+      <description>缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
+解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY + id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate.opsForValue().set(RedisConstants.CACHE_SHOP_KEY + id, &amp;#34;&amp;#34;, CACHE_NULL_TTL, TimeUnit.</description>
+    </item>
+    
     <item>
       <title>Redis基础</title>
       <link>https://sherry-long.github.io/post/redis/</link>

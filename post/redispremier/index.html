@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Redis进阶 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis进阶"/>
+<meta name="twitter:description" content="缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
+解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate.opsForValue().set(RedisConstants.CACHE_SHOP_KEY &#43; id, &#34;&#34;, CACHE_NULL_TTL, TimeUnit."/>
+
+    <meta property="og:title" content="Redis进阶" />
+<meta property="og:description" content="缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
+解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate.opsForValue().set(RedisConstants.CACHE_SHOP_KEY &#43; id, &#34;&#34;, CACHE_NULL_TTL, TimeUnit." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/redispremier/" />
+<meta property="article:published_time" content="2022-12-27T10:53:23+08:00" />
+<meta property="article:modified_time" content="2022-12-27T10:53:23+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Redis进阶</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 27, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h3 id="缓存穿透">缓存穿透</h3>
+<h5 id="缓存穿透产生的原因">缓存穿透产生的原因：</h5>
+<p>用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力</p>
+<h5 id="解决方案">解决方案：</h5>
+<ul>
+<li>缓存null值(空字符串)</li>
+<li>布隆过滤(类似位图)</li>
+<li>增强id的复杂度，避免被猜测id规律</li>
+<li>做好数据的基础格式校验</li>
+<li>加强用户权限校验</li>
+<li>对热点参数做限流</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> Shop <span style="color:#a6e22e">queryWithPassThrough</span><span style="color:#f92672">(</span>Long id<span style="color:#f92672">){</span>
+    <span style="color:#75715e">// 从redis查询商铺缓存
+</span><span style="color:#75715e"></span>    String shopJson <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>RedisConstants<span style="color:#f92672">.</span><span style="color:#a6e22e">CACHE_SHOP_KEY</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isNotBlank</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 存在，直接返回
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">,</span> Shop<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 判断命中的是否是空值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>shopJson <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 不存在，根据id查数据库
+</span><span style="color:#75715e"></span>    Shop shop <span style="color:#f92672">=</span> getById<span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 数据库不存在，返回404
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>shop <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 将空值写入redis
+</span><span style="color:#75715e"></span>        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>RedisConstants<span style="color:#f92672">.</span><span style="color:#a6e22e">CACHE_SHOP_KEY</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> CACHE_NULL_TTL<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MINUTES</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 存在，写入redis
+</span><span style="color:#75715e"></span>    stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>RedisConstants<span style="color:#f92672">.</span><span style="color:#a6e22e">CACHE_SHOP_KEY</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">,</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toJsonStr</span><span style="color:#f92672">(</span>shop<span style="color:#f92672">),</span> CACHE_SHOP_TTL<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MINUTES</span><span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 返回
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h3 id="缓存雪崩">缓存雪崩</h3>
+<p>缓存雪崩是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力</p>
+<h5 id="解决方案-1">解决方案：</h5>
+<ul>
+<li>给不同key的TTL添加随机值</li>
+<li>利用redis集群提高服务可用性</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul>
+<hr>
+<h3 id="缓存击穿">缓存击穿</h3>
+<p>缓存击穿问题也叫热点Key问题，就是一个被高并发访问并且缓存重建业务较复杂的key突然失效了，无数的请求访问会在瞬间给数据库带来巨大的冲击</p>
+<ul>
+<li>互斥锁
+使用锁控制同一时间内只有一个线程查询数据库重建缓存
+**优点：**没有额外内存消耗；保证一致性；实现简单
+**问题：**等待时间内未持有锁的线程只能等待，性能受影响；可能有死锁风险</li>
+<li>逻辑过期
+不设置TTL，建立缓存时手动设置属性expire代表逻辑过期时间，获取缓存时手动检查是否逻辑过期。如果过期，获取锁，开启一个新线程负责查询数据库重建缓存，原线程返回旧数据。如果在锁被占用期间有其他线程尝试获取锁，失败，并不再进行循环等待，而是直接返回旧数据
+**优点：**线程无需等待，性能较好
+**问题：**不保证一致性；有额外内存消耗；实现复杂</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 获取锁方法，使用redis的setnx来实现
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">){</span>
+    Boolean flag <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setIfAbsent</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">,</span> 10<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> BooleanUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isTrue</span><span style="color:#f92672">(</span>flag<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">// 释放锁方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">){</span>
+    stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">// 将封装数据存入redis中
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">saveShop2Redis</span><span style="color:#f92672">(</span>Long id<span style="color:#f92672">,</span> Long expireSeconds<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+    Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>200<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 从数据库获取shop
+</span><span style="color:#75715e"></span>    Shop shop <span style="color:#f92672">=</span> getById<span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 封装逻辑过期时间
+</span><span style="color:#75715e"></span>    RedisData redisData <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RedisData<span style="color:#f92672">();</span>
+    redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">setData</span><span style="color:#f92672">(</span>shop<span style="color:#f92672">);</span>
+    redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">setExpireTime</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">().</span><span style="color:#a6e22e">plusSeconds</span><span style="color:#f92672">(</span>expireSeconds<span style="color:#f92672">));</span>
+    <span style="color:#75715e">// 写入Redis
+</span><span style="color:#75715e"></span>    stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>CACHE_SHOP_KEY <span style="color:#f92672">+</span> id<span style="color:#f92672">,</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toJsonStr</span><span style="color:#f92672">(</span>redisData<span style="color:#f92672">));</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">------------------------------------------------------------------------------</span>
+
+<span style="color:#75715e">// 互斥锁解决缓存击穿问题
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> Shop <span style="color:#a6e22e">queryWithMutex</span><span style="color:#f92672">(</span>Long id<span style="color:#f92672">){</span>
+    <span style="color:#75715e">// 从redis查询商铺缓存
+</span><span style="color:#75715e"></span>    String shopJson <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>CACHE_SHOP_KEY <span style="color:#f92672">+</span> id<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isNotBlank</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 存在，直接返回
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">,</span> Shop<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 判断命中的是否是空值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>shopJson <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// 缓存重建
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 尝试获取互斥锁
+</span><span style="color:#75715e"></span>    String lockKey <span style="color:#f92672">=</span> LOCK_SHOP_KEY <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+    Shop shop <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">boolean</span> isLock <span style="color:#f92672">=</span> tryLock<span style="color:#f92672">(</span>lockKey<span style="color:#f92672">);</span>
+        <span style="color:#75715e">//  判断是否获取成功
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>isLock<span style="color:#f92672">){</span>
+            <span style="color:#75715e">//  失败，休眠并重试
+</span><span style="color:#75715e"></span>            Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>50<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> queryWithMutex<span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">// 再次检查redis缓存是否存在
+</span><span style="color:#75715e"></span>        shopJson <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>RedisConstants<span style="color:#f92672">.</span><span style="color:#a6e22e">CACHE_SHOP_KEY</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isNotBlank</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 存在，说明已有线程完成重建缓存工作，直接返回
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">,</span> Shop<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">//  不存在，重建缓存
+</span><span style="color:#75715e"></span>        Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>200<span style="color:#f92672">);</span>
+        shop <span style="color:#f92672">=</span> getById<span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 数据库不存在，返回404
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>shop <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 将空值写入redis
+</span><span style="color:#75715e"></span>            stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>RedisConstants<span style="color:#f92672">.</span><span style="color:#a6e22e">CACHE_SHOP_KEY</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> CACHE_NULL_TTL<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MINUTES</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 存在，写入redis
+</span><span style="color:#75715e"></span>        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>RedisConstants<span style="color:#f92672">.</span><span style="color:#a6e22e">CACHE_SHOP_KEY</span> <span style="color:#f92672">+</span> id<span style="color:#f92672">,</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toJsonStr</span><span style="color:#f92672">(</span>shop<span style="color:#f92672">),</span> CACHE_SHOP_TTL<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MINUTES</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 释放锁
+</span><span style="color:#75715e"></span>        unlock<span style="color:#f92672">(</span>lockKey<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// 返回
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">------------------------------------------------------------------------------</span>
+
+<span style="color:#75715e">// 逻辑过期解决缓存击穿问题
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> ExecutorService CACHE_REBUILD_EXECUTOR <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newFixedThreadPool</span><span style="color:#f92672">(</span>10<span style="color:#f92672">);</span>
+    
+<span style="color:#66d9ef">private</span> Shop <span style="color:#a6e22e">queryWithLogicalExpire</span><span style="color:#f92672">(</span>Long id<span style="color:#f92672">){</span>
+    String key <span style="color:#f92672">=</span> CACHE_SHOP_KEY <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+    <span style="color:#75715e">// 根据id从缓存中获取店铺信息
+</span><span style="color:#75715e"></span>    String shopJson <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isBlank</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">)){</span>
+        <span style="color:#75715e">// 不存在，返回空
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 存在，把json反序列化成对象
+</span><span style="color:#75715e"></span>    RedisData redisData <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">,</span> RedisData<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    Shop shop <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">((</span>JSONObject<span style="color:#f92672">)</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(),</span> Shop<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断是否逻辑过期
+</span><span style="color:#75715e"></span>    LocalDateTime expireTime <span style="color:#f92672">=</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getExpireTime</span><span style="color:#f92672">();</span>
+
+    <span style="color:#75715e">// 未过期，直接返回
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>expireTime<span style="color:#f92672">.</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">())){</span>
+        <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    String lockKey <span style="color:#f92672">=</span> LOCK_SHOP_KEY <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+    <span style="color:#75715e">// 获取锁
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">boolean</span> isLock <span style="color:#f92672">=</span> tryLock<span style="color:#f92672">(</span>lockKey<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>isLock<span style="color:#f92672">){</span>
+        <span style="color:#75715e">// 获取锁成功，再次判断逻辑过期时间
+</span><span style="color:#75715e"></span>        shopJson <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isBlank</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">)){</span>
+            <span style="color:#75715e">// 不存在，返回空
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 存在，把json反序列化成对象
+</span><span style="color:#75715e"></span>        redisData <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>shopJson<span style="color:#f92672">,</span> RedisData<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        shop <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">((</span>JSONObject<span style="color:#f92672">)</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(),</span> Shop<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 判断是否逻辑过期
+</span><span style="color:#75715e"></span>        expireTime <span style="color:#f92672">=</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getExpireTime</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 未过期，直接返回
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>expireTime<span style="color:#f92672">.</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">())){</span>
+            <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">// 逻辑时间依然过期，说明本线程是第一个获取锁的线程，进行缓存重建
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 开启新线程，进行缓存重建
+</span><span style="color:#75715e"></span>        CACHE_REBUILD_EXECUTOR<span style="color:#f92672">.</span><span style="color:#a6e22e">submit</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">saveShop2Redis</span><span style="color:#f92672">(</span>id<span style="color:#f92672">,</span> LOCK_SHOP_TTL<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+                unlock<span style="color:#f92672">(</span>lockKey<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// 返回旧的店铺信息
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h3 id="缓存工具类封装">缓存工具类封装</h3>
+<p>注意事项：泛型，函数式编程</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Slf4j</span>
+<span style="color:#a6e22e">@Component</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CacheClient</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">CacheClient</span><span style="color:#f92672">(</span>StringRedisTemplate stringRedisTemplate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">stringRedisTemplate</span> <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">,</span> Object value<span style="color:#f92672">,</span> Long time<span style="color:#f92672">,</span> TimeUnit timeUnit<span style="color:#f92672">){</span>
+        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toJsonStr</span><span style="color:#f92672">(</span>value<span style="color:#f92672">),</span> time<span style="color:#f92672">,</span> timeUnit<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setWithLogicalExpire</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">,</span> Object value<span style="color:#f92672">,</span> Long time<span style="color:#f92672">,</span> TimeUnit timeUnit<span style="color:#f92672">){</span>
+        RedisData redisData <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RedisData<span style="color:#f92672">();</span>
+        redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">setData</span><span style="color:#f92672">(</span>value<span style="color:#f92672">);</span>
+        redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">setExpireTime</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">().</span><span style="color:#a6e22e">plusSeconds</span><span style="color:#f92672">(</span>timeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">toSeconds</span><span style="color:#f92672">(</span>time<span style="color:#f92672">)));</span>
+        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toJsonStr</span><span style="color:#f92672">(</span>redisData<span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
+    
+<span style="color:#75715e">// 缓存穿透
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#f92672">&lt;</span>R<span style="color:#f92672">,</span> ID<span style="color:#f92672">&gt;</span> R <span style="color:#a6e22e">queryWithPassThrough</span><span style="color:#f92672">(</span>
+        String keyPrefix<span style="color:#f92672">,</span> ID id<span style="color:#f92672">,</span> Class<span style="color:#f92672">&lt;</span>R<span style="color:#f92672">&gt;</span> type<span style="color:#f92672">,</span> Function<span style="color:#f92672">&lt;</span>ID<span style="color:#f92672">,</span> R<span style="color:#f92672">&gt;</span> dbFallBack<span style="color:#f92672">,</span> Long time<span style="color:#f92672">,</span> TimeUnit timeUnit<span style="color:#f92672">){</span>
+        String key <span style="color:#f92672">=</span> keyPrefix <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+        String json <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isNotBlank</span><span style="color:#f92672">(</span>json<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 存在，直接返回
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>json<span style="color:#f92672">,</span> type<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 判断命中的是否是空值
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>json <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">){</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 不存在，根据id查数据库
+</span><span style="color:#75715e"></span>        R r <span style="color:#f92672">=</span> dbFallBack<span style="color:#f92672">.</span><span style="color:#a6e22e">apply</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 数据库不存在，返回404
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>r <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 将空值写入redis
+</span><span style="color:#75715e"></span>            stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> CACHE_NULL_TTL<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MINUTES</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 存在，写入redis
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> r<span style="color:#f92672">,</span> time<span style="color:#f92672">,</span> timeUnit<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 返回
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> r<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#75715e">// 逻辑过期解决缓存击穿
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> ExecutorService CACHE_REBUILD_EXECUTOR <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newFixedThreadPool</span><span style="color:#f92672">(</span>10<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">public</span>  <span style="color:#f92672">&lt;</span>R<span style="color:#f92672">,</span> ID<span style="color:#f92672">&gt;</span> R <span style="color:#a6e22e">queryWithLogicalExpire</span><span style="color:#f92672">(</span>
+        String keyPrefix<span style="color:#f92672">,</span> ID id<span style="color:#f92672">,</span> Class<span style="color:#f92672">&lt;</span>R<span style="color:#f92672">&gt;</span> type<span style="color:#f92672">,</span> Function<span style="color:#f92672">&lt;</span>ID<span style="color:#f92672">,</span> R<span style="color:#f92672">&gt;</span> dbFallBack<span style="color:#f92672">,</span> Long time<span style="color:#f92672">,</span> TimeUnit timeUnit<span style="color:#f92672">){</span>
+        String key <span style="color:#f92672">=</span> keyPrefix <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+        <span style="color:#75715e">// 根据id从缓存中获取信息
+</span><span style="color:#75715e"></span>        String Json <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isBlank</span><span style="color:#f92672">(</span>Json<span style="color:#f92672">)){</span>
+            <span style="color:#75715e">// 不存在，返回空
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 存在，把json反序列化成对象
+</span><span style="color:#75715e"></span>        RedisData redisData <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>Json<span style="color:#f92672">,</span> RedisData<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        R obj <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">((</span>JSONObject<span style="color:#f92672">)</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(),</span> type<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 判断是否逻辑过期
+</span><span style="color:#75715e"></span>        LocalDateTime expireTime <span style="color:#f92672">=</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getExpireTime</span><span style="color:#f92672">();</span>
+
+        <span style="color:#75715e">// 未过期，直接返回
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>expireTime<span style="color:#f92672">.</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">())){</span>
+            <span style="color:#66d9ef">return</span> obj<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+
+        String lockKey <span style="color:#f92672">=</span> LOCK_SHOP_KEY <span style="color:#f92672">+</span> id<span style="color:#f92672">;</span>
+        <span style="color:#75715e">// 获取锁
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">boolean</span> isLock <span style="color:#f92672">=</span> tryLock<span style="color:#f92672">(</span>lockKey<span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>isLock<span style="color:#f92672">){</span>
+            <span style="color:#75715e">// 获取锁成功，再次判断逻辑过期时间
+</span><span style="color:#75715e"></span>            Json <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+            <span style="color:#75715e">// 判断是否存在
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>StrUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isBlank</span><span style="color:#f92672">(</span>Json<span style="color:#f92672">)){</span>
+                <span style="color:#75715e">// 不存在，返回空
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#75715e">// 存在，把json反序列化成对象
+</span><span style="color:#75715e"></span>            redisData <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">(</span>Json<span style="color:#f92672">,</span> RedisData<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+            obj <span style="color:#f92672">=</span> JSONUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">toBean</span><span style="color:#f92672">((</span>JSONObject<span style="color:#f92672">)</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getData</span><span style="color:#f92672">(),</span> type<span style="color:#f92672">);</span>
+            <span style="color:#75715e">// 判断是否逻辑过期
+</span><span style="color:#75715e"></span>            expireTime <span style="color:#f92672">=</span> redisData<span style="color:#f92672">.</span><span style="color:#a6e22e">getExpireTime</span><span style="color:#f92672">();</span>
+            <span style="color:#75715e">// 未过期，直接返回
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>expireTime<span style="color:#f92672">.</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">())){</span>
+                <span style="color:#66d9ef">return</span> obj<span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+
+            <span style="color:#75715e">// 逻辑时间依然过期，说明本线程是第一个获取锁的线程，进行缓存重建
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">// 开启新线程，进行缓存重建
+</span><span style="color:#75715e"></span>            CACHE_REBUILD_EXECUTOR<span style="color:#f92672">.</span><span style="color:#a6e22e">submit</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    <span style="color:#75715e">// 查询数据库
+</span><span style="color:#75715e"></span>                    R r <span style="color:#f92672">=</span> dbFallBack<span style="color:#f92672">.</span><span style="color:#a6e22e">apply</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+                    <span style="color:#75715e">// 写入redis
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">setWithLogicalExpire</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> r<span style="color:#f92672">,</span> time<span style="color:#f92672">,</span> timeUnit<span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span>e<span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+                    unlock<span style="color:#f92672">(</span>lockKey<span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">});</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">// 返回旧的信息
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> obj<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">){</span>
+        Boolean flag <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setIfAbsent</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">,</span> 10<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> BooleanUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">isTrue</span><span style="color:#f92672">(</span>flag<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">){</span>
+        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#f92672">----------------------------------------------------------------------------------------------</span>
+<span style="color:#a6e22e">@Data</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RedisData</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> LocalDateTime expireTime<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Object data<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h3 id="全局id生成器">全局ID生成器</h3>
+<p>全局ID生成器，是一种在分布式系统下用来生成全局唯一ID的工具，一般要满足下列特性：</p>
+<ul>
+<li>
+<p>唯一性</p>
+</li>
+<li>
+<p>高可用性</p>
+</li>
+<li>
+<p>高性能</p>
+</li>
+<li>
+<p>递增性(全局ID将在数据库中替代自增id，保持全局ID的递增性有助于提高数据库索引效率)</p>
+</li>
+<li>
+<p>安全性</p>
+</li>
+</ul>
+<p>为了增加ID的安全性，我们可以不直接使用redis自增的数值，而是拼接一些其他信息</p>
+<p><img src="/imgs/Global_ID.png" alt="全局ID"></p>
+<p>ID的组成部分：</p>
+<ul>
+<li>符号位：1bit，永远为0</li>
+<li>时间戳：31bit，以秒为单位，可以使用69年</li>
+<li>序列号：32bit，秒内的计数器，支持每秒产生2^32个不同的ID</li>
+</ul>
+<hr>
+<h3 id="秒杀超卖问题">秒杀超卖问题</h3>
+<h4 id="锁设计理念">锁设计理念</h4>
+<h5 id="悲观锁">悲观锁</h5>
+<p>认为线程安全问题一定会发生，因此在操作数据之前先获取锁，确保线程串行执行</p>
+<p>例如：Synchronized、Lock都属于悲观锁</p>
+<p>缺点：效率低，性能不好</p>
+<h5 id="乐观锁">乐观锁</h5>
+<p>认为线程安全问题不一定会发生，因此不加锁，只是在更新数据时去判断有没有其他线程对数据做了修改。</p>
+<ul>
+<li>如果没有修改则认为是安全的，自己才更新数据</li>
+<li>如果已经被其他线程修改了说明发生了安全问题，此时可以重试或抛出异常</li>
+</ul>
+<p><strong>乐观锁的关键是判断之前查询得到的数据是否有被修改过，常见的方式有两种：</strong></p>
+<ul>
+<li>版本号法(最普遍)</li>
+</ul>
+<p><img src="/imgs/OptimisticLock.png" alt="乐观锁"></p>
+<ul>
+<li>CAS(Compare And Swap)法，利用库存代替版本version</li>
+</ul>
+<p><img src="/imgs/CAS.png" alt="CAS法"></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
