@@ -63,7 +63,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          4 min read
+          5 min read
         </div>
       </div>
     </header>
@@ -455,6 +455,119 @@
 <li>CAS(Compare And Swap)法，利用库存代替版本version</li>
 </ul>
 <p><img src="/imgs/CAS.png" alt="CAS法"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Override</span>
+<span style="color:#a6e22e">@Transactional</span>
+<span style="color:#66d9ef">public</span> Result <span style="color:#a6e22e">seckillVoucher</span><span style="color:#f92672">(</span>Long voucherId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 查询优惠券
+</span><span style="color:#75715e"></span>    SeckillVoucher seckillVoucher <span style="color:#f92672">=</span> seckillVoucherService<span style="color:#f92672">.</span><span style="color:#a6e22e">getById</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断时间是否开始，是否结束
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getBeginTime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">())){</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秒杀未开始!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getEndTime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isBefore</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">())){</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秒杀已结束!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 判断库存是否充足
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getStock</span><span style="color:#f92672">()</span> <span style="color:#f92672">&lt;=</span> 0<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;库存不足!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 扣减库存
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">boolean</span> success <span style="color:#f92672">=</span> seckillVoucherService<span style="color:#f92672">.</span><span style="color:#a6e22e">update</span><span style="color:#f92672">().</span>
+        setSql<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;stock = stock - 1&#34;</span><span style="color:#f92672">).</span>
+        eq<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;voucher_id&#34;</span><span style="color:#f92672">,</span> voucherId<span style="color:#f92672">).</span>
+        gt<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;stock&#34;</span><span style="color:#f92672">,</span> 0<span style="color:#f92672">).</span><span style="color:#a6e22e">update</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>success<span style="color:#f92672">){</span>
+        <span style="color:#75715e">// 扣减失败
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;库存不足!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 创建订单
+</span><span style="color:#75715e"></span>    VoucherOrder voucherOrder <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> VoucherOrder<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">long</span> orderId <span style="color:#f92672">=</span> redisIDGenerator<span style="color:#f92672">.</span><span style="color:#a6e22e">nextID</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;order&#34;</span><span style="color:#f92672">);</span>
+    voucherOrder<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>orderId<span style="color:#f92672">);</span>
+    voucherOrder<span style="color:#f92672">.</span><span style="color:#a6e22e">setUserId</span><span style="color:#f92672">(</span>UserHolder<span style="color:#f92672">.</span><span style="color:#a6e22e">getUser</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+    voucherOrder<span style="color:#f92672">.</span><span style="color:#a6e22e">setVoucherId</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+    save<span style="color:#f92672">(</span>voucherOrder<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 返回订单id
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">(</span>orderId<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="一人一单">一人一单</h4>
+<p>秒杀业务要求同一个优惠券，一个用户只能下一单</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Override</span>
+<span style="color:#66d9ef">public</span> Result <span style="color:#a6e22e">seckillVoucher</span><span style="color:#f92672">(</span>Long voucherId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 查询优惠券
+</span><span style="color:#75715e"></span>    SeckillVoucher seckillVoucher <span style="color:#f92672">=</span> seckillVoucherService<span style="color:#f92672">.</span><span style="color:#a6e22e">getById</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断时间是否开始，是否结束
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getBeginTime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">()))</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秒杀未开始!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getEndTime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isBefore</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">()))</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秒杀已结束!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 判断库存是否充足
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getStock</span><span style="color:#f92672">()</span> <span style="color:#f92672">&lt;=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;库存不足!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    Long userId <span style="color:#f92672">=</span> UserHolder<span style="color:#f92672">.</span><span style="color:#a6e22e">getUser</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+    <span style="color:#75715e">// 在方法外部加锁
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/*
+</span><span style="color:#75715e">    如果在createVoucherOrder方法内部加锁，此时事务提交是在锁释放之后
+</span><span style="color:#75715e">    仍然有可能出现线程安全问题
+</span><span style="color:#75715e">    在外部加锁可以确保事务在锁释放之前提交
+</span><span style="color:#75715e">    */</span>
+    <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>userId<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">().</span><span style="color:#a6e22e">intern</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 获取代理对象(事务)
+</span><span style="color:#75715e"></span>        IVoucherOrderService currentProxy <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>IVoucherOrderService<span style="color:#f92672">)</span> AopContext<span style="color:#f92672">.</span><span style="color:#a6e22e">currentProxy</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">return</span> currentProxy<span style="color:#f92672">.</span><span style="color:#a6e22e">createVoucherOrder</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+        <span style="color:#75715e">/*
+</span><span style="color:#75715e">        此处如果直接调用方法createVoucherOrder,因为Spring实现事务管理是通过获取当前对象的
+</span><span style="color:#75715e">        代理对象来实现的，直接调用createVoucherOrder实际相当于this.createVoucherOrder
+</span><span style="color:#75715e">        不是通过代理对象来调用的，所以会导致事务失效
+</span><span style="color:#75715e">        解决这一问题，需要手动获取当前类的代理对象，通过代理对象来调用事务函数
+</span><span style="color:#75715e">        
+</span><span style="color:#75715e">        使用此方法需要在pom中添加依赖
+</span><span style="color:#75715e">        &lt;dependency&gt;
+</span><span style="color:#75715e">            &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+</span><span style="color:#75715e">            &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
+</span><span style="color:#75715e">        &lt;/dependency&gt;
+</span><span style="color:#75715e">        
+</span><span style="color:#75715e">        还需要在主类中添加注解
+</span><span style="color:#75715e">        @EnableAspectJAutoProxy(exposeProxy = true)
+</span><span style="color:#75715e">        将代理对象暴露出来
+</span><span style="color:#75715e">        */</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#a6e22e">@Transactional</span>
+<span style="color:#66d9ef">public</span> Result <span style="color:#a6e22e">createVoucherOrder</span><span style="color:#f92672">(</span>Long voucherId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 一人一单
+</span><span style="color:#75715e"></span>    Long userId <span style="color:#f92672">=</span> UserHolder<span style="color:#f92672">.</span><span style="color:#a6e22e">getUser</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> query<span style="color:#f92672">().</span><span style="color:#a6e22e">eq</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;user_id&#34;</span><span style="color:#f92672">,</span> userId<span style="color:#f92672">).</span><span style="color:#a6e22e">eq</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;voucher_id&#34;</span><span style="color:#f92672">,</span> voucherId<span style="color:#f92672">).</span><span style="color:#a6e22e">count</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>count <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;已经购买过该优惠券!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 扣减库存
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">boolean</span> success <span style="color:#f92672">=</span> seckillVoucherService<span style="color:#f92672">.</span><span style="color:#a6e22e">update</span><span style="color:#f92672">().</span>
+        setSql<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;stock = stock - 1&#34;</span><span style="color:#f92672">).</span>
+        eq<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;voucher_id&#34;</span><span style="color:#f92672">,</span> voucherId<span style="color:#f92672">).</span>
+        gt<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;stock&#34;</span><span style="color:#f92672">,</span> 0<span style="color:#f92672">).</span><span style="color:#a6e22e">update</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>success<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 扣减失败
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;库存不足!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#75715e">// 创建订单
+</span><span style="color:#75715e"></span>    VoucherOrder voucherOrder <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> VoucherOrder<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">long</span> orderId <span style="color:#f92672">=</span> redisIDGenerator<span style="color:#f92672">.</span><span style="color:#a6e22e">nextID</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;order&#34;</span><span style="color:#f92672">);</span>
+    voucherOrder<span style="color:#f92672">.</span><span style="color:#a6e22e">setId</span><span style="color:#f92672">(</span>orderId<span style="color:#f92672">);</span>
+    voucherOrder<span style="color:#f92672">.</span><span style="color:#a6e22e">setUserId</span><span style="color:#f92672">(</span>userId<span style="color:#f92672">);</span>
+    voucherOrder<span style="color:#f92672">.</span><span style="color:#a6e22e">setVoucherId</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+    save<span style="color:#f92672">(</span>voucherOrder<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 返回订单id
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">(</span>orderId<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>通过加锁可以解决在单机情况下的一人一单安全问题，但是在集群模式下就不行了</p>
+<p>在单机情况下，只有一台JVM，JVM会维护一个锁监视器对象，此时无论有多少线程，都会在锁监视器对象的限制下并发执行，不会出现安全问题</p>
+<p>在集群部署情况下，多台服务器每台有自己的JVM，有自己的堆、栈、方法区、常量池、锁监视器等，此时如果多个线程访问的不是一台服务器，他们的锁监视器对象不是一个，有可能会出现线程安全问题</p>
 
     </div>
     <div class="post-footer">
