@@ -63,7 +63,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          5 min read
+          7 min read
         </div>
       </div>
     </header>
@@ -568,7 +568,159 @@
 </code></pre></div><p>通过加锁可以解决在单机情况下的一人一单安全问题，但是在集群模式下就不行了</p>
 <p>在单机情况下，只有一台JVM，JVM会维护一个锁监视器对象，此时无论有多少线程，都会在锁监视器对象的限制下并发执行，不会出现安全问题</p>
 <p>在集群部署情况下，多台服务器每台有自己的JVM，有自己的堆、栈、方法区、常量池、锁监视器等，此时如果多个线程访问的不是一台服务器，他们的锁监视器对象不是一个，有可能会出现线程安全问题</p>
+<hr>
+<h3 id="分布式锁">分布式锁</h3>
+<p>满足分布式系统或集群模式下多进程<strong>可见</strong>且<strong>互斥</strong>的锁</p>
+<p><img src="/imgs/DistributedLock.jpg" alt="分布式锁要求"></p>
+<h4 id="分布式锁的实现">分布式锁的实现</h4>
+<p>分布式锁的核心是实现多进程之间的互斥，而满足这一点的方式有很多，常见的有三种：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MySQL</th>
+<th>Redis</th>
+<th>ZooKeeper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>互斥</td>
+<td>利用mysql本身的互斥锁机制</td>
+<td>利用setnx这样的互斥命令</td>
+<td>利用节点的唯一性和有序性实现互斥</td>
+</tr>
+<tr>
+<td>高可用</td>
+<td>好</td>
+<td>好</td>
+<td>好</td>
+</tr>
+<tr>
+<td>高性能</td>
+<td>一般</td>
+<td>好</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>断开连接，自动释放锁</td>
+<td>利用锁超时时间，到期自动释放</td>
+<td>临时节点，断开连接自动释放</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="基于redis的分布式锁">基于Redis的分布式锁</h3>
+<p>实现分布式锁时需要实现的两个基本方法：</p>
+<ul>
+<li>
+<p>获取锁：</p>
+<ul>
+<li>互斥：确保只能有一个线程获取锁
+SETNX lock thread1</li>
+</ul>
+</li>
+<li>
+<p>释放锁：</p>
+<ul>
+<li>DEL lock</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ILock</span> <span style="color:#f92672">{</span><span style="color:#75715e">// 接口
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> timeOutSec<span style="color:#f92672">);</span>
 
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">--------------------------------------------------</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleRedisLock</span> <span style="color:#66d9ef">implements</span> ILock<span style="color:#f92672">{</span><span style="color:#75715e">// 锁实现类
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String KEY_PREFIX <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lock:&#34;</span><span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SimpleRedisLock</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">stringRedisTemplate</span> <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> timeOutSec<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">long</span> threadId <span style="color:#f92672">=</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+        Boolean res <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setIfAbsent</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">,</span> threadId <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span> timeOutSec<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> Boolean<span style="color:#f92672">.</span><span style="color:#a6e22e">TRUE</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>res<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">--------------------------------------------------</span>
+
+<span style="color:#a6e22e">@Override</span>
+<span style="color:#66d9ef">public</span> Result <span style="color:#a6e22e">seckillVoucher</span><span style="color:#f92672">(</span>Long voucherId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// 查询优惠券
+</span><span style="color:#75715e"></span>    SeckillVoucher seckillVoucher <span style="color:#f92672">=</span> seckillVoucherService<span style="color:#f92672">.</span><span style="color:#a6e22e">getById</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// 判断时间是否开始，是否结束
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getBeginTime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isAfter</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">()))</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秒杀未开始!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getEndTime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">isBefore</span><span style="color:#f92672">(</span>LocalDateTime<span style="color:#f92672">.</span><span style="color:#a6e22e">now</span><span style="color:#f92672">()))</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;秒杀已结束!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 判断库存是否充足
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>seckillVoucher<span style="color:#f92672">.</span><span style="color:#a6e22e">getStock</span><span style="color:#f92672">()</span> <span style="color:#f92672">&lt;=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;库存不足!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    Long userId <span style="color:#f92672">=</span> UserHolder<span style="color:#f92672">.</span><span style="color:#a6e22e">getUser</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+
+    SimpleRedisLock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SimpleRedisLock<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;lock&#34;</span> <span style="color:#f92672">+</span> userId<span style="color:#f92672">,</span> stringRedisTemplate<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> isLock <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span>1200<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>isLock<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Result<span style="color:#f92672">.</span><span style="color:#a6e22e">fail</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;禁止重复下单!&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        IVoucherOrderService currentProxy <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>IVoucherOrderService<span style="color:#f92672">)</span> AopContext<span style="color:#f92672">.</span><span style="color:#a6e22e">currentProxy</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">return</span> currentProxy<span style="color:#f92672">.</span><span style="color:#a6e22e">createVoucherOrder</span><span style="color:#f92672">(</span>voucherId<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><img src="/imgs/ProblemOfDL.png" alt="分布式锁存在的问题"></p>
+<h4 id="改进redis的分布式锁">改进Redis的分布式锁</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleRedisLock</span> <span style="color:#66d9ef">implements</span> ILock<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String KEY_PREFIX <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lock:&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String ID_PREFIX <span style="color:#f92672">=</span> UUID<span style="color:#f92672">.</span><span style="color:#a6e22e">randomUUID</span><span style="color:#f92672">().</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">// 此处的UUID使用的是hutools中的UUID
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SimpleRedisLock</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">stringRedisTemplate</span> <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> timeOutSec<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String threadId <span style="color:#f92672">=</span> ID_PREFIX <span style="color:#f92672">+</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+        Boolean res <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setIfAbsent</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">,</span> threadId<span style="color:#f92672">,</span> timeOutSec<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> Boolean<span style="color:#f92672">.</span><span style="color:#a6e22e">TRUE</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>res<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        String threadId <span style="color:#f92672">=</span> ID_PREFIX <span style="color:#f92672">+</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+        String lockValue <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>threadId<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>lockValue<span style="color:#f92672">)){</span>
+            stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">delete</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       
