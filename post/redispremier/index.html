@@ -13,12 +13,30 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis进阶"/>
-<meta name="twitter:description" content="缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
-解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate.opsForValue().set(RedisConstants.CACHE_SHOP_KEY &#43; id, &#34;&#34;, CACHE_NULL_TTL, TimeUnit."/>
+<meta name="twitter:description" content="缓存穿透
+缓存雪崩
+缓存击穿
+缓存工具类封装
+全局ID生成器
+秒杀超卖
+分布式锁
+使用Lua脚本解决分布式锁的原子性问题
+#
+缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
+解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate."/>
 
     <meta property="og:title" content="Redis进阶" />
-<meta property="og:description" content="缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
-解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate.opsForValue().set(RedisConstants.CACHE_SHOP_KEY &#43; id, &#34;&#34;, CACHE_NULL_TTL, TimeUnit." />
+<meta property="og:description" content="缓存穿透
+缓存雪崩
+缓存击穿
+缓存工具类封装
+全局ID生成器
+秒杀超卖
+分布式锁
+使用Lua脚本解决分布式锁的原子性问题
+#
+缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
+解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/redispremier/" />
 <meta property="article:published_time" content="2022-12-27T10:53:23+08:00" />
@@ -63,12 +81,21 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          7 min read
+          8 min read
         </div>
       </div>
     </header>
     <div class="post-content">
-      <h3 id="缓存穿透">缓存穿透</h3>
+      <p><a href="#CachePierce">缓存穿透</a></p>
+<p><a href="#CacheSlide">缓存雪崩</a></p>
+<p><a href="#CacheBreakDown">缓存击穿</a></p>
+<p><a href="#CacheUtils">缓存工具类封装</a></p>
+<p><a href="#GlobalIDGenerator">全局ID生成器</a></p>
+<p><a href="#SecKillOverSelling">秒杀超卖</a></p>
+<p><a href="#DistributedLock">分布式锁</a></p>
+<p><a href="#ImproveRedisDLUsingLua">使用Lua脚本解决分布式锁的原子性问题</a></p>
+<p><a id="CachePierce">#</a></p>
+<h3 id="缓存穿透">缓存穿透</h3>
 <h5 id="缓存穿透产生的原因">缓存穿透产生的原因：</h5>
 <p>用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力</p>
 <h5 id="解决方案">解决方案：</h5>
@@ -106,6 +133,7 @@
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><hr>
+<p><a id="CacheSlide">#</a></p>
 <h3 id="缓存雪崩">缓存雪崩</h3>
 <p>缓存雪崩是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力</p>
 <h5 id="解决方案-1">解决方案：</h5>
@@ -116,6 +144,7 @@
 <li>给业务添加多级缓存</li>
 </ul>
 <hr>
+<p><a id="CacheBreakDown">#</a></p>
 <h3 id="缓存击穿">缓存击穿</h3>
 <p>缓存击穿问题也叫热点Key问题，就是一个被高并发访问并且缓存重建业务较复杂的key突然失效了，无数的请求访问会在瞬间给数据库带来巨大的冲击</p>
 <ul>
@@ -272,6 +301,7 @@
 </span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> shop<span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><hr>
+<p><a id="CacheUtils">#</a></p>
 <h3 id="缓存工具类封装">缓存工具类封装</h3>
 <p>注意事项：泛型，函数式编程</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Slf4j</span>
@@ -406,6 +436,7 @@
     <span style="color:#66d9ef">private</span> Object data<span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><hr>
+<p><a id="GlobalIDGenerator">#</a></p>
 <h3 id="全局id生成器">全局ID生成器</h3>
 <p>全局ID生成器，是一种在分布式系统下用来生成全局唯一ID的工具，一般要满足下列特性：</p>
 <ul>
@@ -434,6 +465,7 @@
 <li>序列号：32bit，秒内的计数器，支持每秒产生2^32个不同的ID</li>
 </ul>
 <hr>
+<p><a id="SecKillOverSelling">#</a></p>
 <h3 id="秒杀超卖问题">秒杀超卖问题</h3>
 <h4 id="锁设计理念">锁设计理念</h4>
 <h5 id="悲观锁">悲观锁</h5>
@@ -569,6 +601,7 @@
 <p>在单机情况下，只有一台JVM，JVM会维护一个锁监视器对象，此时无论有多少线程，都会在锁监视器对象的限制下并发执行，不会出现安全问题</p>
 <p>在集群部署情况下，多台服务器每台有自己的JVM，有自己的堆、栈、方法区、常量池、锁监视器等，此时如果多个线程访问的不是一台服务器，他们的锁监视器对象不是一个，有可能会出现线程安全问题</p>
 <hr>
+<p><a id="DistributedLock">#</a></p>
 <h3 id="分布式锁">分布式锁</h3>
 <p>满足分布式系统或集群模式下多进程<strong>可见</strong>且<strong>互斥</strong>的锁</p>
 <p><img src="/imgs/DistributedLock.jpg" alt="分布式锁要求"></p>
@@ -720,6 +753,76 @@ SETNX lock thread1</li>
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
+</code></pre></div><p><strong>此方法仍然存在一些问题：</strong></p>
+<p>因为判断锁是否属于自己的之后 与 释放锁的操作之间仍然有被割断的可能(比如垃圾回收器进行回收时，会阻塞所有线程，可能导致锁超时自动过期，此时其他线程拿到锁，本线程再去释放锁，导致别人的锁被释放，不能保证操作原子性)，就有可能出现以下问题：</p>
+<p><img src="/imgs/AtomicProblem.png" alt="当前分布式锁存在的操作原子性问题"></p>
+<p><strong>由此引入lua脚本，可实现操作原子性</strong></p>
+<p><a id="ImproveRedisDLUsingLua">#</a></p>
+<h3 id="redis的lua脚本">Redis的Lua脚本</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">EVAL script numkeys key <span style="color:#f92672">[</span>key ...<span style="color:#f92672">]</span> arg <span style="color:#f92672">[</span>arg ...<span style="color:#f92672">]</span>
+EVAL 脚本 键值对的数量 键 ... 值 ...
+
+EVAL <span style="color:#e6db74">&#34;return redis.call(&#39;set&#39;, KEYS[1], ARGV[1])&#34;</span> <span style="color:#ae81ff">1</span> name Rose
+EVAL <span style="color:#e6db74">&#34;return redis.call(&#39;mset&#39;, KEYS[1], ARGV[1], KEYS[2], ARGV[2])&#34;</span> <span style="color:#ae81ff">2</span> name1 name2 Jack Mary
+--Lua脚本的参数的键会存入KEYS数组中，值会存入ARGV数组中，数组下标从1开始
+</code></pre></div><h4 id="使用lua编写释放锁的流程">使用Lua编写释放锁的流程</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Lua" data-lang="Lua"><span style="color:#75715e">-- 比较线程标识与锁中的标识是否一致</span>
+<span style="color:#66d9ef">if</span>(redis.call(<span style="color:#e6db74">&#39;get&#39;</span>, KEYS[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">==</span> ARGV[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">then</span>
+	<span style="color:#75715e">-- 释放锁</span>
+	<span style="color:#66d9ef">return</span> redis.call(<span style="color:#e6db74">&#39;del&#39;</span>, KEYS[<span style="color:#ae81ff">1</span>])
+<span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</code></pre></div><h4 id="java调用lua脚本改进分布式锁">Java调用Lua脚本改进分布式锁</h4>
+<p>RedisTemplate调用Lua脚本的API如下：</p>
+<p><img src="/imgs/RedisTemplateLua.png" alt="RedisTemplateLua"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SimpleRedisLock</span> <span style="color:#66d9ef">implements</span> ILock<span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String KEY_PREFIX <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lock:&#34;</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String ID_PREFIX <span style="color:#f92672">=</span> UUID<span style="color:#f92672">.</span><span style="color:#a6e22e">randomUUID</span><span style="color:#f92672">().</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span><span style="color:#f92672">;</span>
+    
+    <span style="color:#75715e">// 实现创建DefaultRedisScript对象，并初始化
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> DefaultRedisScript<span style="color:#f92672">&lt;</span>Long<span style="color:#f92672">&gt;</span> UNLOCK_SCRIPT<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span>
+        UNLOCK_SCRIPT <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DefaultRedisScript<span style="color:#f92672">&lt;&gt;();</span>
+        UNLOCK_SCRIPT<span style="color:#f92672">.</span><span style="color:#a6e22e">setLocation</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> ClassPathResource<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;unlock.lua&#34;</span><span style="color:#f92672">));</span>
+        UNLOCK_SCRIPT<span style="color:#f92672">.</span><span style="color:#a6e22e">setResultType</span><span style="color:#f92672">(</span>Long<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SimpleRedisLock</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">,</span> StringRedisTemplate stringRedisTemplate<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">stringRedisTemplate</span> <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> timeOutSec<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String threadId <span style="color:#f92672">=</span> ID_PREFIX <span style="color:#f92672">+</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">();</span>
+        Boolean res <span style="color:#f92672">=</span> stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">opsForValue</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setIfAbsent</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">,</span> threadId<span style="color:#f92672">,</span> timeOutSec<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> Boolean<span style="color:#f92672">.</span><span style="color:#a6e22e">TRUE</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>res<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        stringRedisTemplate<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span>UNLOCK_SCRIPT<span style="color:#f92672">,</span>
+                                    Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">singletonList</span><span style="color:#f92672">(</span>KEY_PREFIX <span style="color:#f92672">+</span> name<span style="color:#f92672">),</span>
+                                    ID_PREFIX <span style="color:#f92672">+</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getId</span><span style="color:#f92672">());</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//    @Override
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//    public void unlock() {
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//        String threadId = ID_PREFIX + Thread.currentThread().getId();
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//        String lockValue = stringRedisTemplate.opsForValue().get(KEY_PREFIX + name);
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//        if (threadId.equals(lockValue)){
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//            stringRedisTemplate.delete(KEY_PREFIX + name);
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//        }
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//    }
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- location:/resources/unlock.lua</span>
+<span style="color:#75715e">-- 比较线程标识与锁中的标识是否一致</span>
+<span style="color:#66d9ef">if</span>(redis.call(<span style="color:#e6db74">&#39;get&#39;</span>, KEYS[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">==</span> ARGV[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">then</span>
+    <span style="color:#75715e">-- 释放锁</span>
+    <span style="color:#66d9ef">return</span> redis.call(<span style="color:#e6db74">&#39;del&#39;</span>, KEYS[<span style="color:#ae81ff">1</span>])
+<span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
 </code></pre></div>
     </div>
     <div class="post-footer">
