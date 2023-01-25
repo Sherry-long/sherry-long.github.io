@@ -6,7 +6,18 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Dec 2022 10:53:23 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Jan 2023 11:06:02 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redisson</title>
+      <link>https://sherry-long.github.io/post/redisson/</link>
+      <pubDate>Fri, 20 Jan 2023 11:06:02 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/redisson/</guid>
+      <description>Redisson入门 1.引入依赖
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.redisson&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;redisson&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;3.19.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; 2.配置Redisson客户端
+@Configuration public class RedisConfig { @Bean public RedissonClient redissonClient(){ // 配置类  Config config = new Config(); // 添加redis地址，这里添加了单点地址，也可以使用config.useClusterServers()添加集群地址  config.useSingleServer().setAddress(&amp;#34;redis://192.168.88.128:6379&amp;#34;).setPassword(&amp;#34;Redis&amp;#34;); // 创建客户端  return Redisson.create(config); } } </description>
+    </item>
+    
     <item>
       <title>Redis进阶</title>
       <link>https://sherry-long.github.io/post/redispremier/</link>
@@ -21,6 +32,7 @@
 秒杀超卖
 分布式锁
 使用Lua脚本解决分布式锁的原子性问题
+基于Redis的分布式锁优化-Redisson
 #
 缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
 解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY + id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate.</description>

@@ -21,6 +21,7 @@
 秒杀超卖
 分布式锁
 使用Lua脚本解决分布式锁的原子性问题
+基于Redis的分布式锁优化-Redisson
 #
 缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
 解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate."/>
@@ -34,6 +35,7 @@
 秒杀超卖
 分布式锁
 使用Lua脚本解决分布式锁的原子性问题
+基于Redis的分布式锁优化-Redisson
 #
 缓存穿透 缓存穿透产生的原因： 用户请求的数据在redis缓存和数据库中都不存在，用户不断发起该请求，会给数据库带来巨大压力
 解决方案：  缓存null值(空字符串) 布隆过滤(类似位图) 增强id的复杂度，避免被猜测id规律 做好数据的基础格式校验 加强用户权限校验 对热点参数做限流  private Shop queryWithPassThrough(Long id){ // 从redis查询商铺缓存  String shopJson = stringRedisTemplate.opsForValue().get(RedisConstants.CACHE_SHOP_KEY &#43; id); // 判断是否存在  if (StrUtil.isNotBlank(shopJson)) { // 存在，直接返回  return JSONUtil.toBean(shopJson, Shop.class); } // 判断命中的是否是空值  if (shopJson != null){ return null; } // 不存在，根据id查数据库  Shop shop = getById(id); // 数据库不存在，返回404  if (shop == null) { // 将空值写入redis  stringRedisTemplate." />
@@ -94,6 +96,7 @@
 <p><a href="#SecKillOverSelling">秒杀超卖</a></p>
 <p><a href="#DistributedLock">分布式锁</a></p>
 <p><a href="#ImproveRedisDLUsingLua">使用Lua脚本解决分布式锁的原子性问题</a></p>
+<p><a href="#Redisson">基于Redis的分布式锁优化-Redisson</a></p>
 <p><a id="CachePierce">#</a></p>
 <h3 id="缓存穿透">缓存穿透</h3>
 <h5 id="缓存穿透产生的原因">缓存穿透产生的原因：</h5>
@@ -148,14 +151,18 @@
 <h3 id="缓存击穿">缓存击穿</h3>
 <p>缓存击穿问题也叫热点Key问题，就是一个被高并发访问并且缓存重建业务较复杂的key突然失效了，无数的请求访问会在瞬间给数据库带来巨大的冲击</p>
 <ul>
-<li>互斥锁
-使用锁控制同一时间内只有一个线程查询数据库重建缓存
-**优点：**没有额外内存消耗；保证一致性；实现简单
-**问题：**等待时间内未持有锁的线程只能等待，性能受影响；可能有死锁风险</li>
-<li>逻辑过期
-不设置TTL，建立缓存时手动设置属性expire代表逻辑过期时间，获取缓存时手动检查是否逻辑过期。如果过期，获取锁，开启一个新线程负责查询数据库重建缓存，原线程返回旧数据。如果在锁被占用期间有其他线程尝试获取锁，失败，并不再进行循环等待，而是直接返回旧数据
-**优点：**线程无需等待，性能较好
-**问题：**不保证一致性；有额外内存消耗；实现复杂</li>
+<li>
+<p>互斥锁
+使用锁控制同一时间内只有一个线程查询数据库重建缓存</p>
+<p>优点：没有额外内存消耗；保证一致性；实现简单
+问题：等待时间内未持有锁的线程只能等待，性能受影响；可能有死锁风险</p>
+</li>
+<li>
+<p>逻辑过期
+不设置TTL，建立缓存时手动设置属性expire代表逻辑过期时间，获取缓存时手动检查是否逻辑过期。如果过期，获取锁，开启一个新线程负责查询数据库重建缓存，原线程返回旧数据。如果在锁被占用期间有其他线程尝试获取锁，失败，并不再进行循环等待，而是直接返回旧数据</p>
+<p>优点：线程无需等待，性能较好
+问题：不保证一致性；有额外内存消耗；实现复杂</p>
+</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 获取锁方法，使用redis的setnx来实现
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">){</span>
@@ -603,7 +610,7 @@
 <hr>
 <p><a id="DistributedLock">#</a></p>
 <h3 id="分布式锁">分布式锁</h3>
-<p>满足分布式系统或集群模式下多进程<strong>可见</strong>且<strong>互斥</strong>的锁</p>
+<p>满足分布式系统或集群模式下多进程可见且互斥的锁</p>
 <p><img src="/imgs/DistributedLock.jpg" alt="分布式锁要求"></p>
 <h4 id="分布式锁的实现">分布式锁的实现</h4>
 <p>分布式锁的核心是实现多进程之间的互斥，而满足这一点的方式有很多，常见的有三种：</p>
@@ -823,7 +830,23 @@ EVAL <span style="color:#e6db74">&#34;return redis.call(&#39;mset&#39;, KEYS[1],
     <span style="color:#66d9ef">return</span> redis.call(<span style="color:#e6db74">&#39;del&#39;</span>, KEYS[<span style="color:#ae81ff">1</span>])
 <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-</code></pre></div>
+</code></pre></div><hr>
+<hr>
+<p>使用setnx实现的分布式锁存在的问题：</p>
+<ul>
+<li>不可重入（同一个线程无法多次获取同一把锁）</li>
+<li>不可重试（获取锁只尝试一次就返回false，没有重试机制）</li>
+<li>超时释放（锁超时释放虽然可以避免死锁，但如果是业务执行耗时较长，也会导致锁释放，存在安全隐患）</li>
+<li>主从一致性（如果Redis提供了主从集群，主从同步存在延迟，当主机宕机时，如果从并同步主中的锁数据，则会出现锁实现）</li>
+</ul>
+<hr>
+<p><a id="Redisson">#</a></p>
+<h3 id="基于redis的分布式锁优化-redisson">基于Redis的分布式锁优化-Redisson</h3>
+<p>Redisson是一个在Redis的基础上实现的Java驻内存数据网格（In-Memory Data Grid），</p>
+<p>是一个基于Redis实现的一个分布式工具集合。</p>
+<p>它不仅提供了一系列的分布式的Java常用对象，还提供了许多分布式服务，其中就包含了各种分布式锁的实现。</p>
+<p><img src="/imgs/Redisson.png" alt="Redisson"></p>
+
     </div>
     <div class="post-footer">
       
