@@ -163,16 +163,24 @@
 <h5 id="static-thread-currentthread--返回当前线程在thread子类中就是this通常用于主线程和runnable实现类">static Thread currentThread() : 返回当前线程。在Thread子类中就是this，通常用于主线程和Runnable实现类</h5>
 <h5 id="static-void-yield--线程让步">static void yield() : 线程让步</h5>
 <p>暂停当前正在执行的线程，把执行机会让给优先级更高或相同的线程。若队列中没有同优先级的线程，忽略此方法</p>
-<h5 id="join-">join() :</h5>
+<h5 id="void-join--等待线程执行完毕">void join() : 等待线程执行完毕</h5>
 <p>当某个程序执行流中调用其他线程的join()方法时，调用线程将被阻塞，直到join()方法加入的join线程执行完为止</p>
 <ul>
 <li>低优先级的线程也可以获得执行</li>
 </ul>
+<p><em>join()方法内部使用了wait()方法</em></p>
 <h5 id="static-void-sleeplong-millis--指定时间毫秒">static void sleep(long millis) : (指定时间：毫秒)</h5>
 <p>令当前活动线程在指定时间段内放弃对CPU控制，时间到后重排队</p>
 <h5 id="stop--强制线程生命期结束不推荐使用">stop() : 强制线程生命期结束，不推荐使用</h5>
+<p>stop会强制杀死线程，如果此时线程锁住了某些共享资源，他就没机会释放这些资源的锁，这些资源就不能再被其他线程获取到，推荐使用interrupt()方法结合打断标记来停止一个线程</p>
 <h5 id="boolean-isalive--判断线程是否存活">boolean isAlive() : 判断线程是否存活</h5>
-<hr>
+<h5 id="void-interrupt--打断线程">void interrupt() : 打断线程</h5>
+<p>此方法会将线程打断标记置为true，但是并不会真正使线程停止，只是告诉线程我要打断你，再由线程自己去停止</p>
+<h5 id="boolean-isinterrupted--结合上面interrupt方法使用判断线程是否被打断再去手动停止线程">boolean isInterrupted() : 结合上面interrupt()方法使用，判断线程是否被打断，再去手动停止线程</h5>
+<h5 id="static-boolean-interrupted--此方法是thread类中的静态方法它会返回线程的打断标记并重置标记true---false">static boolean interrupted() : 此方法是Thread类中的静态方法，它会返回线程的打断标记并重置标记(true -&gt; false)</h5>
+<pre><code>打断正在sleep(), wait(), join()的线程，打断标记会重置为false(有一定延迟，打断后立刻判断标记是true，等待一段时间判断为false)
+打断正常运行的线程打断标记会置为true
+</code></pre><hr>
 <h3 id="线程的生命周期">线程的生命周期</h3>
 <hr>
 <h1 id="线程的同步线程安全-3种解决方式">线程的同步(线程安全)-3种解决方式</h1>

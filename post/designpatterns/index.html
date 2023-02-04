@@ -161,12 +161,11 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
 <hr>
 <hr>
 <h1 id="模板方法多态的应用">模板方法(多态的应用)</h1>
-<p>Java中抽象类体现的就是一种模板模式的设计，抽象类作为多个子类的通用模板，子类在抽象类的基础上进行扩、改造，但子类
-总体上会保留抽象类的行为方式。</p>
+<p>Java中抽象类体现的就是一种模板模式的设计，抽象类作为多个子类的通用模板，子类在抽象类的基础上进行扩、改造，但子类总体上会保留抽象类的行为方式。</p>
 <h3 id="解决的问题">解决的问题</h3>
 <pre><code>当功能内部一部分实现是确定的，一部分实现是不确定的，这是可以将不确定的部分暴露出去，让子类实现
 </code></pre>
-<hr>
+<h2 id="heading">​</h2>
 <hr>
 <h1 id="代理模式">代理模式</h1>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StarTest</span> <span style="color:#f92672">{</span>
@@ -289,7 +288,70 @@ The real star collects money
 <p>抽象工厂</p>
 </li>
 </ul>
+<hr>
+<hr>
+<h1 id="两阶段终止模式">两阶段终止模式</h1>
+<p>Two Phase Termination</p>
+<p>在一个线程t1中“优雅”地终止线程t2，给t2一个料理后事的机会</p>
+<p><img src="/imgs/TPTdesign_pattern.png" alt="两阶段终止模式"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TwoPhaseTermination</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> Thread monitor<span style="color:#f92672">;</span>
 
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        TwoPhaseTermination twoPhaseTermination <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> TwoPhaseTermination<span style="color:#f92672">();</span>
+        twoPhaseTermination<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>3500<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+
+        twoPhaseTermination<span style="color:#f92672">.</span><span style="color:#a6e22e">stop</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">start</span><span style="color:#f92672">(){</span>
+        monitor <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">){</span>
+                <span style="color:#75715e">//获取当前线程，判断打断标记
+</span><span style="color:#75715e"></span>                Thread currentThread <span style="color:#f92672">=</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">();</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>currentThread<span style="color:#f92672">.</span><span style="color:#a6e22e">isInterrupted</span><span style="color:#f92672">()){</span>
+                    learning<span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;处理后续工作。。。&#34;</span><span style="color:#f92672">);</span>
+                    <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                    <span style="color:#75715e">//在sleep时被打断，会抛出异常重置打断标记
+</span><span style="color:#75715e"></span>                    <span style="color:#75715e">//所以在捕获异常后重新打断一次将标记置为true以便于停止线程
+</span><span style="color:#75715e"></span>                    Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>1000<span style="color:#f92672">);</span>
+                    learning<span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;执行监控记录。。。&#34;</span><span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#75715e">//重新设置打断标记
+</span><span style="color:#75715e"></span>                    currentThread<span style="color:#f92672">.</span><span style="color:#a6e22e">interrupt</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">});</span>
+
+        monitor<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">stop</span><span style="color:#f92672">(){</span>
+        monitor<span style="color:#f92672">.</span><span style="color:#a6e22e">interrupt</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">---------------------------------------------------------------------</span>
+02<span style="color:#f92672">-</span>04 04<span style="color:#f92672">:</span>26<span style="color:#f92672">:</span>11<span style="color:#f92672">:</span>799 Thread<span style="color:#f92672">-</span>0 <span style="color:#f92672">:</span>执行监控记录<span style="color:#960050;background-color:#1e0010">。。。</span>
+02<span style="color:#f92672">-</span>04 04<span style="color:#f92672">:</span>26<span style="color:#f92672">:</span>12<span style="color:#f92672">:</span>831 Thread<span style="color:#f92672">-</span>0 <span style="color:#f92672">:</span>执行监控记录<span style="color:#960050;background-color:#1e0010">。。。</span>
+02<span style="color:#f92672">-</span>04 04<span style="color:#f92672">:</span>26<span style="color:#f92672">:</span>13<span style="color:#f92672">:</span>846 Thread<span style="color:#f92672">-</span>0 <span style="color:#f92672">:</span>执行监控记录<span style="color:#960050;background-color:#1e0010">。。。</span>
+java<span style="color:#f92672">.</span><span style="color:#a6e22e">lang</span><span style="color:#f92672">.</span><span style="color:#a6e22e">InterruptedException</span><span style="color:#f92672">:</span> sleep interrupted
+	at java<span style="color:#f92672">.</span><span style="color:#a6e22e">base</span><span style="color:#f92672">/</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">lang</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Thread</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>Native Method<span style="color:#f92672">)</span>
+	at com<span style="color:#f92672">.</span><span style="color:#a6e22e">sherry</span><span style="color:#f92672">.</span><span style="color:#a6e22e">TwoPhaseTermination</span><span style="color:#f92672">.</span><span style="color:#a6e22e">lambda$start$0</span><span style="color:#f92672">(</span>learning<span style="color:#f92672">.</span><span style="color:#a6e22e">java</span><span style="color:#f92672">:</span>84<span style="color:#f92672">)</span>
+	at java<span style="color:#f92672">.</span><span style="color:#a6e22e">base</span><span style="color:#f92672">/</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">lang</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Thread</span><span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">java</span><span style="color:#f92672">:</span>834<span style="color:#f92672">)</span>
+02<span style="color:#f92672">-</span>04 04<span style="color:#f92672">:</span>26<span style="color:#f92672">:</span>14<span style="color:#f92672">:</span>284 Thread<span style="color:#f92672">-</span>0 <span style="color:#f92672">:</span>处理后续工作<span style="color:#960050;background-color:#1e0010">。。。</span>
+
+Process finished with exit code 0
+</code></pre></div>
     </div>
     <div class="post-footer">
       
