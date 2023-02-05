@@ -6,7 +6,18 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Jan 2023 11:06:02 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Feb 2023 17:08:16 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java线程2</title>
+      <link>https://sherry-long.github.io/post/javathread1/</link>
+      <pubDate>Sat, 04 Feb 2023 17:08:16 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/javathread1/</guid>
+      <description>守护线程 默认情况下，Java进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其他非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束
+垃圾回收线程就是守护线程，在其他非守护线程结束运行后，无论有没有执行完，都立刻停止
+ 线程状态 操作系统层面-5层 Java层面-6层 </description>
+    </item>
+    
     <item>
       <title>Redisson</title>
       <link>https://sherry-long.github.io/post/redisson/</link>
@@ -418,7 +429,7 @@ String str1 = &amp;#34;abc&amp;#34;; // 字面量，区别于new String str2 = &
     </item>
     
     <item>
-      <title>Java线程</title>
+      <title>Java线程1</title>
       <link>https://sherry-long.github.io/post/javathread/</link>
       <pubDate>Mon, 29 Aug 2022 09:22:08 +0800</pubDate>
       
