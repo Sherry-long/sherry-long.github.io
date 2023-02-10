@@ -19,7 +19,13 @@
 轻量级锁对使用者是透明的，语法仍然是synchronized
  ReentrantLock 可重入锁，synchronized也是可重入锁
 特点：
- 可重入&ndash;持有锁的线程可以重复上锁 可打断&ndash;LockInterruptibly()，在持有锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动 锁超时&ndash;tryLock(long timeout, TimeUnit unit)，在尝试获取锁时可以设置超时时间，超时自动放弃获取，主动打断等待状态，避免死锁 公平锁 支持多条件变量  private static ReentrantLock ROOM = new ReentrantLock(); private static Condition waitCigar = ROOM.newCondition(); private static Condition waitTakeout = ROOM.newCondition(); //wait notify所有线程都在同一个waitSet中等待唤醒 //await signal支持多个waitSet，等待不同条件的线程可以在不同的waitSet中等待 "/>
+ 可重入&ndash;持有锁的线程可以重复上锁 可打断&ndash;LockInterruptibly()，在获取锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动 锁超时&ndash;tryLock(long timeout, TimeUnit unit)，在尝试获取锁时可以设置超时时间，超时自动放弃获取，主动打断等待状态，避免死锁 公平锁 支持多条件变量  private static ReentrantLock ROOM = new ReentrantLock(); private static Condition waitCigar = ROOM.newCondition(); private static Condition waitTakeout = ROOM.newCondition(); //wait notify所有线程都在同一个waitSet中等待唤醒 //await signal支持多个waitSet，等待不同条件的线程可以在不同的waitSet中等待  volatile 关键字，可以保证共享变量的可见性和有序性
+多个线程对共享变量进行修改，要使修改对其他线程可见，使用volatile volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序，可能会导致多线程环境下出现错误 操作volatile修饰的变量的代码之前的代码可以保证指令有序性
+volatile原理 volatile的底层实现原理是内存屏障，Memory Barrier(Memory Fence)
+ 对volatile变量的写指令后会加入写屏障 对volatile变量的读指令前会加入读屏障  如何保证可见性 写屏障保证在该屏障之前的对共享变量的改动(赋值)，都同步到主存当中
+读屏障保证在该屏障之后所有对于共享变量的读取，加载的是主存中的最新数据
+如何保证有序性 写屏障可以保证写屏障之前的代码在指令重排时不会排到写屏障之后
+读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前"/>
 
     <meta property="og:title" content="Java线程2" />
 <meta property="og:description" content="守护线程 默认情况下，Java进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其他非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束
@@ -28,7 +34,13 @@
 轻量级锁对使用者是透明的，语法仍然是synchronized
  ReentrantLock 可重入锁，synchronized也是可重入锁
 特点：
- 可重入&ndash;持有锁的线程可以重复上锁 可打断&ndash;LockInterruptibly()，在持有锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动 锁超时&ndash;tryLock(long timeout, TimeUnit unit)，在尝试获取锁时可以设置超时时间，超时自动放弃获取，主动打断等待状态，避免死锁 公平锁 支持多条件变量  private static ReentrantLock ROOM = new ReentrantLock(); private static Condition waitCigar = ROOM.newCondition(); private static Condition waitTakeout = ROOM.newCondition(); //wait notify所有线程都在同一个waitSet中等待唤醒 //await signal支持多个waitSet，等待不同条件的线程可以在不同的waitSet中等待 " />
+ 可重入&ndash;持有锁的线程可以重复上锁 可打断&ndash;LockInterruptibly()，在获取锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动 锁超时&ndash;tryLock(long timeout, TimeUnit unit)，在尝试获取锁时可以设置超时时间，超时自动放弃获取，主动打断等待状态，避免死锁 公平锁 支持多条件变量  private static ReentrantLock ROOM = new ReentrantLock(); private static Condition waitCigar = ROOM.newCondition(); private static Condition waitTakeout = ROOM.newCondition(); //wait notify所有线程都在同一个waitSet中等待唤醒 //await signal支持多个waitSet，等待不同条件的线程可以在不同的waitSet中等待  volatile 关键字，可以保证共享变量的可见性和有序性
+多个线程对共享变量进行修改，要使修改对其他线程可见，使用volatile volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序，可能会导致多线程环境下出现错误 操作volatile修饰的变量的代码之前的代码可以保证指令有序性
+volatile原理 volatile的底层实现原理是内存屏障，Memory Barrier(Memory Fence)
+ 对volatile变量的写指令后会加入写屏障 对volatile变量的读指令前会加入读屏障  如何保证可见性 写屏障保证在该屏障之前的对共享变量的改动(赋值)，都同步到主存当中
+读屏障保证在该屏障之后所有对于共享变量的读取，加载的是主存中的最新数据
+如何保证有序性 写屏障可以保证写屏障之前的代码在指令重排时不会排到写屏障之后
+读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javathread1/" />
 <meta property="article:published_time" content="2023-02-04T17:08:16+08:00" />
@@ -97,7 +109,7 @@
 <p>特点：</p>
 <ul>
 <li>可重入&ndash;持有锁的线程可以重复上锁</li>
-<li>可打断&ndash;LockInterruptibly()，在持有锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动</li>
+<li>可打断&ndash;LockInterruptibly()，在获取锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动</li>
 <li>锁超时&ndash;tryLock(long timeout, TimeUnit unit)，在尝试获取锁时可以设置超时时间，超时自动放弃获取，主动打断等待状态，避免死锁</li>
 <li>公平锁</li>
 <li>支持多条件变量</li>
@@ -107,7 +119,25 @@
 <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Condition waitTakeout <span style="color:#f92672">=</span> ROOM<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
 <span style="color:#75715e">//wait notify所有线程都在同一个waitSet中等待唤醒
 </span><span style="color:#75715e">//await signal支持多个waitSet，等待不同条件的线程可以在不同的waitSet中等待
-</span></code></pre></div>
+</span></code></pre></div><hr>
+<h3 id="volatile">volatile</h3>
+<p>关键字，可以保证共享变量的可见性和有序性</p>
+<p>多个线程对共享变量进行修改，要使修改对其他线程可见，使用volatile
+volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序，可能会导致多线程环境下出现错误
+操作volatile修饰的变量的代码之前的代码可以保证指令有序性</p>
+<h3 id="volatile原理">volatile原理</h3>
+<p>volatile的底层实现原理是内存屏障，Memory Barrier(Memory Fence)</p>
+<ul>
+<li>对volatile变量的写指令后会加入写屏障</li>
+<li>对volatile变量的读指令前会加入读屏障</li>
+</ul>
+<h4 id="如何保证可见性">如何保证可见性</h4>
+<p>写屏障保证在该屏障之前的对共享变量的改动(赋值)，都同步到主存当中</p>
+<p>读屏障保证在该屏障之后所有对于共享变量的读取，加载的是主存中的最新数据</p>
+<h4 id="如何保证有序性">如何保证有序性</h4>
+<p>写屏障可以保证写屏障之前的代码在指令重排时不会排到写屏障之后</p>
+<p>读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前</p>
+
     </div>
     <div class="post-footer">
       
