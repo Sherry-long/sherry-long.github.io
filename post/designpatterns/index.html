@@ -351,7 +351,18 @@ java<span style="color:#f92672">.</span><span style="color:#a6e22e">lang</span><
 02<span style="color:#f92672">-</span>04 04<span style="color:#f92672">:</span>26<span style="color:#f92672">:</span>14<span style="color:#f92672">:</span>284 Thread<span style="color:#f92672">-</span>0 <span style="color:#f92672">:</span>处理后续工作<span style="color:#960050;background-color:#1e0010">。。。</span>
 
 Process finished with exit code 0
-</code></pre></div>
+</code></pre></div><hr>
+<h1 id="同步模式之保护性暂停">同步模式之保护性暂停</h1>
+<p>用在一个线程等待另一个线程的执行结果</p>
+<p>要点</p>
+<ul>
+<li>有一个结果需要从一个线程传递到另一个线程，让他们关联同一个GuardedObject</li>
+<li>如果有结果不断从一个线程到另一个线程那么可以使用消息队列</li>
+<li>JDK种，join的实现，Future的实现，采用的就是此模式</li>
+<li>因为要等待另一方的结果，因此归类到同步模式</li>
+</ul>
+<p><img src="/imgs/GuardedSuspension.png" alt="GuardedSuspension"></p>
+
     </div>
     <div class="post-footer">
       

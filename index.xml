@@ -15,7 +15,11 @@
       <guid>https://sherry-long.github.io/post/javathread1/</guid>
       <description>守护线程 默认情况下，Java进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其他非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束
 垃圾回收线程就是守护线程，在其他非守护线程结束运行后，无论有没有执行完，都立刻停止
- 线程状态 操作系统层面-5层 Java层面-6层 </description>
+ 线程状态 操作系统层面-5层 Java层面-6层  轻量级锁 使用场景：如果一个对象虽然有多线程访问，但多线程访问的时间是错开的(也就是没有竞争)，那么可以使用轻量级锁来优化
+轻量级锁对使用者是透明的，语法仍然是synchronized
+ ReentrantLock 可重入锁，synchronized也是可重入锁
+特点：
+ 可重入&amp;ndash;持有锁的线程可以重复上锁 可打断&amp;ndash;LockInterruptibly()，在持有锁时可由其他线程使用interrupt来打断其等待状态，避免死锁，偏被动 锁超时&amp;ndash;tryLock(long timeout, TimeUnit unit)，在尝试获取锁时可以设置超时时间，超时自动放弃获取，主动打断等待状态，避免死锁 公平锁 支持多条件变量  private static ReentrantLock ROOM = new ReentrantLock(); private static Condition waitCigar = ROOM.newCondition(); private static Condition waitTakeout = ROOM.newCondition(); //wait notify所有线程都在同一个waitSet中等待唤醒 //await signal支持多个waitSet，等待不同条件的线程可以在不同的waitSet中等待 </description>
     </item>
     
     <item>
