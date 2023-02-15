@@ -25,7 +25,8 @@ volatile原理 volatile的底层实现原理是内存屏障，Memory Barrier(Mem
  对volatile变量的写指令后会加入写屏障 对volatile变量的读指令前会加入读屏障  如何保证可见性 写屏障保证在该屏障之前的对共享变量的改动(赋值)，都同步到主存当中
 读屏障保证在该屏障之后所有对于共享变量的读取，加载的是主存中的最新数据
 如何保证有序性 写屏障可以保证写屏障之前的代码在指令重排时不会排到写屏障之后
-读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前"/>
+读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前
+ 原子类 原子类使用乐观锁设计思想实现，内部不设锁，通过CAS &#43; volatile来实现原子操作"/>
 
     <meta property="og:title" content="Java线程2" />
 <meta property="og:description" content="守护线程 默认情况下，Java进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其他非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束
@@ -40,7 +41,8 @@ volatile原理 volatile的底层实现原理是内存屏障，Memory Barrier(Mem
  对volatile变量的写指令后会加入写屏障 对volatile变量的读指令前会加入读屏障  如何保证可见性 写屏障保证在该屏障之前的对共享变量的改动(赋值)，都同步到主存当中
 读屏障保证在该屏障之后所有对于共享变量的读取，加载的是主存中的最新数据
 如何保证有序性 写屏障可以保证写屏障之前的代码在指令重排时不会排到写屏障之后
-读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前" />
+读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前
+ 原子类 原子类使用乐观锁设计思想实现，内部不设锁，通过CAS &#43; volatile来实现原子操作" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/javathread1/" />
 <meta property="article:published_time" content="2023-02-04T17:08:16+08:00" />
@@ -137,6 +139,44 @@ volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序
 <h4 id="如何保证有序性">如何保证有序性</h4>
 <p>写屏障可以保证写屏障之前的代码在指令重排时不会排到写屏障之后</p>
 <p>读屏障可以保证读屏障之后的代码在指令重排时不会排到读屏障之前</p>
+<hr>
+<h3 id="原子类">原子类</h3>
+<p>原子类使用乐观锁设计思想实现，内部不设锁，通过CAS + volatile来实现原子操作</p>
+<h4 id="atomicinteger">AtomicInteger</h4>
+<ul>
+<li>boolean <strong>compareAndSet</strong>(int expectedValue, int newValue) - 配合while (true) {if() break;}来使用</li>
+<li>int <strong>get</strong>()</li>
+<li>int <strong>addAndGet</strong>(int delta)</li>
+<li>int <strong>getAndAdd</strong>(int delta)</li>
+<li>int <strong>updateAndGet</strong>(IntUnaryOperator updateFunction) - λ表达式，函数式接口(一元)，单int输入单int输出</li>
+<li>int <strong>getAndUpdate</strong>(IntUnaryOperator updateFunction) - λ表达式，函数式接口(一元)，单int输入单int输出</li>
+</ul>
+<h4 id="atomicreference">AtomicReference</h4>
+<ul>
+<li>boolean <strong>compareAndSet</strong>(V expectedValue, V newValue)</li>
+<li>V <strong>get</strong>()</li>
+</ul>
+<h4 id="atomicstampedreference">AtomicStampedReference</h4>
+<ul>
+<li>boolean <strong>compareAndSet</strong>(V expectedReference, V newReference, int expectedStamp, int newStamp)</li>
+<li>int <strong>getStamp</strong>() - 返回当前版本号</li>
+<li>V <strong>getReference</strong>() - 返回当前引用对象</li>
+</ul>
+<h4 id="atomicmarkablereference">AtomicMarkableReference</h4>
+<ul>
+<li>boolean <strong>compareAndSet</strong>(V expectedReference, V newReference, boolean expectedMark, boolean newMark)</li>
+<li>boolean <strong>isMarked</strong>()</li>
+<li>V <strong>getReference</strong>()</li>
+</ul>
+<hr>
+<h3 id="原子数组">原子数组</h3>
+<p>AtomicIntegerArray</p>
+<p>AtomicLongArray</p>
+<p>AtomicReferenceArray</p>
+<hr>
+<h3 id="不可变类">不可变类</h3>
+<p>String</p>
+<p>DateTimeFormatter - 用法类似于simpledateformat，因为不可变，线程安全</p>
 
     </div>
     <div class="post-footer">
