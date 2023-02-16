@@ -87,7 +87,7 @@ volatile原理 volatile的底层实现原理是内存屏障，Memory Barrier(Mem
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -179,6 +179,82 @@ volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序
 <p>DateTimeFormatter - 用法类似于simpledateformat，因为不可变，线程安全</p>
 <hr>
 <h3 id="线程池">线程池</h3>
+<p><strong>ThreadPoolExecutor</strong></p>
+<p>使用一个原子整型ctl来保存线程池的状态和线程数目</p>
+<p>32bit，前3位状态，后29位数目</p>
+<p>为什么用一个原子整数来保存而不是分开保存：保存在一起就可以使用一次CAS操作来进行数据更新</p>
+<h4 id="构造方法">构造方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ThreadPoolExecutor</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> corePoolSize<span style="color:#f92672">,</span> 
+                         <span style="color:#66d9ef">int</span> maximumPoolSize<span style="color:#f92672">,</span> 
+                         <span style="color:#66d9ef">long</span> keepAliveTime<span style="color:#f92672">,</span> 
+                         TimeUnit unit<span style="color:#f92672">,</span> 
+                         BlockingQueue<span style="color:#f92672">&lt;</span>Runnable<span style="color:#f92672">&gt;</span> workQueue<span style="color:#f92672">,</span> 
+                         ThreadFactory threadFactory<span style="color:#f92672">,</span> 
+                         RejectExecutionHandler handler<span style="color:#f92672">)</span>
+</code></pre></div><ul>
+<li>corePoolSize 核心线程数目（最多保留的线程数）</li>
+<li>maximumPoolSize 最大线程数目</li>
+<li>keepAliveTime 生存时间 - 针对救急线程</li>
+<li>unit 时间单位 - 针对救急线程</li>
+<li>workQueue 阻塞队列</li>
+<li>threadFactory 线程工厂 - 可以为线程创建时起名字以和其他线程区分开来</li>
+<li>handler 拒绝策略</li>
+</ul>
+<h4 id="工作方式">工作方式：</h4>
+<p>线程池中的线程分为两种：<strong>核心线程</strong>和<strong>救急线程</strong>，他们都是懒创建</p>
+<p>corePoolSize就是核心线程的数量，maximumPoolSize是核心线程数 + 救急线程数</p>
+<ul>
+<li>
+<p>线程池中刚开始没有线程，当一个任务提交给线程池后，线程池会创建一个新线程来执行任务</p>
+</li>
+<li>
+<p>当线程数达到corePoolSize 并且没有线程空闲，这时再加入任务，新加的任务会被加入workQueue 队列排队，直到有空闲的线程</p>
+</li>
+<li>
+<p>如果队列选择了有界队列，那么任务超过了队列大小时，会创建 maximumPoolSize - corePoolSize 数目的线程来救急</p>
+</li>
+<li>
+<p>如果线程到达 maximumPoolSie 仍然有新任务这时会执行拒绝策略</p>
+</li>
+<li>
+<p>拒绝策略dk 提供了4种实现，其它著名框架也提供了实现</p>
+</li>
+<li>
+<ul>
+<li>AbortPolicy - 让调用者抛出 RejectedExecutionException 异常，这是默认策略</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>CallerRunsPolicy - 让用者运行任务</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>DiscardPolicy - 放弃本次任务</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>DiscardOldestPolicy - 放弃队列中最早的任务，本任务取而代之</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Dubbo的实现，在抛出RejectedExecutionException 异常之前会记录日志，并dump 线程栈信息，方便定位问题</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Netty的实现，是创建一个新线程来执行任务ActiveMQ的实现，带超时等待 (60s)尝试放队列，类似我们之前自定义的拒绝策略</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>PinPoint的实现，它使用了一个拒绝策略链，会逐一尝试策略链中每种拒绝策略当高峰过去后，超过corePoolSize 的救急线程如果一段时间没有任务做，需要结束节省资源，这个时间由keepAliveTime和unit 来控制</li>
+</ul>
+</li>
+</ul>
 
     </div>
     <div class="post-footer">
