@@ -3,17 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://sherry-long.github.io/post/javathread1/</loc>
-    <lastmod>2023-02-04T17:08:16+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://sherry-long.github.io/post/</loc>
-    <lastmod>2023-02-04T17:08:16+08:00</lastmod>
+    <lastmod>2023-02-16T16:04:22+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://sherry-long.github.io/</loc>
+    <lastmod>2023-02-16T16:04:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sherry-long.github.io/post/flyweightinstance/</loc>
+    <lastmod>2023-02-16T16:04:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sherry-long.github.io/post/javathread1/</loc>
     <lastmod>2023-02-04T17:08:16+08:00</lastmod>
   </url>
   
