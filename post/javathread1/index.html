@@ -204,57 +204,75 @@ volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序
 <p>线程池中的线程分为两种：<strong>核心线程</strong>和<strong>救急线程</strong>，他们都是懒创建</p>
 <p>corePoolSize就是核心线程的数量，maximumPoolSize是核心线程数 + 救急线程数</p>
 <ul>
-<li>
-<p>线程池中刚开始没有线程，当一个任务提交给线程池后，线程池会创建一个新线程来执行任务</p>
-</li>
-<li>
-<p>当线程数达到corePoolSize 并且没有线程空闲，这时再加入任务，新加的任务会被加入workQueue 队列排队，直到有空闲的线程</p>
-</li>
-<li>
-<p>如果队列选择了有界队列，那么任务超过了队列大小时，会创建 maximumPoolSize - corePoolSize 数目的线程来救急</p>
-</li>
-<li>
-<p>如果线程到达 maximumPoolSie 仍然有新任务这时会执行拒绝策略</p>
-</li>
-<li>
-<p>拒绝策略dk 提供了4种实现，其它著名框架也提供了实现</p>
-</li>
-<li>
+<li>线程池中刚开始没有线程，当一个任务提交给线程池后，线程池会创建一个新线程来执行任务</li>
+<li>当线程数达到corePoolSize 并且没有线程空闲，这时再加入任务，新加的任务会被加入workQueue 队列排队，直到有空闲的线程</li>
+<li>如果队列选择了有界队列，那么任务超过了队列大小时，会创建 maximumPoolSize - corePoolSize 数目的线程来救急</li>
+<li>如果线程到达 maximumPoolSie 仍然有新任务这时会执行拒绝策略</li>
+<li>拒绝策略dk 提供了4种实现，其它著名框架也提供了实现
 <ul>
 <li>AbortPolicy - 让调用者抛出 RejectedExecutionException 异常，这是默认策略</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>CallerRunsPolicy - 让用者运行任务</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>DiscardPolicy - 放弃本次任务</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>DiscardOldestPolicy - 放弃队列中最早的任务，本任务取而代之</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>Dubbo的实现，在抛出RejectedExecutionException 异常之前会记录日志，并dump 线程栈信息，方便定位问题</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>Netty的实现，是创建一个新线程来执行任务ActiveMQ的实现，带超时等待 (60s)尝试放队列，类似我们之前自定义的拒绝策略</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>PinPoint的实现，它使用了一个拒绝策略链，会逐一尝试策略链中每种拒绝策略当高峰过去后，超过corePoolSize 的救急线程如果一段时间没有任务做，需要结束节省资源，这个时间由keepAliveTime和unit 来控制</li>
 </ul>
 </li>
 </ul>
+<hr>
+<hr>
+<p>根据以上构造方法，JDK Executors类中提供了很多工厂方法来创建各种用途的线程池</p>
+<h5 id="1-newfixedthreadpool">1) newFixedThreadPool</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ExecutorService <span style="color:#a6e22e">newFixedThreadPool</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> nThreads<span style="color:#f92672">){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> ThreadPoolExecutor<span style="color:#f92672">(</span>nThreads<span style="color:#f92672">,</span> nThreads<span style="color:#f92672">,</span> 
+                                 0L<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MILLISECONDS</span><span style="color:#f92672">,</span> 
+                                 <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;</span>Runnable<span style="color:#f92672">&gt;());</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>特点：</p>
+<ul>
+<li>核心线程数 == 最大线程数（没有救急线程被创建），因此无需超时时间</li>
+<li>阻塞队列是无界的，可以放任意数量的任务</li>
+</ul>
+<p><em>适用于任务量已知，相对耗时的任务</em></p>
+<hr>
+<h5 id="2-newcachedthreadpool">2) newCachedThreadPool</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ExecutorService <span style="color:#a6e22e">newCachedThreadPool</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> ThreadPoolExecutor<span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span><span style="color:#f92672">,</span> 
+                                 60L<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">,</span> 
+                                 <span style="color:#66d9ef">new</span> SynchronousQueue<span style="color:#f92672">&lt;</span>Runnable<span style="color:#f92672">&gt;());</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>特点：</p>
+<ul>
+<li>核心线程数是0，最大线程数是 Integer.MAX_VALUE ，救急线程的空闲生存时间是60
+<ul>
+<li>全部都是救急线程（60s后可以回收）</li>
+<li>救急线程可以无限创建</li>
+</ul>
+</li>
+<li>队列采用了 SynchronousQueue 实现，特点是：没有容量，没有线程来取是放不进去的</li>
+</ul>
+<p>整个线程池表现为线程数会根据任务量不断增长，没有上限，当任务执行完毕，空闲1分钟后释放线程</p>
+<p><em>适合任务比较紧密，但每个任务执行时间较短的情况</em></p>
+<hr>
+<h5 id="newsinglethreadexecutor">newSingleThreadExecutor</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> ExecutorService <span style="color:#a6e22e">newSingleThreadExecutor</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> FinalizableDelegatedExecutorService
+        <span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> ThreadPoolExecutor<span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 1<span style="color:#f92672">,</span> 
+                               0L<span style="color:#f92672">,</span> TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MILLISECONDS</span><span style="color:#f92672">,</span> 
+                               <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;</span>Runnable<span style="color:#f92672">&gt;()));</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>使用场景：</p>
+<p>希望多个任务排队执行。线程数固定为1，任务多于1时会放入无界队列排队。任务执行完毕这个唯一的线程也不会被释放</p>
+<p>区别：</p>
+<ul>
+<li>自己创建一个单线程串行执行任务，如果任务执行失败而终止那么没有任何补救措施，而线程池还会新建一个线程保证池的正常工作</li>
+<li>Executors.newSingleThreadExecutor() - 线程个数始终为1，不能修改FinalizableDelegatedExecutorService 应用的是装饰器模式，只对外暴露了 ExecutorService 接口，因此不能调用ThreadPoolExecutor 中特有的方法</li>
+<li>Executors.newFixedThreadPool(1) - 初始时为1，以后还可以修改对外暴露的是ThreadPoolExecutor 对象，可以强转后调用 setCorePoolSize 等方法进行修改</li>
+</ul>
+<hr>
+<hr>
+<h4 id="提交任务">提交任务</h4>
 
     </div>
     <div class="post-footer">
