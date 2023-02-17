@@ -273,6 +273,61 @@ volatile还可以禁止指令重排序，jvm为了优化会进行指令重排序
 <hr>
 <hr>
 <h4 id="提交任务">提交任务</h4>
+<ul>
+<li>execute(Runnable) - 执行任务</li>
+<li>submit(Callable) - 提交任务task，以Future类型返回任务执行结果</li>
+<li>invokeAll - 提交所有任务，使用Future集合返回所有任务执行结果（可设置超时时间）</li>
+<li>invokeAny - 提交所有任务，哪个任务先成功执行完毕，返回此任务执行结果，其他任务取消（可设置超时时间）</li>
+</ul>
+<hr>
+<hr>
+<h4 id="关闭线程池">关闭线程池</h4>
+<p><strong>shutdown</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/*
+</span><span style="color:#75715e">线程池状态会变为 SHUTDOWN
+</span><span style="color:#75715e"> - 不会接受新任务
+</span><span style="color:#75715e"> - 已提交的任务会执行完
+</span><span style="color:#75715e"> - 此方法不会阻塞调用线程的执行（异步）
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">shutdown</span><span style="color:#f92672">();</span>
+</code></pre></div><p><strong>shutdownNow</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/*
+</span><span style="color:#75715e">线程池状态变为STOP
+</span><span style="color:#75715e"> - 不会接受新任务
+</span><span style="color:#75715e"> - 会将队列中的任务返回
+</span><span style="color:#75715e"> - 并用 interrupt 的方式中断正在执行的任务
+</span><span style="color:#75715e">*/</span>
+List<span style="color:#f92672">&lt;</span>Runnable<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">shutdownNow</span><span style="color:#f92672">();</span>
+</code></pre></div><p><strong>其他方法</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 不在RUNNIG状态的线程池，此方法就返回true
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isShutdown</span><span style="color:#f92672">();</span>
+
+<span style="color:#75715e">// 线程池状态是否是 TERMINATED
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isTerminated</span><span style="color:#f92672">();</span>
+
+<span style="color:#75715e">// 调用 shutdown 后，由于调用线程并不会等待所有任务运行结束，因此如果它想在线程池 TERMINATED 后做些事情，可以利用此方法等待
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">awaitTermination</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> timeout<span style="color:#f92672">,</span> TimeUnit unit<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">throws</span> InterruptedException<span style="color:#f92672">;</span>
+</code></pre></div><hr>
+<hr>
+<p><em><strong>不同的任务类型应使用不同的线程池，避免出现饥饿现象</strong></em></p>
+<hr>
+<hr>
+<h4 id="创建多大的线程池合适">创建多大的线程池合适</h4>
+<ul>
+<li>过小会导致程序不能充分的利用系统资源、容易导致饥饿</li>
+<li>过大会导致更多的线程上下文切换，占用更多内存</li>
+</ul>
+<hr>
+<h5 id="cpu密集型运算">CPU密集型运算</h5>
+<p>通常采用 cpu 核数 + 1 能够实现最优的CPU利用率，+ 1 是保证当线程由于页缺失故障（操作系统）或其他原因导致暂停时，额外的这一个线程就能顶上去，保证CPU时钟周期不被浪费</p>
+<hr>
+<h5 id="io密集型运算">I/O密集型运算</h5>
+<p>CPU不总是处于繁忙状态，例如，当你执行业务计算时，会使用CPU资源，但当你执行IO操作、远程RPC调用时，包括进行数据库操作时，CPU就闲下来了，可以利用多线程提高它的利用率</p>
+<p>公式如下：</p>
+<p><u>线程数 = 核数 * 期望CPU利用率 * 总时间(CPU计算时间 + 等待时间) / CPU计算时间</u></p>
+<p>例如4核CPU计算时间是50%，其他等待时间是50%，期望利用率100%，套用公式</p>
+<p><u>4 * 100% * 100% / 50% = 8</u></p>
 
     </div>
     <div class="post-footer">

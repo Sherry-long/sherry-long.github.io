@@ -6,7 +6,30 @@
     <description>Recent content on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Feb 2023 16:04:22 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Feb 2023 16:49:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JUC原理相关</title>
+      <link>https://sherry-long.github.io/post/juc/</link>
+      <pubDate>Fri, 17 Feb 2023 16:49:53 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/juc/</guid>
+      <description>AQS原理 AbstractQueuedSynchronizer，是阻塞式锁和相关的同步器工具的框架
+特点：
+ 用 state 属性来表示资源的状态（独占模式和共享模式），子类需要定义如何维护这个状态，控制如何获取锁和释放锁  getState - 获取 state 状态 setState - 设置 state 状态 compareAndSetState - 乐观锁机制设置 state 状态 独占模式是只有一个线程能够访问资源，而共享模式可以允许多个线程访问资源   提供了基于FIFO的等待队列，类似于Monitor的EntryList 条件变量来实现等待、唤醒机制，支持多个条件变量，类似于Monitor的WaitSet  子类主要实现这样一些方法（默认抛出 UnsupportedOperationException）
+ tryAcquire tryRelease tryAcquireShared tryReleaseShared isHeldExclusively  // 使用AQS自定义锁 // 自定义锁 不可重入锁 public class MyLock implements Lock { // 独占锁  class MySync extends AbstractQueuedSynchronizer { @Override protected boolean tryAcquire(int arg) { if (compareAndSetState(0, 1)){ setExclusiveOwnerThread(Thread.currentThread()); return true; } return false; } @Override protected boolean tryRelease(int arg) { setExclusiveOwnerThread(null); setState(0); return true; } @Override protected boolean isHeldExclusively() { return getState() == 1; } public Condition newCondition(){ return new ConditionObject(); } } private MySync sync = new MySync(); @Override // 加锁 不成功会进入等待队列  public void lock() { sync.</description>
+    </item>
+    
+    <item>
+      <title>Tomcat线程池</title>
+      <link>https://sherry-long.github.io/post/tomcatthreadpool/</link>
+      <pubDate>Fri, 17 Feb 2023 16:12:35 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/tomcatthreadpool/</guid>
+      <description>Tomcat在Connector连接器组件中使用了线程池
+ LimitLatch 用来限流，可以控制最大连接个数，类似juc中的Semaphore Acceptor 只负责接收新的socket连接 Poller 只负责监听 socket channel 是否有可读的I/O事件 一旦可读，封装一个任务对象(socketProcessor)，提交给Executor线程池处理 Executor线程池中的工作线程最终负责处理请求  Tomcat线程池扩展了ThreadPoolExecutor，行为稍有不同
+ 如果总线程数达到 maximumPoolSize  这时不会立刻抛 RejectedExecutionException 异常 而是    </description>
+    </item>
+    
     <item>
       <title>享元模式案例-自定义简易连接池、线程池</title>
       <link>https://sherry-long.github.io/post/flyweightinstance/</link>

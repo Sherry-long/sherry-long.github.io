@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>JUC原理相关 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JUC原理相关"/>
+<meta name="twitter:description" content="AQS原理 AbstractQueuedSynchronizer，是阻塞式锁和相关的同步器工具的框架
+特点：
+ 用 state 属性来表示资源的状态（独占模式和共享模式），子类需要定义如何维护这个状态，控制如何获取锁和释放锁  getState - 获取 state 状态 setState - 设置 state 状态 compareAndSetState - 乐观锁机制设置 state 状态 独占模式是只有一个线程能够访问资源，而共享模式可以允许多个线程访问资源   提供了基于FIFO的等待队列，类似于Monitor的EntryList 条件变量来实现等待、唤醒机制，支持多个条件变量，类似于Monitor的WaitSet  子类主要实现这样一些方法（默认抛出 UnsupportedOperationException）
+ tryAcquire tryRelease tryAcquireShared tryReleaseShared isHeldExclusively  // 使用AQS自定义锁 // 自定义锁 不可重入锁 public class MyLock implements Lock { // 独占锁  class MySync extends AbstractQueuedSynchronizer { @Override protected boolean tryAcquire(int arg) { if (compareAndSetState(0, 1)){ setExclusiveOwnerThread(Thread.currentThread()); return true; } return false; } @Override protected boolean tryRelease(int arg) { setExclusiveOwnerThread(null); setState(0); return true; } @Override protected boolean isHeldExclusively() { return getState() == 1; } public Condition newCondition(){ return new ConditionObject(); } } private MySync sync = new MySync(); @Override // 加锁 不成功会进入等待队列  public void lock() { sync."/>
+
+    <meta property="og:title" content="JUC原理相关" />
+<meta property="og:description" content="AQS原理 AbstractQueuedSynchronizer，是阻塞式锁和相关的同步器工具的框架
+特点：
+ 用 state 属性来表示资源的状态（独占模式和共享模式），子类需要定义如何维护这个状态，控制如何获取锁和释放锁  getState - 获取 state 状态 setState - 设置 state 状态 compareAndSetState - 乐观锁机制设置 state 状态 独占模式是只有一个线程能够访问资源，而共享模式可以允许多个线程访问资源   提供了基于FIFO的等待队列，类似于Monitor的EntryList 条件变量来实现等待、唤醒机制，支持多个条件变量，类似于Monitor的WaitSet  子类主要实现这样一些方法（默认抛出 UnsupportedOperationException）
+ tryAcquire tryRelease tryAcquireShared tryReleaseShared isHeldExclusively  // 使用AQS自定义锁 // 自定义锁 不可重入锁 public class MyLock implements Lock { // 独占锁  class MySync extends AbstractQueuedSynchronizer { @Override protected boolean tryAcquire(int arg) { if (compareAndSetState(0, 1)){ setExclusiveOwnerThread(Thread.currentThread()); return true; } return false; } @Override protected boolean tryRelease(int arg) { setExclusiveOwnerThread(null); setState(0); return true; } @Override protected boolean isHeldExclusively() { return getState() == 1; } public Condition newCondition(){ return new ConditionObject(); } } private MySync sync = new MySync(); @Override // 加锁 不成功会进入等待队列  public void lock() { sync." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/juc/" />
+<meta property="article:published_time" content="2023-02-17T16:49:53+08:00" />
+<meta property="article:modified_time" content="2023-02-17T16:49:53+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">JUC原理相关</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 17, 2023
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h3 id="aqs原理">AQS原理</h3>
+<p>AbstractQueuedSynchronizer，是阻塞式锁和相关的同步器工具的框架</p>
+<p>特点：</p>
+<ul>
+<li>用 state 属性来表示资源的状态（独占模式和共享模式），子类需要定义如何维护这个状态，控制如何获取锁和释放锁
+<ul>
+<li>getState - 获取 state 状态</li>
+<li>setState - 设置 state 状态</li>
+<li>compareAndSetState - 乐观锁机制设置 state 状态</li>
+<li>独占模式是只有一个线程能够访问资源，而共享模式可以允许多个线程访问资源</li>
+</ul>
+</li>
+<li>提供了基于FIFO的等待队列，类似于Monitor的EntryList</li>
+<li>条件变量来实现等待、唤醒机制，支持多个条件变量，类似于Monitor的WaitSet</li>
+</ul>
+<p>子类主要实现这样一些方法（默认抛出 UnsupportedOperationException）</p>
+<ul>
+<li>tryAcquire</li>
+<li>tryRelease</li>
+<li>tryAcquireShared</li>
+<li>tryReleaseShared</li>
+<li>isHeldExclusively</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 使用AQS自定义锁
+</span><span style="color:#75715e">// 自定义锁 不可重入锁
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyLock</span> <span style="color:#66d9ef">implements</span> Lock <span style="color:#f92672">{</span>
+
+    <span style="color:#75715e">// 独占锁
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MySync</span> <span style="color:#66d9ef">extends</span> AbstractQueuedSynchronizer <span style="color:#f92672">{</span>
+        <span style="color:#a6e22e">@Override</span>
+        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryAcquire</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> arg<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>compareAndSetState<span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> 1<span style="color:#f92672">)){</span>
+                setExclusiveOwnerThread<span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">());</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#a6e22e">@Override</span>
+        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryRelease</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> arg<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            setExclusiveOwnerThread<span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+            setState<span style="color:#f92672">(</span>0<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#a6e22e">@Override</span>
+        <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isHeldExclusively</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">return</span> getState<span style="color:#f92672">()</span> <span style="color:#f92672">==</span> 1<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">public</span> Condition <span style="color:#a6e22e">newCondition</span><span style="color:#f92672">(){</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> ConditionObject<span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">private</span> MySync sync <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MySync<span style="color:#f92672">();</span>
+
+    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// 加锁 不成功会进入等待队列
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        sync<span style="color:#f92672">.</span><span style="color:#a6e22e">acquire</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// 加锁 可打断
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lockInterruptibly</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+        sync<span style="color:#f92672">.</span><span style="color:#a6e22e">acquireInterruptibly</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// 加锁 尝试一次
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> sync<span style="color:#f92672">.</span><span style="color:#a6e22e">tryAcquire</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// 尝试加锁 带超时
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryLock</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> time<span style="color:#f92672">,</span> TimeUnit unit<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> sync<span style="color:#f92672">.</span><span style="color:#a6e22e">tryAcquireNanos</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> unit<span style="color:#f92672">.</span><span style="color:#a6e22e">toNanos</span><span style="color:#f92672">(</span>time<span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// 解锁
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        sync<span style="color:#f92672">.</span><span style="color:#a6e22e">release</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span> <span style="color:#75715e">// 创建条件变量
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> Condition <span style="color:#a6e22e">newCondition</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> sync<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<hr>
+<h3 id="reentrantlock原理">ReentrantLock原理</h3>
+<p><img src="/imgs/ReentrantLock.png" alt="RL"></p>
+<h4 id="1非公平锁实现原理">1.非公平锁实现原理</h4>
+<p>加锁解锁流程：</p>
+<p>构造器默认为非公平锁实现</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ReentrantLock</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    sync <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NonfairSync<span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>NonfairSync继承自AQS</p>
+<p>没有竞争时</p>
+<p><img src="/imgs/NonfairSyncNComp.png" alt="NonfairSyncNComp"></p>
+<p>第一个竞争出现时</p>
+<p><img src="/imgs/NonfairSyncWComp.png" alt="NonfairSyncWComp"></p>
+<p><strong>Thread-1 执行了：</strong></p>
+<ol>
+<li>CAS 尝试将state 0 -&gt; 1，结果失败</li>
+<li>进入 tryAcquire逻辑， 这时state已经是1，结果仍然失败</li>
+<li>接下来进入addWaiter逻辑，构造Node队列
+<ul>
+<li>黄色三角表示该Node的waitStatus状态，其中0为默认正常状态</li>
+<li>Node是懒创建</li>
+</ul>
+</li>
+</ol>
+<p><img src="/imgs/NFS-1.png" alt="NFS-1"></p>
+<p><strong>当前线程进入acquirQueued逻辑：</strong></p>
+<ol>
+<li>acquireQueued会在一个死循环中不断尝试锁，失败后进入park阻塞</li>
+<li>如果自己是紧邻着head（排第二位），再次tryAcquire尝试获取锁，这时state仍为1，失败</li>
+<li>进入shouldParkAfterFailedAcquire逻辑，将前驱node，即head的waitStatus改为-1，这次返回false</li>
+</ol>
+<p><img src="/imgs/NFS-2.png" alt="NFS-2"></p>
+<ol start="4">
+<li>shouldParkAfterFailedAcquire执行完毕回到 acquireQueued，再次tryAcquire尝试获取锁，失败</li>
+<li>当再次进入 shouldParkAfterFailedAcquire，这时因为其前驱node的waitStatus已经是-1，这次返回true</li>
+<li>进入 parkAndCheckInterrupt，Thread-1 park</li>
+</ol>
+<p><img src="/imgs/NFS-3.png" alt="NFS-3"></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
