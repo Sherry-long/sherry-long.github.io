@@ -67,7 +67,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          4 min read
         </div>
       </div>
     </header>
@@ -199,6 +199,228 @@
 <li>进入 parkAndCheckInterrupt，Thread-1 park</li>
 </ol>
 <p><img src="/imgs/NFS-3.png" alt="NFS-3"></p>
+<hr>
+<h4 id="2锁重入原理">2.锁重入原理</h4>
+<p>ReentrantLock.lock() 会间接执行 AQS的tryAcquire方法</p>
+<p>此方法为抽象方法，在公平锁与非公平锁类中都有实现，以非公平锁为例</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@ReservedStackAccess</span>
+<span style="color:#66d9ef">final</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">nonfairTryAcquire</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> acquires<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">final</span> Thread current <span style="color:#f92672">=</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">();</span>
+    <span style="color:#75715e">// 获取state，0代表未被持有
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> getState<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>c <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>compareAndSetState<span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> acquires<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+            setExclusiveOwnerThread<span style="color:#f92672">(</span>current<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 不为0，检查是否为自身持有，满足此条件触发重入
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>current <span style="color:#f92672">==</span> getExclusiveOwnerThread<span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 以下部分执行state++（带溢出检查）
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> nextc <span style="color:#f92672">=</span> c <span style="color:#f92672">+</span> acquires<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>nextc <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#75715e">// overflow
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Maximum lock count exceeded&#34;</span><span style="color:#f92672">);</span>
+        setState<span style="color:#f92672">(</span>nextc<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#a6e22e">@ReservedStackAccess</span>
+<span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">tryRelease</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> releases<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// state--
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> getState<span style="color:#f92672">()</span> <span style="color:#f92672">-</span> releases<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">()</span> <span style="color:#f92672">!=</span> getExclusiveOwnerThread<span style="color:#f92672">())</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalMonitorStateException<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">boolean</span> free <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+    <span style="color:#75715e">// state-- == 0，则此时无重入，释放锁
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>c <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        free <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        setExclusiveOwnerThread<span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    setState<span style="color:#f92672">(</span>c<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> free<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h4 id="3可打断原理">3.可打断原理</h4>
+<p>ReentrantLock默认不可打断，在此模式下，即使它被打断，仍会驻留在AQS队列中，等获得锁后方能继续运行（打断标记被设置为true）</p>
+<p>在可打断模式下，当被打断时会退出AQS队列，并抛出interrupted异常</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doAcquireInterruptibly</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> arg<span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">throws</span> InterruptedException <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">final</span> Node node <span style="color:#f92672">=</span> addWaiter<span style="color:#f92672">(</span>Node<span style="color:#f92672">.</span><span style="color:#a6e22e">EXCLUSIVE</span><span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(;;)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">final</span> Node p <span style="color:#f92672">=</span> node<span style="color:#f92672">.</span><span style="color:#a6e22e">predecessor</span><span style="color:#f92672">();</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>p <span style="color:#f92672">==</span> head <span style="color:#f92672">&amp;&amp;</span> tryAcquire<span style="color:#f92672">(</span>arg<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+                setHead<span style="color:#f92672">(</span>node<span style="color:#f92672">);</span>
+                p<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span> <span style="color:#75715e">// help GC
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>shouldParkAfterFailedAcquire<span style="color:#f92672">(</span>p<span style="color:#f92672">,</span> node<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span>
+                parkAndCheckInterrupt<span style="color:#f92672">())</span>
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> InterruptedException<span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Throwable t<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        cancelAcquire<span style="color:#f92672">(</span>node<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">throw</span> t<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<h4 id="4条件变量实现原理">4.条件变量实现原理</h4>
+<p>每个条件变量就对应着一个等待队列，其实现类是ConditionObject</p>
+<h5 id="await流程">await流程</h5>
+<hr>
+<hr>
+<h3 id="读写锁">读写锁</h3>
+<h4 id="reentrantreadwritelock">ReentrantReadWriteLock</h4>
+<p>当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发， 读-写、写-写 互斥，提高性能</p>
+<p>类似于数据库中的 select &hellip; from &hellip; lock in share mode</p>
+<p>提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的 write() 方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 使用示例
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataContainer</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> Object data<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> ReentrantReadWriteLock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantReadWriteLock<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">private</span> ReentrantReadWriteLock<span style="color:#f92672">.</span><span style="color:#a6e22e">ReadLock</span> r <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">readLock</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">private</span> ReentrantReadWriteLock<span style="color:#f92672">.</span><span style="color:#a6e22e">WriteLock</span> w <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">writeLock</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">DataContainer</span><span style="color:#f92672">(</span>Object data<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> data<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">read</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;获取读锁&#34;</span><span style="color:#f92672">);</span>
+        r<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;读取数据&#34;</span><span style="color:#f92672">);</span>
+            sleep<span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> data<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            r<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>Object data<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;获取写锁&#34;</span><span style="color:#f92672">);</span>
+        w<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;写入数据&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> data<span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            w<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><strong>注意事项：</strong></p>
+<ul>
+<li>读锁不支持条件变量</li>
+<li>重入时升级不支持：即持有读锁的情况下去获取写锁，会导致获取写锁永久等待</li>
+<li>重入时降级支持：即持有写锁的情况下获取读锁</li>
+</ul>
+<hr>
+<hr>
+<h4 id="stampedlock">StampedLock</h4>
+<p>该类自JDK 8加入，是为了进一步优化读性能，特点是在使用读锁、写锁时都必须配合戳使用</p>
+<p>获取、释放 读锁</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">long</span> stamp <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">readLock</span><span style="color:#f92672">();</span>
+lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlockRead</span><span style="color:#f92672">(</span>stamp<span style="color:#f92672">);</span>
+</code></pre></div><p>获取、释放 写锁</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">long</span> stamp <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">writeLock</span><span style="color:#f92672">();</span>
+lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlockWrite</span><span style="color:#f92672">(</span>stamp<span style="color:#f92672">);</span>
+</code></pre></div><p>乐观读，StampedLock支持tryOptimisticRead()方法（乐观读），读取完毕后需要做一次 戳校验</p>
+<p>如果校验通过，表示这期间确实没有写操作，数据可以安全使用，如果校验没通过，需要重新获取读锁，保证数据安全。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">long</span> stamp <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">tryOptimisticRead</span><span style="color:#f92672">();</span>
+<span style="color:#75715e">// 戳校验
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>lock<span style="color:#f92672">.</span><span style="color:#a6e22e">validate</span><span style="color:#f92672">(</span>stamp<span style="color:#f92672">)){</span>
+    <span style="color:#75715e">// 锁升级
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<hr>
+<h3 id="semaphore">Semaphore</h3>
+<p>信号量，与ReentrantLock不同，信号量允许多个线程在同一时刻对共享资源进行访问</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Semaphore semaphore <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Semaphore<span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 10<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                semaphore<span style="color:#f92672">.</span><span style="color:#a6e22e">acquire</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            print<span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">());</span>
+            sleep<span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            semaphore<span style="color:#f92672">.</span><span style="color:#a6e22e">release</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><strong>Semaphore应用</strong></p>
+<ul>
+<li>使用Semaphore限流，在访问高峰期时，让请求线程阻塞，高峰期过去再释放许可，只适合限制单机线程数量，并且仅是限制线程数，而不是限制资源数（例如连接数）</li>
+<li>用Semaphore实现简单连接池，对比享元模式下的实现，性能和可读性更好</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Pool</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> poolSize<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Connection<span style="color:#f92672">[]</span> connections<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> AtomicIntegerArray status<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Semaphore semaphore<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Pool</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> poolSize<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">poolSize</span> <span style="color:#f92672">=</span> poolSize<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">connections</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Connection<span style="color:#f92672">[</span>poolSize<span style="color:#f92672">];</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">semaphore</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Semaphore<span style="color:#f92672">(</span>poolSize<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">status</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AtomicIntegerArray<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>poolSize<span style="color:#f92672">]);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> poolSize<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            connections<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Connection<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;conn&#34;</span> <span style="color:#f92672">+</span> i<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> Connection <span style="color:#a6e22e">getConnection</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            semaphore<span style="color:#f92672">.</span><span style="color:#a6e22e">acquire</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> poolSize<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>status<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>status<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSet</span><span style="color:#f92672">(</span>i<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> 1<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+                    print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;get &#34;</span> <span style="color:#f92672">+</span> connections<span style="color:#f92672">[</span>i<span style="color:#f92672">]);</span>
+                    <span style="color:#66d9ef">return</span> connections<span style="color:#f92672">[</span>i<span style="color:#f92672">];</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">free</span><span style="color:#f92672">(</span>Connection connection<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> poolSize<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>connections<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">==</span> connection<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                status<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>i<span style="color:#f92672">,</span> 0<span style="color:#f92672">);</span>
+                print<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;free &#34;</span> <span style="color:#f92672">+</span> connection<span style="color:#f92672">);</span>
+                semaphore<span style="color:#f92672">.</span><span style="color:#a6e22e">release</span><span style="color:#f92672">();</span>
+                <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Connection</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Connection</span><span style="color:#f92672">(</span>String name<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> name<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><hr>
+<hr>
+<h3 id="countdownlatch">CountdownLatch</h3>
+<p>用来进行线程同步协作，等待所有线程完成倒计时</p>
+<p>其中构造参数用来初始化等待计数值，await()用来等待计数归零，countDown()用来让计数减一</p>
 
     </div>
     <div class="post-footer">
