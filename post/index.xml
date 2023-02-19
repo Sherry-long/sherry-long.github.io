@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Feb 2023 16:49:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 19 Feb 2023 15:36:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>线程安全集合类</title>
+      <link>https://sherry-long.github.io/post/threadsafecollection/</link>
+      <pubDate>Sun, 19 Feb 2023 15:36:53 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/threadsafecollection/</guid>
+      <description>线程安全集合类概述 线程安全集合类分为三大类：
+ 遗留的线程安全集合如 Hashtable, Vector 使用Collections装饰的线程安全集合  Collections.synchronizedCollection Collections.synchronizedList Collections.synchronizedMap Collections.synchronizedSet Collections.synchronizedNavigableMap Collections.synchronizedNavigableSet Collections.synchronizedSortedMap Collections.synchronizedSortedSet   java.util.concurrent.*  JUC下的线程安全集合类，包含三类关键词
+ Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历</description>
+    </item>
+    
     <item>
       <title>JUC原理相关</title>
       <link>https://sherry-long.github.io/post/juc/</link>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>线程安全集合类 // Sp(act)rum</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="冯雪洋" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sherry-long.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="线程安全集合类"/>
+<meta name="twitter:description" content="线程安全集合类概述 线程安全集合类分为三大类：
+ 遗留的线程安全集合如 Hashtable, Vector 使用Collections装饰的线程安全集合  Collections.synchronizedCollection Collections.synchronizedList Collections.synchronizedMap Collections.synchronizedSet Collections.synchronizedNavigableMap Collections.synchronizedNavigableSet Collections.synchronizedSortedMap Collections.synchronizedSortedSet   java.util.concurrent.*  JUC下的线程安全集合类，包含三类关键词
+ Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历"/>
+
+    <meta property="og:title" content="线程安全集合类" />
+<meta property="og:description" content="线程安全集合类概述 线程安全集合类分为三大类：
+ 遗留的线程安全集合如 Hashtable, Vector 使用Collections装饰的线程安全集合  Collections.synchronizedCollection Collections.synchronizedList Collections.synchronizedMap Collections.synchronizedSet Collections.synchronizedNavigableMap Collections.synchronizedNavigableSet Collections.synchronizedSortedMap Collections.synchronizedSortedSet   java.util.concurrent.*  JUC下的线程安全集合类，包含三类关键词
+ Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sherry-long.github.io/post/threadsafecollection/" />
+<meta property="article:published_time" content="2023-02-19T15:36:53+08:00" />
+<meta property="article:modified_time" content="2023-02-19T15:36:53+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sherry-long.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="冯雪洋" /></a>
+      <h1>Sp(act)rum</h1>
+      <p>这个人很懒，什么介绍都没留下</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/Sherry-long" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="https://space.bilibili.com/13547597" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-link">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">线程安全集合类</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 19, 2023
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<hr>
+<h3 id="线程安全集合类概述">线程安全集合类概述</h3>
+<p>线程安全集合类分为三大类：</p>
+<p><img src="/imgs/ThreadSafeCollection.png" alt="ThreadSafeCollection"></p>
+<ul>
+<li>遗留的线程安全集合如 Hashtable, Vector</li>
+<li>使用Collections装饰的线程安全集合
+<ul>
+<li>Collections.synchronizedCollection</li>
+<li>Collections.synchronizedList</li>
+<li>Collections.synchronizedMap</li>
+<li>Collections.synchronizedSet</li>
+<li>Collections.synchronizedNavigableMap</li>
+<li>Collections.synchronizedNavigableSet</li>
+<li>Collections.synchronizedSortedMap</li>
+<li>Collections.synchronizedSortedSet</li>
+</ul>
+</li>
+<li>java.util.concurrent.*</li>
+</ul>
+<p>JUC下的线程安全集合类，包含三类关键词</p>
+<ul>
+<li>Blocking 大部分实现基于锁，并提供用来阻塞的方法</li>
+<li>CopyOnWrite 之类的容器修改开销相对较重</li>
+<li>Concurrent 类型的容器
+<ul>
+<li>内部很多操作使用CAS优化，一般可以提供较高吞吐量</li>
+<li>弱一致性
+<ul>
+<li>遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的</li>
+<li>求大小弱一致性，size操作未必是 100% 准确</li>
+<li>读取弱一致性</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历</strong></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
