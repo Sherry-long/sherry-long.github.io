@@ -15,12 +15,14 @@
 <meta name="twitter:title" content="线程安全集合类"/>
 <meta name="twitter:description" content="线程安全集合类概述 线程安全集合类分为三大类：
  遗留的线程安全集合如 Hashtable, Vector 使用Collections装饰的线程安全集合  Collections.synchronizedCollection Collections.synchronizedList Collections.synchronizedMap Collections.synchronizedSet Collections.synchronizedNavigableMap Collections.synchronizedNavigableSet Collections.synchronizedSortedMap Collections.synchronizedSortedSet   java.util.concurrent.*  JUC下的线程安全集合类，包含三类关键词
- Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历"/>
+ Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历
+ ConcurrentHashMap  computeIfAbsent(key, Function) - 缺少 key ，计算生成一个值，键值对放入集合中  原理 - 属性&amp;内部类&amp;方法 // 默认为0 // 当初始化时，为 -1 // 当扩容时，为 -(1 &#43; 扩容线程数) // 当初始化或扩容完成后，为 下一次的扩容阈值大小 private transient volatile int sizeCtl; // 整个 ConcurrentHashMap 就是一个 Node[] static class Node&lt;K, V&gt; implements Map."/>
 
     <meta property="og:title" content="线程安全集合类" />
 <meta property="og:description" content="线程安全集合类概述 线程安全集合类分为三大类：
  遗留的线程安全集合如 Hashtable, Vector 使用Collections装饰的线程安全集合  Collections.synchronizedCollection Collections.synchronizedList Collections.synchronizedMap Collections.synchronizedSet Collections.synchronizedNavigableMap Collections.synchronizedNavigableSet Collections.synchronizedSortedMap Collections.synchronizedSortedSet   java.util.concurrent.*  JUC下的线程安全集合类，包含三类关键词
- Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历" />
+ Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历
+ ConcurrentHashMap  computeIfAbsent(key, Function) - 缺少 key ，计算生成一个值，键值对放入集合中  原理 - 属性&amp;内部类&amp;方法 // 默认为0 // 当初始化时，为 -1 // 当扩容时，为 -(1 &#43; 扩容线程数) // 当初始化或扩容完成后，为 下一次的扩容阈值大小 private transient volatile int sizeCtl; // 整个 ConcurrentHashMap 就是一个 Node[] static class Node&lt;K, V&gt; implements Map." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/threadsafecollection/" />
 <meta property="article:published_time" content="2023-02-19T15:36:53+08:00" />
@@ -65,7 +67,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          5 min read
         </div>
       </div>
     </header>
@@ -109,7 +111,227 @@
 </li>
 </ul>
 <p><strong>遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历</strong></p>
+<hr>
+<h3 id="concurrenthashmap">ConcurrentHashMap</h3>
+<ul>
+<li>computeIfAbsent(key, Function) - 缺少 key ，计算生成一个值，键值对放入集合中</li>
+</ul>
+<h4 id="原理---属性内部类方法">原理 - 属性&amp;内部类&amp;方法</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// 默认为0
+</span><span style="color:#75715e">// 当初始化时，为 -1
+</span><span style="color:#75715e">// 当扩容时，为 -(1 + 扩容线程数)
+</span><span style="color:#75715e">// 当初始化或扩容完成后，为 下一次的扩容阈值大小
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">transient</span> <span style="color:#66d9ef">volatile</span> <span style="color:#66d9ef">int</span> sizeCtl<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 整个 ConcurrentHashMap 就是一个 Node[]
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Node</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">implements</span> Map<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{...}</span>
+<span style="color:#75715e">// hash 表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">transient</span> <span style="color:#66d9ef">volatile</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;[]</span> table<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 扩容时新的hash表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">transient</span> <span style="color:#66d9ef">volatile</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;[]</span> newTable<span style="color:#f92672">;</span>
+<span style="color:#75715e">// 扩容时如果某个bin迁移完毕，用 ForwardingNode 作为旧的 table bin 的头节点
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ForwardingNode</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{...}</span>
+<span style="color:#75715e">// 用在 compute 以及 computeIfAbsent 时，用来占位，计算完成后替换为普通 Node
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ReservationNode</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{...}</span>
+<span style="color:#75715e">// 作为 treebin 的头节点，存储 root 和 first
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TreeBin</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{...}</span>
+<span style="color:#75715e">// 作为 treebin 的节点，存储 parent，left，right
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TreeNode</span><span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span> V<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{...}</span>
+</code></pre></div><p><em><strong>当进行扩容时，旧表中转移完成的桶位会放置一个ForwardingNode，用来表示数据已转移完毕，当此时有其他线程来获取数据可以得知此信息</strong></em></p>
+<h4 id="构造器分析">构造器分析</h4>
+<p>懒惰初始化</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ConcurrentHashMap</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> initialCapacity<span style="color:#f92672">,</span>
+                         <span style="color:#66d9ef">float</span> loadFactor<span style="color:#f92672">,</span> 
+                         <span style="color:#66d9ef">int</span> concurrencyLevel<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!(</span>loadFactor <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">.</span><span style="color:#a6e22e">0f</span><span style="color:#f92672">)</span> <span style="color:#f92672">||</span> initialCapacity <span style="color:#f92672">&lt;</span> 0 <span style="color:#f92672">||</span> concurrencyLevel <span style="color:#f92672">&lt;=</span> 0<span style="color:#f92672">)</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>initialCapacity <span style="color:#f92672">&lt;</span> concurrencyLevel<span style="color:#f92672">)</span>   <span style="color:#75715e">// Use at least as many bins
+</span><span style="color:#75715e"></span>        initialCapacity <span style="color:#f92672">=</span> concurrencyLevel<span style="color:#f92672">;</span>   <span style="color:#75715e">// as estimated threads
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">long</span> size <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span><span style="color:#f92672">)(</span>1<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span> <span style="color:#f92672">+</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span><span style="color:#f92672">)</span>initialCapacity <span style="color:#f92672">/</span> loadFactor<span style="color:#f92672">);</span>
+    <span style="color:#75715e">// tableSizeFor保证计算大小是2的幂
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> cap <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>size <span style="color:#f92672">&gt;=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span><span style="color:#f92672">)</span>MAXIMUM_CAPACITY<span style="color:#f92672">)</span> <span style="color:#f92672">?</span>
+        MAXIMUM_CAPACITY <span style="color:#f92672">:</span> tableSizeFor<span style="color:#f92672">((</span><span style="color:#66d9ef">int</span><span style="color:#f92672">)</span>size<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sizeCtl</span> <span style="color:#f92672">=</span> cap<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="get流程">get流程</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> V <span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>Object key<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> tab<span style="color:#f92672">;</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> e<span style="color:#f92672">,</span> p<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> n<span style="color:#f92672">,</span> eh<span style="color:#f92672">;</span> K ek<span style="color:#f92672">;</span>
+    <span style="color:#75715e">// spread会将hashcode高16位与低16位进行运算，将高位影响扩散到低位，减少哈希碰撞，并同时保证最终结果是正数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> h <span style="color:#f92672">=</span> spread<span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">hashCode</span><span style="color:#f92672">());</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>tab <span style="color:#f92672">=</span> table<span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">=</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">&gt;</span> 0 <span style="color:#f92672">&amp;&amp;</span>
+        <span style="color:#f92672">(</span>e <span style="color:#f92672">=</span> tabAt<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;</span> h<span style="color:#f92672">))</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// 如果头节点已经是要查找的 key
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>eh <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> h<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>ek <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> key <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>ek <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>ek<span style="color:#f92672">)))</span>
+                <span style="color:#66d9ef">return</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// hash 为负数表示该 bin 在扩容中或者是 treebin，这时调用 find 方法来查找
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>eh <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>p <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">find</span><span style="color:#f92672">(</span>h<span style="color:#f92672">,</span> key<span style="color:#f92672">))</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#75715e">// 正常遍历链表，用 equals 比较
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>e <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span> <span style="color:#f92672">==</span> h <span style="color:#f92672">&amp;&amp;</span>
+                <span style="color:#f92672">((</span>ek <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> key <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>ek <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>ek<span style="color:#f92672">))))</span>
+                <span style="color:#66d9ef">return</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="putval流程">putVal流程</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">final</span> V <span style="color:#a6e22e">putVal</span><span style="color:#f92672">(</span>K key<span style="color:#f92672">,</span> V value<span style="color:#f92672">,</span> <span style="color:#66d9ef">boolean</span> onlyIfAbsent<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// CHM不可以存储空键空值
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>key <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> value <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException<span style="color:#f92672">();</span>
+    <span style="color:#75715e">// spread会将hashcode高16位与低16位进行运算，将高位影响扩散到低位，减少哈希碰撞，并同时保证最终结果是正数
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> hash <span style="color:#f92672">=</span> spread<span style="color:#f92672">(</span>key<span style="color:#f92672">.</span><span style="color:#a6e22e">hashCode</span><span style="color:#f92672">());</span>
+    <span style="color:#66d9ef">int</span> binCount <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> tab <span style="color:#f92672">=</span> table<span style="color:#f92672">;;)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">// f 是链表头节点
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// fh 是链表头节点的 hash
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// i 是链表在 table 中的下标
+</span><span style="color:#75715e"></span>        Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> f<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> n<span style="color:#f92672">,</span> i<span style="color:#f92672">,</span> fh<span style="color:#f92672">;</span> K fk<span style="color:#f92672">;</span> V fv<span style="color:#f92672">;</span>
+        <span style="color:#75715e">// 要创建 table
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>tab <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">=</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span>
+            <span style="color:#75715e">// 初始化 table 使用了 cas，无需 synchronized 创建成功，进入下一轮循环
+</span><span style="color:#75715e"></span>            tab <span style="color:#f92672">=</span> initTable<span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 要创建链表头节点
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>f <span style="color:#f92672">=</span> tabAt<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> i <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;</span> hash<span style="color:#f92672">))</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 添加链表头使用了 cas，无需synchronized
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>casTabAt<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> i<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;(</span>hash<span style="color:#f92672">,</span> key<span style="color:#f92672">,</span> value<span style="color:#f92672">)))</span>
+                <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>                   <span style="color:#75715e">// no lock when adding to empty bin
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        <span style="color:#75715e">// 发现有线程正在扩容，帮助扩容
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>fh <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> MOVED<span style="color:#f92672">)</span>
+            <span style="color:#75715e">// 帮助扩容之后进入下一轮循环
+</span><span style="color:#75715e"></span>            tab <span style="color:#f92672">=</span> helpTransfer<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> f<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>onlyIfAbsent <span style="color:#75715e">// check first node without acquiring lock
+</span><span style="color:#75715e"></span>                 <span style="color:#f92672">&amp;&amp;</span> fh <span style="color:#f92672">==</span> hash
+                 <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">((</span>fk <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> key <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>fk <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>fk<span style="color:#f92672">)))</span>
+                 <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>fv <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span><span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">return</span> fv<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+            V oldVal <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+            <span style="color:#75715e">// 锁住链表头节点
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>f<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// 再次确认链表头节点没有被移动，DoubleCheck
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>tabAt<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> i<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> f<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#75715e">// 链表
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>fh <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                        binCount <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
+                        <span style="color:#75715e">// 遍历链表
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> e <span style="color:#f92672">=</span> f<span style="color:#f92672">;;</span> <span style="color:#f92672">++</span>binCount<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                            K ek<span style="color:#f92672">;</span>
+                            <span style="color:#75715e">// 找到相同的 key
+</span><span style="color:#75715e"></span>                            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>e<span style="color:#f92672">.</span><span style="color:#a6e22e">hash</span> <span style="color:#f92672">==</span> hash <span style="color:#f92672">&amp;&amp;</span>
+                                <span style="color:#f92672">((</span>ek <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> key <span style="color:#f92672">||</span>
+                                 <span style="color:#f92672">(</span>ek <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> key<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>ek<span style="color:#f92672">))))</span> <span style="color:#f92672">{</span>
+                                oldVal <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span><span style="color:#f92672">;</span>
+                                <span style="color:#75715e">// 更新
+</span><span style="color:#75715e"></span>                                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>onlyIfAbsent<span style="color:#f92672">)</span>
+                                    e<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span> <span style="color:#f92672">=</span> value<span style="color:#f92672">;</span>
+                                <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+                            <span style="color:#f92672">}</span>
+                            Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> pred <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>
+                            <span style="color:#75715e">// 已经是最后的节点了，新增Node，追加至链表尾
+</span><span style="color:#75715e"></span>                            <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>e <span style="color:#f92672">=</span> e<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                                pred<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;(</span>hash<span style="color:#f92672">,</span> key<span style="color:#f92672">,</span> value<span style="color:#f92672">);</span>
+                                <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+                            <span style="color:#f92672">}</span>
+                        <span style="color:#f92672">}</span>
+                    <span style="color:#f92672">}</span>
+                    <span style="color:#75715e">// 红黑树
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>f <span style="color:#66d9ef">instanceof</span> TreeBin<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                        Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;</span> p<span style="color:#f92672">;</span>
+                        binCount <span style="color:#f92672">=</span> 2<span style="color:#f92672">;</span>
+                        <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">((</span>TreeBin<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;)</span>f<span style="color:#f92672">).</span><span style="color:#a6e22e">putTreeVal</span><span style="color:#f92672">(</span>hash<span style="color:#f92672">,</span> key<span style="color:#f92672">,</span>
+                                                              value<span style="color:#f92672">))</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                            oldVal <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span><span style="color:#f92672">;</span>
+                            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(!</span>onlyIfAbsent<span style="color:#f92672">)</span>
+                                p<span style="color:#f92672">.</span><span style="color:#a6e22e">val</span> <span style="color:#f92672">=</span> value<span style="color:#f92672">;</span>
+                        <span style="color:#f92672">}</span>
+                    <span style="color:#f92672">}</span>
+                    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>f <span style="color:#66d9ef">instanceof</span> ReservationNode<span style="color:#f92672">)</span>
+                        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Recursive update&#34;</span><span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+                <span style="color:#75715e">// 释放链表头节点的锁
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>binCount <span style="color:#f92672">!=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">// 如果链表长度 &gt;= 8，树化
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>binCount <span style="color:#f92672">&gt;=</span> TREEIFY_THRESHOLD<span style="color:#f92672">)</span>
+                    treeifyBin<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> i<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>oldVal <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                    <span style="color:#66d9ef">return</span> oldVal<span style="color:#f92672">;</span>
+                <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">// 增加 size 计数
+</span><span style="color:#75715e"></span>    addCount<span style="color:#f92672">(</span>1L<span style="color:#f92672">,</span> binCount<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
 
+<span style="color:#75715e">// 初始化 table
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> <span style="color:#a6e22e">initTable</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> tab<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> sc<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>tab <span style="color:#f92672">=</span> table<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>sc <span style="color:#f92672">=</span> sizeCtl<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+            Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">yield</span><span style="color:#f92672">();</span> <span style="color:#75715e">// lost initialization race; just spin
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetInt</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> SIZECTL<span style="color:#f92672">,</span> sc<span style="color:#f92672">,</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>tab <span style="color:#f92672">=</span> table<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>sc <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">?</span> sc <span style="color:#f92672">:</span> DEFAULT_CAPACITY<span style="color:#f92672">;</span>
+                    <span style="color:#a6e22e">@SuppressWarnings</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;unchecked&#34;</span><span style="color:#f92672">)</span>
+                    Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> nt <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[])</span><span style="color:#66d9ef">new</span> Node<span style="color:#f92672">&lt;?,?&gt;[</span>n<span style="color:#f92672">];</span>
+                    table <span style="color:#f92672">=</span> tab <span style="color:#f92672">=</span> nt<span style="color:#f92672">;</span>
+                    sc <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> <span style="color:#f92672">(</span>n <span style="color:#f92672">&gt;&gt;&gt;</span> 2<span style="color:#f92672">);</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+                sizeCtl <span style="color:#f92672">=</span> sc<span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> tab<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addCount</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> x<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> check<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    CounterCell<span style="color:#f92672">[]</span> cs<span style="color:#f92672">;</span> <span style="color:#66d9ef">long</span> b<span style="color:#f92672">,</span> s<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>cs <span style="color:#f92672">=</span> counterCells<span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
+        <span style="color:#f92672">!</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetLong</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> BASECOUNT<span style="color:#f92672">,</span> b <span style="color:#f92672">=</span> baseCount<span style="color:#f92672">,</span> s <span style="color:#f92672">=</span> b <span style="color:#f92672">+</span> x<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+        CounterCell c<span style="color:#f92672">;</span> <span style="color:#66d9ef">long</span> v<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> m<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">boolean</span> uncontended <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>cs <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>m <span style="color:#f92672">=</span> cs<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> 0 <span style="color:#f92672">||</span>
+            <span style="color:#f92672">(</span>c <span style="color:#f92672">=</span> cs<span style="color:#f92672">[</span>ThreadLocalRandom<span style="color:#f92672">.</span><span style="color:#a6e22e">getProbe</span><span style="color:#f92672">()</span> <span style="color:#f92672">&amp;</span> m<span style="color:#f92672">])</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
+            <span style="color:#f92672">!(</span>uncontended <span style="color:#f92672">=</span>
+              U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetLong</span><span style="color:#f92672">(</span>c<span style="color:#f92672">,</span> CELLVALUE<span style="color:#f92672">,</span> v <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span><span style="color:#f92672">,</span> v <span style="color:#f92672">+</span> x<span style="color:#f92672">)))</span> <span style="color:#f92672">{</span>
+            fullAddCount<span style="color:#f92672">(</span>x<span style="color:#f92672">,</span> uncontended<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>check <span style="color:#f92672">&lt;=</span> 1<span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+        s <span style="color:#f92672">=</span> sumCount<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>check <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> tab<span style="color:#f92672">,</span> nt<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> n<span style="color:#f92672">,</span> sc<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>s <span style="color:#f92672">&gt;=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span><span style="color:#f92672">)(</span>sc <span style="color:#f92672">=</span> sizeCtl<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>tab <span style="color:#f92672">=</span> table<span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span>
+               <span style="color:#f92672">(</span>n <span style="color:#f92672">=</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> MAXIMUM_CAPACITY<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">int</span> rs <span style="color:#f92672">=</span> resizeStamp<span style="color:#f92672">(</span>n<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sc <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>sc <span style="color:#f92672">&gt;&gt;&gt;</span> RESIZE_STAMP_SHIFT<span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> rs <span style="color:#f92672">||</span> sc <span style="color:#f92672">==</span> rs <span style="color:#f92672">+</span> 1 <span style="color:#f92672">||</span>
+                    sc <span style="color:#f92672">==</span> rs <span style="color:#f92672">+</span> MAX_RESIZERS <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>nt <span style="color:#f92672">=</span> nextTable<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
+                    transferIndex <span style="color:#f92672">&lt;=</span> 0<span style="color:#f92672">)</span>
+                    <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+                <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetInt</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> SIZECTL<span style="color:#f92672">,</span> sc<span style="color:#f92672">,</span> sc <span style="color:#f92672">+</span> 1<span style="color:#f92672">))</span>
+                    transfer<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> nt<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetInt</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> SIZECTL<span style="color:#f92672">,</span> sc<span style="color:#f92672">,</span>
+                                        <span style="color:#f92672">(</span>rs <span style="color:#f92672">&lt;&lt;</span> RESIZE_STAMP_SHIFT<span style="color:#f92672">)</span> <span style="color:#f92672">+</span> 2<span style="color:#f92672">))</span>
+                transfer<span style="color:#f92672">(</span>tab<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+            s <span style="color:#f92672">=</span> sumCount<span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
     </div>
     <div class="post-footer">
       

@@ -15,7 +15,8 @@
       <guid>https://sherry-long.github.io/post/threadsafecollection/</guid>
       <description>线程安全集合类概述 线程安全集合类分为三大类：
  遗留的线程安全集合如 Hashtable, Vector 使用Collections装饰的线程安全集合  Collections.synchronizedCollection Collections.synchronizedList Collections.synchronizedMap Collections.synchronizedSet Collections.synchronizedNavigableMap Collections.synchronizedNavigableSet Collections.synchronizedSortedMap Collections.synchronizedSortedSet   java.util.concurrent.*  JUC下的线程安全集合类，包含三类关键词
- Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历</description>
+ Blocking 大部分实现基于锁，并提供用来阻塞的方法 CopyOnWrite 之类的容器修改开销相对较重 Concurrent 类型的容器  内部很多操作使用CAS优化，一般可以提供较高吞吐量 弱一致性  遍历时弱一致性，例如，当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历，这时内容是旧的 求大小弱一致性，size操作未必是 100% 准确 读取弱一致性      遍历时如果发生了修改，对于非安全容器来讲，使用fail-fast机制也就是让遍历立刻失败，抛出ConcurrentModificationException，不再继续遍历
+ ConcurrentHashMap  computeIfAbsent(key, Function) - 缺少 key ，计算生成一个值，键值对放入集合中  原理 - 属性&amp;amp;内部类&amp;amp;方法 // 默认为0 // 当初始化时，为 -1 // 当扩容时，为 -(1 + 扩容线程数) // 当初始化或扩容完成后，为 下一次的扩容阈值大小 private transient volatile int sizeCtl; // 整个 ConcurrentHashMap 就是一个 Node[] static class Node&amp;lt;K, V&amp;gt; implements Map.</description>
     </item>
     
     <item>
