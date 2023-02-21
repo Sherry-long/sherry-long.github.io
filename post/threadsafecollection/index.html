@@ -67,7 +67,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          5 min read
+          6 min read
         </div>
       </div>
     </header>
@@ -275,8 +275,10 @@
     <span style="color:#66d9ef">while</span> <span style="color:#f92672">((</span>tab <span style="color:#f92672">=</span> table<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
         <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>sc <span style="color:#f92672">=</span> sizeCtl<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
             Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">yield</span><span style="color:#f92672">();</span> <span style="color:#75715e">// lost initialization race; just spin
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 尝试将 sizeCtl 设置为 -1（表示初始化table）
 </span><span style="color:#75715e"></span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetInt</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> SIZECTL<span style="color:#f92672">,</span> sc<span style="color:#f92672">,</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
-            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">// 获得锁，创建 table，这时其他线程会在 while() 循环中 yield 直至 table 创建
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
                 <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>tab <span style="color:#f92672">=</span> table<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> tab<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
                     <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>sc <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">?</span> sc <span style="color:#f92672">:</span> DEFAULT_CAPACITY<span style="color:#f92672">;</span>
                     <span style="color:#a6e22e">@SuppressWarnings</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;unchecked&#34;</span><span style="color:#f92672">)</span>
@@ -293,23 +295,32 @@
     <span style="color:#66d9ef">return</span> tab<span style="color:#f92672">;</span>
 <span style="color:#f92672">}</span>
 
-
-<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addCount</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> x<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> check<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+<span style="color:#75715e">// check 是之前 binCount 的个数
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addCount</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> x<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> check<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     CounterCell<span style="color:#f92672">[]</span> cs<span style="color:#f92672">;</span> <span style="color:#66d9ef">long</span> b<span style="color:#f92672">,</span> s<span style="color:#f92672">;</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>cs <span style="color:#f92672">=</span> counterCells<span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
-        <span style="color:#f92672">!</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetLong</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> BASECOUNT<span style="color:#f92672">,</span> b <span style="color:#f92672">=</span> baseCount<span style="color:#f92672">,</span> s <span style="color:#f92672">=</span> b <span style="color:#f92672">+</span> x<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>
+        <span style="color:#75715e">// 已经有了 counterCells，向 cell 累加
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">(</span>cs <span style="color:#f92672">=</span> counterCells<span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
+        <span style="color:#75715e">// 还没有，向 baseCount 累加
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">!</span>U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetLong</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> BASECOUNT<span style="color:#f92672">,</span> b <span style="color:#f92672">=</span> baseCount<span style="color:#f92672">,</span> s <span style="color:#f92672">=</span> b <span style="color:#f92672">+</span> x<span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
         CounterCell c<span style="color:#f92672">;</span> <span style="color:#66d9ef">long</span> v<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> m<span style="color:#f92672">;</span>
         <span style="color:#66d9ef">boolean</span> uncontended <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
-        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>cs <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>m <span style="color:#f92672">=</span> cs<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> 0 <span style="color:#f92672">||</span>
-            <span style="color:#f92672">(</span>c <span style="color:#f92672">=</span> cs<span style="color:#f92672">[</span>ThreadLocalRandom<span style="color:#f92672">.</span><span style="color:#a6e22e">getProbe</span><span style="color:#f92672">()</span> <span style="color:#f92672">&amp;</span> m<span style="color:#f92672">])</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
-            <span style="color:#f92672">!(</span>uncontended <span style="color:#f92672">=</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>
+            <span style="color:#75715e">// 还没有 counterCells
+</span><span style="color:#75715e"></span>            cs <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> <span style="color:#f92672">(</span>m <span style="color:#f92672">=</span> cs<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;</span> 0 <span style="color:#f92672">||</span>
+            <span style="color:#75715e">// 还没有 cell
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">(</span>c <span style="color:#f92672">=</span> cs<span style="color:#f92672">[</span>ThreadLocalRandom<span style="color:#f92672">.</span><span style="color:#a6e22e">getProbe</span><span style="color:#f92672">()</span> <span style="color:#f92672">&amp;</span> m<span style="color:#f92672">])</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span>
+            <span style="color:#75715e">// cell cas 增加计数失败
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">!(</span>uncontended <span style="color:#f92672">=</span>
               U<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSetLong</span><span style="color:#f92672">(</span>c<span style="color:#f92672">,</span> CELLVALUE<span style="color:#f92672">,</span> v <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span><span style="color:#f92672">,</span> v <span style="color:#f92672">+</span> x<span style="color:#f92672">)))</span> <span style="color:#f92672">{</span>
-            fullAddCount<span style="color:#f92672">(</span>x<span style="color:#f92672">,</span> uncontended<span style="color:#f92672">);</span>
+            <span style="color:#75715e">// 创建累加单元数组和cell，累加重试
+</span><span style="color:#75715e"></span>            fullAddCount<span style="color:#f92672">(</span>x<span style="color:#f92672">,</span> uncontended<span style="color:#f92672">);</span>
             <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
         <span style="color:#f92672">}</span>
         <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>check <span style="color:#f92672">&lt;=</span> 1<span style="color:#f92672">)</span>
             <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
-        s <span style="color:#f92672">=</span> sumCount<span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 获取元素个数
+</span><span style="color:#75715e"></span>        s <span style="color:#f92672">=</span> sumCount<span style="color:#f92672">();</span>
     <span style="color:#f92672">}</span>
     <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>check <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
         Node<span style="color:#f92672">&lt;</span>K<span style="color:#f92672">,</span>V<span style="color:#f92672">&gt;[]</span> tab<span style="color:#f92672">,</span> nt<span style="color:#f92672">;</span> <span style="color:#66d9ef">int</span> n<span style="color:#f92672">,</span> sc<span style="color:#f92672">;</span>
@@ -331,7 +342,40 @@
         <span style="color:#f92672">}</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div>
+</code></pre></div><h4 id="size计算流程">size计算流程</h4>
+<p>size 计算实际发生在 put，remove 改变集合元素的操作之中</p>
+<ul>
+<li>没有竞争发生，向 baseCount 累加计数</li>
+<li>有竞争发生，新建 counterCells，向其中一个 cell 累加计数
+<ul>
+<li>counterCells 初始有两个 cell</li>
+<li>如果计数竞争比较激烈，会创建新的 cell 来累加计数</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">long</span> n <span style="color:#f92672">=</span> sumCount<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">((</span>n <span style="color:#f92672">&lt;</span> 0L<span style="color:#f92672">)</span> <span style="color:#f92672">?</span> 0 <span style="color:#f92672">:</span>
+            <span style="color:#f92672">(</span>n <span style="color:#f92672">&gt;</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span><span style="color:#f92672">)</span>Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span><span style="color:#f92672">)</span> <span style="color:#f92672">?</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span> <span style="color:#f92672">:</span>
+            <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span><span style="color:#f92672">)</span>n<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">sumCount</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    CounterCell<span style="color:#f92672">[]</span> cs <span style="color:#f92672">=</span> counterCells<span style="color:#f92672">;</span>
+    <span style="color:#75715e">// 将 baseCount 计数与所有 cell 计数累加
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">long</span> sum <span style="color:#f92672">=</span> baseCount<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>cs <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>CounterCell c <span style="color:#f92672">:</span> cs<span style="color:#f92672">)</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>c <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                sum <span style="color:#f92672">+=</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">value</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> sum<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h4 id="transfer-扩容流程">transfer 扩容流程</h4>
+<ul>
+<li></li>
+</ul>
+
     </div>
     <div class="post-footer">
       

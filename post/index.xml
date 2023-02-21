@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Feb 2023 15:36:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Feb 2023 11:39:54 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL</title>
+      <link>https://sherry-long.github.io/post/mysql/</link>
+      <pubDate>Tue, 21 Feb 2023 11:39:54 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/mysql/</guid>
+      <description>SELECT相关 列的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &amp;#34;别名&amp;#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &amp;#34;eName&amp;#34; FROM t_emp; 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &amp;#39;赵&amp;#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &amp;#39;字符串&amp;#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   运算符 - 符号 SELECT 100 + &amp;#39;1&amp;#39; 101 # sql中，+ 没有连接的作用，会将字符串转换成数值（隐式转换） # 不能被转换成数字的字符串（比如 &amp;#39;abc&amp;#39;）会被当成 0 看待 SELECT 0 = &amp;#39;a&amp;#39; 1 # 有 null 参与的运算，结果为 null 关于除法</description>
+    </item>
+    
     <item>
       <title>线程安全集合类</title>
       <link>https://sherry-long.github.io/post/threadsafecollection/</link>
