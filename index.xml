@@ -21,6 +21,8 @@
 ​	多表查询-内连外连、UNION
 ​	SQL99新特性
 ​	单行函数
+​	聚合函数与GROUPBY、HAVING
+​	SQL执行流程
 #
 SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &amp;#34;别名&amp;#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &amp;#34;eName&amp;#34; FROM t_emp; # 表名 别名 SELECT emp_name FROM t_emp emp; # 如果给表起了别名，在SELECT和WHERE中必须使用别名，否则会报错 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &amp;#39;赵&amp;#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &amp;#39;字符串&amp;#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   #</description>
     </item>
@@ -566,10 +568,10 @@ Java实现 public static int[][] generateMatrix(int n) { int[][] res = new int[n
       <pubDate>Tue, 23 Aug 2022 11:52:56 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/designpatterns/</guid>
-      <description>单例模式 Java中，可用static来实现单例模式
+      <description>设计模式
+ 创建型模式  工厂模式 抽象工厂模式 单例模式 建造者模式 原型模式   结构型模式  适配器模式 桥接模式 过滤器模式 组合模式 装饰器模式 外观模式 享元模式 代理模式   行为型模式  责任链模式 命令模式 解释器模式 迭代器模式 中介者模式 备忘录模式 观察者模式 状态模式 空对象模式 策略模式 模板模式 访问者模式    单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
-class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
-class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 懒汉式的线程安全实现方法：</description>
+class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)</description>
     </item>
     
     <item>

@@ -13,16 +13,16 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="设计模式(Java)"/>
-<meta name="twitter:description" content="单例模式 Java中，可用static来实现单例模式
+<meta name="twitter:description" content="设计模式
+ 创建型模式  工厂模式 抽象工厂模式 单例模式 建造者模式 原型模式   结构型模式  适配器模式 桥接模式 过滤器模式 组合模式 装饰器模式 外观模式 享元模式 代理模式   行为型模式  责任链模式 命令模式 解释器模式 迭代器模式 中介者模式 备忘录模式 观察者模式 状态模式 空对象模式 策略模式 模板模式 访问者模式    单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
-class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
-class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 懒汉式的线程安全实现方法："/>
+class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)"/>
 
     <meta property="og:title" content="设计模式(Java)" />
-<meta property="og:description" content="单例模式 Java中，可用static来实现单例模式
+<meta property="og:description" content="设计模式
+ 创建型模式  工厂模式 抽象工厂模式 单例模式 建造者模式 原型模式   结构型模式  适配器模式 桥接模式 过滤器模式 组合模式 装饰器模式 外观模式 享元模式 代理模式   行为型模式  责任链模式 命令模式 解释器模式 迭代器模式 中介者模式 备忘录模式 观察者模式 状态模式 空对象模式 策略模式 模板模式 访问者模式    单例模式 Java中，可用static来实现单例模式
 饿汉式 (优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)
-class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)
-class New2 { private New2() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New2 instance = null; public static New2 getInstance() { if (instance == null) instance = new New2(); return instance;//什么时候用什么时候创建，拖延症 	} } 懒汉式的线程安全实现方法：" />
+class New1 { private New1() { //构造方法要私有化，不允许外部直接调用构造方法 	} private static New1 new1 = new New1(); public static New1 getInstance() { return new1;//不管用不用直接创建，饥不择食 	} } 懒汉式 (优点：延迟对象的创建，不会浪费空间 ； 缺点：需要手动加锁实现线程安全)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/designpatterns/" />
 <meta property="article:published_time" content="2022-08-23T11:52:56+08:00" />
@@ -72,7 +72,47 @@ class New2 { private New2() { //构造方法要私有化，不允许外部直接
       </div>
     </header>
     <div class="post-content">
-      <h1 id="单例模式">单例模式</h1>
+      <p><strong>设计模式</strong></p>
+<ul>
+<li>创建型模式
+<ul>
+<li>工厂模式</li>
+<li>抽象工厂模式</li>
+<li>单例模式</li>
+<li>建造者模式</li>
+<li>原型模式</li>
+</ul>
+</li>
+<li>结构型模式
+<ul>
+<li>适配器模式</li>
+<li>桥接模式</li>
+<li>过滤器模式</li>
+<li>组合模式</li>
+<li>装饰器模式</li>
+<li>外观模式</li>
+<li>享元模式</li>
+<li>代理模式</li>
+</ul>
+</li>
+<li>行为型模式
+<ul>
+<li>责任链模式</li>
+<li>命令模式</li>
+<li>解释器模式</li>
+<li>迭代器模式</li>
+<li>中介者模式</li>
+<li>备忘录模式</li>
+<li>观察者模式</li>
+<li>状态模式</li>
+<li>空对象模式</li>
+<li>策略模式</li>
+<li>模板模式</li>
+<li>访问者模式</li>
+</ul>
+</li>
+</ul>
+<h1 id="单例模式">单例模式</h1>
 <p>Java中，可用static来实现单例模式</p>
 <h3 id="饿汉式">饿汉式</h3>
 <p>(优点：天然线程安全 ； 缺点：对象存续时间过长，当短时间内不需要此对象时会浪费空间)</p>
