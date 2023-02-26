@@ -23,6 +23,7 @@
 ​	单行函数
 ​	聚合函数与GROUPBY、HAVING
 ​	SQL执行流程
+​	子查询
 #
 SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &#34;别名&#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &#34;eName&#34; FROM t_emp; # 表名 别名 SELECT emp_name FROM t_emp emp; # 如果给表起了别名，在SELECT和WHERE中必须使用别名，否则会报错 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &#39;赵&#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &#39;字符串&#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   #"/>
 
@@ -37,6 +38,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
 ​	单行函数
 ​	聚合函数与GROUPBY、HAVING
 ​	SQL执行流程
+​	子查询
 #
 SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &#34;别名&#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &#34;eName&#34; FROM t_emp; # 表名 别名 SELECT emp_name FROM t_emp emp; # 如果给表起了别名，在SELECT和WHERE中必须使用别名，否则会报错 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &#39;赵&#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &#39;字符串&#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   #" />
 <meta property="og:type" content="article" />
@@ -83,7 +85,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          6 min read
+          7 min read
         </div>
       </div>
     </header>
@@ -98,6 +100,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
 <p>​	<a href="#SingleLineFunction">单行函数</a></p>
 <p>​	<a href="#AggregateFunctions">聚合函数与GROUPBY、HAVING</a></p>
 <p>​	<a href="#SQLexqtProcess">SQL执行流程</a></p>
+<p>​	<a href="#SubQuery">子查询</a></p>
 <p><a id="MySQLstarter">#</a></p>
 <h3 id="select相关">SELECT相关</h3>
 <h4 id="列与表的别名">列与表的别名</h4>
@@ -571,7 +574,162 @@ IFNULL(value1,value2) <span style="color:#f92672">#</span> <span style="color:#9
 <p>然后进入第三步和第四步，GROUPBY和HAVING，在vt2的基础上进行分组和分组过滤，得到vt3和vt4</p>
 <p>当完成了条件筛选部分之后，就可以筛选表中提取的字段，SELECT和DISTINCT</p>
 <p>提取到想要的字段数据后，可以按照指定字段进行排序ORDERBY，最后LIMIT取出指定行的记录</p>
+<hr>
+<hr>
+<p><a id="SubQuery">#</a></p>
+<h3 id="子查询嵌套查询">子查询(嵌套查询)</h3>
+<p>子查询指一个查询语句嵌套在另一个查询语句内部的查询，这个特性从MySQL4.1开始引入</p>
+<p>SQL中子查询的使用大大增强了SELECT查询的能力，因为很多时候查询需要从结果集中获取数据，或者需要从同一个表中先计算得出一个数据结果，然后根据这个数据结果(可能是某个标量，也可能是某个集合)进行比较</p>
+<hr>
+<h4 id="子查询的基本使用">子查询的基本使用</h4>
+<ul>
+<li>
+<p>子查询的基本语法结构</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> select_list
+<span style="color:#66d9ef">FROM</span> <span style="color:#66d9ef">table</span>
+<span style="color:#66d9ef">WHERE</span> expr <span style="color:#66d9ef">operator</span>
+              (<span style="color:#66d9ef">SELECT</span> select_list
+                 <span style="color:#66d9ef">FROM</span> <span style="color:#66d9ef">table</span>);
+</code></pre></div></li>
+<li>
+<p>子查询（内查询）在主查询之前一次执行完成</p>
+</li>
+<li>
+<p>子查询的结果被主查询（外查询）使用</p>
+</li>
+<li>
+<p>子查询要包含在括号内</p>
+<ul>
+<li>将子查询放在比较条件的右侧</li>
+<li>单行操作符对应单行子查询，多行操作符对应多行子查询</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="子查询分类">子查询分类</h4>
+<p>按内查询的结果返回一条还是多条记录，分为<em><strong>单行子查询</strong></em>、<em><strong>多行子查询</strong></em></p>
+<p>按内查询是否被执行多次，分为<em><strong>相关(关联)子查询</strong></em>和<em><strong>不相关(非关联)子查询</strong></em></p>
+<h4 id="单行子查询">单行子查询</h4>
+<h5 id="单行比较操作符">单行比较操作符</h5>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>&lt;&gt;</td>
+<td>不等于</td>
+</tr>
+</tbody>
+</table>
+<p>**例：**查询工资大于149号员工工资的员工信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_name, emp_id
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> salary <span style="color:#f92672">&gt;</span> (<span style="color:#66d9ef">SELECT</span> salary
+                <span style="color:#66d9ef">FROM</span> employees
+                <span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">149</span>)
+</code></pre></div><p>**例：**查询job_id与141号员工相同，salary比143号员工多的员工姓名，job_id和工资</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_name,job_id,salary
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> job_id <span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> job_id
+                <span style="color:#66d9ef">FROM</span> employees
+                <span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">141</span>)
+<span style="color:#66d9ef">AND</span> salary <span style="color:#f92672">&gt;</span> (<span style="color:#66d9ef">SELECT</span> salary
+              <span style="color:#66d9ef">FROM</span> employees
+              <span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#f92672">=</span> <span style="color:#ae81ff">143</span>)
+</code></pre></div><p>**例：**查询公司工资最少的员工的last_name,job_id,salary</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> last_name,job_id,salary
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> salary <span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">MIN</span>(salary)
+				<span style="color:#66d9ef">FROM</span> employees)
+</code></pre></div><p>**例：**查询与141号或174号员工的manager_id和department_id相同的其他员工的emp_id,manager_id,department_id</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式一：</span>
+<span style="color:#66d9ef">SELECT</span> emp_id,manager_id,department_id
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> manager_id <span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> manager_id
+                    <span style="color:#66d9ef">FROM</span> employees
+                    <span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">141</span>,<span style="color:#ae81ff">174</span>))
+<span style="color:#66d9ef">AND</span> department_id <span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> department_id
+                     <span style="color:#66d9ef">FROM</span> employees
+                     <span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">141</span>,<span style="color:#ae81ff">174</span>)))
+<span style="color:#66d9ef">AND</span> emp_id <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">141</span>,<span style="color:#ae81ff">174</span>)
 
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式二：</span>
+<span style="color:#66d9ef">SELECT</span> emp_id,manager_id,department_id
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> (manager_id,department_id) <span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> manager_id,department_id
+                                    <span style="color:#66d9ef">FROM</span> employees
+                                    <span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">141</span>,<span style="color:#ae81ff">174</span>))
+<span style="color:#66d9ef">AND</span> emp_id <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">IN</span> (<span style="color:#ae81ff">141</span>,<span style="color:#ae81ff">174</span>)
+
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">两方式效率大差不差，方式二写代码更少，方式一适用范围更广</span>
+</code></pre></div><p>子查询的结果为空值时不会报错，不返回任何行</p>
+<h5 id="非法使用子查询">非法使用子查询</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_id,last_name
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> salary <span style="color:#f92672">=</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">MIN</span>(salary)
+                <span style="color:#66d9ef">FROM</span> employees
+                <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> department_id)
+                
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">子查询返回的结果是多行数据，此时应使用</span> <span style="color:#66d9ef">IN</span> <span style="color:#960050;background-color:#1e0010">而非</span> <span style="color:#f92672">=</span>
+</code></pre></div><hr>
+<h4 id="多行子查询">多行子查询</h4>
+<ul>
+<li>也称为集合比较子查询</li>
+<li>内查询返回多行</li>
+<li>使用多行比较操作符</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IN</td>
+<td>等于列表中的任意一个</td>
+</tr>
+<tr>
+<td>ANY</td>
+<td>需要和单行比较操作符一起使用，和子查询返回的<strong>某一个</strong>值比较</td>
+</tr>
+<tr>
+<td>ALL</td>
+<td>需要和单行比较操作符一起使用，和子查询返回的<strong>所有</strong>值比较</td>
+</tr>
+<tr>
+<td>SOME</td>
+<td>ANY的别名，作用相同，一般常使用ANY</td>
+</tr>
+</tbody>
+</table>
+<p>**例：**查询其他job_id中比job_id为&rsquo;IT_PROG&rsquo;部门任一工资低的员工的员工号，姓名，job_id，以及salary</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"></code></pre></div>
     </div>
     <div class="post-footer">
       
