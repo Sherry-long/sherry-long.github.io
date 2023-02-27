@@ -85,7 +85,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          7 min read
+          8 min read
         </div>
       </div>
     </header>
@@ -533,6 +533,7 @@ IFNULL(value1,value2) <span style="color:#f92672">#</span> <span style="color:#9
 <p><a id="AggregateFunctions">#</a></p>
 <h3 id="聚合函数与groupbyhaving">聚合函数与GROUPBY、HAVING</h3>
 <p>聚合函数：多行输入，单行输出</p>
+<p><em><strong>MySQL暂时不支持聚合函数嵌套</strong></em></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">MIN</span>(<span style="color:#66d9ef">column</span>) <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">求列中的最小值</span>
 <span style="color:#66d9ef">MAX</span>(<span style="color:#66d9ef">column</span>) <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">求列中的最大值</span>
 <span style="color:#66d9ef">AVG</span>(<span style="color:#66d9ef">column</span>) <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">平均值</span>
@@ -729,7 +730,83 @@ IFNULL(value1,value2) <span style="color:#f92672">#</span> <span style="color:#9
 </tbody>
 </table>
 <p>**例：**查询其他job_id中比job_id为&rsquo;IT_PROG&rsquo;部门任一工资低的员工的员工号，姓名，job_id，以及salary</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_id,emp_name,job_id,salary
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> job_id <span style="color:#f92672">&lt;&gt;</span> <span style="color:#e6db74">&#39;IT_PROG&#39;</span>,
+salary <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ANY</span> (<span style="color:#66d9ef">SELECT</span> salary
+              <span style="color:#66d9ef">FROM</span> employees
+              <span style="color:#66d9ef">WHERE</span> job_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;IT_PROG&#39;</span>)
+</code></pre></div><hr>
+<h4 id="相关子查询">相关子查询</h4>
+<p>如果子查询的执行依赖于外部查询，通常情况下都是因为子查询中的表用到了外部的表，并进行了条件关联，因此每执行一次外部查询，子查询都要重新计算一次，这样的子查询就称之为<em><strong>关联子查询</strong></em></p>
+<p>相关子查询按照一行接一行的顺序执行，主查询的每一行都执行一次子查询</p>
+<p><img src="/imgs/RelativeSQ.png" alt="RelativeSQ"></p>
+<p>**例：**查询员工中工资大于本部门平均工资的员工的name，salary，department_id</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_name,salary,department_id
+<span style="color:#66d9ef">FROM</span> employees <span style="color:#66d9ef">outer</span>
+<span style="color:#66d9ef">where</span> salary <span style="color:#f92672">&gt;</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">AVG</span>(salary)
+                <span style="color:#66d9ef">FROM</span> employees <span style="color:#66d9ef">inner</span>
+                <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> department_id
+                <span style="color:#66d9ef">HAVING</span> <span style="color:#66d9ef">inner</span>.department_id <span style="color:#f92672">=</span> <span style="color:#66d9ef">outer</span>.department_id
+               )
+</code></pre></div><p>**例：**查询员工的id，salary（employees表中），按照department_name（departments表中）排序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_id,salary
+<span style="color:#66d9ef">FROM</span> employees e
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> (<span style="color:#66d9ef">SELECT</span> department_name
+          <span style="color:#66d9ef">FROM</span> departments d
+          <span style="color:#66d9ef">WHERE</span> e.department_id <span style="color:#f92672">=</span> d.department_id
+         )
+</code></pre></div><p>**例：**若employees表中emp_id与 job_history表中emp_id相同的数目不小于2，输出这些相同id的员工的emp_id，last_name和job_id</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> emp_id,last_name,job_id
+<span style="color:#66d9ef">FROM</span> employees e
+<span style="color:#66d9ef">WHERE</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;=</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>)
+           <span style="color:#66d9ef">FROM</span> job_history j
+           <span style="color:#66d9ef">WHERE</span> e.employee_id <span style="color:#f92672">=</span> j.employee_id
+          )
+</code></pre></div><p>结论：在SELECT语句中，除了ORDER BY和LIMIT之外，都可以写子查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> (<span style="color:#66d9ef">DISTINCT</span>)
+<span style="color:#66d9ef">FROM</span> (<span style="color:#66d9ef">LEFT</span><span style="color:#f92672">/</span><span style="color:#66d9ef">RIGHT</span>) <span style="color:#66d9ef">JOIN</span> <span style="color:#66d9ef">ON</span>
+<span style="color:#66d9ef">WHERE</span>
+<span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span>
+<span style="color:#66d9ef">HAVING</span>
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#f92672">#</span> 
+<span style="color:#66d9ef">LIMIT</span> <span style="color:#f92672">#</span> 
+</code></pre></div><h4 id="exists-与-not-exists关键字">EXISTS 与 NOT EXISTS关键字</h4>
+<p>**例：**查询公司管理者的emp_id,last_name,job_id,department_id信息</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式一：自连接</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">DISTINCT</span> mgr.emp_id,mgr.last_name,mgr.job_id,mgr.department_id
+<span style="color:#66d9ef">FROM</span> employees emp <span style="color:#66d9ef">JOIN</span> employees mgr
+<span style="color:#66d9ef">ON</span> emp.manager_id <span style="color:#f92672">=</span> mgr.emp_id
+
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式二：子查询</span>
+<span style="color:#66d9ef">SELECT</span> emp_id,last_name,job_id,department_id
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#66d9ef">WHERE</span> emp_id <span style="color:#66d9ef">IN</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">DISTINCT</span> manager_id
+                 <span style="color:#66d9ef">FROM</span> employees
+                )
+
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式三：</span>EXISTS关键字
+<span style="color:#66d9ef">SELECT</span> emp_id,last_name,job_id,department_id
+<span style="color:#66d9ef">FROM</span> employees e1
+<span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">EXISTS</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+              <span style="color:#66d9ef">FROM</span> employees e2
+              <span style="color:#66d9ef">WHERE</span> e1.emp_id <span style="color:#f92672">=</span> e2.manager_id
+             )
+</code></pre></div><p>**例：**查询departments表中，不存在于employees表中的部门的depaertment_id和department_name</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式一：右外连接</span>
+<span style="color:#66d9ef">SELECT</span> d.department_id,d.department_name
+<span style="color:#66d9ef">FROM</span> employees e <span style="color:#66d9ef">RIGHT</span> <span style="color:#66d9ef">JOIN</span> departments d
+<span style="color:#66d9ef">ON</span> e.department_id <span style="color:#f92672">=</span> d.department_id
+<span style="color:#66d9ef">WHERE</span> e.department_id <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NULL</span>
+
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">方式二：</span><span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">EXISTS</span>
+<span style="color:#66d9ef">SELECT</span> department_id,department_name
+<span style="color:#66d9ef">FROM</span> departments d
+<span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">EXISTS</span> (<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+                 <span style="color:#66d9ef">FROM</span> employees
+                 <span style="color:#66d9ef">WHERE</span> department_id <span style="color:#f92672">=</span> e.department_id
+                 )
+</code></pre></div>
     </div>
     <div class="post-footer">
       
