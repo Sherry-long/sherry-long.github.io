@@ -25,6 +25,7 @@
 ​	SQL执行流程
 ​	子查询
 ​	DDL-创建管理表
+​	DCL-COMMIT、ROLLBACK
 SQL分类：
 DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
 DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
@@ -45,6 +46,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
 ​	SQL执行流程
 ​	子查询
 ​	DDL-创建管理表
+​	DCL-COMMIT、ROLLBACK
 SQL分类：
 DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
 DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
@@ -95,7 +97,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          8 min read
+          9 min read
         </div>
       </div>
     </header>
@@ -112,6 +114,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
 <p>​		<a href="#SQLexqtProcess">SQL执行流程</a></p>
 <p>​		<a href="#SubQuery">子查询</a></p>
 <p>​	<a href="#DDL">DDL-创建管理表</a></p>
+<p>​	<a href="#DCL">DCL-COMMIT、ROLLBACK</a></p>
 <p><strong>SQL分类：</strong></p>
 <p>DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE</p>
 <p>DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT</p>
@@ -829,6 +832,93 @@ salary <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ANY</
 <p>存储数据是处理数据的第一步。只有正确的把数据存储起来，我们才能进行有效的处理和分析</p>
 <p>在MySQL中，一个完整的数据存储过程总共有 4 步，创建数据库、确认字段、创建数据表、插入数据</p>
 <h4 id="mysql中的数据类型">MySQL中的数据类型</h4>
+<p><img src="/imgs/MySQLData.png" alt="MySQLData"></p>
+<p>其中，常用的几类类型介绍如下：</p>
+<p><img src="/imgs/MySQLDataFreq.png" alt="MySQLDataFreq"></p>
+<hr>
+<h4 id="基于现有的表创建新表">基于现有的表创建新表</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">AS</span>
+<span style="color:#66d9ef">SELECT</span> emp_id,last_name,salary
+<span style="color:#66d9ef">FROM</span> employees
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">直接将查询字段作为新表字段，查询结果作为新表数据</span>
+</code></pre></div><hr>
+<h4 id="修改表">修改表</h4>
+<h5 id="添加一个字段">添加一个字段</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">ADD</span> salary DOUBLE(<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">2</span>)
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">默认添加到表中最后一个字段位置</span>
+
+<span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">ADD</span> email VARCHAR(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">FIRST</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">添加到第一个位置</span>
+
+<span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">ADD</span> tele VARCHAR(<span style="color:#ae81ff">15</span>) <span style="color:#66d9ef">AFTER</span> emp_name
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">添加到指定字段的后面</span>
+</code></pre></div><h5 id="修改一个字段">修改一个字段</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">MODIFY</span> emp_name VARCHAR(<span style="color:#ae81ff">20</span>)
+
+<span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">MODIFY</span> emp_name VARCHAR(<span style="color:#ae81ff">30</span>) <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;aaa&#39;</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">修改并设置默认值</span>
+</code></pre></div><h5 id="重命名一个字段">重命名一个字段</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+CHANGE salary monthly_salary DOUBLE(<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">2</span>)
+</code></pre></div><h5 id="删除一个字段">删除一个字段</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">COLUMN</span> email
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">如果删除的字段不存在，报错</span>
+</code></pre></div><h5 id="重命名表">重命名表</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">RENAME</span> <span style="color:#66d9ef">TABLE</span> myemp
+<span style="color:#66d9ef">TO</span> myOwnEmp
+</code></pre></div><h5 id="清空表">清空表</h5>
+<ul>
+<li>
+<p>TRUNCATE TABLE语句：</p>
+<ul>
+<li>删除表中所有数据，表结构保留</li>
+<li>释放表的存储空间</li>
+</ul>
+</li>
+<li>
+<p>举例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">TRUNCATE</span> <span style="color:#66d9ef">TABLE</span> detail_dept
+</code></pre></div></li>
+<li>
+<p>TRUNCATE语句<strong>不能回滚</strong>，而使用DELETE语句删除数据，可以回滚</p>
+</li>
+<li>
+<p>对比：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#66d9ef">TRUNCATE</span> TABLE和DELETE <span style="color:#66d9ef">FROM</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">相同点：都可以实现对表中所有数据的删除，同时保留表结构</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">不同点：</span><span style="color:#66d9ef">TRUNCATE</span> <span style="color:#66d9ef">TABLE</span><span style="color:#960050;background-color:#1e0010">：一旦执行此操作，表数据全部清除，不可回滚</span>
+<span style="color:#f92672">#</span>		<span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span><span style="color:#960050;background-color:#1e0010">：一旦执行此操作，表数据可以全部清除，数据可以实现回滚</span>
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">    DDL 和 DML 的说明
+</span><span style="color:#75715e">    DDL的操作一旦执行，就不可回滚
+</span><span style="color:#75715e">    DML的操作默认情况下，一旦执行，也是不可回滚的。但是如果在执行DML之前执行了
+</span><span style="color:#75715e">              set autocommit = FALSE
+</span><span style="color:#75715e">    则执行的DML操作可以回滚
+</span><span style="color:#75715e">*/</span>
+  
+<span style="color:#66d9ef">SET</span> autocommit <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">将自动提交关闭</span>
+<span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span> table1
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">执行</span>DML
+<span style="color:#66d9ef">ROLLBACK</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">回滚成功</span>
+</code></pre></div></li>
+</ul>
+<hr>
+<hr>
+<p><a id="DCL">#</a></p>
+<h3 id="commitrollback">COMMIT、ROLLBACK</h3>
+<ul>
+<li>commit：提交数据。一旦执行commit，数据就被永久的保存在了数据库中，意味着数据不可以回滚</li>
+<li>rollback：回滚数据。一旦执行rollback，则可以实现数据的回滚。回滚到最近的一次commit之后</li>
+</ul>
 
     </div>
     <div class="post-footer">
