@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>MySQL // Sp(act)rum</title>
+    <title>MySQL初级 // Sp(act)rum</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.80.0" />
@@ -12,9 +12,8 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MySQL"/>
-<meta name="twitter:description" content="MySQL基础
-​	SELECT
+<meta name="twitter:title" content="MySQL初级"/>
+<meta name="twitter:description" content="​	SELECT
 ​	运算符-符号与关键字
 ​	ORDERBY
 ​	分页
@@ -26,16 +25,16 @@
 ​	子查询
 ​	DDL-创建管理表
 ​	DCL-COMMIT、ROLLBACK
-SQL分类：
-DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
-DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
-DCL：数据控制语言。COMMIT \ ROLLBACK \ SAVEPOINT \ GRANT \ REVOKE
-#
+  SQL分类：
+  DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
+  DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
+  DCL：数据控制语言。GRANT \ REVOKE
+  TCL：事务控制语言。COMMIT \ ROLLBACK \ SAVEPOINT
+    #
 SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &#34;别名&#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &#34;eName&#34; FROM t_emp; # 表名 别名 SELECT emp_name FROM t_emp emp; # 如果给表起了别名，在SELECT和WHERE中必须使用别名，否则会报错 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &#39;赵&#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &#39;字符串&#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   #"/>
 
-    <meta property="og:title" content="MySQL" />
-<meta property="og:description" content="MySQL基础
-​	SELECT
+    <meta property="og:title" content="MySQL初级" />
+<meta property="og:description" content="​	SELECT
 ​	运算符-符号与关键字
 ​	ORDERBY
 ​	分页
@@ -47,11 +46,12 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
 ​	子查询
 ​	DDL-创建管理表
 ​	DCL-COMMIT、ROLLBACK
-SQL分类：
-DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
-DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
-DCL：数据控制语言。COMMIT \ ROLLBACK \ SAVEPOINT \ GRANT \ REVOKE
-#
+  SQL分类：
+  DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
+  DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
+  DCL：数据控制语言。GRANT \ REVOKE
+  TCL：事务控制语言。COMMIT \ ROLLBACK \ SAVEPOINT
+    #
 SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &#34;别名&#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &#34;eName&#34; FROM t_emp; # 表名 别名 SELECT emp_name FROM t_emp emp; # 如果给表起了别名，在SELECT和WHERE中必须使用别名，否则会报错 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &#39;赵&#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &#39;字符串&#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   #" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sherry-long.github.io/post/mysql/" />
@@ -83,7 +83,7 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">MySQL</h1>
+      <h1 class ="post-title">MySQL初级</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -102,7 +102,8 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
       </div>
     </header>
     <div class="post-content">
-      <p><a href="#MySQLstarter">MySQL基础</a></p>
+      <hr>
+<hr>
 <p>​	<a href="#MySQLstarter">SELECT</a></p>
 <p>​		<a href="#op">运算符-符号与关键字</a></p>
 <p>​		<a href="#ORDERBY">ORDERBY</a></p>
@@ -115,10 +116,25 @@ SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_
 <p>​		<a href="#SubQuery">子查询</a></p>
 <p>​	<a href="#DDL">DDL-创建管理表</a></p>
 <p>​	<a href="#DCL">DCL-COMMIT、ROLLBACK</a></p>
+<hr>
+<hr>
 <p><strong>SQL分类：</strong></p>
+<ul>
+<li>
 <p>DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE</p>
+</li>
+<li>
 <p>DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT</p>
-<p>DCL：数据控制语言。COMMIT \ ROLLBACK \ SAVEPOINT \ GRANT \ REVOKE</p>
+</li>
+<li>
+<p>DCL：数据控制语言。GRANT \ REVOKE</p>
+</li>
+<li>
+<p>TCL：事务控制语言。COMMIT \ ROLLBACK \ SAVEPOINT</p>
+</li>
+</ul>
+<hr>
+<hr>
 <p><a id="MySQLstarter">#</a></p>
 <h3 id="select相关">SELECT相关</h3>
 <h4 id="列与表的别名">列与表的别名</h4>
@@ -897,18 +913,24 @@ CHANGE salary monthly_salary DOUBLE(<span style="color:#ae81ff">10</span>,<span 
 <span style="color:#f92672">#</span>		<span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span><span style="color:#960050;background-color:#1e0010">：一旦执行此操作，表数据可以全部清除，数据可以实现回滚</span>
 <span style="color:#75715e">/*
 </span><span style="color:#75715e">    DDL 和 DML 的说明
-</span><span style="color:#75715e">    DDL的操作一旦执行，就不可回滚
+</span><span style="color:#75715e">    DDL的操作一旦执行，就不可回滚(DDL执行之后一定会进行一次提交，而此提交不受我们控制)
 </span><span style="color:#75715e">    DML的操作默认情况下，一旦执行，也是不可回滚的。但是如果在执行DML之前执行了
 </span><span style="color:#75715e">              set autocommit = FALSE
 </span><span style="color:#75715e">    则执行的DML操作可以回滚
 </span><span style="color:#75715e">*/</span>
-  
+<span style="color:#66d9ef">COMMIT</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">先进行一次提交，</span>rollback会回滚到最近一次提交之后<span style="color:#960050;background-color:#1e0010">，此处可以视为锚点</span>
 <span style="color:#66d9ef">SET</span> autocommit <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">将自动提交关闭</span>
 <span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span> table1
 <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">执行</span>DML
 <span style="color:#66d9ef">ROLLBACK</span>
-<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">回滚成功</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">回滚成功，数据恢复</span>
+  
+<span style="color:#66d9ef">COMMIT</span>
+<span style="color:#66d9ef">TRUNCATE</span> table1
+<span style="color:#66d9ef">ROLLBACK</span>
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">回滚成功，但是数据恢复不了</span>
 </code></pre></div></li>
 </ul>
 <hr>

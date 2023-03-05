@@ -6,15 +6,37 @@
     <description>Recent content in Posts on Sp(act)rum</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Feb 2023 11:39:54 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Mar 2023 11:28:53 +0800</lastBuildDate><atom:link href="https://sherry-long.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>MySQL</title>
+      <title>MySQL高级</title>
+      <link>https://sherry-long.github.io/post/mysqlpremium/</link>
+      <pubDate>Sun, 05 Mar 2023 11:28:53 +0800</pubDate>
+      
+      <guid>https://sherry-long.github.io/post/mysqlpremium/</guid>
+      <description>  MySQL索引
+查询优化
+范式
+事务
+  #
+MySQL索引   #
+查询优化   #
+范式   #
+事务 事务是数据库区别于文件系统的重要特性之一，当我们有了事务就会让数据库始终保持一致性，同时我们还能通过事务的机制恢复到某个时间点，这样可以保证已提交到数据库的修改不会因为系统崩溃而丢失
+在MySQL中，只有InnoDB支持事务
+事务处理原则：保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。当在一个事务中执行多个操作时，要么所有的事务都被提交，那么这些修改就永久地保存下来，要么数据库管理系统放弃所做的所有修改，将事务回滚到最初状态
+ ACID 原子性、一致性、隔离性、持久性
+略
+ 事务状态 事务对应着一个或多个数据库操作，MySQL根据这些操作执行的不同阶段把事务大致划分成几个状态：
+ 活动的(active) 事务对应的数据库操作正在执行过程中时，我们就说该事务处在活动的状态 部分提交的(partially commited) 当事务中的最后一个操作执行完成，但由于操作都在内存中执行，所造成的影响并没有刷新到磁盘时，我们就说该事务处在部分提交的状态 失败的(failed) 当事务处在活动的或者部分提交的状态时，可能遇到了某些错误(数据库自身错误、操作系统错误或者直接断电等)而无法继续执行，或者人为的停止当前事务的执行，我们就说该事务处在失败的状态 中止的(aborted) 如果事务执行了一部分而变为失败的状态，就需要进行回滚   使用事务  事务隔离级别    隔离级别 脏读 不可重复读 幻读     读未提交(READ-UNCOMMITED) 有 有 有   读已提交(READ-COMMITED) 无 有 有   可重复读(REPEATABLE READ) 无 无 有   串行(SERIALIZABLE) 无 无 无    </description>
+    </item>
+    
+    <item>
+      <title>MySQL初级</title>
       <link>https://sherry-long.github.io/post/mysql/</link>
       <pubDate>Tue, 21 Feb 2023 11:39:54 +0800</pubDate>
       
       <guid>https://sherry-long.github.io/post/mysql/</guid>
-      <description>MySQL基础
-​	SELECT
+      <description>​	SELECT
 ​	运算符-符号与关键字
 ​	ORDERBY
 ​	分页
@@ -26,11 +48,12 @@
 ​	子查询
 ​	DDL-创建管理表
 ​	DCL-COMMIT、ROLLBACK
-SQL分类：
-DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
-DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
-DCL：数据控制语言。COMMIT \ ROLLBACK \ SAVEPOINT \ GRANT \ REVOKE
-#
+  SQL分类：
+  DDL：数据定义语言。CREATE \ ALTER \ DROP \ RENAME \ TRUNCATE
+  DML：数据操作语言。INSERT \ DELETE \ UPDATE \ SELECT
+  DCL：数据控制语言。GRANT \ REVOKE
+  TCL：事务控制语言。COMMIT \ ROLLBACK \ SAVEPOINT
+    #
 SELECT相关 列与表的别名 # 字段名 别名 SELECT emp_name eName FROM t_emp; # 字段名 AS 别名 （AS ~ AliaS） SELECT emp_name AS eName FROM t_emp; # 字段名 &amp;#34;别名&amp;#34; （当别名中含有 空格 时，必须使用此方法） SELECT emp_name &amp;#34;eName&amp;#34; FROM t_emp; # 表名 别名 SELECT emp_name FROM t_emp emp; # 如果给表起了别名，在SELECT和WHERE中必须使用别名，否则会报错 去重 # 只保留一个符合条件的结果 SELECT DISTINCT * FROM t_emp WHERE emp_name = &amp;#39;赵&amp;#39; 着重号 `` # 当表名或字段名与关键字发生冲突时，使用 `` 来区分 SELECT * FROM `order` 查询常数 SELECT &amp;#39;字符串&amp;#39;, 123, emp_name, age FROM t_emp 显示表结构 DESC t_emp DESCRIBE t_emp   #</description>
     </item>
     
