@@ -30,7 +30,7 @@ MySQL索引   #
  活动的(active) 事务对应的数据库操作正在执行过程中时，我们就说该事务处在活动的状态 部分提交的(partially commited) 当事务中的最后一个操作执行完成，但由于操作都在内存中执行，所造成的影响并没有刷新到磁盘时，我们就说该事务处在部分提交的状态 失败的(failed) 当事务处在活动的或者部分提交的状态时，可能遇到了某些错误(数据库自身错误、操作系统错误或者直接断电等)而无法继续执行，或者人为的停止当前事务的执行，我们就说该事务处在失败的状态 中止的(aborted) 如果事务执行了一部分而变为失败的状态，就需要进行回滚。当回滚操作执行完毕时，也就是数据库恢复到了执行事务之前的状态，我们就说该事务处在了中止的状态 提交的(commited) 当一个处在部分提交的状态的事务将修改过的数据都同步到磁盘上之后，我们就可以说该事务处在了提交的状态   使用事务 使用事务有两种方式，分别是显式事务和隐式事务
 显式事务   START TRANSACTION 或者 BEGIN，作用是显式开启一个事务
 mysql&amp;gt; BEGIN; # 或者 mysql&amp;gt; START TRANSACTION; START TRANSACTION 相较于 BEGIN，特点在于后边能跟随修饰符：
- READ ONLY：标识当前事务是一个只读事务，属于该事务的数据库操作只能读取数据，不能修改数据 只读事务中只是不允许修改那些其他事务也能访问到的表中的数据，对于临时表来说(CREATE TEMPORARY TABLE)，由于它们只能在当前会话中可见，所以只读事务其实也是可以对临时表进行增、删、改操作的  READ WRITE (DEFAULT)：标识当前事务是一个读写事务，也就是属于该事务的数据库操作既可以读取数据，也可以修改数据 WITH CONSISTENT SANPSHOT：启动一致性读  START TRANSACTION READ ONLY, WITH CONSISTENT SNAPSHOT; # 开启只读事务和一致性读   一系列DML</description>
+ READ ONLY：标识当前事务是一个只读事务，属于该事务的数据库操作只能读取数据，不能修改数据 只读事务中只是不允许修改那些其他事务也能访问到的表中的数据，对于临时表来说(CREATE TEMPORARY TABLE)，由于它们只能在当前会话中可见，所以只读事务其实也是可以对临时表进行增、删、改操作的  READ WRITE (DEFAULT)：标识当前事务是一个读写事务，也就是属于该事务的数据库操作既可以读取数据，也可以修改数据 WITH CONSISTENT SNAPSHOT：启动一致性读  START TRANSACTION READ ONLY, WITH CONSISTENT SNAPSHOT; # 开启只读事务和一致性读   一系列DML</description>
     </item>
     
     <item>
