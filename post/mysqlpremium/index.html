@@ -95,7 +95,7 @@ mysql&gt; BEGIN; # 或者 mysql&gt; START TRANSACTION; START TRANSACTION 相较�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div>
       </div>
     </header>
@@ -199,7 +199,57 @@ RELEASE SAVEPOINT name;
 </li>
 </ul>
 <p><em><strong>Oracle默认不自动提交，需要手写COMMIT命令，而MySQL默认自动提交</strong></em></p>
-<h5 id="隐式提交数据的情况">隐式提交数据的情况</h5>
+<h5 id="隐式提交数据的情况无视autocommit--false">隐式提交数据的情况（无视autocommit = false）</h5>
+<ul>
+<li>
+<p><strong>DDL</strong>
+数据库对象，指的就是数据库、表、视图、存储过程等结构。当我们使用 <em>CREATE、ALTER、DROP</em> 等语句去修改数据库对象时，就会<strong>隐式的提交</strong>前边语句所属于的事务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span>;
+  
+<span style="color:#66d9ef">SELECT</span> ... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">事务中的一条语句</span>
+<span style="color:#66d9ef">UPDATE</span> ... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">事务中的一条语句</span>
+... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">事务中的其他语句</span>
+  
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> ... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">此语句会隐式的提交前边语句所属于的事务</span>
+</code></pre></div></li>
+<li>
+<p><strong>隐式使用或修改mysql数据库中的表</strong>
+当我们使用 <em>ALTER USER、CREATE USER、DROP USER、GRANT、RENAME USER、REVOKE、SET PASSWORD</em> 等语句时也会<strong>隐式的提交</strong>前边语句所属的事务</p>
+</li>
+<li>
+<p><strong>事务控制或关于锁定的语句</strong></p>
+<ol>
+<li>
+<p>当我们在一个事务还没提交或者回滚时就又使用START TRANSACTION 或者 BEGIN 语句开启了另一个事务时，会<strong>隐式的提交</strong>上一个事务</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span>;
+     
+<span style="color:#66d9ef">SELECT</span> ... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">事务中的一条语句</span>
+<span style="color:#66d9ef">UPDATE</span> ... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">事务中的一条语句</span>
+... <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">事务中的其他语句</span>
+     
+<span style="color:#66d9ef">BEGIN</span>; <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">此语句会隐式的提交前边语句所属于的事务</span>
+</code></pre></div></li>
+<li>
+<p>当前的autocommit系统变量值为0，我们手动调为1时，也会隐式提交前边语句所属于的事务</p>
+</li>
+<li>
+<p>使用 <em>LOCK TABLES、UNLOCK TABLES</em> 等关于锁定的语句也会隐式的提交前边语句所属的事务</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>加载数据的语句</strong>
+使用 <em>LOAD DATA</em> 语句来批量往数据库中导入数据时，也会隐式提交</p>
+</li>
+<li>
+<p><strong>关于MySQL复制的一些语句</strong>
+使用 <em>START SLAVE、STOP SLAVE、RESET SLAVE、CHANGE MASTER TO</em> 等语句时会隐式提交</p>
+</li>
+<li>
+<p><strong>其他的一些语句</strong>
+使用 <em>ANALYZE TABLE、CACHE INDEX、CHECK TABLE、FLUSH、LOAD INDEX INTO CACHE、OPTIMIZE TABLE、REPAIR TABLE、RESET</em> 等语句也会隐式提交</p>
+</li>
+</ul>
 <hr>
 <h4 id="事务隔离级别">事务隔离级别</h4>
 <table>
