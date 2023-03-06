@@ -250,6 +250,13 @@ RELEASE SAVEPOINT name;
 使用 <em>ANALYZE TABLE、CACHE INDEX、CHECK TABLE、FLUSH、LOAD INDEX INTO CACHE、OPTIMIZE TABLE、REPAIR TABLE、RESET</em> 等语句也会隐式提交</p>
 </li>
 </ul>
+<h5 id="set-completion_type--1">SET @@completion_type = 1</h5>
+<p>completion_type参数有三种取值</p>
+<ol>
+<li>completion_type = 0，默认情况。当我们执行COMMIT的时候会提交事务，在执行下一个事务时，还需要使用START TRANSACTION 或者 BEGIN 来开启</li>
+<li>completion_type = 1，在这种情况下，当我们提交事务后，相当于执行了 COMMIT AND CHAIN，也就是开启一个链式事务，当我们提交事务后会开启一个相同隔离级别的事务</li>
+<li>completion_type = 2，这种情况下 COMMIT=COMMIT AND RELEASE，也就是当我们提交后，会自动与服务器断开连接</li>
+</ol>
 <hr>
 <h4 id="事务隔离级别">事务隔离级别</h4>
 <table>
