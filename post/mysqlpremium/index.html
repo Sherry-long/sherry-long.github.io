@@ -103,7 +103,7 @@ MySQL索引 1. 为什么使用索引 索引是存储引擎用于快速找到数�
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
       </div>
     </header>
@@ -261,9 +261,10 @@ MySQL索引 1. 为什么使用索引 索引是存储引擎用于快速找到数�
 <h4 id="12-创建索引">1.2 创建索引</h4>
 <ol>
 <li>
-<p><strong>创建表的时候创建索引</strong>
-使用CREATE TABLE创建表时，除了可以定义列的数据类型外，还可以定义<strong>主键约束</strong>、<strong>外键约束</strong>或者<strong>唯一性约束</strong>，而不论创建哪种约束，<strong>在定义约束的同时相当于在指定列上创建了一个索引</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> dept(
+<p><strong>创建表的时候创建索引</strong></p>
+<p>使用CREATE TABLE创建表时，除了可以定义列的数据类型外，还可以定义<strong>主键约束</strong>、<strong>外键约束</strong>或者<strong>唯一性约束</strong>，而不论创建哪种约束，<strong>在定义约束的同时相当于在指定列上创建了一个索引</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">隐式</span>
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> dept(
     dept_id INT <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> AUTO_INCREMENT, <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">主键约束</span>
     dept_name VARCHAR(<span style="color:#ae81ff">20</span>)
 );
@@ -276,8 +277,41 @@ MySQL索引 1. 为什么使用索引 索引是存储引擎用于快速找到数�
     <span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">外键约束</span>
 );
 </code></pre></div><p>如果显式创建表时创建索引，基本语法格式如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">table_name</span> [col_name data_type]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">显式</span>
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">table_name</span> [col_name data_type]
 [<span style="color:#66d9ef">UNIQUE</span> <span style="color:#f92672">|</span> FULLTEXT <span style="color:#f92672">|</span> SPATIAL] [<span style="color:#66d9ef">INDEX</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">KEY</span>] [index_name] (col_name [<span style="color:#66d9ef">length</span>]) [<span style="color:#66d9ef">ASC</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">DESC</span>]
+</code></pre></div><ul>
+<li><strong>UNIQUE</strong>、<strong>FULLTEXT</strong>和<strong>SPATIAL</strong>为可选参数，分别表示唯一索引、全文索引和空间索引</li>
+<li><strong>INDEX</strong>与<strong>KEY</strong>为同义词，两者作用相同，用来指定创建索引</li>
+<li><strong>index_name</strong>指定索引名称，为可选参数，如不指定，MySQL默认<strong>col_name</strong>为索引名</li>
+<li><strong>col_name</strong>为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
+<li><strong>length</strong>为可选参数，表示索引的长度，只有字符串类型的字段才能指定索引长度</li>
+<li><strong>ASC</strong>或<strong>DESC</strong>指定升序或者降序的索引值存储</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">创建普通索引</span>
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> book(
+ book_id INT,
+    book_name VARCHAR(<span style="color:#ae81ff">100</span>),
+    authors VARCHAR(<span style="color:#ae81ff">100</span>),
+    info VARCHAR(<span style="color:#ae81ff">100</span>),
+    <span style="color:#66d9ef">comment</span> VARCHAR(<span style="color:#ae81ff">100</span>),
+    year_publication <span style="color:#66d9ef">YEAR</span>,
+    <span style="color:#66d9ef">INDEX</span> idx_bkname (book_name)
+);
+   
+<span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> book <span style="color:#66d9ef">WHERE</span> book_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ABC&#39;</span>;
+   
+<span style="color:#f92672">#</span> <span style="color:#960050;background-color:#1e0010">创建唯一索引</span>
+<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> book(
+ book_id INT,
+    book_name VARCHAR(<span style="color:#ae81ff">100</span>),
+    authors VARCHAR(<span style="color:#ae81ff">100</span>),
+    info VARCHAR(<span style="color:#ae81ff">100</span>),
+    <span style="color:#66d9ef">comment</span> VARCHAR(<span style="color:#ae81ff">100</span>),
+    year_publication <span style="color:#66d9ef">YEAR</span>,
+    <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">INDEX</span> uk_idx_cmt (<span style="color:#66d9ef">comment</span>)
+);
+   
 </code></pre></div></li>
 <li>
 <p><strong>在已经存在的表上创建索引</strong></p>
